@@ -18,13 +18,13 @@
       --bg-1: url('./images/bg-1.jpg');
       --bg-2: url('./images/bg-2.jpg');
       --bg-3: url('./images/bg-3.jpg');
-      --c-bg:#0a0a0a;
-      --c-fg:#ececec;
-      --c-fg-dim:#bdbdbd;
-      --c-line:#2a2a2a;
-      --glass: rgba(18,18,18,.6);
-      --glass-strong: rgba(18,18,18,.85);
-      --accent:#ffffff; /* Bleibt in B/W – optional für Highlights */
+      --c-bg:#fafafa;
+      --c-fg:#0e0e0e;
+      --c-fg-dim:#333333;
+      --c-line:#e4e4e4;
+      --glass: rgba(255,255,255,.6);
+      --glass-strong: rgba(255,255,255,.9);
+      --accent:#000000; /* helles Theme */
     }
 
     *{box-sizing:border-box}
@@ -42,7 +42,7 @@
       position:fixed; inset:0 0 auto 0; height:64px;
       display:flex; align-items:center; justify-content:space-between;
       padding:0 18px; z-index:50;
-      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0));
+      background:linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,0));
       backdrop-filter:saturate(120%) blur(6px);
       transition: background .3s ease;
       border-bottom:1px solid transparent;
@@ -67,7 +67,7 @@
       transform: scale(1.04);
       animation: kenburns 28s ease-in-out infinite alternate;
     }
-    .hero::before{ background-image: var(--bg-1); opacity:.55; }
+    .hero::before{ background-image: var(--bg-1); opacity:.35; }
     .hero::after{ background-image: radial-gradient(ellipse at 60% 40%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.75) 100%); z-index:-1; animation:none; transform:none; }
 
     @keyframes kenburns{ from{ transform:scale(1.04) translateY(-1%)} to{ transform:scale(1.12) translateY(2%)} }
@@ -79,7 +79,7 @@
     .hero-inner{ width:min(1200px, 92vw); padding:120px 0 80px; display:grid; gap:22px; text-align:center; }
     .tagline{ color:var(--c-fg-dim); letter-spacing:.12em; text-transform:uppercase; font-size:12px }
     .headline{ font-size:clamp(28px, 6.2vw, 68px); line-height:1.1; margin:0; }
-    .sub{ max-width:780px; margin:0 auto; color:#d0d0d0 }
+    .sub{ max-width:780px; margin:0 auto; color:#444 }
 
     .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px }
     .btn{ padding:12px 16px; border:1px solid var(--c-fg); border-radius:14px; background:transparent; color:var(--c-fg); cursor:pointer; font-weight:600 }
@@ -97,7 +97,7 @@
     .mood-track{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(160px, 1fr); gap:10px;
       animation: slide 32s linear infinite; opacity:.9 }
     .mood-item{ height:140px; border-radius:12px; overflow:hidden; border:1px solid var(--c-line); background:#111 }
-    .mood-item span{ display:block; width:100%; height:100%; background-size:cover; background-position:center; filter:grayscale(100%) contrast(1.05) }
+    .mood-item span{ display:block; width:100%; height:100%; background-size:cover; background-position:center; filter:grayscale(100%) contrast(1.05) brightness(.9) }
     .mood-item:nth-child(3n+1) span{ background-image: var(--bg-1) }
     .mood-item:nth-child(3n+2) span{ background-image: var(--bg-2) }
     .mood-item:nth-child(3n+3) span{ background-image: var(--bg-3) }
@@ -125,7 +125,7 @@
     .caption{ position:absolute; inset:auto 0 0 0; padding:10px 12px; background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0)); font-size:14px }
 
     /* Footer */
-    footer{ padding:52px 0; border-top:1px solid var(--c-line); color:#9a9a9a }
+    footer{ padding:52px 0; border-top:1px solid var(--c-line); color:#666 }
     .foot{ width:min(1100px, 92vw); margin:0 auto; display:flex; gap:20px; justify-content:space-between; flex-wrap:wrap }
 
     /* Scroll reveal */
@@ -153,7 +153,7 @@
     </a>
     <div class="right" role="navigation" aria-label="Hauptnavigation">
       <a class="item" href="#galerie">Galerie</a>
-      <a class="item" href="#manifest">Manifest</a>
+      <a class="item" href="#ueber">Über</a>
       <a class="item" href="#mitmachen">Mitmachen</a>
       <a class="item" href="#kontakt">Kontakt</a>
     </div>
@@ -184,10 +184,10 @@
       </div>
       <div class="tagline reveal">Kollektiv der leisen Zeichen</div>
       <h1 class="headline reveal">Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
-      <p class="sub reveal">Wir waren nie getrennt. Diese Seite sammelt Artworks, die Gruppenbewusstsein sichtbar machen – ruhig, klar, schwarz‑weiß. Nimm eins. Kleb eins. Gib eins.</p>
+      <p class="sub reveal"><strong>Gruppenbewusstsein</strong> heißt: Wir sind viele – und spüren doch <strong>das Eine</strong>. Wenn <strong>Aufmerksamkeit</strong>, <strong>Atem</strong> und <strong>Haltung</strong> zusammenfallen, entsteht ein Feld: ruhig, klar, warm. Schau in die Galerie und fühl rein.</p>
       <div class="cta-row reveal">
         <a class="btn" href="#galerie">Galerie ansehen</a>
-        <a class="btn" href="#manifest">Manifest lesen</a>
+        <a class="btn" href="#ueber">Über lesen</a>
       </div>
 
       <!-- moving collage band (header-integrated) -->
@@ -225,11 +225,16 @@
     </div>
   </section>
 
-  <!-- Manifest -->
-  <section id="manifest" aria-labelledby="manifest-title">
+  <!-- Über / Erklärung -->
+  <section id="ueber" aria-labelledby="ueber-title">
     <div class="wrap">
-      <h2 class="section-title reveal" id="manifest-title">Manifest</h2>
-      <p class="lead reveal">Kurz, ruhig, klar. Ersetze diesen Platzhalter mit deinem Text. Vorschlag: drei Abschnitte – 1) Wir waren nie getrennt. 2) Positive Energie verbreitet sich am schnellsten. 3) Nimm eins · Kleb eins · Gib eins.</p>
+      <h2 class="section-title reveal" id="ueber-title">Worum es geht</h2>
+      <div class="lead reveal">
+        <p><strong>Gruppenbewusstsein</strong> ist kein großer Zauber, sondern ein einfaches Erleben: Viele Menschen richten <strong>Aufmerksamkeit</strong>, <strong>Atem</strong> und <strong>Haltung</strong> gleichzeitig aus – und plötzlich fühlt es sich an, als würde der Raum selbst tragen. Das kennst du aus guten Proben, einem Flow mit der Crew oder einer stillen Minute: Einzelne Impulse legen sich übereinander und werden zu einem Feld.</p>
+        <p><strong>Warum es heute wichtig ist:</strong> Medien können unsere <strong>Alarmknöpfe</strong> drücken – Angst klickt schnell und verkauft sich gut. Doch ständiges Kopf‑Kino hilft selten. Heilsamer ist <strong>Gegenwart</strong>: die Person vor mir, der Atem jetzt, die Kunst in meiner Hand. Wenn wir das teilen, <strong>steckt es an</strong> – leise, aber zuverlässig.</p>
+        <p>Dieses Kollektiv zeigt Arbeiten, die daran erinnern: <em>Wir waren nie getrennt.</em> Schwarz‑weiß, damit Form und Zwischenraum sprechen. Keine Parolen, kein Lärm – nur Zeichen, die still sagen: <strong>Eine Menschheit. Ein Planet. Keine Unterschiede.</strong></p>
+        <p>Wenn dich das berührt, nimm dir Zeit für die Bilder. Atme. Vielleicht spürst du, wie das Feld auf dich zurückatmet.</p>
+      </div>
     </div>
   </section>
 
@@ -237,7 +242,14 @@
   <section id="mitmachen" aria-labelledby="mitmachen-title">
     <div class="wrap">
       <h2 class="section-title reveal" id="mitmachen-title">Mitmachen</h2>
-      <p class="lead reveal">Lege hier deine Download‑Links für Sticker/Lesezeichen ab oder beschreibe das Host‑Programm für Cafés, Bibliotheken, Studios.</p>
+      <p class="lead reveal"><strong>Ohne Trubel unterstützen:</strong> Du kannst einen kleinen Beitrag für Material/Porto geben (z. B. über Ko‑fi) oder dir <strong>kostenlose Sticker‑Packs</strong> sichern – solange der Vorrat reicht. Außerdem stellen wir die <strong>Druck‑PDFs</strong> frei zum Selbstdruck bereit.</p>
+      <div class="lead reveal">
+        <ul>
+          <li>Ko‑fi‑Link (freiwillig)</li>
+          <li>Formular/Adresse für kostenlose Sticker</li>
+          <li>Download: Sticker‑/Lesezeichen‑PDF</li>
+        </ul>
+      </div>
     </div>
   </section>
 
