@@ -42,7 +42,7 @@
       position:fixed; inset:0 0 auto 0; height:64px;
       display:flex; align-items:center; justify-content:space-between;
       padding:0 18px; z-index:50;
-      background:linear-gradient(to bottom, rgba(255,255,255,.85), rgba(255,255,255,0));
+      background:linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,0));
       backdrop-filter:saturate(120%) blur(6px);
       transition: background .3s ease;
       border-bottom:1px solid transparent;
@@ -131,7 +131,17 @@
       .hero::before{ animation:none }
       .reveal{ transition:none }
     }
-  </style>
+    /* Hero dark theme (black header, white text) */
+  .hero{ background:#000; color:#fff }
+  .hero .tagline, .hero .headline, .hero .sub{ color:#fff }
+  .hero .btn{ border-color:#fff; color:#fff }
+  .arrow-down{ border-right-color:#fff; border-bottom-color:#fff }
+  /* Nav color over dark hero; switch back on scroll */
+  .nav:not(.scrolled) .title, .nav:not(.scrolled) a.item{ color:#fff }
+  .nav:not(.scrolled) a.item{ border-color:transparent }
+  .nav:not(.scrolled) a.item:hover{ border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.08) }
+  .nav.scrolled .title, .nav.scrolled a.item{ color:var(--c-fg) }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -177,7 +187,7 @@
       </div>
       <div class="tagline reveal">Hier und Jetzt</div>
       <h1 class="headline reveal">Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
-      <p class="sub reveal"><strong>Gruppenbewusstsein</strong> heißt: Wir sind viele – und spüren doch <strong>das Eine</strong>. Wenn <strong>Aufmerksamkeit</strong>, <strong>Atem</strong> und <strong>Haltung</strong> zusammenfallen, entsteht ein Feld: ruhig, klar, warm. Unten findest du eine kurze Einführung und die Galerie.</p>
+      <p class="sub reveal"><strong>Wir sitzen im selben Boot.</strong> Jede Entscheidung zieht Kreise. <strong>Gruppenbewusstsein</strong> heißt, die Folgen meines Handelns für dich, mich und alle mitzudenken – heute, morgen, überall. Diese Seite sammelt Arbeiten, die daran erinnern und uns zusammenziehen: <strong>würdevoll</strong>, <strong>klar</strong>, <strong>verbindend</strong>.</p>
       <div class="cta-row reveal">
         <a class="btn" href="#ueber">Mehr erfahren</a>
         <a class="btn" href="#stickers">Kostenlose Sticker holen</a>
@@ -213,10 +223,24 @@
     <div class="wrap">
       <h2 class="section-title reveal" id="ueber-title">Worum es geht</h2>
       <div class="lead reveal">
-        <p><strong>Gruppenbewusstsein</strong> ist kein großer Zauber, sondern ein einfaches Erleben: Viele Menschen richten <strong>Aufmerksamkeit</strong>, <strong>Atem</strong> und <strong>Haltung</strong> gleichzeitig aus – und plötzlich fühlt es sich an, als würde der Raum selbst tragen. Das kennst du aus guten Proben, einem Flow mit der Crew oder einer stillen Minute: Einzelne Impulse legen sich übereinander und werden zu einem Feld.</p>
-        <p><strong>Warum es heute wichtig ist:</strong> Medien können unsere <strong>Alarmknöpfe</strong> drücken – Angst klickt schnell und verkauft sich gut. Doch ständiges Kopf‑Kino hilft selten. Heilsamer ist <strong>Gegenwart</strong>: die Person vor mir, der Atem jetzt, die Kunst in meiner Hand. Wenn wir das teilen, <strong>steckt es an</strong> – leise, aber zuverlässig.</p>
-        <p>Dieses Kollektiv zeigt Arbeiten, die daran erinnern: <em>Wir waren nie getrennt.</em> Schwarz‑weiß, damit Form und Zwischenraum sprechen. Keine Parolen, kein Lärm – nur Zeichen, die still sagen: <strong>Eine Menschheit. Ein Planet. Keine Unterschiede.</strong></p>
-        <p>Wenn dich das berührt, nimm dir Zeit für die Bilder. Atme. Vielleicht spürst du, wie das Feld auf dich zurückatmet.</p>
+        <p><strong>Wir atmen dieselbe Luft, teilen Wasser, Straßen, Netze.</strong> Grenzen sind Vereinbarungen, keine Mauern für Folgen. Was wir tun – oder lassen – landet bei uns allen. Oft verhalten wir uns, als wären wir Inseln. In Wirklichkeit sind wir <strong>ein Netz</strong>.</p>
+        <p><strong>Gruppenbewusstsein</strong> ist das Erinnern an dieses Netz. Es ist keine Esoterik und kein Parteiprogramm, sondern eine <strong>Haltung</strong>: Ich sehe deine Würde, ich sehe den Zusammenhang, und ich wähle Handlungen, die dem Ganzen gut tun.</p>
+        <p><strong>Drei Sätze tragen alles:</strong><br>
+        1) <strong>Würde:</strong> Jeder Mensch zählt – Herkunft, Status, Meinung ändern daran nichts.<br>
+        2) <strong>Folgen:</strong> Alles hängt zusammen. Bequemlichkeit auf Kosten anderer schickt die Rechnung später zurück.<br>
+        3) <strong>Verantwortung:</strong> Freiheit heißt, die Auswirkungen meiner Entscheidungen mitzutragen.</p>
+        <p><strong>Was das im Alltag heißt</strong> (ohne Predigt, ohne Lärm):</p>
+        <ul>
+          <li><strong>Respekt im Ton:</strong> hart in der Sache, weich im Menschen.</li>
+          <li><strong>Fairness im Tausch:</strong> geben und nehmen, das beide Seiten stehen lässt.</li>
+          <li><strong>Hilfe im Nahfeld:</strong> zuerst dort handeln, wo du bist – Partnerin, Freunde, Nachbarschaft, Crew.</li>
+          <li><strong>Sorgfalt mit Ressourcen:</strong> Zeit, Aufmerksamkeit, Geld, Dinge – bewusst einsetzen.</li>
+          <li><strong>Mut zur Korrektur:</strong> Fehler zugeben, Kurs anpassen.</li>
+          <li><strong>Wahrheit vor Klicks:</strong> Medien können Angst verkaufen; wir wählen Quellen, Kontext, Ruhe.</li>
+          <li><strong>Gemeinsame Zukunft:</strong> Lösungen bevorzugen, die auch anderen nützen – nicht nur mir jetzt.</li>
+        </ul>
+        <p><strong>Woran du es merkst:</strong> Der Raum wird ruhiger. Konflikte werden klarer. Hilfe findet schneller statt. Freude steckt an. Nicht, weil alle gleich denken, sondern weil wir uns als <strong>verbunden</strong> verhalten.</p>
+        <p>Die Galerie unten zeigt Arbeiten, die das fühlbar machen – <strong>ohne Pathos</strong>, in Schwarz‑weiß, mit Platz für Zwischenräume. Nimm dir Zeit, schau hin, und wenn du willst, trag die Idee weiter.</p>
       </div>
     </div>
   </section>
