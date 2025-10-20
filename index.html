@@ -2,48 +2,289 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Eine Menschheit · Ein Planet</title>
-  <meta name="description" content="Nimm eins. Kleb eins. Gib eins. Positive Energie verbreitet sich am schnellsten.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eine Menschheit · Kollektiv</title>
+  <meta name="description" content="Eine Menschheit · Ein Planet · Keine Unterschiede. Ein kollektiver Hub für Artworks und Gruppenbewusstsein – dezent, schwarz‑weiß, emotional.">
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;line-height:1.5;margin:0;padding:0;background:#fff;color:#111}
-    .wrap{max-width:720px;margin:0 auto;padding:40px 20px}
-    h1{font-size:clamp(28px,4vw,40px);margin:0 0 12px}
-    p{margin:0 0 14px}
-    .box{border:1px solid #ddd;border-radius:12px;padding:18px;margin:18px 0}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
-    .btn{display:inline-block;padding:10px 14px;border:1px solid #111;border-radius:10px;text-decoration:none;color:#111}
-    footer{margin-top:32px;font-size:14px;color:#555}
+    /*
+      One Humanity – Startseite (schwarz‑weiß, animiert, kollektiv)
+      Hinweise:
+      – Ersetze ./images/bg-1.jpg, ./images/bg-2.jpg, ./images/bg-3.jpg mit deinen eigenen Bildern.
+      – Ersetze das Inline‑Logo (SVG) unten, falls du dein eigenes Symbol verwenden willst.
+      – Navigationspunkte verlinken auf Anker; Inhalte kannst du später befüllen.
+    */
+
+    :root{
+      --bg-1: url('./images/bg-1.jpg');
+      --bg-2: url('./images/bg-2.jpg');
+      --bg-3: url('./images/bg-3.jpg');
+      --c-bg:#0a0a0a;
+      --c-fg:#ececec;
+      --c-fg-dim:#bdbdbd;
+      --c-line:#2a2a2a;
+      --glass: rgba(18,18,18,.6);
+      --glass-strong: rgba(18,18,18,.85);
+      --accent:#ffffff; /* Bleibt in B/W – optional für Highlights */
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--c-bg); color:var(--c-fg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+      line-height:1.6;
+    }
+    a{color:var(--c-fg); text-decoration:none}
+    a:focus{outline:2px solid #888; outline-offset:4px}
+
+    /* NAV */
+    .nav{
+      position:fixed; inset:0 0 auto 0; height:64px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 18px; z-index:50;
+      background:linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0));
+      backdrop-filter:saturate(120%) blur(6px);
+      transition: background .3s ease;
+      border-bottom:1px solid transparent;
+    }
+    .nav.scrolled{ background:var(--glass-strong); border-bottom-color:var(--c-line); }
+    .brand{display:flex; gap:12px; align-items:center}
+    .brand .logo{width:28px; height:28px}
+    .brand .title{font-weight:600; letter-spacing:.2px}
+    .nav a.item{padding:8px 12px; border-radius:10px; border:1px solid transparent}
+    .nav a.item:hover{border-color:var(--c-line); background:rgba(255,255,255,.03)}
+    .nav .right{display:flex; gap:6px}
+
+    /* HERO */
+    .hero{
+      position:relative; min-height:100svh; display:grid; place-items:center; overflow:hidden;
+      isolation:isolate; /* so pseudo-layers stay behind */
+    }
+    /* Layered backgrounds with subtle movement */
+    .hero::before, .hero::after{
+      content:""; position:absolute; inset:-10% -10% -10% -10%; z-index:-2;
+      background-size:cover; background-position:center; filter:grayscale(100%);
+      transform: scale(1.04);
+      animation: kenburns 28s ease-in-out infinite alternate;
+    }
+    .hero::before{ background-image: var(--bg-1); opacity:.55; }
+    .hero::after{ background-image: radial-gradient(ellipse at 60% 40%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.75) 100%); z-index:-1; animation:none; transform:none; }
+
+    @keyframes kenburns{ from{ transform:scale(1.04) translateY(-1%)} to{ transform:scale(1.12) translateY(2%)} }
+
+    /* Subtle film grain */
+    .grain{ pointer-events:none; position:absolute; inset:0; z-index:0; opacity:.08; mix-blend-mode: soft-light; }
+
+    /* Hero Content */
+    .hero-inner{ width:min(1200px, 92vw); padding:120px 0 80px; display:grid; gap:22px; text-align:center; }
+    .tagline{ color:var(--c-fg-dim); letter-spacing:.12em; text-transform:uppercase; font-size:12px }
+    .headline{ font-size:clamp(28px, 6.2vw, 68px); line-height:1.1; margin:0; }
+    .sub{ max-width:780px; margin:0 auto; color:#d0d0d0 }
+
+    .cta-row{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:10px }
+    .btn{ padding:12px 16px; border:1px solid var(--c-fg); border-radius:14px; background:transparent; color:var(--c-fg); cursor:pointer; font-weight:600 }
+    .btn:hover{ background:rgba(255,255,255,.08) }
+
+    /* Header graphic container */
+    .symbol-wrap{ display:flex; align-items:center; justify-content:center; gap:16px; margin:6px auto 4px }
+    .symbol{
+      width:min(120px, 26vw); aspect-ratio:1; display:block;
+      filter:drop-shadow(0 8px 24px rgba(0,0,0,.45));
+    }
+
+    /* Mood strip (mini galerie feeling integrated in header area) */
+    .mood-strip{ position:relative; margin:34px auto 0; width:min(1100px, 94vw); }
+    .mood-track{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(160px, 1fr); gap:10px;
+      animation: slide 32s linear infinite; opacity:.9 }
+    .mood-item{ height:140px; border-radius:12px; overflow:hidden; border:1px solid var(--c-line); background:#111 }
+    .mood-item span{ display:block; width:100%; height:100%; background-size:cover; background-position:center; filter:grayscale(100%) contrast(1.05) }
+    .mood-item:nth-child(3n+1) span{ background-image: var(--bg-1) }
+    .mood-item:nth-child(3n+2) span{ background-image: var(--bg-2) }
+    .mood-item:nth-child(3n+3) span{ background-image: var(--bg-3) }
+
+    @keyframes slide{ from{ transform:translateX(0) } to{ transform:translateX(-33.333%) } }
+
+    /* Sections */
+    section{ padding:80px 0; border-top:1px solid var(--c-line); }
+    .wrap{ width:min(1100px, 92vw); margin:0 auto }
+    .section-title{ font-size:clamp(20px, 3.2vw, 36px); margin:0 0 14px }
+    .lead{ color:#cfcfcf; max-width:840px }
+
+    /* Simple gallery grid (placeholder – you can replace images) */
+    .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:14px; margin-top:16px }
+    .card{ position:relative; border:1px solid var(--c-line); border-radius:14px; overflow:hidden; background:#0f0f0f; aspect-ratio:4/5 }
+    .card::before{ content:""; position:absolute; inset:0; background-size:cover; background-position:center; filter:grayscale(100%); opacity:.95; transition: transform .5s ease }
+    .card:hover::before{ transform: scale(1.04) }
+    .card:nth-child(6n+1)::before{ background-image: var(--bg-1) }
+    .card:nth-child(6n+2)::before{ background-image: var(--bg-2) }
+    .card:nth-child(6n+3)::before{ background-image: var(--bg-3) }
+    .card:nth-child(6n+4)::before{ background-image: var(--bg-2) }
+    .card:nth-child(6n+5)::before{ background-image: var(--bg-3) }
+    .card:nth-child(6n+6)::before{ background-image: var(--bg-1) }
+
+    .caption{ position:absolute; inset:auto 0 0 0; padding:10px 12px; background:linear-gradient(to top, rgba(0,0,0,.65), rgba(0,0,0,0)); font-size:14px }
+
+    /* Footer */
+    footer{ padding:52px 0; border-top:1px solid var(--c-line); color:#9a9a9a }
+    .foot{ width:min(1100px, 92vw); margin:0 auto; display:flex; gap:20px; justify-content:space-between; flex-wrap:wrap }
+
+    /* Scroll reveal */
+    .reveal{ opacity:0; transform:translateY(12px); transition:opacity .7s ease, transform .7s ease }
+    .reveal.in{ opacity:1; transform:none }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .mood-track{ animation:none }
+      .hero::before{ animation:none }
+      .reveal{ transition:none }
+    }
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <h1>Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
-    <p>Wir waren nie getrennt. Wenn dich das berührt: Nimm eins. Kleb eins. Gib eins.</p>
-    <p><strong>Positive Energie verbreitet sich am schnellsten.</strong></p>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="#top" class="brand" aria-label="Startseite">
+      <!-- Inline Symbol (Planet + Herz) – ersetzbar durch eigene SVG/Grafik -->
+      <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#eaeaea" stroke-width="2"/>
+        <path d="M24 30c0-3 2.4-5.5 5.3-5.5 1.6 0 3.1.7 4.1 1.9 1-1.2 2.5-1.9 4.1-1.9 2.9 0 5.5 2.4 5.5 5.5 0 6.5-9.6 10.6-9.6 10.6S24 36.6 24 30z" fill="#eaeaea"/>
+      </svg>
+      <span class="title">Eine Menschheit</span>
+    </a>
+    <div class="right" role="navigation" aria-label="Hauptnavigation">
+      <a class="item" href="#galerie">Galerie</a>
+      <a class="item" href="#manifest">Manifest</a>
+      <a class="item" href="#mitmachen">Mitmachen</a>
+      <a class="item" href="#kontakt">Kontakt</a>
+    </div>
+  </nav>
 
-    <div class="box">
-      <h2>Mitmachen</h2>
-      <p>Lade dir Sticker und Lesezeichen herunter oder frag nach Gratis-Packs für deinen Ort.</p>
-      <div class="row">
-        <a class="btn" href="./downloads/sticker.pdf">Sticker-PDF</a>
-        <a class="btn" href="./downloads/lesezeichen.pdf">Lesezeichen-PDF</a>
-        <a class="btn" href="./mitmachen.html">Wie mitmachen</a>
+  <!-- Hero -->
+  <header class="hero" id="top" aria-label="Einstieg">
+    <!-- Film grain texture -->
+    <svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter>
+      <rect width="100" height="100" filter="url(#n)" opacity="1"></rect>
+    </svg>
+
+    <div class="hero-inner">
+      <div class="symbol-wrap reveal">
+        <!-- Du kannst diese Inline‑SVG durch eine PNG/SVG ersetzen: <img class="symbol" src="./images/header-symbol.svg" alt="Kollektiv Symbol"> -->
+        <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Planet mit Herz">
+          <defs>
+            <radialGradient id="g" cx="50%" cy="50%" r="60%">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="100%" stop-color="#dcdcdc"/>
+            </radialGradient>
+          </defs>
+          <circle cx="100" cy="100" r="86" fill="none" stroke="url(#g)" stroke-width="3"/>
+          <ellipse cx="100" cy="120" rx="86" ry="24" fill="none" stroke="#e5e5e5" stroke-width="2" opacity=".8"/>
+          <path d="M71 90c0-7 5.6-12.9 12.6-12.9 3.8 0 7.3 1.6 9.6 4.6 2.3-3 5.8-4.6 9.6-4.6 7 0 12.9 5.8 12.9 12.9 0 15.3-22.6 25.2-22.6 25.2S71 105.3 71 90z" fill="#f0f0f0"/>
+        </svg>
+      </div>
+      <div class="tagline reveal">Kollektiv der leisen Zeichen</div>
+      <h1 class="headline reveal">Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
+      <p class="sub reveal">Wir waren nie getrennt. Diese Seite sammelt Artworks, die Gruppenbewusstsein sichtbar machen – ruhig, klar, schwarz‑weiß. Nimm eins. Kleb eins. Gib eins.</p>
+      <div class="cta-row reveal">
+        <a class="btn" href="#galerie">Galerie ansehen</a>
+        <a class="btn" href="#manifest">Manifest lesen</a>
+      </div>
+
+      <!-- moving collage band (header-integrated) -->
+      <div class="mood-strip reveal" aria-label="Stimmungsbilder">
+        <div class="mood-track" aria-hidden="true">
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+          <div class="mood-item"><span></span></div>
+        </div>
       </div>
     </div>
+  </header>
 
-    <div class="box">
-      <h2>Kunst auswählen</h2>
-      <p>Du kannst zwischen meiner SFW-Galerie und einem Erwachsenen-Bereich (18+) wählen.</p>
-      <div class="row">
-        <a class="btn" href="./sfw.html">SFW-Galerie</a>
-        <a class="btn" href="./adult.html">18+ Galerie (nur Volljährige)</a>
+  <!-- Galerie -->
+  <section id="galerie" aria-labelledby="galerie-title">
+    <div class="wrap">
+      <h2 class="section-title reveal" id="galerie-title">Galerie</h2>
+      <p class="lead reveal">Platzhalter‑Grid. Du kannst für jedes Artwork eine eigene Detail‑Seite oder einen externen Link setzen. Ersetze die Hintergrundbilder in ./images/… oder stell echte <code>&lt;img&gt;</code> ein.</p>
+      <div class="grid">
+        <a class="card reveal" href="#" aria-label="Artwork 1"><span class="caption">Artwork 1</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 2"><span class="caption">Artwork 2</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 3"><span class="caption">Artwork 3</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 4"><span class="caption">Artwork 4</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 5"><span class="caption">Artwork 5</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 6"><span class="caption">Artwork 6</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 7"><span class="caption">Artwork 7</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 8"><span class="caption">Artwork 8</span></a>
       </div>
     </div>
+  </section>
 
-    <footer>
-      <a href="./impressum.html">Impressum</a> · <a href="./datenschutz.html">Datenschutz</a>
-    </footer>
-  </main>
+  <!-- Manifest -->
+  <section id="manifest" aria-labelledby="manifest-title">
+    <div class="wrap">
+      <h2 class="section-title reveal" id="manifest-title">Manifest</h2>
+      <p class="lead reveal">Kurz, ruhig, klar. Ersetze diesen Platzhalter mit deinem Text. Vorschlag: drei Abschnitte – 1) Wir waren nie getrennt. 2) Positive Energie verbreitet sich am schnellsten. 3) Nimm eins · Kleb eins · Gib eins.</p>
+    </div>
+  </section>
+
+  <!-- Mitmachen -->
+  <section id="mitmachen" aria-labelledby="mitmachen-title">
+    <div class="wrap">
+      <h2 class="section-title reveal" id="mitmachen-title">Mitmachen</h2>
+      <p class="lead reveal">Lege hier deine Download‑Links für Sticker/Lesezeichen ab oder beschreibe das Host‑Programm für Cafés, Bibliotheken, Studios.</p>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section id="kontakt" aria-labelledby="kontakt-title">
+    <div class="wrap">
+      <h2 class="section-title reveal" id="kontakt-title">Kontakt</h2>
+      <p class="lead reveal">E‑Mail oder Kontaktformular. Optional: Social‑Links (SFW / 18+ getrennt). Keine Tracker.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <div>© <span id="y"></span> Eine Menschheit – Kollektiv</div>
+      <div><a href="#">Impressum</a> · <a href="#">Datenschutz</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Nav background on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 8) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+    };
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    // Smooth scroll for in-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        const el = document.querySelector(id);
+        if(!el) return;
+        e.preventDefault();
+        el.scrollIntoView({behavior:'smooth', block:'start'});
+      })
+    });
+
+    // Reveal on view
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      })
+    }, {threshold:.16});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>
