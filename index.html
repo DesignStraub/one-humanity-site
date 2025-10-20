@@ -95,7 +95,6 @@
     /* Arrow Down */
     .arrow-down{ display:inline-block; width:28px; height:28px; border-right:2px solid var(--c-fg); border-bottom:2px solid var(--c-fg); transform:rotate(45deg); opacity:.6 }
     .arrow-down:hover{ opacity:1 }
-     to{ transform:translateX(-33.333%) } }
 
     /* Sections */
     section{ padding:80px 0; border-top:1px solid var(--c-line); }
@@ -161,12 +160,12 @@
       <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
   <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
 </svg>
-      <span class="title">Eine Menschheit</span>
+      <span class="title">OneHumanity</span>
     </a>
     <div class="right" role="navigation" aria-label="Hauptnavigation">
       <a class="item" href="#ueber">Über</a>
       <a class="item" href="#mitmachen">Mitmachen</a>
-      <a class="item" href="#galerie">Galerie</a>
+      
     </div>
   </nav>
 
@@ -187,7 +186,7 @@
       </div>
       <div class="tagline reveal">Hier und Jetzt</div>
       <h1 class="headline reveal">Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
-      <p class="sub reveal"><strong>Wir sitzen im selben Boot.</strong> Jede Entscheidung zieht Kreise. <strong>Gruppenbewusstsein</strong> heißt, die Folgen meines Handelns für dich, mich und alle mitzudenken – heute, morgen, überall. Diese Seite sammelt Arbeiten, die daran erinnern und uns zusammenziehen: <strong>würdevoll</strong>, <strong>klar</strong>, <strong>verbindend</strong>.</p>
+      <p class="sub reveal"><strong>Unter der Oberfläche sind wir eins.</strong> Gefühle kommen und gehen – auch die dunklen. Wir heißen sie willkommen und lassen sie weiterziehen. Nicht verstricken, nicht bekämpfen: <strong>loslassen</strong>. Was bleibt, ist Raum für Mitgefühl. Und in diesem Raum ist <strong>Liebe stärker als Hass</strong>.</p>
       <div class="cta-row reveal">
         <a class="btn" href="#ueber">Mehr erfahren</a>
         <a class="btn" href="#stickers">Kostenlose Sticker holen</a>
@@ -207,10 +206,10 @@
   <section id="ueber" aria-labelledby="ueber-title">
     <div class="wrap">
       <h2 class="section-title reveal" id="ueber-title">Worum es geht</h2>
-      <div class="lead reveal">
-        <p><strong>Liebe ist stärker als Hass.</strong> Das ist kein Spruch – es ist Physik für Herzen: Was wir einander geben, verstärkt sich. Angst zieht zusammen, Liebe macht weit. Gruppenbewusstsein bedeutet, diese <strong>Weite gemeinsam zu halten</strong> – auch wenn wir verschieden sind.</p>
-        <p>Wir leben nicht nebeneinander, sondern <strong>miteinander</strong>. Jede Geste, jeder Ton, jede Entscheidung hat Echo. Grenzen, Jobs, Feeds – all das strukturiert uns, aber es trennt uns nicht. Unter der Oberfläche sind wir <strong>ein Gewebe</strong>. Diese Seite erinnert daran – ohne Pathos, ohne Lärm.</p>
-        <p>Die Bilder hier sind schwarz‑weiß, damit nichts dazwischenfunkt. Linien, Flächen, Zwischenräume. Schau, was sie in dir auslösen. Wenn etwas warm wird: bewahre es. Wenn etwas heil wird: teile es. <strong>Eine Menschheit. Ein Planet. Keine Unterschiede.</strong></p>
+      <div class="lead reveal" id="aboutText">
+        <p><strong>One Humanity</strong> ist eine Erinnerung, kein Programm. Wir sind viele Wege, doch ein Feld. Was wir tun, hat Echo – nicht nur in uns, sondern zwischen uns. <strong>Ich lebe nicht neben dir, sondern mit dir.</strong> Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir halten sie still, statt sie zu verkaufen. <strong>Schuld bindet. Loslassen befreit.</strong> In dieser Freiheit wird Nähe wieder möglich: würdevoll, ruhig, klar.</p>
+        <p>Es braucht dafür keinen Lärm und keinen Zwang. Nur die Bereitschaft, nicht wegzusehen – und <strong>gegenwärtig</strong> zu bleiben: hier, jetzt, miteinander. So wird Distanz zu Raum, in dem Vertrauen wachsen kann. So wird „ich gegen du“ zu <strong>wir</strong>.
+        Wenn dich das berührt, trag die Botschaft leise weiter: <strong>One Humanity · One Planet · No Differences.</strong> Unten findest du die <strong>kostenlosen Sticker</strong> (solange Vorrat reicht) und – wenn du magst – die Möglichkeit einer <strong>kleinen Kostenbeteiligung</strong> für Material & Porto. Alles andere bleibt frei.</p>
       </div>
     </div>
   </section>
@@ -233,6 +232,8 @@
         <p class="lead reveal">Schreib uns kurz oder nutze das Formular. Solange der Vorrat reicht, schicken wir dir ein Set. Du kannst die Druck‑PDFs auch selbst nutzen und weitergeben.</p>
         <div class="reveal" style="border:1px solid var(--c-line); border-radius:14px; overflow:hidden; background:#fff; padding:14px; margin-bottom:16px">
           <img src="./images/sticker-placeholder.jpg" alt="Beispielbild der Sticker (Platzhalter)" style="width:100%; height:auto; display:block;" />
+        </div>
+        <form class="reveal" id="stickerForm" method="post" action="#" style="display:grid; gap:10px; max-width:720px">
           <div style="display:grid; gap:8px; grid-template-columns:1fr 1fr">
             <input required name="name" placeholder="Dein Name" style="padding:10px; border:1px solid var(--c-line); border-radius:10px" />
             <input required type="email" name="email" placeholder="E‑Mail" style="padding:10px; border:1px solid var(--c-line); border-radius:10px" />
@@ -249,28 +250,13 @@
           <button class="btn" type="submit">Anfragen senden</button>
           <p style="font-size:14px; color:#666">Hinweis: Reine Anfrage. Kein Tracking, keine Cookies. Du kannst auch per E‑Mail schreiben.</p>
         </form>
-      </div>
     </div>
   </section>
 
   <!-- Kontakt -->
   
 
-    <!-- Galerie (am Ende) -->
-  <section id="galerie" aria-labelledby="galerie-title">
-    <div class="wrap">
-      <h2 class="section-title reveal" id="galerie-title">Galerie</h2>
-      <p class="lead reveal">Eine Auswahl – die Sammlung wächst. Du kannst später externe Links oder Details ergänzen.</p>
-      <div class="grid">
-        <a class="card reveal" href="#" aria-label="Artwork 1"><span class="caption">Artwork 1</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 2"><span class="caption">Artwork 2</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 3"><span class="caption">Artwork 3</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 4"><span class="caption">Artwork 4</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 5"><span class="caption">Artwork 5</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 6"><span class="caption">Artwork 6</span></a>
-      </div>
-    </div>
-  </section>
+    
 
   <footer>
     <div class="foot">
@@ -309,36 +295,5 @@
     }, {threshold:.16});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </script>
-  <script>
-  // Superleichtes DE/EN für den Über-Text
-  const dict = {
-    de: {
-      about: `
-        <p><strong>One Humanity</strong> ist eine Erinnerung, kein Programm. Wir sind viele Wege, doch ein Feld. Was wir tun, hat Echo — nicht nur in uns, sondern zwischen uns.
-        <strong>Ich lebe nicht neben dir, sondern mit dir.</strong> Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir halten sie still, statt sie zu verkaufen. <strong>Schuld bindet. Loslassen befreit.</strong> In dieser Freiheit wird Nähe wieder möglich: würdevoll, ruhig, klar.</p>
-        <p>Es braucht dafür keinen Lärm und keinen Zwang. Nur die Bereitschaft, nicht wegzusehen — und <strong>gegenwärtig</strong> zu bleiben: hier, jetzt, miteinander. So wird Distanz zu Raum, in dem Vertrauen wachsen kann. So wird „ich gegen du“ zu <strong>wir</strong>.
-        Wenn dich das berührt, trag die Botschaft leise weiter: <strong>One Humanity · One Planet · No Differences.</strong> Unten findest du die <strong>kostenlosen Sticker</strong> (solange Vorrat reicht) und — wenn du magst — die Möglichkeit einer <strong>kleinen Kostenbeteiligung</strong> für Material & Porto. Alles andere bleibt frei.</p>
-      `
-    },
-    en: {
-      about: `
-        <p><strong>One Humanity</strong> is a reminder, not a program. Many paths, one field. What we do echoes — not only within us, but between us.
-        <strong>I don’t live beside you, I live with you.</strong> We share air, roads, stories, and future. Heavy feelings belong here too. We hold them quietly instead of selling them. <strong>Blame binds. Letting go frees.</strong> In that freedom, closeness becomes possible again: dignified, calm, clear.</p>
-        <p>No noise needed, no force. Only the willingness to not look away — to stay <strong>present</strong>: here, now, together. Distance becomes space where trust can grow. “Me versus you” becomes <strong>we</strong>.
-        If this resonates, carry the message gently: <strong>One Humanity · One Planet · No Differences.</strong> Below you’ll find <strong>free stickers</strong> (while supplies last) and — if you like — a small <strong>cost-share</strong> for materials & postage. Everything else remains open.</p>
-      `
-    }
-  };
-  const aboutEl = document.getElementById('aboutText');
-  const toggle = document.getElementById('langToggle');
-  let lang = 'de';
-  toggle?.addEventListener('click', (e)=>{
-    e.preventDefault();
-    lang = (lang==='de' ? 'en' : 'de');
-    aboutEl.innerHTML = dict[lang].about;
-    toggle.textContent = lang==='de' ? 'DE/EN' : 'EN/DE';
-  });
-</script>
-
 </body>
 </html>
