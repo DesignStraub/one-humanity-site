@@ -309,5 +309,36 @@
     }, {threshold:.16});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   </script>
+  <script>
+  // Superleichtes DE/EN für den Über-Text
+  const dict = {
+    de: {
+      about: `
+        <p><strong>One Humanity</strong> ist eine Erinnerung, kein Programm. Wir sind viele Wege, doch ein Feld. Was wir tun, hat Echo — nicht nur in uns, sondern zwischen uns.
+        <strong>Ich lebe nicht neben dir, sondern mit dir.</strong> Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir halten sie still, statt sie zu verkaufen. <strong>Schuld bindet. Loslassen befreit.</strong> In dieser Freiheit wird Nähe wieder möglich: würdevoll, ruhig, klar.</p>
+        <p>Es braucht dafür keinen Lärm und keinen Zwang. Nur die Bereitschaft, nicht wegzusehen — und <strong>gegenwärtig</strong> zu bleiben: hier, jetzt, miteinander. So wird Distanz zu Raum, in dem Vertrauen wachsen kann. So wird „ich gegen du“ zu <strong>wir</strong>.
+        Wenn dich das berührt, trag die Botschaft leise weiter: <strong>One Humanity · One Planet · No Differences.</strong> Unten findest du die <strong>kostenlosen Sticker</strong> (solange Vorrat reicht) und — wenn du magst — die Möglichkeit einer <strong>kleinen Kostenbeteiligung</strong> für Material & Porto. Alles andere bleibt frei.</p>
+      `
+    },
+    en: {
+      about: `
+        <p><strong>One Humanity</strong> is a reminder, not a program. Many paths, one field. What we do echoes — not only within us, but between us.
+        <strong>I don’t live beside you, I live with you.</strong> We share air, roads, stories, and future. Heavy feelings belong here too. We hold them quietly instead of selling them. <strong>Blame binds. Letting go frees.</strong> In that freedom, closeness becomes possible again: dignified, calm, clear.</p>
+        <p>No noise needed, no force. Only the willingness to not look away — to stay <strong>present</strong>: here, now, together. Distance becomes space where trust can grow. “Me versus you” becomes <strong>we</strong>.
+        If this resonates, carry the message gently: <strong>One Humanity · One Planet · No Differences.</strong> Below you’ll find <strong>free stickers</strong> (while supplies last) and — if you like — a small <strong>cost-share</strong> for materials & postage. Everything else remains open.</p>
+      `
+    }
+  };
+  const aboutEl = document.getElementById('aboutText');
+  const toggle = document.getElementById('langToggle');
+  let lang = 'de';
+  toggle?.addEventListener('click', (e)=>{
+    e.preventDefault();
+    lang = (lang==='de' ? 'en' : 'de');
+    aboutEl.innerHTML = dict[lang].about;
+    toggle.textContent = lang==='de' ? 'DE/EN' : 'EN/DE';
+  });
+</script>
+
 </body>
 </html>
