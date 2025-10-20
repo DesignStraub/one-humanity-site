@@ -106,7 +106,7 @@
     /* Simple gallery grid (placeholder – you can replace images) */
     .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:14px; margin-top:16px }
     .card{ position:relative; border:1px solid var(--c-line); border-radius:14px; overflow:hidden; background:#0f0f0f; aspect-ratio:4/5 }
-    .card::before{ content:""; position:absolute; inset:0; background-size:cover; background-position:center; filter:grayscale(100%); opacity:.95; transition: transform .5s ease }
+    .card::before{ content:""; position:absolute; inset:0; background-size:cover; background-position:center; opacity:.95; transition: transform .5s ease }
     .card:hover::before{ transform: scale(1.04) }
     .card:nth-child(6n+1)::before{ background-image: var(--bg-1) }
     .card:nth-child(6n+2)::before{ background-image: var(--bg-2) }
@@ -159,16 +159,14 @@
     <a href="#top" class="brand" aria-label="Startseite">
       <!-- Inline Symbol (Planet + Herz) – ersetzbar durch eigene SVG/Grafik -->
       <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
-        <circle cx="32" cy="32" r="28" fill="none" stroke="#eaeaea" stroke-width="2"/>
-        <path d="M24 30c0-3 2.4-5.5 5.3-5.5 1.6 0 3.1.7 4.1 1.9 1-1.2 2.5-1.9 4.1-1.9 2.9 0 5.5 2.4 5.5 5.5 0 6.5-9.6 10.6-9.6 10.6S24 36.6 24 30z" fill="#eaeaea"/>
-      </svg>
+  <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
+</svg>
       <span class="title">Eine Menschheit</span>
     </a>
     <div class="right" role="navigation" aria-label="Hauptnavigation">
-      <a class="item" href="#galerie">Galerie</a>
       <a class="item" href="#ueber">Über</a>
       <a class="item" href="#mitmachen">Mitmachen</a>
-      <a class="item" href="#kontakt">Kontakt</a>
+      <a class="item" href="#galerie">Galerie</a>
     </div>
   </nav>
 
@@ -183,17 +181,9 @@
     <div class="hero-inner">
       <div class="symbol-wrap reveal">
         <!-- Du kannst diese Inline‑SVG durch eine PNG/SVG ersetzen: <img class="symbol" src="./images/header-symbol.svg" alt="Kollektiv Symbol"> -->
-        <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Planet mit Herz">
-          <defs>
-            <radialGradient id="g" cx="50%" cy="50%" r="60%">
-              <stop offset="0%" stop-color="#fff"/>
-              <stop offset="100%" stop-color="#dcdcdc"/>
-            </radialGradient>
-          </defs>
-          <circle cx="100" cy="100" r="86" fill="none" stroke="url(#g)" stroke-width="3"/>
-          <ellipse cx="100" cy="120" rx="86" ry="24" fill="none" stroke="#e5e5e5" stroke-width="2" opacity=".8"/>
-          <path d="M71 90c0-7 5.6-12.9 12.6-12.9 3.8 0 7.3 1.6 9.6 4.6 2.3-3 5.8-4.6 9.6-4.6 7 0 12.9 5.8 12.9 12.9 0 15.3-22.6 25.2-22.6 25.2S71 105.3 71 90z" fill="#f0f0f0"/>
-        </svg>
+        <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Herz">
+  <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
+</svg>
       </div>
       <div class="tagline reveal">Hier und Jetzt</div>
       <h1 class="headline reveal">Eine Menschheit · Ein Planet · Keine Unterschiede</h1>
@@ -211,30 +201,16 @@
   </header>
 
   <!-- Galerie -->
-  <section id="galerie" aria-labelledby="galerie-title">
-    <div class="wrap">
-      <h2 class="section-title reveal" id="galerie-title">Galerie</h2>
-      <p class="lead reveal">Platzhalter‑Grid. Du kannst für jedes Artwork eine eigene Detail‑Seite oder einen externen Link setzen. Ersetze die Hintergrundbilder in ./images/… oder stell echte <code>&lt;img&gt;</code> ein.</p>
-      <div class="grid">
-        <a class="card reveal" href="#" aria-label="Artwork 1"><span class="caption">Artwork 1</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 2"><span class="caption">Artwork 2</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 3"><span class="caption">Artwork 3</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 4"><span class="caption">Artwork 4</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 5"><span class="caption">Artwork 5</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 6"><span class="caption">Artwork 6</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 7"><span class="caption">Artwork 7</span></a>
-        <a class="card reveal" href="#" aria-label="Artwork 8"><span class="caption">Artwork 8</span></a>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Über / Erklärung -->
   <section id="ueber" aria-labelledby="ueber-title">
     <div class="wrap">
       <h2 class="section-title reveal" id="ueber-title">Worum es geht</h2>
       <div class="lead reveal">
-        <p><strong>Liebe ist stärker als Angst.</strong> Wir sind viele Stimmen – und doch ein Chor. Gruppenbewusstsein bedeutet: Ich lebe nicht neben dir, sondern mit dir. Was ich tue, berührt dich; was du tust, berührt mich. Diese Seite hält diesen Faden – leise, klar, aufrichtig.</p>
-        <p>Wir müssen nicht gleich sein, um verbunden zu sein. Unterschiedliche Wege, gemeinsame Würde. In dieser Galerie findest du Zeichen dafür: Linien, Flächen, Zwischenräume – schwarz‑weiß, damit Gefühl und Bedeutung nicht übertönt werden. Kein Lärm, kein Druck. Nur die Erinnerung: <strong>Eine Menschheit. Ein Planet. Keine Unterschiede.</strong></p>
+        <p><strong>Liebe ist stärker als Hass.</strong> Das ist kein Spruch – es ist Physik für Herzen: Was wir einander geben, verstärkt sich. Angst zieht zusammen, Liebe macht weit. Gruppenbewusstsein bedeutet, diese <strong>Weite gemeinsam zu halten</strong> – auch wenn wir verschieden sind.</p>
+        <p>Wir leben nicht nebeneinander, sondern <strong>miteinander</strong>. Jede Geste, jeder Ton, jede Entscheidung hat Echo. Grenzen, Jobs, Feeds – all das strukturiert uns, aber es trennt uns nicht. Unter der Oberfläche sind wir <strong>ein Gewebe</strong>. Diese Seite erinnert daran – ohne Pathos, ohne Lärm.</p>
+        <p>Die Bilder hier sind schwarz‑weiß, damit nichts dazwischenfunkt. Linien, Flächen, Zwischenräume. Schau, was sie in dir auslösen. Wenn etwas warm wird: bewahre es. Wenn etwas heil wird: teile es. <strong>Eine Menschheit. Ein Planet. Keine Unterschiede.</strong></p>
       </div>
     </div>
   </section>
@@ -255,18 +231,44 @@
       <div class="wrap" id="stickers" style="margin-top:30px">
         <h3 class="section-title reveal">Kostenlose Sticker</h3>
         <p class="lead reveal">Schreib uns kurz oder nutze das Formular. Solange der Vorrat reicht, schicken wir dir ein Set. Du kannst die Druck‑PDFs auch selbst nutzen und weitergeben.</p>
-        <div class="reveal" style="border:1px solid var(--c-line); border-radius:14px; overflow:hidden; background:#fff; padding:14px">
-          <img src="./images/sticker-placeholder.jpg" alt="Beispielbild der Sticker (Platzhalter)" style="width:100%; height:auto; display:block; filter:grayscale(100%)" />
-        </div>
+        <div class="reveal" style="border:1px solid var(--c-line); border-radius:14px; overflow:hidden; background:#fff; padding:14px; margin-bottom:16px">
+          <img src="./images/sticker-placeholder.jpg" alt="Beispielbild der Sticker (Platzhalter)" style="width:100%; height:auto; display:block;" />
+          <div style="display:grid; gap:8px; grid-template-columns:1fr 1fr">
+            <input required name="name" placeholder="Dein Name" style="padding:10px; border:1px solid var(--c-line); border-radius:10px" />
+            <input required type="email" name="email" placeholder="E‑Mail" style="padding:10px; border:1px solid var(--c-line); border-radius:10px" />
+          </div>
+          <input name="address" placeholder="Adresse für den Versand (optional)" style="padding:10px; border:1px solid var(--c-line); border-radius:10px" />
+          <div style="display:grid; gap:8px; grid-template-columns:1fr 160px">
+            <textarea name="message" placeholder="Kurz: wie viele Sticker, wofür?" rows="4" style="padding:10px; border:1px solid var(--c-line); border-radius:10px"></textarea>
+            <select name="quantity" style="padding:10px; border:1px solid var(--c-line); border-radius:10px">
+              <option value="mini">Mini (3)</option>
+              <option value="standard" selected>Standard (10)</option>
+              <option value="community">Community (50)</option>
+            </select>
+          </div>
+          <button class="btn" type="submit">Anfragen senden</button>
+          <p style="font-size:14px; color:#666">Hinweis: Reine Anfrage. Kein Tracking, keine Cookies. Du kannst auch per E‑Mail schreiben.</p>
+        </form>
       </div>
     </div>
   </section>
 
   <!-- Kontakt -->
-  <section id="kontakt" aria-labelledby="kontakt-title">
+  
+
+    <!-- Galerie (am Ende) -->
+  <section id="galerie" aria-labelledby="galerie-title">
     <div class="wrap">
-      <h2 class="section-title reveal" id="kontakt-title">Kontakt</h2>
-      <p class="lead reveal">E‑Mail oder Kontaktformular. Optional: Social‑Links (SFW / 18+ getrennt). Keine Tracker.</p>
+      <h2 class="section-title reveal" id="galerie-title">Galerie</h2>
+      <p class="lead reveal">Eine Auswahl – die Sammlung wächst. Du kannst später externe Links oder Details ergänzen.</p>
+      <div class="grid">
+        <a class="card reveal" href="#" aria-label="Artwork 1"><span class="caption">Artwork 1</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 2"><span class="caption">Artwork 2</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 3"><span class="caption">Artwork 3</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 4"><span class="caption">Artwork 4</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 5"><span class="caption">Artwork 5</span></a>
+        <a class="card reveal" href="#" aria-label="Artwork 6"><span class="caption">Artwork 6</span></a>
+      </div>
     </div>
   </section>
 
