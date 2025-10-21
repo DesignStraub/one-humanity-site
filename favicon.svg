@@ -1,6 +1,4 @@
-<!-- favicon.svg -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
-  <!-- Rot kannst du ändern (#E0002B ist kräftig, #FF1744 heller) -->
   <path fill="#E0002B" d="
     M32 58
     C 22 51, 8 41, 8 27
