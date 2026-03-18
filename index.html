@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>OneHumanity</title>
-  <meta name="description" content="OneHumanity · One Planet · No Differences.">
+  <meta name="description" content="OneHumanity · One Planet · No Differences. Kostenlose Sticker, Sticker-PDF und eine ruhige Botschaft über Verbundenheit.">
   <meta name="theme-color" content="#000000">
   <style>
     :root{
       --bg-hero: url('./images/earth-gray.jpg');
       --c-bg:#fafafa;
       --c-fg:#0e0e0e;
+      --c-fg-dim:#333333;
       --c-line:#e4e4e4;
       --c-soft:#666;
       --c-blue:#6aa7ff;
@@ -28,9 +29,7 @@
       color:var(--c-fg);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
       line-height:1.6;
-      overflow-x:hidden;
     }
-
     a{color:var(--c-fg); text-decoration:none}
     a:focus{outline:2px solid #888; outline-offset:4px}
 
@@ -45,31 +44,13 @@
       justify-content:space-between;
       padding:8px 18px;
       z-index:50;
-      background:rgba(0,0,0,.92);
-      backdrop-filter:blur(8px);
-      border-bottom:1px solid rgba(255,255,255,.08);
+      background:#000;
+      border-bottom:1px solid transparent;
     }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-    .brand .logo{
-      width:28px;
-      height:28px;
-      color:#fff;
-    }
-    .brand .title{
-      font-weight:600;
-      letter-spacing:.2px;
-      color:#fff;
-    }
-    .nav .right{
-      display:flex;
-      gap:6px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .brand .logo{width:28px; height:28px; color:#fff}
+    .brand .title{font-weight:600; letter-spacing:.2px; color:#fff}
+    .nav .right{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
     .nav a.item,
     .lang-toggle button{
       padding:8px 12px;
@@ -79,21 +60,19 @@
       background:transparent;
       font:inherit;
       cursor:pointer;
-      transition:background .18s ease, border-color .18s ease, transform .18s ease;
+      transition:background .18s ease, border-color .18s ease;
     }
     .nav a.item:hover,
     .lang-toggle button:hover{
       border-color:rgba(255,255,255,.35);
-      background:rgba(255,255,255,.08);
-      transform:translateY(-1px);
+      background:rgba(255,255,255,.08)
     }
-    .lang-toggle{
-      display:flex;
-      gap:4px;
-    }
+    .lang-toggle{display:flex; gap:4px}
     .lang-toggle button.active{
       border-color:rgba(255,255,255,.35);
-      background:linear-gradient(135deg, rgba(106,167,255,.18), rgba(243,164,216,.18));
+      background:
+        linear-gradient(135deg, rgba(106,167,255,.16), rgba(243,164,216,.16)),
+        rgba(255,255,255,.08);
     }
 
     /* HERO */
@@ -104,7 +83,6 @@
       place-items:center;
       overflow:hidden;
       isolation:isolate;
-      padding:96px 20px 40px;
     }
     .hero::before,
     .hero::after{
@@ -114,25 +92,24 @@
       z-index:-2;
       background-size:cover;
       background-position:center;
+      filter:grayscale(100%);
       transform:scale(1.04);
       animation:kenburns 28s ease-in-out infinite alternate;
     }
     .hero::before{
       background-image:var(--bg-hero);
-      opacity:.26;
-      filter:grayscale(100%) contrast(1) brightness(.92);
+      opacity:.32;
+      filter:grayscale(100%) contrast(1) brightness(.9);
     }
     .hero::after{
       background-image:
-        radial-gradient(circle at 18% 22%, rgba(106,167,255,.22), transparent 24%),
-        radial-gradient(circle at 84% 28%, rgba(243,164,216,.20), transparent 24%),
-        radial-gradient(circle at 50% 72%, rgba(106,167,255,.10), transparent 24%),
-        radial-gradient(ellipse at 60% 45%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.14) 55%, rgba(0,0,0,.62) 100%);
+        radial-gradient(circle at 18% 22%, rgba(106,167,255,.14), transparent 24%),
+        radial-gradient(circle at 84% 28%, rgba(243,164,216,.14), transparent 24%),
+        radial-gradient(ellipse at 60% 40%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.75) 100%);
       z-index:-1;
       animation:none;
       transform:none;
     }
-
     @keyframes kenburns{
       from{ transform:scale(1.04) translateY(-1%)}
       to{ transform:scale(1.12) translateY(2%)}
@@ -149,44 +126,105 @@
 
     .hero-inner{
       width:min(1200px, 92vw);
-      min-height:calc(100svh - 140px);
+      padding:120px 0 80px;
       display:grid;
-      place-items:center;
-      position:relative;
-      z-index:1;
+      grid-template-columns:minmax(0,1.08fr) minmax(300px,390px);
+      gap:38px;
+      align-items:center;
+    }
+    .hero-copy{
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
     }
 
-    /* STICKER / IMAGE */
+    .tagline{
+      color:var(--c-fg-dim);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .headline{
+      font-size:clamp(28px, 6.2vw, 68px);
+      line-height:1.1;
+      margin:0 0 14px;
+    }
+    .sub{
+      max-width:780px;
+      margin:0 auto;
+      color:#0e0e0e;
+      font-size:clamp(16px, 1.35vw, 18px);
+    }
+
+    .cta-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+      justify-content:center;
+    }
+    .btn{
+      padding:12px 16px;
+      border:1px solid var(--c-fg);
+      border-radius:14px;
+      background:transparent;
+      color:var(--c-fg);
+      cursor:pointer;
+      font-weight:600;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover{
+      background:rgba(255,255,255,.08);
+      transform:translateY(-1px);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .symbol-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:16px;
+      margin:0 0 8px;
+    }
+    .symbol{
+      width:min(120px, 26vw);
+      aspect-ratio:1;
+      display:block;
+      filter:drop-shadow(0 8px 24px rgba(0,0,0,.45));
+      color:#000;
+    }
+
+    /* STICKER PREVIEW */
     .hero-sticker-wrap{
       display:grid;
       place-items:center;
-      width:100%;
     }
-
     .sticker-card{
-      width:min(100%, 520px);
+      width:min(100%, 360px);
       perspective:1100px;
       position:relative;
     }
-
     .sticker-card::before{
       content:"";
       position:absolute;
-      inset:auto 10% -26px 10%;
-      height:34px;
+      inset:auto 12% -18px 12%;
+      height:24px;
       background:radial-gradient(ellipse at center, rgba(0,0,0,.18), rgba(0,0,0,0));
-      filter:blur(12px);
+      filter:blur(10px);
       z-index:0;
       pointer-events:none;
     }
-
     .sticker{
       position:relative;
       z-index:1;
       width:100%;
-      border-radius:32px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.97), rgba(244,244,244,.93));
+      aspect-ratio:1 / 1.14;
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(255,255,255,.97), rgba(244,244,244,.92));
       border:1px solid rgba(0,0,0,.08);
       box-shadow:var(--shadow);
       overflow:hidden;
@@ -194,25 +232,22 @@
       transition:transform .18s ease-out, box-shadow .18s ease-out;
       animation:idleFloat 4.6s ease-in-out infinite;
     }
-
     @keyframes idleFloat{
-      0%,100%{transform:translateY(0px) rotateZ(-.3deg)}
-      50%{transform:translateY(-6px) rotateZ(.3deg)}
+      0%,100%{transform:translateY(0px) rotateZ(-.35deg)}
+      50%{transform:translateY(-6px) rotateZ(.35deg)}
     }
-
     .sticker::before{
       content:"";
       position:absolute;
       inset:0;
       background:
         radial-gradient(circle at 18% 10%, rgba(255,255,255,.82), transparent 28%),
-        linear-gradient(135deg, rgba(255,255,255,.30), transparent 34%),
-        linear-gradient(180deg, rgba(106,167,255,.08), transparent 24%),
-        linear-gradient(0deg, rgba(243,164,216,.08), transparent 24%);
+        linear-gradient(135deg, rgba(255,255,255,.33), transparent 34%),
+        linear-gradient(180deg, rgba(106,167,255,.07), transparent 22%),
+        linear-gradient(0deg, rgba(243,164,216,.07), transparent 24%);
       pointer-events:none;
       z-index:2;
     }
-
     .sticker::after{
       content:"";
       position:absolute;
@@ -220,54 +255,91 @@
       left:-30%;
       width:42%;
       height:130%;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.42), rgba(255,255,255,0));
+      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.4), rgba(255,255,255,0));
       transform:rotate(12deg);
       opacity:.65;
       pointer-events:none;
       animation:shineSweep 5.2s ease-in-out infinite;
       z-index:3;
     }
-
     @keyframes shineSweep{
       0%, 78%, 100%{transform:translateX(0) rotate(12deg); opacity:0}
       8%, 20%{opacity:.6}
       26%{transform:translateX(320%) rotate(12deg); opacity:0}
     }
-
     .sticker img{
       width:100%;
-      height:auto;
+      height:100%;
       display:block;
       object-fit:cover;
       position:relative;
       z-index:1;
     }
 
-    footer{
-      padding:24px 20px 34px;
-      position:relative;
-      z-index:2;
+    .arrow-down{
+      display:inline-block;
+      width:28px;
+      height:28px;
+      border-right:2px solid var(--c-fg);
+      border-bottom:2px solid var(--c-fg);
+      transform:rotate(45deg);
+      opacity:.6;
+      margin-top:8px;
+    }
+    .arrow-down:hover{ opacity:1 }
+
+    section{
+      padding:80px 0;
+      border-top:1px solid var(--c-line);
+    }
+    .wrap{
+      width:min(1100px, 92vw);
+      margin:0 auto;
+    }
+    .section-title{
+      font-size:clamp(20px, 3.2vw, 36px);
+      margin:0 0 14px;
+    }
+    .lead{
+      color:#0e0e0e;
+      max-width:840px;
     }
 
+    .cta-stack{
+      display:grid;
+      gap:10px;
+      max-width:560px;
+      margin-top:18px;
+    }
+    .btn.icon{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+    }
+    .btn.icon svg{
+      width:18px;
+      height:18px;
+      flex:0 0 auto;
+    }
+    .hint{
+      font-size:14px;
+      color:#666;
+      margin:-6px 0 10px 28px;
+    }
+
+    footer{
+      padding:52px 0;
+      border-top:1px solid var(--c-line);
+      color:#666;
+    }
     .foot{
       width:min(1100px, 92vw);
       margin:0 auto;
       display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:16px;
-      color:#666;
-      text-align:center;
-    }
-
-    .foot a{
-      color:#111;
-      font-weight:600;
-      transition:opacity .18s ease;
-    }
-
-    .foot a:hover{
-      opacity:.68;
+      gap:20px;
+      justify-content:space-between;
+      flex-wrap:wrap;
     }
 
     .reveal{
@@ -287,13 +359,13 @@
       .reveal{ transition:none }
     }
 
+    /* Responsive Navigation */
     @media (max-width: 900px){
       .nav{ padding:10px 12px }
       .brand{ margin-bottom:6px }
       .nav .right{
         width:100%;
         display:flex;
-        justify-content:flex-end;
         gap:6px;
         flex-wrap:wrap;
       }
@@ -301,14 +373,29 @@
       .lang-toggle button{ padding:10px 12px }
     }
 
+    @media (max-width: 980px){
+      .hero-inner{
+        grid-template-columns:1fr;
+        gap:22px;
+        padding-top:120px;
+      }
+      .hero-copy{text-align:center}
+      .symbol-wrap{justify-content:center}
+      .sub{margin:0 auto}
+      .cta-row{justify-content:center}
+      .hero-sticker-wrap{order:-1}
+    }
+
     @media (max-width: 560px){
       .nav .right{ row-gap:6px }
-      .sticker-card{ width:min(100%, 360px) }
-      .brand .title{ font-size:15px }
+      .wrap{ width:min(620px, 92vw) }
+      .hint{ margin-left:0 }
+      .sticker-card{ width:min(100%, 310px) }
     }
   </style>
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="nav" id="nav" data-testid="nav">
     <a href="#top" class="brand" aria-label="Homepage">
       <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
@@ -327,6 +414,7 @@
     </div>
   </nav>
 
+  <!-- Hero -->
   <header class="hero" id="top" aria-label="Intro" data-testid="hero">
     <svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
       <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter>
@@ -334,52 +422,112 @@
     </svg>
 
     <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="symbol-wrap reveal">
+          <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heart">
+            <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <div class="tagline reveal" data-i18n="tagline">Here and now</div>
+        <h1 class="headline reveal" data-i18n="headline">One Humanity · One Planet · No Differences</h1>
+        <p class="sub reveal" data-i18n="heroText"><strong>Under the surface, we are one.</strong> Feelings come and go — even the darker ones. We welcome them and let them pass. Not clinging, not fighting: <strong>letting go</strong>. What remains is space for compassion. And in that space, <strong>love is stronger than hate</strong>.</p>
+
+        <div class="cta-row reveal">
+          <a class="btn" href="#mitmachen" data-i18n="heroBtn1">See the sticker</a>
+          <a class="btn" href="#ueber" data-i18n="heroBtn2">Learn more</a>
+        </div>
+
+        <div class="reveal" style="margin-top:8px">
+          <a href="#ueber" aria-label="Scroll down" class="arrow-down" title="Scroll down"></a>
+        </div>
+      </div>
+
       <div class="hero-sticker-wrap reveal">
         <div class="sticker-card" id="stickerCard">
           <div class="sticker" id="stickerTilt">
-            <img src="./images/sticker-main.png" alt="OneHumanity sticker" id="stickerImage">
+            <img src="./images/sticker-placeholder.jpg" alt="Sticker preview" id="stickerImage">
           </div>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Über / Erklärung -->
+  <section id="ueber" aria-labelledby="ueber-title" data-testid="about">
+    <div class="wrap">
+      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">What this is about</h2>
+
+      <div class="lead reveal" id="aboutText">
+        <p data-i18n="aboutP1"><strong>One Humanity</strong> is a reminder, not a program. Many paths, one field. What we do echoes — not only within us, but between us. <strong>I do not live beside you; I live with you.</strong> We share air, streets, stories and future. Even the difficult feelings belong here. We hold them quietly instead of throwing them onto others. <strong>Blame binds. Letting go frees.</strong> In that freedom, closeness becomes possible again: dignified, calm, clear.</p>
+
+        <p data-i18n="aboutP2">It does not need noise or pressure. Only the willingness to stay present — here, now, together. That is how distance becomes space where trust can grow. That is how “me versus you” becomes <strong>we</strong>. If this speaks to you, carry the message forward quietly: <strong>One Humanity · One Planet · No Differences.</strong></p>
+      </div>
+
+      <!-- Mitmachen -->
+      <div id="mitmachen" class="lead reveal">
+        <h3 class="section-title" style="font-size:clamp(20px,2.3vw,28px); margin-top:26px" data-i18n="takePartTitle">Take part</h3>
+
+        <div class="cta-stack">
+          <a class="btn icon" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/></svg>
+            <span data-i18n="ctaRequest">Request stickers (Google Forms)</span>
+          </a>
+          <p class="hint" data-i18n="hintRequest">We usually ship within about 7 days, while supplies last.</p>
+
+          <a class="btn icon" href="https://raw.githubusercontent.com/DesignStraub/one-humanity-site/main/oneforall.pdf" target="_blank" rel="noopener" download>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5L13 3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z" fill="currentColor"/></svg>
+            <span data-i18n="ctaPdf">Download the sticker PDF</span>
+          </a>
+          <p class="hint" data-i18n="hintPdf">Print it yourself and share it freely — no sign-up needed.</p>
+
+          <a class="btn icon" href="https://ko-fi.com/oneplanetonehumanity" target="_blank" rel="noopener">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/></svg>
+            <span data-i18n="ctaSupport">Support on Ko-fi</span>
+          </a>
+          <p class="hint" data-i18n="hintSupport">Optional support for materials and postage. Thank you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="foot">
-      <a href="https://instagram.com/marcelloswigswag" target="_blank" rel="noopener">@marcelloswigswag</a>
+      <div>© <span id="y"></span> OneHumanity</div>
+      <div><a href="https://instagram.com/marcelloswigswag" target="_blank" rel="noopener">@marcelloswigswag</a></div>
     </div>
   </footer>
 
   <script>
-    const nav = document.getElementById('nav');
+    document.getElementById('y').textContent = new Date().getFullYear();
 
+    const nav = document.getElementById('nav');
     const onScroll = () => {
       if (window.scrollY > 8) nav.classList.add('scrolled');
       else nav.classList.remove('scrolled');
     };
-    document.addEventListener('scroll', onScroll, { passive:true });
+    document.addEventListener('scroll', onScroll, {passive:true});
     onScroll();
 
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
         const id = a.getAttribute('href');
         const el = document.querySelector(id);
         if(!el) return;
         e.preventDefault();
-        el.scrollIntoView({ behavior:'smooth', block:'start' });
+        el.scrollIntoView({behavior:'smooth', block:'start'});
       });
     });
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(en => {
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
         if(en.isIntersecting){
           en.target.classList.add('in');
           io.unobserve(en.target);
         }
       });
-    }, { threshold:.16 });
-
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }, {threshold:.16});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
     const stickerCard = document.getElementById('stickerCard');
     const stickerTilt = document.getElementById('stickerTilt');
@@ -405,11 +553,41 @@
     const translations = {
       de: {
         legal: 'Impressum',
-        privacy: 'Datenschutz'
+        privacy: 'Datenschutz',
+        tagline: 'Hier und Jetzt',
+        headline: 'Eine Menschheit · Ein Planet · Keine Unterschiede',
+        heroText: '<strong>Unter der Oberfläche sind wir eins.</strong> Gefühle kommen und gehen – auch die dunklen. Wir heißen sie willkommen und lassen sie weiterziehen. Nicht verstricken, nicht bekämpfen: <strong>loslassen</strong>. Was bleibt, ist Raum für Mitgefühl. Und in diesem Raum ist <strong>Liebe stärker als Hass</strong>.',
+        heroBtn1: 'Sticker ansehen',
+        heroBtn2: 'Mehr erfahren',
+        aboutTitle: 'Worum es geht',
+        aboutP1: '<strong>One Humanity</strong> ist eine Erinnerung, kein Programm. Wir sind viele Wege, doch ein Feld. Was wir tun, hat Echo – nicht nur in uns, sondern zwischen uns. <strong>Ich lebe nicht neben dir, sondern mit dir.</strong> Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir halten sie still, statt sie auf andere zu werfen. <strong>Schuld bindet. Loslassen befreit.</strong> In dieser Freiheit wird Nähe wieder möglich: würdevoll, ruhig, klar.',
+        aboutP2: 'Es braucht dafür keinen Lärm und keinen Zwang. Nur die Bereitschaft, nicht wegzusehen – und <strong>gegenwärtig</strong> zu bleiben: hier, jetzt, miteinander. So wird Distanz zu Raum, in dem Vertrauen wachsen kann. So wird „ich gegen du“ zu <strong>wir</strong>. Wenn dich das berührt, trag die Botschaft leise weiter: <strong>One Humanity · One Planet · No Differences.</strong>',
+        takePartTitle: 'Mitmachen',
+        ctaRequest: 'Sticker anfragen (Google Forms)',
+        hintRequest: 'Wir versenden in der Regel innerhalb von etwa 7 Tagen, solange Vorrat reicht.',
+        ctaPdf: 'Sticker-PDF downloaden',
+        hintPdf: 'Zum Selbstdruck und Weitergeben – ganz ohne Anmeldung.',
+        ctaSupport: 'Auf Ko-fi unterstützen',
+        hintSupport: 'Freiwillige Unterstützung für Material und Porto. Danke!'
       },
       en: {
         legal: 'Legal notice',
-        privacy: 'Privacy'
+        privacy: 'Privacy',
+        tagline: 'Here and now',
+        headline: 'One Humanity · One Planet · No Differences',
+        heroText: '<strong>Under the surface, we are one.</strong> Feelings come and go — even the darker ones. We welcome them and let them pass. Not clinging, not fighting: <strong>letting go</strong>. What remains is space for compassion. And in that space, <strong>love is stronger than hate</strong>.',
+        heroBtn1: 'See the sticker',
+        heroBtn2: 'Learn more',
+        aboutTitle: 'What this is about',
+        aboutP1: '<strong>One Humanity</strong> is a reminder, not a program. Many paths, one field. What we do echoes — not only within us, but between us. <strong>I do not live beside you; I live with you.</strong> We share air, streets, stories and future. Even the difficult feelings belong here. We hold them quietly instead of throwing them onto others. <strong>Blame binds. Letting go frees.</strong> In that freedom, closeness becomes possible again: dignified, calm, clear.',
+        aboutP2: 'It does not need noise or pressure. Only the willingness to stay present — here, now, together. That is how distance becomes space where trust can grow. That is how “me versus you” becomes <strong>we</strong>. If this speaks to you, carry the message forward quietly: <strong>One Humanity · One Planet · No Differences.</strong>',
+        takePartTitle: 'Take part',
+        ctaRequest: 'Request stickers (Google Forms)',
+        hintRequest: 'We usually ship within about 7 days, while supplies last.',
+        ctaPdf: 'Download the sticker PDF',
+        hintPdf: 'Print it yourself and share it freely — no sign-up needed.',
+        ctaSupport: 'Support on Ko-fi',
+        hintSupport: 'Optional support for materials and postage. Thank you.'
       }
     };
 
@@ -421,16 +599,11 @@
     function setLang(lang) {
       const dict = translations[lang];
       document.documentElement.lang = lang;
-
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (dict[key]) el.textContent = dict[key];
+        if (dict[key]) el.innerHTML = dict[key];
       });
-
-      Object.entries(langButtons).forEach(([key, btn]) => {
-        btn.classList.toggle('active', key === lang);
-      });
-
+      Object.entries(langButtons).forEach(([key, btn]) => btn.classList.toggle('active', key === lang));
       localStorage.setItem('onehumanity-lang', lang);
     }
 
@@ -443,7 +616,8 @@
       try{
         console.assert(document.querySelector('[data-testid="nav"]'), 'Nav fehlt');
         console.assert(document.querySelector('[data-testid="hero"]'), 'Hero fehlt');
-        console.assert(document.querySelector('#stickerImage'), 'Bild fehlt');
+        console.assert(document.querySelector('[data-testid="about"]'), 'Über-Sektion fehlt');
+        console.assert(document.querySelector('#stickerImage'), 'Sticker Placeholder fehlt');
         console.assert(document.querySelector('#lang-de') && document.querySelector('#lang-en'), 'Sprachumschalter fehlt');
         console.log('[OneHumanity] Smoke-Tests ok');
       }catch(e){
