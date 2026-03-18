@@ -102,9 +102,9 @@
     }
     .hero::after{
       background-image:
-        radial-gradient(circle at 20% 22%, rgba(106,167,255,.16), transparent 24%),
-        radial-gradient(circle at 82% 24%, rgba(243,164,216,.16), transparent 24%),
-        radial-gradient(circle at 50% 72%, rgba(106,167,255,.07), transparent 28%),
+        radial-gradient(circle at 20% 22%, rgba(106,167,255,.18), transparent 24%),
+        radial-gradient(circle at 82% 24%, rgba(243,164,216,.18), transparent 24%),
+        radial-gradient(circle at 50% 72%, rgba(106,167,255,.08), transparent 28%),
         radial-gradient(ellipse at 60% 40%, rgba(0,0,0,.0) 0%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.75) 100%);
       z-index:-1;
       animation:none;
@@ -145,23 +145,6 @@
       max-width:860px;
     }
 
-    .hero-copy::after{
-      content:"";
-      position:absolute;
-      width:min(560px, 78vw);
-      height:260px;
-      left:50%;
-      top:52%;
-      transform:translate(-50%,-50%);
-      background:
-        radial-gradient(circle at 35% 50%, rgba(106,167,255,.18), transparent 46%),
-        radial-gradient(circle at 65% 50%, rgba(243,164,216,.18), transparent 46%);
-      filter:blur(42px);
-      opacity:.95;
-      z-index:-1;
-      pointer-events:none;
-    }
-
     .tagline{
       color:var(--c-fg-dim);
       letter-spacing:.16em;
@@ -182,11 +165,25 @@
     }
 
     .symbol-wrap{
+      position:relative;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:16px;
       margin:0 0 8px;
+    }
+    .symbol-wrap::before{
+      content:"";
+      position:absolute;
+      width:min(260px, 52vw);
+      height:min(260px, 52vw);
+      background:
+        radial-gradient(circle at 35% 50%, rgba(106,167,255,.42), transparent 42%),
+        radial-gradient(circle at 68% 52%, rgba(243,164,216,.44), transparent 42%);
+      filter:blur(34px);
+      opacity:1;
+      z-index:-1;
+      pointer-events:none;
     }
     .symbol{
       width:min(120px, 26vw);
@@ -283,40 +280,39 @@
     }
     .sticker-card{
       width:min(100%, 360px);
-      perspective:1100px;
+      perspective:1200px;
       position:relative;
+      user-select:none;
+      touch-action:none;
     }
     .sticker-card::before{
       content:"";
       position:absolute;
-      inset:auto 12% -18px 12%;
-      height:24px;
-      background:radial-gradient(ellipse at center, rgba(0,0,0,.18), rgba(0,0,0,0));
+      inset:auto 10% -20px 10%;
+      height:26px;
+      background:radial-gradient(ellipse at center, rgba(0,0,0,.20), rgba(0,0,0,0));
       filter:blur(10px);
       z-index:0;
       pointer-events:none;
     }
+
     .sticker{
       position:relative;
       z-index:1;
       width:100%;
-      aspect-ratio:1 / 1.14;
+      aspect-ratio:1 / 1;
       border-radius:28px;
       background:linear-gradient(180deg, rgba(255,255,255,.97), rgba(244,244,244,.92));
       border:1px solid rgba(0,0,0,.08);
       box-shadow:var(--shadow);
       overflow:hidden;
       transform-style:preserve-3d;
-      transition:transform .12s ease-out, box-shadow .18s ease-out;
+      transition:transform .14s ease-out, box-shadow .18s ease-out;
       will-change:transform;
-      animation:idleFloat 4.6s ease-in-out infinite;
+      cursor:grab;
     }
-    .sticker.is-interacting{
-      animation:none;
-    }
-    @keyframes idleFloat{
-      0%,100%{transform:translateY(0px) rotateZ(-.35deg)}
-      50%{transform:translateY(-6px) rotateZ(.35deg)}
+    .sticker:active{
+      cursor:grabbing;
     }
     .sticker::before{
       content:"";
@@ -324,31 +320,37 @@
       inset:0;
       background:
         radial-gradient(circle at 18% 10%, rgba(255,255,255,.82), transparent 28%),
-        linear-gradient(135deg, rgba(255,255,255,.33), transparent 34%),
-        linear-gradient(180deg, rgba(106,167,255,.10), transparent 22%),
-        linear-gradient(0deg, rgba(243,164,216,.10), transparent 24%);
+        linear-gradient(135deg, rgba(255,255,255,.18), transparent 34%),
+        linear-gradient(180deg, rgba(106,167,255,.12), transparent 24%),
+        linear-gradient(0deg, rgba(243,164,216,.12), transparent 24%);
       pointer-events:none;
       z-index:2;
     }
-    .sticker::after{
-      content:"";
+
+    .sticker-sheen{
       position:absolute;
-      top:-8%;
-      left:-30%;
-      width:42%;
-      height:130%;
-      background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.4), rgba(255,255,255,0));
-      transform:rotate(12deg);
-      opacity:.65;
-      pointer-events:none;
-      animation:shineSweep 5.2s ease-in-out infinite;
+      inset:-20%;
       z-index:3;
+      pointer-events:none;
+      background:
+        linear-gradient(
+          105deg,
+          rgba(255,255,255,0) 32%,
+          rgba(255,255,255,.12) 40%,
+          rgba(255,255,255,.45) 50%,
+          rgba(255,255,255,.12) 60%,
+          rgba(255,255,255,0) 68%
+        );
+      transform:translateX(-65%) rotate(8deg);
+      opacity:0;
+      transition:transform .18s ease-out, opacity .18s ease-out;
+      mix-blend-mode:screen;
     }
-    @keyframes shineSweep{
-      0%, 78%, 100%{transform:translateX(0) rotate(12deg); opacity:0}
-      8%, 20%{opacity:.6}
-      26%{transform:translateX(320%) rotate(12deg); opacity:0}
+
+    .sticker.is-hovered .sticker-sheen{
+      opacity:1;
     }
+
     .sticker img{
       width:100%;
       height:100%;
@@ -383,10 +385,10 @@
     }
 
     @media (prefers-reduced-motion: reduce){
-      .hero::before,
-      .sticker,
-      .sticker::after{ animation:none }
+      .hero::before{ animation:none }
       .reveal{ transition:none }
+      .sticker,
+      .sticker-sheen{ transition:none }
     }
 
     @media (max-width: 900px){
@@ -500,7 +502,8 @@
           <div class="sticker-showcase">
             <div class="sticker-card" id="stickerCard">
               <div class="sticker" id="stickerTilt">
-                <img src="./images/sticker-placeholder.jpg" alt="Sticker preview" id="stickerImage">
+                <img src="./Sticker.jpeg" alt="Sticker preview" id="stickerImage">
+                <div class="sticker-sheen" id="stickerSheen"></div>
               </div>
             </div>
           </div>
@@ -512,7 +515,7 @@
   <footer>
     <div class="foot">
       <div>© <span id="y"></span> OneHumanity</div>
-      <div><a href="https://instagram.com/marcelloswigswag" target="_blank" rel="noopener">@marcelloswigswag</a></div>
+      <div>Made by <a href="https://instagram.com/marcelloswigswag" target="_blank" rel="noopener">@marcelloswigswag</a></div>
     </div>
   </footer>
 
@@ -549,24 +552,70 @@
 
     const stickerCard = document.getElementById('stickerCard');
     const stickerTilt = document.getElementById('stickerTilt');
+    const stickerSheen = document.getElementById('stickerSheen');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!reduceMotion && stickerCard && stickerTilt) {
-      stickerCard.addEventListener('mousemove', (e) => {
+    if (!reduceMotion && stickerCard && stickerTilt && stickerSheen) {
+      let active = false;
+
+      const applyTilt = (clientX, clientY) => {
         const rect = stickerCard.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
         const px = (x / rect.width - 0.5) * 2;
         const py = (y / rect.height - 0.5) * 2;
 
-        stickerTilt.classList.add('is-interacting');
+        const rotateY = px * 14;
+        const rotateX = -py * 14;
+        const shiftX = px * 10;
+        const shiftY = py * 6;
+
+        stickerTilt.classList.add('is-hovered');
         stickerTilt.style.transform =
-          `perspective(1100px) rotateX(${(-py * 8).toFixed(2)}deg) rotateY(${(px * 10).toFixed(2)}deg) translateY(-4px)`;
+          `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateX(${shiftX.toFixed(2)}px) translateY(${(-4 + shiftY).toFixed(2)}px) scale(1.02)`;
+
+        const sheenX = (x / rect.width) * 120 - 70;
+        stickerSheen.style.transform = `translateX(${sheenX}%) rotate(8deg)`;
+        stickerSheen.style.opacity = '1';
+      };
+
+      const resetTilt = () => {
+        stickerTilt.style.transform = '';
+        stickerTilt.classList.remove('is-hovered');
+        stickerSheen.style.transform = 'translateX(-65%) rotate(8deg)';
+        stickerSheen.style.opacity = '0';
+      };
+
+      stickerCard.addEventListener('pointerenter', (e) => {
+        active = true;
+        applyTilt(e.clientX, e.clientY);
       });
 
-      stickerCard.addEventListener('mouseleave', () => {
-        stickerTilt.style.transform = '';
-        stickerTilt.classList.remove('is-interacting');
+      stickerCard.addEventListener('pointermove', (e) => {
+        if (!active) active = true;
+        applyTilt(e.clientX, e.clientY);
+      });
+
+      stickerCard.addEventListener('pointerleave', () => {
+        active = false;
+        resetTilt();
+      });
+
+      stickerCard.addEventListener('pointerdown', (e) => {
+        active = true;
+        stickerCard.setPointerCapture(e.pointerId);
+        applyTilt(e.clientX, e.clientY);
+      });
+
+      stickerCard.addEventListener('pointerup', () => {
+        active = false;
+        resetTilt();
+      });
+
+      stickerCard.addEventListener('pointercancel', () => {
+        active = false;
+        resetTilt();
       });
     }
 
@@ -633,7 +682,7 @@
         console.assert(document.querySelector('[data-testid="nav"]'), 'Nav fehlt');
         console.assert(document.querySelector('[data-testid="hero"]'), 'Hero fehlt');
         console.assert(document.querySelector('[data-testid="about"]'), 'Über-Sektion fehlt');
-        console.assert(document.querySelector('#stickerImage'), 'Sticker Placeholder fehlt');
+        console.assert(document.querySelector('#stickerImage'), 'Sticker Bild fehlt');
         console.assert(document.querySelector('#lang-de') && document.querySelector('#lang-en'), 'Sprachumschalter fehlt');
         console.log('[OneHumanity] Smoke-Tests ok');
       }catch(e){
