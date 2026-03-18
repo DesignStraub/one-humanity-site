@@ -1,3 +1,4 @@
 # one-humanity-site
 
-onehumanity.eu.org
+
+https://oneplanetonehumanity.com/
