@@ -5,33 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>OneHumanity</title>
-  <meta name="description" content="OneHumanity · One Planet · No Differences.">
-  <meta name="theme-color" content="#000000">
+  <meta name="description" content="A quiet space for people who long for more peace, connection and humanity.">
+  <meta name="theme-color" content="#314137">
   <style>
     :root{
       --bg-hero: url('./images/earth-gray.jpg');
 
-      --c-bg:#f7f4ef;
-      --c-bg-soft:#fbf9f6;
-      --c-fg:#171717;
-      --c-fg-dim:#4f4a44;
-      --c-line:#e4ddd4;
-      --c-soft:#7b746c;
+      --c-bg:#f6f2eb;
+      --c-bg-soft:#fbf8f3;
+      --c-bg-warm:#efe7db;
 
-      --c-blue:#aebec9;
-      --c-sand:#d8c8b8;
-      --c-rose:#d9c7c3;
-      --c-mist:#dfe6e2;
-      --c-sage:#c8d5ca;
-      --c-sage-soft:#dce8dc;
+      --c-fg:#1a1a18;
+      --c-fg-dim:#555149;
+      --c-soft:#797268;
+      --c-line:#e3dbcf;
 
-      --c-forest:#5c6b5e;
-      --c-forest-deep:#455345;
-      --c-forest-soft:#b9c9bc;
-      --c-nav-text:#c5d3c4;
+      --c-sky:#b8c6cf;
+      --c-mist:#dbe3de;
+      --c-sand:#d9c7b2;
+      --c-sage:#bcc8bc;
+      --c-sage-soft:#d9e2d8;
+      --c-forest:#445449;
+      --c-forest-deep:#314137;
+      --c-forest-ink:#d3ddd0;
 
-      --shadow:0 20px 46px rgba(28,22,16,.09);
-      --shadow-soft:0 10px 28px rgba(28,22,16,.06);
+      --shadow:0 22px 52px rgba(34,28,21,.09);
+      --shadow-soft:0 12px 30px rgba(34,28,21,.06);
+      --radius:24px;
     }
 
     *{box-sizing:border-box}
@@ -40,15 +40,16 @@
 
     body{
       margin:0;
-      background:var(--c-bg);
       color:var(--c-fg);
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
-      line-height:1.72;
+      line-height:1.76;
       letter-spacing:.01em;
+      background:
+        linear-gradient(180deg, #faf7f1 0%, #f5f1ea 22%, #f2ece3 58%, #ece4d8 100%);
     }
 
     a{color:var(--c-fg); text-decoration:none}
-    a:focus{outline:2px solid rgba(23,23,23,.35); outline-offset:4px}
+    a:focus{outline:2px solid rgba(26,26,24,.28); outline-offset:4px}
 
     .nav{
       position:fixed;
@@ -60,7 +61,8 @@
       justify-content:space-between;
       padding:10px 20px;
       z-index:50;
-      background:#000;
+      background:rgba(49,65,55,.94);
+      backdrop-filter:blur(14px);
       border-bottom:1px solid rgba(255,255,255,.05);
     }
 
@@ -73,13 +75,13 @@
     .brand .logo{
       width:28px;
       height:28px;
-      color:var(--c-nav-text);
+      color:var(--c-forest-ink);
     }
 
     .brand .title{
       font-weight:600;
       letter-spacing:.02em;
-      color:var(--c-nav-text);
+      color:var(--c-forest-ink);
     }
 
     .nav .right{
@@ -94,7 +96,7 @@
       padding:8px 12px;
       border-radius:999px;
       border:1px solid transparent;
-      color:var(--c-nav-text);
+      color:var(--c-forest-ink);
       background:transparent;
       font:inherit;
       cursor:pointer;
@@ -103,10 +105,10 @@
 
     .nav a.item:hover,
     .lang-toggle button:hover{
-      border-color:rgba(197,211,196,.16);
-      background:rgba(197,211,196,.07);
+      border-color:rgba(211,221,208,.18);
+      background:rgba(211,221,208,.08);
+      color:#e6ede3;
       transform:translateY(-1px);
-      color:#d5e0d3;
     }
 
     .lang-toggle{
@@ -115,8 +117,8 @@
     }
 
     .lang-toggle button.active{
-      border-color:rgba(197,211,196,.14);
-      background:rgba(197,211,196,.10);
+      border-color:rgba(211,221,208,.16);
+      background:rgba(211,221,208,.10);
     }
 
     .hero{
@@ -137,31 +139,29 @@
       background-size:cover;
       background-position:center;
       transform:scale(1.04);
-      animation:kenburns 28s ease-in-out infinite alternate;
     }
 
     .hero::before{
       background-image:var(--bg-hero);
-      opacity:.08;
-      filter:grayscale(100%) brightness(.97) contrast(.92);
+      opacity:.06;
+      filter:grayscale(100%) brightness(.98) contrast(.9);
+      animation:kenburns 34s ease-in-out infinite alternate;
     }
 
     .hero::after{
       background-image:
-        radial-gradient(circle at 16% 20%, rgba(174,190,201,.22), transparent 24%),
-        radial-gradient(circle at 79% 22%, rgba(216,200,184,.18), transparent 24%),
-        radial-gradient(circle at 52% 72%, rgba(200,213,202,.18), transparent 28%),
-        radial-gradient(circle at 30% 68%, rgba(223,230,226,.14), transparent 24%),
-        radial-gradient(circle at 64% 36%, rgba(185,201,188,.14), transparent 22%),
-        linear-gradient(180deg, rgba(251,249,246,.76), rgba(247,244,239,.95));
+        radial-gradient(circle at 16% 18%, rgba(184,198,207,.22), transparent 23%),
+        radial-gradient(circle at 80% 20%, rgba(217,199,178,.18), transparent 24%),
+        radial-gradient(circle at 54% 68%, rgba(188,200,188,.19), transparent 28%),
+        radial-gradient(circle at 32% 66%, rgba(219,227,222,.14), transparent 24%),
+        radial-gradient(circle at 68% 42%, rgba(188,200,188,.10), transparent 22%),
+        linear-gradient(180deg, rgba(251,248,243,.82), rgba(246,242,235,.95));
       z-index:-1;
-      animation:none;
-      transform:none;
     }
 
     @keyframes kenburns{
-      from{ transform:scale(1.04) translateY(-1%)}
-      to{ transform:scale(1.08) translateY(1%)}
+      from{ transform:scale(1.03) translateY(-1%)}
+      to{ transform:scale(1.08) translateY(1.2%)}
     }
 
     .grain{
@@ -169,52 +169,48 @@
       position:absolute;
       inset:0;
       z-index:0;
-      opacity:.03;
+      opacity:.025;
       mix-blend-mode:multiply;
     }
 
     .hero-inner{
-      width:min(980px, 92vw);
-      padding:142px 0 96px;
+      width:min(1000px, 92vw);
+      padding:144px 0 104px;
       display:grid;
-      grid-template-columns:1fr;
-      gap:28px;
-      align-items:center;
-      justify-items:center;
-      text-align:center;
+      place-items:center;
       position:relative;
       z-index:1;
+      text-align:center;
     }
 
     .hero-copy{
       position:relative;
-      text-align:center;
       display:flex;
       flex-direction:column;
       align-items:center;
-      max-width:860px;
+      max-width:900px;
       gap:10px;
     }
 
     .hero-copy::before{
       content:"";
       position:absolute;
-      width:min(820px, 92vw);
-      height:420px;
+      width:min(860px, 96vw);
+      height:430px;
       left:50%;
       top:42%;
       transform:translate(-50%,-50%);
       background:
-        radial-gradient(circle at 22% 36%, rgba(174,190,201,.20), transparent 24%),
-        radial-gradient(circle at 76% 36%, rgba(216,200,184,.18), transparent 22%),
-        radial-gradient(circle at 50% 54%, rgba(200,213,202,.24), transparent 28%),
-        radial-gradient(circle at 40% 60%, rgba(185,201,188,.14), transparent 24%),
-        radial-gradient(circle at 62% 58%, rgba(223,230,226,.16), transparent 24%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.24), transparent 38%);
-      filter:blur(38px);
+        radial-gradient(circle at 22% 34%, rgba(184,198,207,.20), transparent 22%),
+        radial-gradient(circle at 76% 36%, rgba(217,199,178,.18), transparent 20%),
+        radial-gradient(circle at 48% 54%, rgba(188,200,188,.24), transparent 28%),
+        radial-gradient(circle at 38% 60%, rgba(219,227,222,.15), transparent 24%),
+        radial-gradient(circle at 62% 58%, rgba(188,200,188,.12), transparent 24%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.24), transparent 40%);
+      filter:blur(42px);
+      opacity:1;
       pointer-events:none;
       z-index:-1;
-      opacity:1;
     }
 
     .tagline{
@@ -225,19 +221,20 @@
     }
 
     .headline{
-      font-size:clamp(32px, 6vw, 68px);
-      line-height:1.08;
       margin:0;
       max-width:920px;
+      font-size:clamp(34px, 6vw, 72px);
+      line-height:1.05;
       font-weight:650;
+      letter-spacing:-.02em;
     }
 
     .sub{
-      max-width:780px;
-      margin:10px auto 0;
+      max-width:760px;
+      margin:12px auto 0;
       color:var(--c-fg-dim);
       font-size:clamp(17px, 1.35vw, 20px);
-      line-height:1.85;
+      line-height:1.88;
     }
 
     .symbol-wrap{
@@ -245,35 +242,34 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      margin:0 0 10px;
+      margin:0 0 12px;
     }
 
     .symbol-wrap::before{
       content:"";
       position:absolute;
-      width:min(340px, 62vw);
-      height:min(340px, 62vw);
+      width:min(360px, 64vw);
+      height:min(360px, 64vw);
       background:
-        radial-gradient(circle at 34% 46%, rgba(174,190,201,.28), transparent 40%),
-        radial-gradient(circle at 68% 50%, rgba(216,200,184,.24), transparent 38%),
-        radial-gradient(circle at 52% 64%, rgba(200,213,202,.24), transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(185,201,188,.12), transparent 44%);
-      filter:blur(38px);
+        radial-gradient(circle at 34% 46%, rgba(184,198,207,.28), transparent 38%),
+        radial-gradient(circle at 68% 50%, rgba(217,199,178,.22), transparent 36%),
+        radial-gradient(circle at 52% 64%, rgba(188,200,188,.24), transparent 38%);
+      filter:blur(40px);
       opacity:1;
       z-index:-1;
       pointer-events:none;
     }
 
     .symbol{
-      width:min(112px, 25vw);
+      width:min(114px, 25vw);
       aspect-ratio:1;
       display:block;
       color:#111;
-      filter:drop-shadow(0 10px 28px rgba(0,0,0,.12));
+      filter:drop-shadow(0 10px 26px rgba(0,0,0,.10));
     }
 
     .hero-note{
-      margin-top:18px;
+      margin-top:20px;
       color:var(--c-soft);
       font-size:14px;
       letter-spacing:.02em;
@@ -283,22 +279,20 @@
       display:inline-block;
       width:28px;
       height:28px;
-      border-right:1.8px solid rgba(23,23,23,.78);
-      border-bottom:1.8px solid rgba(23,23,23,.78);
+      border-right:1.8px solid rgba(26,26,24,.78);
+      border-bottom:1.8px solid rgba(26,26,24,.78);
       transform:rotate(45deg);
       opacity:.56;
-      margin-top:30px;
-      animation:arrowBob 2.1s ease-in-out infinite;
+      margin-top:32px;
+      animation:arrowBob 2.2s ease-in-out infinite;
     }
 
-    .arrow-down:hover{
-      opacity:.95;
-    }
+    .arrow-down:hover{ opacity:.92 }
 
     @keyframes arrowBob{
       0%,100%{
         transform:rotate(45deg) translateY(0);
-        opacity:.45;
+        opacity:.44;
       }
       50%{
         transform:rotate(45deg) translateY(8px);
@@ -307,20 +301,14 @@
     }
 
     section{
-      padding:104px 0;
+      position:relative;
+      padding:108px 0;
       border-top:1px solid var(--c-line);
     }
 
     .wrap{
       width:min(1120px, 92vw);
       margin:0 auto;
-    }
-
-    .section-title{
-      font-size:clamp(24px, 3vw, 40px);
-      margin:0 0 20px;
-      line-height:1.15;
-      letter-spacing:-.01em;
     }
 
     .section-kicker{
@@ -331,22 +319,29 @@
       margin-bottom:12px;
     }
 
+    .section-title{
+      margin:0 0 22px;
+      font-size:clamp(24px, 3vw, 40px);
+      line-height:1.15;
+      letter-spacing:-.01em;
+    }
+
     .lead{
+      max-width:800px;
       color:var(--c-fg-dim);
-      max-width:790px;
       font-size:18px;
-      line-height:1.9;
+      line-height:1.92;
     }
 
     .lead p{
-      margin:0 0 24px;
+      margin:0 0 26px;
     }
 
     .take-part-layout{
-      margin-top:40px;
+      margin-top:42px;
       display:grid;
       grid-template-columns:minmax(0, 1fr) 360px;
-      gap:58px;
+      gap:60px;
       align-items:start;
     }
 
@@ -354,40 +349,33 @@
       display:grid;
       gap:14px;
       max-width:100%;
-      margin-top:6px;
+      margin-top:8px;
     }
 
     .btn{
       padding:14px 18px;
-      border:1px solid rgba(69,83,69,.16);
+      border:1px solid rgba(68,84,73,.16);
       border-radius:18px;
-      background:rgba(255,255,255,.42);
+      background:rgba(255,255,255,.40);
       color:var(--c-fg);
       cursor:pointer;
       font-weight:600;
       display:inline-flex;
       align-items:center;
       gap:12px;
-      transition:transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
-      box-shadow:0 1px 0 rgba(255,255,255,.35) inset;
+      box-shadow:0 1px 0 rgba(255,255,255,.34) inset;
       backdrop-filter:blur(6px);
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
     }
 
     .btn:hover{
       background:
-        linear-gradient(135deg, rgba(200,213,202,.18), rgba(216,200,184,.10)),
-        rgba(255,255,255,.62);
-      border-color:rgba(69,83,69,.24);
-      color:#213021;
+        linear-gradient(135deg, rgba(188,200,188,.18), rgba(217,199,178,.10)),
+        rgba(255,255,255,.60);
+      border-color:rgba(68,84,73,.24);
+      color:#223022;
       transform:translateY(-1px);
       box-shadow:var(--shadow-soft);
-    }
-
-    .btn.icon{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-weight:600;
     }
 
     .btn.icon svg{
@@ -427,8 +415,8 @@
       filter:blur(13px);
       z-index:0;
       pointer-events:none;
-      transition:transform .12s ease-out, opacity .12s ease-out;
       opacity:.8;
+      transition:transform .12s ease-out, opacity .12s ease-out;
     }
 
     .sticker{
@@ -438,31 +426,29 @@
       aspect-ratio:1 / 1;
       border-radius:24px;
       background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(247,243,238,.94));
-      border:1px solid rgba(23,23,23,.08);
+      border:1px solid rgba(26,26,24,.08);
       box-shadow:var(--shadow);
       overflow:hidden;
       transform-style:preserve-3d;
+      will-change:transform;
+      cursor:grab;
       transition:
         transform .08s linear,
         box-shadow .12s ease-out,
         filter .12s ease-out;
-      will-change:transform;
-      cursor:grab;
     }
 
-    .sticker:active{
-      cursor:grabbing;
-    }
+    .sticker:active{ cursor:grabbing }
 
     .sticker::before{
       content:"";
       position:absolute;
       inset:0;
       background:
-        radial-gradient(circle at 18% 10%, rgba(255,255,255,.60), transparent 28%),
+        radial-gradient(circle at 18% 10%, rgba(255,255,255,.62), transparent 28%),
         linear-gradient(135deg, rgba(255,255,255,.06), transparent 34%),
-        linear-gradient(180deg, rgba(174,190,201,.10), transparent 24%),
-        linear-gradient(0deg, rgba(200,213,202,.10), transparent 24%);
+        linear-gradient(180deg, rgba(184,198,207,.10), transparent 24%),
+        linear-gradient(0deg, rgba(188,200,188,.10), transparent 24%);
       pointer-events:none;
       z-index:2;
     }
@@ -499,6 +485,138 @@
       object-fit:cover;
       position:relative;
       z-index:1;
+    }
+
+    .growing{
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(251,248,243,.26), rgba(239,231,219,.38));
+    }
+
+    .growing::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(ellipse at 18% 36%, rgba(184,198,207,.14), transparent 28%),
+        radial-gradient(ellipse at 80% 34%, rgba(188,200,188,.16), transparent 28%),
+        radial-gradient(ellipse at 50% 78%, rgba(217,199,178,.16), transparent 30%);
+      pointer-events:none;
+    }
+
+    .growing-grid{
+      position:relative;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:42px;
+      align-items:center;
+    }
+
+    .growing-copy{
+      max-width:760px;
+      position:relative;
+      z-index:1;
+    }
+
+    .growing-copy p{
+      margin:0 0 18px;
+      color:var(--c-fg-dim);
+      font-size:18px;
+      line-height:1.9;
+    }
+
+    .growing-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:22px;
+    }
+
+    .growing-tag{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(68,84,73,.12);
+      background:rgba(255,255,255,.36);
+      color:var(--c-fg-dim);
+      font-size:14px;
+      box-shadow:0 1px 0 rgba(255,255,255,.28) inset;
+      backdrop-filter:blur(5px);
+    }
+
+    .growing-visual{
+      min-height:280px;
+      border-radius:32px;
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,.06)),
+        radial-gradient(circle at 22% 26%, rgba(184,198,207,.24), transparent 24%),
+        radial-gradient(circle at 74% 34%, rgba(188,200,188,.22), transparent 28%),
+        radial-gradient(circle at 56% 74%, rgba(217,199,178,.24), transparent 30%),
+        linear-gradient(180deg, rgba(246,242,235,.7), rgba(232,223,211,.7));
+      border:1px solid rgba(68,84,73,.10);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .growing-visual::before{
+      content:"";
+      position:absolute;
+      inset:auto -10% 18% -10%;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(68,84,73,.18), transparent);
+    }
+
+    .growing-visual::after{
+      content:"";
+      position:absolute;
+      inset:auto 12% 12% 12%;
+      height:42%;
+      border-radius:999px 999px 0 0;
+      border-top:1px solid rgba(68,84,73,.14);
+      background:
+        radial-gradient(circle at 50% 100%, rgba(255,255,255,.08), transparent 58%);
+      opacity:.9;
+      filter:blur(.2px);
+    }
+
+    .mist{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(26px);
+      opacity:.48;
+      pointer-events:none;
+    }
+
+    .mist.one{
+      width:180px;
+      height:110px;
+      left:12%;
+      top:18%;
+      background:rgba(184,198,207,.34);
+      animation:drift 18s ease-in-out infinite alternate;
+    }
+
+    .mist.two{
+      width:220px;
+      height:120px;
+      right:10%;
+      top:28%;
+      background:rgba(188,200,188,.30);
+      animation:drift 22s ease-in-out infinite alternate-reverse;
+    }
+
+    .mist.three{
+      width:210px;
+      height:130px;
+      left:30%;
+      bottom:10%;
+      background:rgba(217,199,178,.28);
+      animation:drift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift{
+      from{ transform:translate3d(0,0,0) }
+      to{ transform:translate3d(18px,-10px,0) }
     }
 
     footer{
@@ -538,7 +656,8 @@
     }
 
     @media (prefers-reduced-motion: reduce){
-      .hero::before{ animation:none }
+      .hero::before,
+      .mist{ animation:none }
       .reveal{ transition:none }
       .sticker,
       .sticker-sheen,
@@ -562,7 +681,8 @@
         padding:10px 12px;
       }
 
-      .take-part-layout{
+      .take-part-layout,
+      .growing-grid{
         grid-template-columns:1fr;
         gap:34px;
       }
@@ -571,6 +691,10 @@
         place-items:center;
         order:-1;
       }
+
+      .growing-visual{
+        min-height:240px;
+      }
     }
 
     @media (max-width: 560px){
@@ -578,9 +702,9 @@
       .wrap{ width:min(620px, 92vw) }
       .hint{ margin-left:0 }
       .sticker-card{ width:min(100%, 310px) }
-      section{ padding:84px 0 }
-      .hero-inner{ padding:128px 0 80px }
-      .headline{ font-size:clamp(30px, 11vw, 46px) }
+      section{ padding:86px 0 }
+      .hero-inner{ padding:128px 0 86px }
+      .headline{ font-size:clamp(32px, 11vw, 48px) }
       .sub{ font-size:17px }
     }
   </style>
@@ -620,17 +744,16 @@
           </svg>
         </div>
 
-        <div class="tagline reveal" data-i18n="tagline">Here and now</div>
+        <div class="tagline reveal" data-i18n="tagline">A quiet place</div>
 
-        <h1 class="headline reveal" data-i18n="headline">One Humanity · One Planet · No Differences</h1>
+        <h1 class="headline reveal" data-i18n="headline">One Planet · One Humanity</h1>
 
         <p class="sub reveal" data-i18n="heroText">
-          Under the surface, we are one. Feelings come and go — even the darker ones.
-          We welcome them and let them pass. Not clinging, not fighting: letting go.
-          What remains is space for compassion. And in that space, love is stronger than hate.
+          You are not alone if you long for more peace, more depth, more humanity.
+          This is a quiet place for people who feel there must be more than noise, distance and division.
         </p>
 
-        <div class="hero-note reveal" data-i18n="heroNote">A quiet reminder. Nothing more. Nothing less.</div>
+        <div class="hero-note reveal" data-i18n="heroNote">Take your time. Look around.</div>
 
         <div class="reveal">
           <a href="#ueber" aria-label="Scroll down" class="arrow-down" title="Scroll down"></a>
@@ -642,23 +765,25 @@
   <section id="ueber" aria-labelledby="ueber-title" data-testid="about">
     <div class="wrap">
       <div class="section-kicker reveal" data-i18n="aboutKicker">About</div>
-      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A quiet sign for people who feel there is more than division.</h2>
+      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A small sign for people who still believe in closeness.</h2>
 
       <div class="lead reveal" id="aboutText">
         <p data-i18n="aboutP1">
-          One Humanity is a reminder, not a slogan. We are many paths, but one field.
-          What we do has an echo — not only in us, but between us.
+          One Humanity is not here to argue with the world.
+          It is here for people who already feel that kindness, presence and dignity still matter.
         </p>
 
         <p data-i18n="aboutP2">
-          We share air, streets, stories and future. Even the heavy feelings belong here.
-          We do not have to throw them at each other. We can hold them, let them move, and stay human.
+          We share more than we often remember.
+          Air. Streets. Stories. A future.
+          Even the difficult feelings belong here.
+          We do not have to turn them into more distance.
         </p>
       </div>
 
       <div id="mitmachen" class="reveal">
         <div class="section-kicker" data-i18n="takePartKicker">Take part</div>
-        <h3 class="section-title" style="font-size:clamp(22px,2.3vw,30px); margin-top:0" data-i18n="takePartTitle">Carry it forward in your own way.</h3>
+        <h3 class="section-title" style="font-size:clamp(22px,2.3vw,30px); margin-top:0" data-i18n="takePartTitle">Take something with you.</h3>
 
         <div class="take-part-layout">
           <div class="cta-stack">
@@ -668,7 +793,7 @@
               </svg>
               <span data-i18n="ctaRequest">Request sticker set</span>
             </a>
-            <p class="hint" data-i18n="hintRequest">We usually send them within about 7 days, while supplies last.</p>
+            <p class="hint" data-i18n="hintRequest">A small set to keep, share, or pass on quietly.</p>
 
             <a class="btn icon" href="https://raw.githubusercontent.com/DesignStraub/one-humanity-site/main/oneforall.pdf" target="_blank" rel="noopener" download>
               <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -676,7 +801,7 @@
               </svg>
               <span data-i18n="ctaPdf">Download the sticker PDF</span>
             </a>
-            <p class="hint" data-i18n="hintPdf">Print it yourself and pass it on in your own way.</p>
+            <p class="hint" data-i18n="hintPdf">For printing at home and sharing in your own way.</p>
 
             <a class="btn icon" href="https://ko-fi.com/oneplanetonehumanity" target="_blank" rel="noopener">
               <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -684,7 +809,7 @@
               </svg>
               <span data-i18n="ctaSupport">Support the project</span>
             </a>
-            <p class="hint" data-i18n="hintSupport">A small contribution for printing, materials and postage.</p>
+            <p class="hint" data-i18n="hintSupport">A quiet way to support printing, materials and postage.</p>
           </div>
 
           <div class="sticker-showcase">
@@ -695,6 +820,38 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="growing" id="growing" aria-labelledby="growing-title">
+    <div class="wrap">
+      <div class="growing-grid reveal">
+        <div class="growing-copy">
+          <div class="section-kicker" data-i18n="growingKicker">Quietly growing</div>
+          <h3 class="section-title" id="growing-title" data-i18n="growingTitle">Small things are taking shape.</h3>
+          <p data-i18n="growingText1">
+            This space is still growing in a quiet way.
+            New pieces are slowly finding their form.
+          </p>
+          <p data-i18n="growingText2">
+            Patches. Prints. Workshops. More to come.
+            Nothing rushed. Just made with care.
+          </p>
+
+          <div class="growing-tags" aria-label="Upcoming ideas">
+            <span class="growing-tag" data-i18n="tagPatches">patches</span>
+            <span class="growing-tag" data-i18n="tagPrints">prints</span>
+            <span class="growing-tag" data-i18n="tagWorkshops">workshops</span>
+            <span class="growing-tag" data-i18n="tagMore">more to come</span>
+          </div>
+        </div>
+
+        <div class="growing-visual" aria-hidden="true">
+          <span class="mist one"></span>
+          <span class="mist two"></span>
+          <span class="mist three"></span>
         </div>
       </div>
     </div>
@@ -765,7 +922,7 @@
         stickerSheen.style.opacity = '1';
         stickerSheen.style.transform = `translateX(${sheenX}%) rotate(10deg)`;
 
-        stickerCard.style.transform = `translateY(-3px)`;
+        stickerCard.style.transform = 'translateY(-3px)';
       }
 
       function resetSticker() {
@@ -776,14 +933,8 @@
         stickerCard.style.transform = 'translateY(0)';
       }
 
-      stickerCard.addEventListener('mousemove', (e) => {
-        updateSticker(e.clientX, e.clientY);
-      });
-
-      stickerCard.addEventListener('mouseenter', (e) => {
-        updateSticker(e.clientX, e.clientY);
-      });
-
+      stickerCard.addEventListener('mousemove', (e) => updateSticker(e.clientX, e.clientY));
+      stickerCard.addEventListener('mouseenter', (e) => updateSticker(e.clientX, e.clientY));
       stickerCard.addEventListener('mouseleave', resetSticker);
 
       stickerCard.addEventListener('touchmove', (e) => {
@@ -799,42 +950,58 @@
       de: {
         legal: 'Impressum',
         privacy: 'Datenschutz',
-        tagline: 'Hier und jetzt',
-        headline: 'Eine Menschheit · Ein Planet · Keine Unterschiede',
-        heroText: 'Unter der Oberfläche sind wir eins. Gefühle kommen und gehen — auch die dunklen. Wir heißen sie willkommen und lassen sie weiterziehen. Nicht verstricken, nicht bekämpfen: loslassen. Was bleibt, ist Raum für Mitgefühl. Und in diesem Raum ist Liebe stärker als Hass.',
-        heroNote: 'Eine stille Erinnerung. Nicht mehr. Nicht weniger.',
+        tagline: 'Ein stiller Ort',
+        headline: 'One Planet · One Humanity',
+        heroText: 'Du bist nicht allein, wenn du dir mehr Frieden, mehr Tiefe und mehr Menschlichkeit wünschst. Dies ist ein stiller Ort für Menschen, die spüren, dass es mehr geben muss als Lärm, Abstand und Gegeneinander.',
+        heroNote: 'Nimm dir Zeit. Schau dich in Ruhe um.',
         aboutKicker: 'Über',
-        aboutTitle: 'Ein stilles Zeichen für Menschen, die spüren, dass es mehr gibt als Spaltung.',
-        aboutP1: 'One Humanity ist eine Erinnerung, kein Slogan. Wir sind viele Wege, aber ein Feld. Was wir tun, hat ein Echo — nicht nur in uns, sondern zwischen uns.',
-        aboutP2: 'Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir müssen sie nicht aufeinander werfen. Wir können sie halten, weiterziehen lassen und menschlich bleiben.',
-        takePartKicker: 'Mitmachen',
-        takePartTitle: 'Trag es auf deine Weise weiter.',
+        aboutTitle: 'Ein kleines Zeichen für Menschen, die noch an Nähe glauben.',
+        aboutP1: 'One Humanity ist nicht da, um mit der Welt zu streiten. Es ist für Menschen da, die längst spüren, dass Freundlichkeit, Gegenwart und Würde noch etwas bedeuten.',
+        aboutP2: 'Wir teilen mehr, als wir oft erinnern. Luft. Straßen. Geschichten. Zukunft. Auch die schweren Gefühle gehören dazu. Wir müssen aus ihnen nicht noch mehr Distanz machen.',
+        takePartKicker: 'Mitnehmen',
+        takePartTitle: 'Nimm etwas davon mit.',
         ctaRequest: 'Sticker-Set anfragen',
-        hintRequest: 'Wir verschicken in der Regel innerhalb von etwa 7 Tagen, solange der Vorrat reicht.',
+        hintRequest: 'Ein kleines Set zum Behalten, Teilen oder stillen Weitergeben.',
         ctaPdf: 'Sticker-PDF herunterladen',
-        hintPdf: 'Druck es selbst und gib es auf deine Weise weiter.',
+        hintPdf: 'Zum Selbstdrucken und Weitergeben auf deine Weise.',
         ctaSupport: 'Projekt unterstützen',
-        hintSupport: 'Ein kleiner Beitrag für Druck, Material und Versand.'
+        hintSupport: 'Eine ruhige Art, Druck, Material und Versand mitzutragen.',
+        growingKicker: 'Wächst leise weiter',
+        growingTitle: 'Kleine Dinge nehmen Form an.',
+        growingText1: 'Dieser Raum wächst weiter, auf eine ruhige Weise. Neue Dinge finden langsam ihre Form.',
+        growingText2: 'Patches. Prints. Workshops. Mehr kommt. Nichts überstürzt. Nur mit Sorgfalt gemacht.',
+        tagPatches: 'patches',
+        tagPrints: 'prints',
+        tagWorkshops: 'workshops',
+        tagMore: 'mehr kommt'
       },
       en: {
         legal: 'Legal notice',
         privacy: 'Privacy',
-        tagline: 'Here and now',
-        headline: 'One Humanity · One Planet · No Differences',
-        heroText: 'Under the surface, we are one. Feelings come and go — even the darker ones. We welcome them and let them pass. Not clinging, not fighting: letting go. What remains is space for compassion. And in that space, love is stronger than hate.',
-        heroNote: 'A quiet reminder. Nothing more. Nothing less.',
+        tagline: 'A quiet place',
+        headline: 'One Planet · One Humanity',
+        heroText: 'You are not alone if you long for more peace, more depth, more humanity. This is a quiet place for people who feel there must be more than noise, distance and division.',
+        heroNote: 'Take your time. Look around.',
         aboutKicker: 'About',
-        aboutTitle: 'A quiet sign for people who feel there is more than division.',
-        aboutP1: 'One Humanity is a reminder, not a slogan. We are many paths, but one field. What we do has an echo — not only in us, but between us.',
-        aboutP2: 'We share air, streets, stories and future. Even the heavy feelings belong here. We do not have to throw them at each other. We can hold them, let them move, and stay human.',
+        aboutTitle: 'A small sign for people who still believe in closeness.',
+        aboutP1: 'One Humanity is not here to argue with the world. It is here for people who already feel that kindness, presence and dignity still matter.',
+        aboutP2: 'We share more than we often remember. Air. Streets. Stories. A future. Even the difficult feelings belong here. We do not have to turn them into more distance.',
         takePartKicker: 'Take part',
-        takePartTitle: 'Carry it forward in your own way.',
+        takePartTitle: 'Take something with you.',
         ctaRequest: 'Request sticker set',
-        hintRequest: 'We usually send them within about 7 days, while supplies last.',
+        hintRequest: 'A small set to keep, share, or pass on quietly.',
         ctaPdf: 'Download the sticker PDF',
-        hintPdf: 'Print it yourself and pass it on in your own way.',
+        hintPdf: 'For printing at home and sharing in your own way.',
         ctaSupport: 'Support the project',
-        hintSupport: 'A small contribution for printing, materials and postage.'
+        hintSupport: 'A quiet way to support printing, materials and postage.',
+        growingKicker: 'Quietly growing',
+        growingTitle: 'Small things are taking shape.',
+        growingText1: 'This space is still growing in a quiet way. New pieces are slowly finding their form.',
+        growingText2: 'Patches. Prints. Workshops. More to come. Nothing rushed. Just made with care.',
+        tagPatches: 'patches',
+        tagPrints: 'prints',
+        tagWorkshops: 'workshops',
+        tagMore: 'more to come'
       }
     };
 
@@ -865,6 +1032,7 @@
         console.assert(document.querySelector('[data-testid="hero"]'), 'Hero fehlt');
         console.assert(document.querySelector('[data-testid="about"]'), 'Über-Sektion fehlt');
         console.assert(document.querySelector('#stickerImage'), 'Sticker Bild fehlt');
+        console.assert(document.querySelector('#growing-title'), 'Growing-Sektion fehlt');
         console.assert(document.querySelector('#lang-de') && document.querySelector('#lang-en'), 'Sprachumschalter fehlt');
         console.log('[OneHumanity] Smoke-Tests ok');
       } catch (e) {
