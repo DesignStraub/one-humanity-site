@@ -24,7 +24,11 @@
       --c-mist:#dfe6e2;
       --c-sage:#c8d5ca;
       --c-sage-soft:#dce8dc;
-      --c-sage-text:#d9ead8;
+
+      --c-forest:#5c6b5e;
+      --c-forest-deep:#455345;
+      --c-forest-soft:#b9c9bc;
+      --c-nav-text:#c5d3c4;
 
       --shadow:0 20px 46px rgba(28,22,16,.09);
       --shadow-soft:0 10px 28px rgba(28,22,16,.06);
@@ -69,13 +73,13 @@
     .brand .logo{
       width:28px;
       height:28px;
-      color:var(--c-sage-text);
+      color:var(--c-nav-text);
     }
 
     .brand .title{
       font-weight:600;
       letter-spacing:.02em;
-      color:var(--c-sage-text);
+      color:var(--c-nav-text);
     }
 
     .nav .right{
@@ -90,7 +94,7 @@
       padding:8px 12px;
       border-radius:999px;
       border:1px solid transparent;
-      color:var(--c-sage-text);
+      color:var(--c-nav-text);
       background:transparent;
       font:inherit;
       cursor:pointer;
@@ -99,9 +103,10 @@
 
     .nav a.item:hover,
     .lang-toggle button:hover{
-      border-color:rgba(217,234,216,.18);
-      background:rgba(217,234,216,.08);
+      border-color:rgba(197,211,196,.16);
+      background:rgba(197,211,196,.07);
       transform:translateY(-1px);
+      color:#d5e0d3;
     }
 
     .lang-toggle{
@@ -110,8 +115,8 @@
     }
 
     .lang-toggle button.active{
-      border-color:rgba(217,234,216,.14);
-      background:rgba(217,234,216,.10);
+      border-color:rgba(197,211,196,.14);
+      background:rgba(197,211,196,.10);
     }
 
     .hero{
@@ -143,11 +148,12 @@
 
     .hero::after{
       background-image:
-        radial-gradient(circle at 18% 20%, rgba(174,190,201,.22), transparent 24%),
-        radial-gradient(circle at 78% 24%, rgba(216,200,184,.18), transparent 24%),
+        radial-gradient(circle at 16% 20%, rgba(174,190,201,.22), transparent 24%),
+        radial-gradient(circle at 79% 22%, rgba(216,200,184,.18), transparent 24%),
         radial-gradient(circle at 52% 72%, rgba(200,213,202,.18), transparent 28%),
-        radial-gradient(circle at 30% 70%, rgba(223,230,226,.14), transparent 24%),
-        linear-gradient(180deg, rgba(251,249,246,.78), rgba(247,244,239,.94));
+        radial-gradient(circle at 30% 68%, rgba(223,230,226,.14), transparent 24%),
+        radial-gradient(circle at 64% 36%, rgba(185,201,188,.14), transparent 22%),
+        linear-gradient(180deg, rgba(251,249,246,.76), rgba(247,244,239,.95));
       z-index:-1;
       animation:none;
       transform:none;
@@ -193,20 +199,22 @@
     .hero-copy::before{
       content:"";
       position:absolute;
-      width:min(760px, 90vw);
-      height:360px;
+      width:min(820px, 92vw);
+      height:420px;
       left:50%;
-      top:44%;
+      top:42%;
       transform:translate(-50%,-50%);
       background:
-        radial-gradient(circle at 22% 40%, rgba(174,190,201,.18), transparent 26%),
-        radial-gradient(circle at 76% 42%, rgba(216,200,184,.16), transparent 24%),
-        radial-gradient(circle at 52% 58%, rgba(200,213,202,.18), transparent 28%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.26), transparent 38%);
-      filter:blur(34px);
+        radial-gradient(circle at 22% 36%, rgba(174,190,201,.20), transparent 24%),
+        radial-gradient(circle at 76% 36%, rgba(216,200,184,.18), transparent 22%),
+        radial-gradient(circle at 50% 54%, rgba(200,213,202,.24), transparent 28%),
+        radial-gradient(circle at 40% 60%, rgba(185,201,188,.14), transparent 24%),
+        radial-gradient(circle at 62% 58%, rgba(223,230,226,.16), transparent 24%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.24), transparent 38%);
+      filter:blur(38px);
       pointer-events:none;
       z-index:-1;
-      opacity:.95;
+      opacity:1;
     }
 
     .tagline{
@@ -243,13 +251,14 @@
     .symbol-wrap::before{
       content:"";
       position:absolute;
-      width:min(320px, 60vw);
-      height:min(320px, 60vw);
+      width:min(340px, 62vw);
+      height:min(340px, 62vw);
       background:
-        radial-gradient(circle at 34% 48%, rgba(174,190,201,.26), transparent 42%),
-        radial-gradient(circle at 68% 52%, rgba(216,200,184,.22), transparent 40%),
-        radial-gradient(circle at 52% 64%, rgba(200,213,202,.20), transparent 42%);
-      filter:blur(36px);
+        radial-gradient(circle at 34% 46%, rgba(174,190,201,.28), transparent 40%),
+        radial-gradient(circle at 68% 50%, rgba(216,200,184,.24), transparent 38%),
+        radial-gradient(circle at 52% 64%, rgba(200,213,202,.24), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(185,201,188,.12), transparent 44%);
+      filter:blur(38px);
       opacity:1;
       z-index:-1;
       pointer-events:none;
@@ -350,7 +359,7 @@
 
     .btn{
       padding:14px 18px;
-      border:1px solid rgba(23,23,23,.16);
+      border:1px solid rgba(69,83,69,.16);
       border-radius:18px;
       background:rgba(255,255,255,.42);
       color:var(--c-fg);
@@ -359,14 +368,17 @@
       display:inline-flex;
       align-items:center;
       gap:12px;
-      transition:transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease, color .18s ease;
       box-shadow:0 1px 0 rgba(255,255,255,.35) inset;
       backdrop-filter:blur(6px);
     }
 
     .btn:hover{
-      background:rgba(255,255,255,.60);
-      border-color:rgba(23,23,23,.22);
+      background:
+        linear-gradient(135deg, rgba(200,213,202,.18), rgba(216,200,184,.10)),
+        rgba(255,255,255,.62);
+      border-color:rgba(69,83,69,.24);
+      color:#213021;
       transform:translateY(-1px);
       box-shadow:var(--shadow-soft);
     }
@@ -492,8 +504,8 @@
     footer{
       padding:42px 0 56px;
       border-top:1px solid rgba(0,0,0,.04);
-      color:#5f675f;
-      background:var(--c-sage-soft);
+      color:#d7e1d5;
+      background:var(--c-forest-deep);
     }
 
     .foot{
@@ -507,11 +519,11 @@
     }
 
     .foot a{
-      color:#5f675f;
+      color:#d7e1d5;
     }
 
     .foot a:hover{
-      color:#374037;
+      color:#edf3eb;
     }
 
     .reveal{
@@ -654,7 +666,7 @@
               <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
                 <path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/>
               </svg>
-              <span data-i18n="ctaRequest">Request a sticker</span>
+              <span data-i18n="ctaRequest">Request sticker set</span>
             </a>
             <p class="hint" data-i18n="hintRequest">We usually send them within about 7 days, while supplies last.</p>
 
@@ -797,7 +809,7 @@
         aboutP2: 'Wir teilen Luft, Straßen, Geschichten und Zukunft. Auch die schweren Gefühle gehören dazu. Wir müssen sie nicht aufeinander werfen. Wir können sie halten, weiterziehen lassen und menschlich bleiben.',
         takePartKicker: 'Mitmachen',
         takePartTitle: 'Trag es auf deine Weise weiter.',
-        ctaRequest: 'Sticker anfragen',
+        ctaRequest: 'Sticker-Set anfragen',
         hintRequest: 'Wir verschicken in der Regel innerhalb von etwa 7 Tagen, solange der Vorrat reicht.',
         ctaPdf: 'Sticker-PDF herunterladen',
         hintPdf: 'Druck es selbst und gib es auf deine Weise weiter.',
@@ -817,7 +829,7 @@
         aboutP2: 'We share air, streets, stories and future. Even the heavy feelings belong here. We do not have to throw them at each other. We can hold them, let them move, and stay human.',
         takePartKicker: 'Take part',
         takePartTitle: 'Carry it forward in your own way.',
-        ctaRequest: 'Request a sticker',
+        ctaRequest: 'Request sticker set',
         hintRequest: 'We usually send them within about 7 days, while supplies last.',
         ctaPdf: 'Download the sticker PDF',
         hintPdf: 'Print it yourself and pass it on in your own way.',
