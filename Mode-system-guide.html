@@ -126,37 +126,31 @@
       place-items:center;
       overflow:hidden;
       isolation:isolate;
+      background:transparent;
     }
 
     .hero::before,
     .hero::after{
       content:"";
       position:absolute;
-      inset:-10% -10% -10% -10%;
-      z-index:-2;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.04);
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    .hero::before{
+      background:
+        radial-gradient(circle at 16% 18%, rgba(184,198,207,.10), transparent 23%),
+        radial-gradient(circle at 80% 20%, rgba(217,199,178,.08), transparent 24%),
+        radial-gradient(circle at 54% 68%, rgba(188,200,188,.09), transparent 28%),
+        radial-gradient(circle at 32% 66%, rgba(219,227,222,.08), transparent 24%),
+        radial-gradient(circle at 68% 42%, rgba(188,200,188,.06), transparent 22%);
+      filter:blur(10px);
+      opacity:1;
     }
 
     .hero::after{
-      background-image:
-        radial-gradient(circle at 16% 18%, rgba(184,198,207,.22), transparent 23%),
-        radial-gradient(circle at 80% 20%, rgba(217,199,178,.18), transparent 24%),
-        radial-gradient(circle at 54% 68%, rgba(188,200,188,.19), transparent 28%),
-        radial-gradient(circle at 32% 66%, rgba(219,227,222,.14), transparent 24%),
-        radial-gradient(circle at 68% 42%, rgba(188,200,188,.10), transparent 22%),
-        linear-gradient(180deg, rgba(251,248,243,.82), rgba(246,242,235,.95));
-      z-index:-1;
-    }
-
-    .grain{
-      pointer-events:none;
-      position:absolute;
-      inset:0;
-      z-index:0;
-      opacity:.025;
-      mix-blend-mode:multiply;
+      display:none;
     }
 
     .hero-inner{
@@ -255,8 +249,9 @@
 
     section{
       position:relative;
-      padding:108px 0;
+      padding:88px 0;
       border-top:1px solid var(--c-line);
+      background:transparent;
     }
 
     .wrap{
@@ -337,6 +332,13 @@
       color:var(--c-soft);
       margin-bottom:14px;
       font-size:.96rem;
+    }
+
+    .muted{
+      color:var(--c-fg-dim);
+      font-size:16px;
+      line-height:1.84;
+      margin:16px 0 0;
     }
 
     .mode-card ul,
@@ -486,7 +488,8 @@
         <h2 class="section-title">What this is</h2>
         <div class="lead">
           <p>The Mode System separates different kinds of energy into clearly chosen states. Instead of doing everything at once, you decide what state you are in and stay with it.</p>
-          <p>It is not about becoming perfect. It is about becoming more conscious. Less unconscious switching. Less inner friction. Less drift.</p>
+          <p>One of the main problems today is constant switching. Messages, tabs, short videos, quick dopamine, unfinished thoughts. Multitasking feels normal, but it often leaves people fragmented, restless and mentally scattered.</p>
+          <p>This system is a simple way to interrupt that pattern. It gives your attention a direction again. Less unconscious switching. Less inner friction. Less drift.</p>
         </div>
       </div>
 
@@ -495,7 +498,8 @@
         <h2 class="section-title">Was das ist</h2>
         <div class="lead">
           <p>Das Mode System trennt verschiedene Arten von Energie in klar gewählte Zustände. Statt alles gleichzeitig zu tun, entscheidest du bewusst, in welchem Modus du gerade bist, und bleibst darin.</p>
-          <p>Es geht nicht darum, perfekt zu werden. Es geht darum, bewusster zu werden. Weniger unbewusstes Wechseln. Weniger innere Reibung. Weniger Drift.</p>
+          <p>Eines der größten Probleme heute ist ständiges Wechseln. Nachrichten, Tabs, kurze Videos, schneller Dopamin-Konsum, unfertige Gedanken. Multitasking wirkt normal, hinterlässt viele Menschen aber innerlich zersplittert, unruhig und mental verstreut.</p>
+          <p>Dieses System ist ein einfacher Weg, genau dieses Muster zu unterbrechen. Es gibt deiner Aufmerksamkeit wieder eine Richtung. Weniger unbewusstes Wechseln. Weniger innere Reibung. Weniger Drift.</p>
         </div>
       </div>
 
@@ -557,62 +561,11 @@
             <h3>Creator Mode</h3>
             <div class="mode-sub">Create. Express. Flow.</div>
             <ul>
-              <li>Create content and ideas.</li>
-              <li>Social media is allowed when it supports creation.</li>
-              <li>Do not get stuck in overthinking.</li>
-            </ul>
-          </article>
-          <article class="mode-card">
-            <h3>Builder Mode</h3>
-            <div class="mode-sub">Structure. Execute. Finish.</div>
-            <ul>
-              <li>Build and complete tasks.</li>
-              <li>No social media.</li>
-              <li>No new ideas while building.</li>
-            </ul>
-          </article>
-          <article class="mode-card">
-            <h3>Human Mode</h3>
-            <div class="mode-sub">Be present. Connect. Live.</div>
-            <ul>
-              <li>Be with people. Talk. Listen. Eat consciously.</li>
-              <li>Let real life be enough for a moment.</li>
-              <li>No mindless scrolling.</li>
-            </ul>
-          </article>
-          <article class="mode-card">
-            <h3>Play Mode</h3>
-            <div class="mode-sub">Enjoy. Relax. Immerse.</div>
-            <ul>
-              <li>Stay with one activity.</li>
-              <li>No switching between apps, tabs, or distractions.</li>
-              <li>Stay immersed in what you chose for fun.</li>
-            </ul>
-          </article>
-          <article class="mode-card">
-            <h3>Release Mode</h3>
-            <div class="mode-sub">Feel. Release. Let go.</div>
-            <ul>
-              <li>Consume consciously.</li>
-              <li>No judgment.</li>
-              <li>Chosen, not automatic.</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-
-      <div data-lang-content="de" class="reveal">
-        <div class="section-kicker">Modi</div>
-        <h2 class="section-title">Die fünf Modi</h2>
-        <div class="content-grid">
-          <article class="mode-card">
-            <h3>Creator Mode</h3>
-            <div class="mode-sub">Create. Express. Flow.</div>
-            <ul>
               <li>Erstelle Inhalte und Ideen.</li>
               <li>Social Media ist erlaubt, wenn es dem Erschaffen dient.</li>
               <li>Bleib nicht im Overthinking hängen.</li>
             </ul>
+            <p class="muted">Dieser Modus ist für Ausdruck, Ideen und kreativen Flow gedacht. Es geht nicht darum, ziellos zu konsumieren. Social Media darf Teil dieses Modus sein, aber nur dann, wenn es dir beim Erschaffen, Recherchieren, Posten oder beim bewussten Sammeln von Inspiration hilft.</p>
           </article>
           <article class="mode-card">
             <h3>Builder Mode</h3>
@@ -622,6 +575,7 @@
               <li>Kein Social Media.</li>
               <li>Keine neuen Ideen während du etwas fertigstellst.</li>
             </ul>
+            <p class="muted">Dieser Modus ist für Umsetzung da. Du bist hier nicht, um endlos weiter zu erkunden. Du bist hier, um zu bauen, abzuschließen und Dinge voranzubringen. Wenn eine neue Idee auftaucht, notiere sie und geh zurück in die Aufgabe, statt direkt zu wechseln.</p>
           </article>
           <article class="mode-card">
             <h3>Human Mode</h3>
@@ -631,6 +585,7 @@
               <li>Lass das echte Leben für einen Moment genügen.</li>
               <li>Kein gedankenloses Scrollen.</li>
             </ul>
+            <p class="muted">Dieser Modus bringt dich zurück ins echte Leben. Gespräche, Essen, Spazieren, Zuhören, Präsenz mit einem anderen Menschen oder mit dir selbst. Er ist das Gegenteil davon, in dein Gerät abzudriften, während das Leben direkt vor dir stattfindet.</p>
           </article>
           <article class="mode-card">
             <h3>Play Mode</h3>
@@ -640,6 +595,7 @@
               <li>Kein Wechseln zwischen Apps, Tabs oder Ablenkungen.</li>
               <li>Tauche in das ein, was du bewusst zum Spaß gewählt hast.</li>
             </ul>
+            <p class="muted">Dieser Modus ist für bewussten Genuss da. Gaming, ein Film, eine Serie oder einfach eine gewählte Form von Entspannung. Es geht nicht um möglichst viel Reiz. Es geht darum, bei dem zu bleiben, was du gewählt hast, statt deine Aufmerksamkeit auf fünf Dinge gleichzeitig zu verteilen.</p>
           </article>
           <article class="mode-card">
             <h3>Release Mode</h3>
@@ -649,6 +605,7 @@
               <li>Ohne Verurteilung.</li>
               <li>Gewählt, nicht automatisch.</li>
             </ul>
+            <p class="muted">Dieser Modus ist für stärkere Impulse und intensivere Formen von Release gedacht. Es geht nicht darum, diese Impulse wegzudrücken. Es geht darum, sie bewusst zu machen. Entscheidend ist, dass du es wählst, statt unbemerkt hineinzurutschen.</p>
           </article>
         </div>
       </div>
