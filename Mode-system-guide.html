@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mode System Guide</title>
+  <meta name="description" content="A simple guide to the Mode System: choose one state at a time, reduce drift, and stay conscious in what you do." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #777777;
+      --line: #d9d9d9;
+      --soft: #f5f5f5;
+      --max: 920px;
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .brand {
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      color: var(--muted);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 16px;
+      cursor: pointer;
+      font: inherit;
+      transition: 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: #111111;
+      color: #ffffff;
+    }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin: 0 0 20px;
+      max-width: 780px;
+    }
+
+    .lead {
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      color: #333333;
+      max-width: 720px;
+      margin: 0 0 32px;
+    }
+
+    .hero-note {
+      display: inline-block;
+      padding: 12px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toc {
+      margin: 10px 0 56px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .toc h2,
+    .section h2 {
+      font-size: 1.2rem;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 24px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      color: #222222;
+      padding: 6px 0;
+    }
+
+    .section {
+      padding: 36px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section p {
+      margin: 0 0 16px;
+      max-width: 760px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .rules {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .rule {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .modes {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mode-card {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      background: #fff;
+    }
+
+    .mode-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+    }
+
+    .mode-sub {
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .mode-card ul,
+    .tips ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .mode-card li,
+    .tips li {
+      margin-bottom: 8px;
+    }
+
+    .quote {
+      margin-top: 24px;
+      padding: 22px 24px;
+      border-left: 3px solid #111111;
+      background: var(--soft);
+      border-radius: 0 20px 20px 0;
+      max-width: 760px;
+    }
+
+    .tips {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      background: #fff;
+      max-width: 760px;
+    }
+
+    .footer {
+      padding: 56px 0 72px;
+      border-top: 1px solid var(--line);
+      margin-top: 28px;
+    }
+
+    .footer p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    [data-lang-content] {
+      display: none;
+    }
+
+    [data-lang-content].active {
+      display: block;
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner {
+        min-height: 64px;
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+
+      .toc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lang-btn {
+        padding: 9px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">One Planet One Humanity</div>
+      <div class="lang-switch" aria-label="Language switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div data-lang-content="en" class="active">
+        <span class="eyebrow">Mode System Guide</span>
+        <h1>Choose one state. Stay in it consciously.</h1>
+        <p class="lead">The Mode System is a simple way to reduce drift, stop unconscious switching, and bring more presence into what you do. One mode at a time.</p>
+        <div class="hero-note">Not everything at once.</div>
+      </div>
+
+      <div data-lang-content="de">
+        <span class="eyebrow">Mode System Guide</span>
+        <h1>Wähle einen Zustand. Bleib bewusst darin.</h1>
+        <p class="lead">Das Mode System ist ein einfaches Werkzeug, um Drift zu reduzieren, unbewusstes Wechseln zu stoppen und mehr Präsenz in das zu bringen, was du gerade tust. Ein Modus zur Zeit.</p>
+        <div class="hero-note">Nicht alles gleichzeitig.</div>
+      </div>
+    </section>
+
+    <section class="wrap toc">
+      <div data-lang-content="en" class="active">
+        <h2>Contents</h2>
+        <div class="toc-grid">
+          <a href="#what-it-is">What this is</a>
+          <a href="#how-to-use">How to use it</a>
+          <a href="#modes">The five modes</a>
+          <a href="#rules">System rules</a>
+          <a href="#why-it-works">Why it works</a>
+          <a href="#tips">Getting started</a>
+        </div>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Inhalt</h2>
+        <div class="toc-grid">
+          <a href="#what-it-is">Was das ist</a>
+          <a href="#how-to-use">Wie du es nutzt</a>
+          <a href="#modes">Die fünf Modi</a>
+          <a href="#rules">Systemregeln</a>
+          <a href="#why-it-works">Warum es wirkt</a>
+          <a href="#tips">Einstieg</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="what-it-is" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>What this is</h2>
+        <p>This system separates different kinds of energy into clearly chosen modes. Instead of doing everything at once, you decide what state you are in and stay with it.</p>
+        <p>It is not about becoming perfect. It is about becoming more conscious. Less unconscious switching. Less inner friction. Less drift.</p>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Was das ist</h2>
+        <p>Dieses System trennt verschiedene Arten von Energie in klar gewählte Modi. Statt alles gleichzeitig zu tun, entscheidest du bewusst, in welchem Zustand du gerade bist, und bleibst darin.</p>
+        <p>Es geht nicht darum, perfekt zu werden. Es geht darum, bewusster zu werden. Weniger unbewusstes Wechseln. Weniger innere Reibung. Weniger Drift.</p>
+      </div>
+    </section>
+
+    <section id="how-to-use" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>How to use it</h2>
+        <p>Pick the card that matches your current intention. Place it into the Active Mode card. Let that become your state for now.</p>
+        <p>When you feel yourself drifting, check the card. Are you still in that mode? If yes, stay. If not, switch consciously.</p>
+        <div class="quote">You are allowed to do anything. Just not everything at once.</div>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Wie du es nutzt</h2>
+        <p>Nimm die Karte, die zu deiner aktuellen Absicht passt. Lege sie in die Active Mode Card. Lass genau das für den Moment dein Zustand sein.</p>
+        <p>Wenn du merkst, dass du driftest, schau auf die Karte. Bist du noch in diesem Modus? Wenn ja, bleib. Wenn nicht, wechsle bewusst.</p>
+        <div class="quote">Du darfst alles tun. Nur nicht alles gleichzeitig.</div>
+      </div>
+    </section>
+
+    <section id="modes" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>The five modes</h2>
+        <div class="modes">
+          <article class="mode-card">
+            <h3>Creator Mode</h3>
+            <div class="mode-sub">Create. Express. Flow.</div>
+            <ul>
+              <li>Create content and ideas.</li>
+              <li>Social media is allowed when it supports creation.</li>
+              <li>Do not get stuck in overthinking.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Builder Mode</h3>
+            <div class="mode-sub">Structure. Execute. Finish.</div>
+            <ul>
+              <li>Build and complete tasks.</li>
+              <li>No social media.</li>
+              <li>No new ideas while building.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Human Mode</h3>
+            <div class="mode-sub">Be present. Connect. Live.</div>
+            <ul>
+              <li>Be with people. Talk. Listen. Eat consciously.</li>
+              <li>Let real life be enough for a moment.</li>
+              <li>No mindless scrolling.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Play Mode</h3>
+            <div class="mode-sub">Enjoy. Relax. Immerse.</div>
+            <ul>
+              <li>Stay with one activity.</li>
+              <li>No switching between apps, tabs, or distractions.</li>
+              <li>Stay immersed in what you chose for fun.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Release Mode</h3>
+            <div class="mode-sub">Feel. Release. Let go.</div>
+            <ul>
+              <li>Consume consciously.</li>
+              <li>No judgment.</li>
+              <li>Chosen, not automatic.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Die fünf Modi</h2>
+        <div class="modes">
+          <article class="mode-card">
+            <h3>Creator Mode</h3>
+            <div class="mode-sub">Create. Express. Flow.</div>
+            <ul>
+              <li>Erstelle Inhalte und Ideen.</li>
+              <li>Social Media ist erlaubt, wenn es dem Erschaffen dient.</li>
+              <li>Bleib nicht im Overthinking hängen.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Builder Mode</h3>
+            <div class="mode-sub">Structure. Execute. Finish.</div>
+            <ul>
+              <li>Baue und vollende Aufgaben.</li>
+              <li>Kein Social Media.</li>
+              <li>Keine neuen Ideen während du etwas fertigstellst.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Human Mode</h3>
+            <div class="mode-sub">Be present. Connect. Live.</div>
+            <ul>
+              <li>Sei mit Menschen. Rede. Höre zu. Iss bewusst.</li>
+              <li>Lass das echte Leben für einen Moment genügen.</li>
+              <li>Kein gedankenloses Scrollen.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Play Mode</h3>
+            <div class="mode-sub">Enjoy. Relax. Immerse.</div>
+            <ul>
+              <li>Bleib bei einer Aktivität.</li>
+              <li>Kein Wechseln zwischen Apps, Tabs oder Ablenkungen.</li>
+              <li>Tauche in das ein, was du bewusst zum Spaß gewählt hast.</li>
+            </ul>
+          </article>
+
+          <article class="mode-card">
+            <h3>Release Mode</h3>
+            <div class="mode-sub">Feel. Release. Let go.</div>
+            <ul>
+              <li>Konsumiere bewusst.</li>
+              <li>Ohne Verurteilung.</li>
+              <li>Gewählt, nicht automatisch.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>System rules</h2>
+        <div class="rules">
+          <div class="rule">One mode at a time.</div>
+          <div class="rule">Choose consciously.</div>
+          <div class="rule">No multitasking between modes.</div>
+          <div class="rule">Switching is a decision.</div>
+        </div>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Systemregeln</h2>
+        <div class="rules">
+          <div class="rule">Ein Modus zur Zeit.</div>
+          <div class="rule">Bewusst wählen.</div>
+          <div class="rule">Kein Multitasking zwischen Modi.</div>
+          <div class="rule">Wechseln ist eine Entscheidung.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why-it-works" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>Why it works</h2>
+        <p>Many people do not lack motivation. They leak attention. They start one thing, open another, drift away, and return with less energy than before.</p>
+        <p>The Mode System reduces that leak. It gives each state a place. Creation has a place. Work has a place. Real life has a place. Play has a place. Release has a place too.</p>
+        <p>When everything has a place, inner conflict gets quieter.</p>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Warum es wirkt</h2>
+        <p>Viele Menschen haben nicht zu wenig Motivation. Sie verlieren Aufmerksamkeit. Sie fangen etwas an, öffnen etwas anderes, driften weg und kehren mit weniger Energie zurück.</p>
+        <p>Das Mode System reduziert genau dieses Leck. Es gibt jedem Zustand einen Platz. Erschaffen hat einen Platz. Arbeit hat einen Platz. Echtes Leben hat einen Platz. Spiel hat einen Platz. Auch Release hat einen Platz.</p>
+        <p>Wenn alles einen Platz hat, wird der innere Konflikt leiser.</p>
+      </div>
+    </section>
+
+    <section id="tips" class="wrap section">
+      <div data-lang-content="en" class="active">
+        <h2>Getting started</h2>
+        <div class="tips">
+          <ul>
+            <li>Do not try to be perfect on day one.</li>
+            <li>Choose a mode and stay with it for a real block of time.</li>
+            <li>If you drift, do not judge yourself. Just notice it.</li>
+            <li>Switching is allowed. Unconscious switching is the problem.</li>
+            <li>The system gets stronger when you actually live it.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-lang-content="de">
+        <h2>Einstieg</h2>
+        <div class="tips">
+          <ul>
+            <li>Versuche nicht, am ersten Tag perfekt zu sein.</li>
+            <li>Wähle einen Modus und bleib für einen echten Block darin.</li>
+            <li>Wenn du driftest, verurteile dich nicht. Nimm es einfach wahr.</li>
+            <li>Wechseln ist erlaubt. Unbewusstes Wechseln ist das Problem.</li>
+            <li>Das System wird stärker, wenn du es wirklich lebst.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <div data-lang-content="en" class="active">
+      <p>One Planet One Humanity</p>
+    </div>
+    <div data-lang-content="de">
+      <p>One Planet One Humanity</p>
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.lang-btn');
+    const blocks = document.querySelectorAll('[data-lang-content]');
+
+    function setLanguage(lang) {
+      buttons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.lang === lang);
+      });
+
+      blocks.forEach((block) => {
+        block.classList.toggle('active', block.dataset.langContent === lang);
+      });
+
+      document.documentElement.lang = lang;
+      localStorage.setItem('modeGuideLanguage', lang);
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.lang));
+    });
+
+    const saved = localStorage.getItem('modeGuideLanguage');
+    if (saved === 'de' || saved === 'en') {
+      setLanguage(saved);
+    }
+  </script>
+</body>
+</html>
