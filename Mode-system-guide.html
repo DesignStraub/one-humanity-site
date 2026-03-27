@@ -46,7 +46,7 @@
       font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
       line-height:1.76;
       letter-spacing:.01em;
-      background:linear-gradient(180deg, #faf7f1 0%, #f5f1ea 22%, #f2ece3 58%, #ece4d8 100%);
+      background: var(--c-bg);
     }
 
     a{color:var(--c-fg); text-decoration:none}
@@ -126,31 +126,12 @@
       place-items:center;
       overflow:hidden;
       isolation:isolate;
-      background:transparent;
+      background: var(--c-bg);
     }
 
     .hero::before,
     .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-    }
-
-    .hero::before{
-      background:
-        radial-gradient(circle at 16% 18%, rgba(184,198,207,.10), transparent 23%),
-        radial-gradient(circle at 80% 20%, rgba(217,199,178,.08), transparent 24%),
-        radial-gradient(circle at 54% 68%, rgba(188,200,188,.09), transparent 28%),
-        radial-gradient(circle at 32% 66%, rgba(219,227,222,.08), transparent 24%),
-        radial-gradient(circle at 68% 42%, rgba(188,200,188,.06), transparent 22%);
-      filter:blur(10px);
-      opacity:1;
-    }
-
-    .hero::after{
-      display:none;
+      content:none;
     }
 
     .hero-inner{
@@ -191,6 +172,22 @@
       opacity:1;
       pointer-events:none;
       z-index:-1;
+    }
+
+    .symbol-wrap{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 0 2px;
+    }
+
+    .symbol{
+      width:min(114px, 25vw);
+      aspect-ratio:1;
+      display:block;
+      color:#111;
+      filter:drop-shadow(0 10px 26px rgba(0,0,0,.10));
     }
 
     .eyebrow{
@@ -446,9 +443,8 @@
         <button id="lang-de" type="button">DE</button>
         <button id="lang-en" class="active" type="button">EN</button>
       </div>
-      <a class="item" href="#what-it-is" data-i18n="navStart">Start</a>
-      <a class="item" href="#modes" data-i18n="navModes">Modes</a>
-      <a class="item" href="#rules" data-i18n="navRules">Rules</a>
+      <a class="item" href="impressum.html" data-i18n="legal">Legal notice</a>
+      <a class="item" href="datenschutz.html" data-i18n="privacy">Privacy</a>
     </div>
   </nav>
 
@@ -463,6 +459,11 @@
     <div class="hero-inner">
       <div class="hero-copy reveal">
         <div data-lang-content="en" class="active">
+          <div class="symbol-wrap">
+            <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heart">
+              <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
+            </svg>
+          </div>
           <div class="eyebrow">Mode System Guide</div>
           <h1 class="headline">Choose one state. Stay in it consciously.</h1>
           <div class="baseline">A quiet guide for more presence, less drift and one clear mode at a time.</div>
@@ -470,6 +471,11 @@
         </div>
 
         <div data-lang-content="de">
+          <div class="symbol-wrap">
+            <svg class="symbol" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Heart">
+              <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
+            </svg>
+          </div>
           <div class="eyebrow">Mode System Guide</div>
           <h1 class="headline">Wähle einen Zustand. Bleib bewusst darin.</h1>
           <div class="baseline">Ein ruhiger Guide für mehr Präsenz, weniger Drift und einen klaren Modus zur Zeit.</div>
@@ -561,67 +567,52 @@
             <h3>Creator Mode</h3>
             <div class="mode-sub">Create. Express. Flow.</div>
             <ul>
-              <li>Erstelle Inhalte und Ideen.</li>
-              <li>Social Media ist erlaubt, wenn es dem Erschaffen dient.</li>
-              <li>Bleib nicht im Overthinking hängen.</li>
+              <li>Create content and ideas.</li>
+              <li>Social media is allowed when it supports creation.</li>
+              <li>Do not get stuck in overthinking.</li>
             </ul>
-            <p class="muted">Dieser Modus ist für Ausdruck, Ideen und kreativen Flow gedacht. Es geht nicht darum, ziellos zu konsumieren. Social Media darf Teil dieses Modus sein, aber nur dann, wenn es dir beim Erschaffen, Recherchieren, Posten oder beim bewussten Sammeln von Inspiration hilft.</p>
+            <p class="muted">This mode is for expression, ideation and creative flow. It is not about consuming without direction. Social media can be part of this mode, but only when it helps you create, research, post or gather inspiration with intention.</p>
           </article>
           <article class="mode-card">
             <h3>Builder Mode</h3>
             <div class="mode-sub">Structure. Execute. Finish.</div>
             <ul>
-              <li>Baue und vollende Aufgaben.</li>
-              <li>Kein Social Media.</li>
-              <li>Keine neuen Ideen während du etwas fertigstellst.</li>
+              <li>Build and complete tasks.</li>
+              <li>No social media.</li>
+              <li>No new ideas while building.</li>
             </ul>
-            <p class="muted">Dieser Modus ist für Umsetzung da. Du bist hier nicht, um endlos weiter zu erkunden. Du bist hier, um zu bauen, abzuschließen und Dinge voranzubringen. Wenn eine neue Idee auftaucht, notiere sie und geh zurück in die Aufgabe, statt direkt zu wechseln.</p>
+            <p class="muted">This mode is for execution. You are not here to explore endlessly. You are here to build, finish and move things forward. If a new idea appears, note it and return to the task instead of switching away.</p>
           </article>
           <article class="mode-card">
             <h3>Human Mode</h3>
             <div class="mode-sub">Be present. Connect. Live.</div>
             <ul>
-              <li>Sei mit Menschen. Rede. Höre zu. Iss bewusst.</li>
-              <li>Lass das echte Leben für einen Moment genügen.</li>
-              <li>Kein gedankenloses Scrollen.</li>
+              <li>Be with people. Talk. Listen. Eat consciously.</li>
+              <li>Let real life be enough for a moment.</li>
+              <li>No mindless scrolling.</li>
             </ul>
-            <p class="muted">Dieser Modus bringt dich zurück ins echte Leben. Gespräche, Essen, Spazieren, Zuhören, Präsenz mit einem anderen Menschen oder mit dir selbst. Er ist das Gegenteil davon, in dein Gerät abzudriften, während das Leben direkt vor dir stattfindet.</p>
+            <p class="muted">This mode brings you back into real life. Conversations, meals, walking, listening, being present with another person or with yourself. It is the opposite of drifting into your device while life is happening in front of you.</p>
           </article>
           <article class="mode-card">
             <h3>Play Mode</h3>
             <div class="mode-sub">Enjoy. Relax. Immerse.</div>
             <ul>
-              <li>Bleib bei einer Aktivität.</li>
-              <li>Kein Wechseln zwischen Apps, Tabs oder Ablenkungen.</li>
-              <li>Tauche in das ein, was du bewusst zum Spaß gewählt hast.</li>
+              <li>Stay with one activity.</li>
+              <li>No switching between apps, tabs, or distractions.</li>
+              <li>Stay immersed in what you chose for fun.</li>
             </ul>
-            <p class="muted">Dieser Modus ist für bewussten Genuss da. Gaming, ein Film, eine Serie oder einfach eine gewählte Form von Entspannung. Es geht nicht um möglichst viel Reiz. Es geht darum, bei dem zu bleiben, was du gewählt hast, statt deine Aufmerksamkeit auf fünf Dinge gleichzeitig zu verteilen.</p>
+            <p class="muted">This mode is for conscious enjoyment. Gaming, watching a film, a series, or simply relaxing with one chosen activity. The point is not stimulation at all costs. The point is staying with what you chose instead of splitting your attention across five things.</p>
           </article>
           <article class="mode-card">
             <h3>Release Mode</h3>
             <div class="mode-sub">Feel. Release. Let go.</div>
             <ul>
-              <li>Konsumiere bewusst.</li>
-              <li>Ohne Verurteilung.</li>
-              <li>Gewählt, nicht automatisch.</li>
+              <li>Consume consciously.</li>
+              <li>No judgment.</li>
+              <li>Chosen, not automatic.</li>
             </ul>
-            <p class="muted">Dieser Modus ist für stärkere Impulse und intensivere Formen von Release gedacht. Es geht nicht darum, diese Impulse wegzudrücken. Es geht darum, sie bewusst zu machen. Entscheidend ist, dass du es wählst, statt unbemerkt hineinzurutschen.</p>
+            <p class="muted">This mode is for stronger impulses and more intense forms of release. The goal is not to pretend those impulses do not exist. The goal is to make them conscious. What matters is that you choose it instead of sliding into it without noticing.</p>
           </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="rules">
-    <div class="wrap">
-      <div data-lang-content="en" class="active reveal">
-        <div class="section-kicker">Rules</div>
-        <h2 class="section-title">System rules</h2>
-        <div class="rule-list">
-          <div class="rule-card">One mode at a time.</div>
-          <div class="rule-card">Choose consciously.</div>
-          <div class="rule-card">No multitasking between modes.</div>
-          <div class="rule-card">Switching is a decision.</div>
         </div>
       </div>
 
@@ -735,14 +726,12 @@
 
     const translations = {
       de: {
-        navStart: 'Start',
-        navModes: 'Modi',
-        navRules: 'Regeln'
+        legal: 'Impressum',
+        privacy: 'Datenschutz'
       },
       en: {
-        navStart: 'Start',
-        navModes: 'Modes',
-        navRules: 'Rules'
+        legal: 'Legal notice',
+        privacy: 'Privacy'
       }
     };
 
