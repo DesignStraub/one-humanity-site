@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Tools – OneHumanity</title>
+  <meta name="description" content="Simple tools for clarity, focus and conscious action.">
+
+  <style>
+    :root{
+      --c-bg:#f6f2eb;
+      --c-fg:#1a1a18;
+      --c-fg-dim:#555149;
+      --c-soft:#797268;
+      --c-line:#e3dbcf;
+      --c-forest:#314137;
+      --c-forest-text:#eef4eb;
+      --radius:24px;
+    }
+
+    body{
+      margin:0;
+      font-family:system-ui, sans-serif;
+      background:var(--c-bg);
+      color:var(--c-fg);
+      line-height:1.7;
+    }
+
+    .wrap{width:min(1100px,92vw);margin:0 auto}
+
+    .nav{
+      position:fixed;
+      top:0;left:0;right:0;
+      background:rgba(49,65,55,.95);
+      padding:12px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:var(--c-forest-text);
+    }
+
+    .nav a{color:var(--c-forest-text);text-decoration:none}
+
+    .hero{
+      padding:140px 0 80px;
+      text-align:center;
+    }
+
+    h1{
+      font-size:clamp(32px,6vw,64px);
+      margin-bottom:16px;
+    }
+
+    .lead{
+      color:var(--c-fg-dim);
+      max-width:700px;
+      margin:0 auto;
+    }
+
+    section{
+      padding:80px 0;
+      border-top:1px solid var(--c-line);
+    }
+
+    .tool-grid{
+      display:grid;
+      gap:24px;
+      grid-template-columns:1fr;
+      margin-top:40px;
+    }
+
+    .tool{
+      border:1px solid var(--c-line);
+      border-radius:var(--radius);
+      background:#fff;
+      padding:24px;
+    }
+
+    .tool img{
+      width:100%;
+      border-radius:16px;
+      margin-bottom:16px;
+    }
+
+    .tool h3{margin:0 0 8px}
+    .tool p{color:var(--c-fg-dim)}
+
+    .actions{
+      margin-top:16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:999px;
+      text-decoration:none;
+      border:1px solid var(--c-line);
+      color:var(--c-fg);
+    }
+
+    .btn.primary{
+      background:var(--c-forest);
+      color:var(--c-forest-text);
+      border:none;
+    }
+
+    footer{
+      padding:40px 0;
+      text-align:center;
+      background:var(--c-forest);
+      color:var(--c-forest-text);
+      margin-top:60px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html">OneHumanity</a>
+    <a href="index.html">Back</a>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>Tools for clarity</h1>
+      <p class="lead">
+        Not everything has to stay abstract.
+        Some ideas become simple tools you can use in everyday life.
+      </p>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="tool-grid">
+
+        <!-- MODE SYSTEM -->
+        <div class="tool">
+          <img src="./images/mode.jpg" alt="Mode System">
+          <h3>Mode System</h3>
+          <p>
+            A simple system that helps you stop multitasking and stay in one clear state at a time.
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="mode-system-guide.html">Open guide</a>
+            <a class="btn" href="https://oneplanetonehumanity.etsy.com" target="_blank">View on Etsy</a>
+          </div>
+        </div>
+
+        <!-- FUTURE TOOL -->
+        <div class="tool">
+          <img src="./images/placeholder.jpg" alt="Coming soon">
+          <h3>More tools coming</h3>
+          <p>
+            Additional tools are currently in development.
+            Built from real problems, designed to stay simple.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>One Planet, One Humanity</div>
+  </footer>
+
+</body>
+</html>
