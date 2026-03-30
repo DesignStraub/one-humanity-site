@@ -10,37 +10,112 @@
   <style>
     :root{
       --c-bg:#f6f2eb;
+      --c-bg-soft:#fbf8f3;
+      --c-bg-warm:#efe7db;
+
       --c-fg:#1a1a18;
       --c-fg-dim:#555149;
       --c-soft:#797268;
       --c-line:#e3dbcf;
-      --c-forest:#314137;
+
+      --c-sky:#b8c6cf;
+      --c-mist:#dbe3de;
+      --c-sand:#d9c7b2;
+      --c-sage:#bcc8bc;
+      --c-sage-soft:#d9e2d8;
+
+      --c-forest:#4f6455;
+      --c-forest-mid:#5d7461;
+      --c-forest-deep:#314137;
+      --c-forest-ink:#dbe6d8;
       --c-forest-text:#eef4eb;
+      --c-forest-soft:#bdd0bf;
+
+      --shadow:0 22px 52px rgba(34,28,21,.09);
+      --shadow-soft:0 12px 30px rgba(34,28,21,.06);
       --radius:24px;
     }
 
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+
     body{
       margin:0;
-      font-family:system-ui, sans-serif;
-      background:var(--c-bg);
       color:var(--c-fg);
-      line-height:1.7;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial,sans-serif;
+      line-height:1.76;
+      letter-spacing:.01em;
+      background:var(--c-bg);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
     }
 
-    .wrap{width:min(1100px,92vw);margin:0 auto}
+    main{flex:1}
+
+    a{color:var(--c-fg); text-decoration:none}
+    a:focus{outline:2px solid rgba(26,26,24,.28); outline-offset:4px}
+
+    .wrap{width:min(1120px,92vw);margin:0 auto}
 
     .nav{
       position:fixed;
-      top:0;left:0;right:0;
-      background:rgba(49,65,55,.95);
-      padding:12px 20px;
+      inset:0 0 auto 0;
+      min-height:68px;
       display:flex;
-      justify-content:space-between;
+      flex-wrap:wrap;
       align-items:center;
-      color:var(--c-forest-text);
+      justify-content:space-between;
+      padding:10px 20px;
+      z-index:50;
+      background:rgba(49,65,55,.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(255,255,255,.05);
     }
 
-    .nav a{color:var(--c-forest-text);text-decoration:none}
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .brand .logo{
+      width:28px;
+      height:28px;
+      color:var(--c-forest-ink);
+    }
+
+    .brand .title{
+      font-weight:600;
+      letter-spacing:.02em;
+      color:var(--c-forest-ink);
+    }
+
+    .nav .right{
+      display:flex;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .nav a.item{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid transparent;
+      color:var(--c-forest-ink);
+      background:transparent;
+      font:inherit;
+      cursor:pointer;
+      transition:background .18s ease, border-color .18s ease, transform .18s ease, color .18s ease;
+    }
+
+    .nav a.item:hover{
+      border-color:rgba(211,221,208,.18);
+      background:rgba(211,221,208,.08);
+      color:#e6ede3;
+      transform:translateY(-1px);
+    }
 
     .hero{
       padding:140px 0 80px;
@@ -49,13 +124,17 @@
 
     h1{
       font-size:clamp(32px,6vw,64px);
-      margin-bottom:16px;
+      margin:0 0 16px;
+      line-height:1.06;
+      letter-spacing:-.02em;
     }
 
     .lead{
       color:var(--c-fg-dim);
       max-width:700px;
       margin:0 auto;
+      font-size:18px;
+      line-height:1.9;
     }
 
     section{
@@ -73,7 +152,8 @@
     .tool{
       border:1px solid var(--c-line);
       border-radius:var(--radius);
-      background:#fff;
+      background:rgba(255,255,255,.55);
+      box-shadow:var(--shadow-soft);
       padding:24px;
     }
 
@@ -81,10 +161,13 @@
       width:100%;
       border-radius:16px;
       margin-bottom:16px;
+      display:block;
+      background:#ece7de;
+      object-fit:cover;
     }
 
-    .tool h3{margin:0 0 8px}
-    .tool p{color:var(--c-fg-dim)}
+    .tool h3{margin:0 0 8px; font-size:1.1rem; letter-spacing:-.02em}
+    .tool p{color:var(--c-fg-dim); margin:0}
 
     .actions{
       margin-top:16px;
@@ -99,75 +182,131 @@
       text-decoration:none;
       border:1px solid var(--c-line);
       color:var(--c-fg);
+      transition:background .18s ease, border-color .18s ease, transform .18s ease, color .18s ease;
+    }
+
+    .btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.78);
+      border-color:#d8d0c4;
     }
 
     .btn.primary{
-      background:var(--c-forest);
+      background:var(--c-forest-deep);
       color:var(--c-forest-text);
       border:none;
     }
 
-    footer{
-      padding:40px 0;
-      text-align:center;
-      background:var(--c-forest);
-      color:var(--c-forest-text);
-      margin-top:60px;
+    .btn.primary:hover{
+      background:var(--c-forest-mid);
+      color:#ffffff;
     }
 
+    footer{
+      padding:42px 0 56px;
+      text-align:center;
+      background:var(--c-forest-deep);
+      color:#d7e1d5;
+      margin-top:60px;
+      border-top:1px solid rgba(255,255,255,.05);
+    }
+
+    .foot{
+      width:min(1120px,92vw);
+      margin:0 auto;
+      display:flex;
+      gap:20px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .foot a{
+      color:#d7e1d5;
+      text-decoration:none;
+    }
+
+    .foot a:hover{
+      color:#edf3eb;
+    }
+
+    @media (max-width: 900px){
+      .nav{padding:10px 12px}
+      .brand{margin-bottom:6px}
+      .nav .right{width:100%; display:flex; gap:6px; flex-wrap:wrap}
+      .nav a.item{padding:10px 12px}
+    }
+
+    @media (max-width: 560px){
+      .wrap{width:min(620px,92vw)}
+      .hero{padding:128px 0 72px}
+      h1{font-size:clamp(32px,11vw,48px)}
+      section{padding:72px 0}
+    }
   </style>
 </head>
 <body>
 
   <nav class="nav">
-    <a href="index.html">OneHumanity</a>
-    <a class="item" href="impressum.html" data-i18n="legal">Legal notice</a>
-    <a class="item" href="datenschutz.html" data-i18n="privacy">Privacy</a>
+    <a href="index.html" class="brand" aria-label="Homepage">
+      <svg class="logo" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img">
+        <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
+      </svg>
+      <span class="title">OneHumanity</span>
+    </a>
+    <div class="right" role="navigation" aria-label="Main navigation">
+      <a class="item" href="index.html">Home</a>
+      <a class="item" href="impressum.html">Legal notice</a>
+      <a class="item" href="datenschutz.html">Privacy</a>
+    </div>
   </nav>
 
-  <header class="hero">
-    <div class="wrap">
-      <h1>Tools for clarity</h1>
-      <p class="lead">
-        Not everything has to stay abstract.
-        Some ideas become simple tools you can use in everyday life.
-      </p>
-    </div>
-  </header>
-
-  <section>
-    <div class="wrap">
-      <div class="tool-grid">
-
-        <!-- MODE SYSTEM -->
-        <div class="tool">
-          <img src="./images/mode.jpg" alt="Mode System">
-          <h3>Mode System</h3>
-          <p>
-            A simple system that helps you stop multitasking and stay in one clear state at a time.
-          </p>
-          <div class="actions">
-            <a class="btn primary" href="Mode-system-guide.html">Open guide</a>
-            <a class="btn" href="https://oneplanetonehumanity.etsy.com" target="_blank">View on Etsy</a>
-          </div>
-        </div>
-
-        <!-- FUTURE TOOL -->
-        <div class="tool">
-          <img src="./images/placeholder.jpg" alt="Coming soon">
-          <h3>More tools coming</h3>
-          <p>
-            Additional tools are currently in development.
-            Built from real problems, designed to stay simple.
-          </p>
-        </div>
-
+  <main>
+    <header class="hero">
+      <div class="wrap">
+        <h1>Tools for clarity</h1>
+        <p class="lead">
+          Not everything has to stay abstract.
+          Some ideas become simple tools you can use in everyday life.
+        </p>
       </div>
-    </div>
-  </section>
+    </header>
+
+    <section>
+      <div class="wrap">
+        <div class="tool-grid">
+
+          <div class="tool">
+            <img src="./images/mode.jpg" alt="Mode System">
+            <h3>Mode System</h3>
+            <p>
+              A simple system that helps you stop multitasking and stay in one clear state at a time.
+            </p>
+            <div class="actions">
+              <a class="btn primary" href="Mode-system-guide.html">Open guide</a>
+              <a class="btn" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">View on Etsy</a>
+            </div>
+          </div>
+
+          <div class="tool">
+            <img src="./images/placeholder.jpg" alt="Coming soon">
+            <h3>More tools coming</h3>
+            <p>
+              Additional tools are currently in development.
+              Built from real problems, designed to stay simple.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <div>One Planet, One Humanity</div>
+    <div class="foot">
+      <div>One Planet One Humanity</div>
+      <div><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">Etsy</a></div>
+    </div>
   </footer>
 
 </body>
