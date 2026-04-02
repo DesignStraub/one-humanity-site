@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Proof – One Planet, One Humanity</title>
+  <meta name="description" content="A simple physical tool to see your day clearly. No tracking. No pressure.">
 
   <style>
     :root{
@@ -24,24 +26,35 @@
       line-height:1.7;
     }
 
-    .wrap{
-      width:min(800px,92vw);
-      margin:0 auto;
+    .wrap{width:min(900px,92vw);margin:0 auto}
+
+    /* NAV */
+
+    .nav{
+      position:sticky;
+      top:0;
+      background:var(--c-bg);
+      border-bottom:1px solid var(--c-line);
+      z-index:10;
     }
 
-    /* HEADER */
-
-    .header{
-      background:var(--c-forest);
-      color:var(--c-forest-text);
-      padding:32px 0;
-      text-align:center;
+    .nav-inner{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 0;
     }
 
-    .header h1{
-      margin:0;
-      font-weight:500;
-      letter-spacing:0.1em;
+    .nav a{
+      text-decoration:none;
+      color:var(--c-fg);
+      margin-right:18px;
+      font-size:14px;
+    }
+
+    .nav-right{
+      font-size:14px;
+      color:var(--c-soft);
     }
 
     /* HERO */
@@ -51,29 +64,30 @@
       text-align:center;
     }
 
-    .hero h2{
+    .hero h1{
       font-size:clamp(28px,5vw,42px);
       font-weight:500;
-      margin:0 0 20px;
+      margin:0 0 16px;
+      letter-spacing:0.08em;
     }
 
     .hero p{
       color:var(--c-soft);
-      max-width:500px;
+      max-width:520px;
       margin:0 auto;
     }
 
-    /* SECTION */
+    /* SECTIONS */
 
     .section{
       padding:60px 0;
       border-top:1px solid var(--c-line);
+      text-align:center;
     }
 
     .section p{
-      max-width:520px;
+      max-width:560px;
       margin:0 auto;
-      text-align:center;
       color:var(--c-soft);
     }
 
@@ -89,7 +103,6 @@
       border:1px solid var(--c-line);
       border-radius:var(--radius);
       padding:20px;
-      text-align:center;
       background:white;
     }
 
@@ -102,13 +115,15 @@
     /* FOOTER */
 
     .footer{
-      padding:60px 0 80px;
+      margin-top:80px;
+      background:var(--c-forest);
+      color:var(--c-forest-text);
+      padding:60px 0;
       text-align:center;
-      color:var(--c-soft);
       font-size:14px;
     }
 
-    /* subtle fade in */
+    /* FADE */
 
     .fade{
       opacity:0;
@@ -132,60 +147,97 @@
 
 <body>
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="wrap">
-      <h1>PROOF</h1>
+  <!-- NAV -->
+  <div class="nav">
+    <div class="wrap nav-inner">
+      <div>
+        <a href="index.html">One Planet</a>
+        <a href="tools.html">Tools</a>
+      </div>
+      <div class="nav-right">
+        DE / EN
+      </div>
     </div>
   </div>
 
   <!-- HERO -->
   <div class="hero wrap fade">
-    <h2>See your day.</h2>
+    <h1>PROOF</h1>
     <p>
-      No tracking. No goals. No pressure.
+      See your day as it actually was.
       <br>
-      Just what actually happened.
+      No tracking. No pressure. No pretending.
     </p>
   </div>
 
-  <!-- HOW IT WORKS -->
+  <!-- WHY -->
+  <div class="section wrap fade">
+    <p>
+      Many people feel like they could do more with their life.
+      <br><br>
+      But most don’t actually see what their days look like.
+      <br><br>
+      Not in theory. Not in plans.
+      <br>
+      In reality.
+    </p>
+  </div>
+
+  <!-- HOW -->
   <div class="section wrap fade">
     <div class="steps">
 
       <div class="step">
         <strong>1</strong>
-        Place what happened
+        Place a token for what happened
       </div>
 
       <div class="step">
         <strong>2</strong>
-        White or black
+        White or black — your choice
       </div>
 
       <div class="step">
         <strong>3</strong>
-        Move it tomorrow
+        Move everything to yesterday
       </div>
 
     </div>
   </div>
 
-  <!-- MEANING -->
+  <!-- USE CASE -->
   <div class="section wrap fade">
     <p>
-      It doesn’t judge.
-      <br>
-      It doesn’t guide.
+      Proof is not here to control you.
       <br><br>
-      It just shows you
-      what you already know.
+      It is here to show you patterns.
+      <br><br>
+      A good day.
+      A distracted day.
+      A balanced day.
+      <br><br>
+      You don’t need to track everything.
+      <br>
+      You just need to see enough.
+    </p>
+  </div>
+
+  <!-- CONNECTION -->
+  <div class="section wrap fade">
+    <p>
+      Use it on its own.
+      <br>
+      Or combine it with your current mode.
+      <br><br>
+      Intention meets reality.
     </p>
   </div>
 
   <!-- FOOTER -->
-  <div class="footer wrap fade">
-    One Planet, One Humanity
+  <div class="footer">
+    <div class="wrap">
+      One Planet, One Humanity
+    </div>
   </div>
 
 </body>
