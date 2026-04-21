@@ -147,34 +147,32 @@
     .hero::after{
       content:"";
       position:absolute;
-      inset:-10% -10% -10% -10%;
+      inset:-8%;
       z-index:-2;
       background-size:cover;
       background-position:center;
-      transform:scale(1.04);
+      transform:scale(1.03);
     }
 
     .hero::before{
       background-image:var(--bg-hero);
-      opacity:.06;
-      filter:grayscale(100%) brightness(.98) contrast(.9);
+      opacity:.05;
+      filter:grayscale(100%) brightness(.99) contrast(.92);
       animation:kenburns 34s ease-in-out infinite alternate;
     }
 
     .hero::after{
-      background-image:
-        radial-gradient(circle at 16% 18%, rgba(184,198,207,.22), transparent 23%),
-        radial-gradient(circle at 80% 20%, rgba(217,199,178,.18), transparent 24%),
-        radial-gradient(circle at 54% 68%, rgba(188,200,188,.19), transparent 28%),
-        radial-gradient(circle at 32% 66%, rgba(219,227,222,.14), transparent 24%),
-        radial-gradient(circle at 68% 42%, rgba(188,200,188,.10), transparent 22%),
-        linear-gradient(180deg, rgba(251,248,243,.82), rgba(246,242,235,.95));
       z-index:-1;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(184,198,207,.18), transparent 22%),
+        radial-gradient(circle at 82% 18%, rgba(217,199,178,.15), transparent 24%),
+        radial-gradient(circle at 52% 62%, rgba(188,200,188,.16), transparent 28%),
+        linear-gradient(180deg, rgba(251,248,243,.84), rgba(246,242,235,.96));
     }
 
     @keyframes kenburns{
-      from{ transform:scale(1.03) translateY(-1%)}
-      to{ transform:scale(1.08) translateY(1.2%)}
+      from{ transform:scale(1.02) translateY(-1%)}
+      to{ transform:scale(1.06) translateY(1%)}
     }
 
     .grain{
@@ -187,7 +185,7 @@
     }
 
     .hero-inner{
-      width:min(1000px, 92vw);
+      width:min(1080px, 92vw);
       padding:144px 0 104px;
       display:grid;
       place-items:center;
@@ -201,25 +199,23 @@
       display:flex;
       flex-direction:column;
       align-items:center;
-      max-width:900px;
+      max-width:940px;
       gap:10px;
     }
 
     .hero-copy::before{
       content:"";
       position:absolute;
-      width:min(860px, 96vw);
-      height:430px;
+      width:min(860px, 94vw);
+      height:420px;
       left:50%;
       top:42%;
       transform:translate(-50%,-50%);
       background:
-        radial-gradient(circle at 22% 34%, rgba(184,198,207,.20), transparent 22%),
-        radial-gradient(circle at 76% 36%, rgba(217,199,178,.18), transparent 20%),
-        radial-gradient(circle at 48% 54%, rgba(188,200,188,.24), transparent 28%),
-        radial-gradient(circle at 38% 60%, rgba(219,227,222,.15), transparent 24%),
-        radial-gradient(circle at 62% 58%, rgba(188,200,188,.12), transparent 24%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.24), transparent 40%);
+        radial-gradient(circle at 28% 34%, rgba(184,198,207,.16), transparent 24%),
+        radial-gradient(circle at 72% 36%, rgba(217,199,178,.14), transparent 22%),
+        radial-gradient(circle at 50% 56%, rgba(188,200,188,.18), transparent 28%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.20), transparent 42%);
       filter:blur(42px);
       opacity:1;
       pointer-events:none;
@@ -229,18 +225,19 @@
     .headline{
       margin:0;
       max-width:920px;
-      font-size:clamp(34px, 6vw, 72px);
-      line-height:1.05;
+      font-size:clamp(40px, 6.4vw, 84px);
+      line-height:1.02;
       font-weight:650;
-      letter-spacing:-.02em;
+      letter-spacing:-.03em;
     }
 
     .baseline{
       margin-top:14px;
       color:var(--c-fg-dim);
-      font-size:clamp(16px, 1.2vw, 20px);
+      font-size:clamp(17px, 1.28vw, 21px);
       letter-spacing:.01em;
       line-height:1.7;
+      max-width:760px;
     }
 
     .symbol-wrap{
@@ -248,18 +245,18 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      margin:0 0 2px;
+      margin:0 0 6px;
     }
 
     .symbol-wrap::before{
       content:"";
       position:absolute;
-      width:min(360px, 64vw);
-      height:min(360px, 64vw);
+      width:min(320px, 58vw);
+      height:min(320px, 58vw);
       background:
-        radial-gradient(circle at 34% 46%, rgba(184,198,207,.28), transparent 38%),
-        radial-gradient(circle at 68% 50%, rgba(217,199,178,.22), transparent 36%),
-        radial-gradient(circle at 52% 64%, rgba(188,200,188,.24), transparent 38%);
+        radial-gradient(circle at 34% 46%, rgba(184,198,207,.22), transparent 38%),
+        radial-gradient(circle at 68% 50%, rgba(217,199,178,.18), transparent 36%),
+        radial-gradient(circle at 52% 64%, rgba(188,200,188,.18), transparent 38%);
       filter:blur(40px);
       opacity:1;
       z-index:-1;
@@ -274,11 +271,53 @@
       filter:drop-shadow(0 10px 26px rgba(0,0,0,.10));
     }
 
-    .hero-note{
-      margin-top:22px;
-      color:var(--c-soft);
-      font-size:14px;
-      letter-spacing:.02em;
+    .hero-actions{
+      margin-top:24px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-btn{
+      min-height:50px;
+      padding:14px 20px;
+      border-radius:999px;
+      border:1px solid rgba(26,26,24,.14);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+      box-shadow:0 8px 24px rgba(34,28,21,.04);
+      backdrop-filter:blur(8px);
+    }
+
+    .hero-btn:hover{
+      transform:translateY(-1px);
+      box-shadow:0 14px 32px rgba(34,28,21,.08);
+    }
+
+    .hero-btn.primary{
+      background:rgba(26,26,24,.88);
+      color:#fff;
+      border-color:rgba(26,26,24,.88);
+    }
+
+    .hero-btn.primary:hover{
+      background:#111;
+      color:#fff;
+    }
+
+    .hero-btn.secondary{
+      background:rgba(255,255,255,.46);
+      color:var(--c-fg);
+      border-color:rgba(26,26,24,.12);
+    }
+
+    .hero-btn.secondary:hover{
+      background:rgba(255,255,255,.68);
+      color:var(--c-fg);
     }
 
     .arrow-down{
@@ -289,7 +328,7 @@
       border-bottom:1.8px solid rgba(26,26,24,.78);
       transform:rotate(45deg);
       opacity:.56;
-      margin-top:34px;
+      margin-top:36px;
       animation:arrowBob 4.2s ease-in-out infinite;
     }
 
@@ -308,7 +347,7 @@
 
     section{
       position:relative;
-      padding:108px 0;
+      padding:112px 0;
       border-top:1px solid var(--c-line);
     }
 
@@ -327,9 +366,10 @@
 
     .section-title{
       margin:0 0 22px;
-      font-size:clamp(24px, 3vw, 40px);
-      line-height:1.15;
-      letter-spacing:-.01em;
+      font-size:clamp(28px, 3vw, 48px);
+      line-height:1.1;
+      letter-spacing:-.02em;
+      font-weight:650;
     }
 
     .lead{
@@ -343,8 +383,102 @@
       margin:0 0 26px;
     }
 
+    .projects-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1fr) 420px;
+      gap:56px;
+      align-items:center;
+      margin-top:18px;
+    }
+
+    .projects-copy{
+      max-width:640px;
+    }
+
+    .projects-text{
+      color:var(--c-fg-dim);
+      font-size:18px;
+      line-height:1.9;
+      margin:0 0 28px;
+      max-width:540px;
+    }
+
+    .projects-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .projects-btn{
+      min-height:50px;
+      padding:14px 20px;
+      border-radius:999px;
+      border:1px solid rgba(26,26,24,.12);
+      background:rgba(255,255,255,.58);
+      color:var(--c-fg);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      box-shadow:0 12px 30px rgba(34,28,21,.05);
+      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .projects-btn:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.8);
+      border-color:rgba(26,26,24,.18);
+      box-shadow:0 18px 34px rgba(34,28,21,.08);
+    }
+
+    .projects-visual{
+      position:relative;
+      min-height:320px;
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 24% 28%, rgba(184,198,207,.28), transparent 26%),
+        radial-gradient(circle at 76% 34%, rgba(217,199,178,.22), transparent 24%),
+        radial-gradient(circle at 52% 70%, rgba(188,200,188,.22), transparent 30%),
+        linear-gradient(180deg, rgba(255,255,255,.62), rgba(245,240,232,.84));
+      border:1px solid rgba(255,255,255,.5);
+      box-shadow:0 22px 52px rgba(34,28,21,.07);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      padding:32px;
+    }
+
+    .projects-visual::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.32), transparent 34%);
+      pointer-events:none;
+    }
+
+    .projects-placeholder{
+      position:relative;
+      z-index:1;
+      width:min(100%, 290px);
+      aspect-ratio:4 / 3;
+      border-radius:24px;
+      border:1px solid rgba(26,26,24,.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.72), rgba(250,247,241,.92));
+      box-shadow:0 14px 28px rgba(34,28,21,.06);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--c-soft);
+      font-size:15px;
+      letter-spacing:.02em;
+      text-align:center;
+      padding:24px;
+    }
+
     .cta-section{
-      padding-top:92px;
+      padding-top:96px;
       padding-bottom:110px;
       border-top:1px solid rgba(255,255,255,.08);
       background:
@@ -552,6 +686,19 @@
       .sticker-sheen,
       .sticker-card{ transition:none }
       .arrow-down{ animation:none }
+      .hero-btn,
+      .projects-btn{ transition:none }
+    }
+
+    @media (max-width: 980px){
+      .projects-grid{
+        grid-template-columns:1fr;
+        gap:32px;
+      }
+
+      .projects-visual{
+        min-height:260px;
+      }
     }
 
     @media (max-width: 900px){
@@ -587,9 +734,11 @@
       .wrap{ width:min(620px, 92vw) }
       .hint{ margin-left:0 }
       .sticker-card{ width:min(100%, 310px) }
-      section{ padding:86px 0 }
+      section{ padding:88px 0 }
       .hero-inner{ padding:128px 0 86px }
-      .headline{ font-size:clamp(32px, 11vw, 48px) }
+      .headline{ font-size:clamp(34px, 11vw, 54px) }
+      .hero-actions{ width:100% }
+      .hero-btn{ width:100% }
     }
   </style>
 </head>
@@ -629,11 +778,15 @@
           </svg>
         </div>
 
-        <h1 class="headline reveal" data-i18n="headline">One Planet · One Humanity</h1>
+        <h1 class="headline reveal" data-i18n="headline">The world is loud.<br>This is a quiet place.</h1>
 
-        <div class="baseline reveal" data-i18n="baseline">More peace. More presence. More humanity.</div>
+        <div class="baseline reveal" data-i18n="baseline">Simple tools to slow down, reconnect and think clearly again.</div>
 
-        <div class="hero-note reveal" data-i18n="heroNote">Take your time. Look around.</div>
+        <div class="hero-actions reveal">
+          <a href="#mitmachen" class="hero-btn primary" data-i18n="heroCtaPrimary">Get free stickers</a>
+          <a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" class="hero-btn secondary" data-i18n="heroCtaPremium">Get premium stickers</a>
+          <a href="#projects" class="hero-btn secondary" data-i18n="heroCtaSecondary">Explore the tools</a>
+        </div>
 
         <div class="reveal">
           <a href="#ueber" aria-label="Scroll down" class="arrow-down" title="Scroll down"></a>
@@ -645,69 +798,95 @@
   <section id="ueber" aria-labelledby="ueber-title" data-testid="about">
     <div class="wrap">
       <div class="section-kicker reveal" data-i18n="aboutKicker">About</div>
-      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">For people who want less noise and more humanity.</h2>
+      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A quiet place in a noisy world.</h2>
 
       <div class="lead reveal" id="aboutText">
         <p data-i18n="aboutP1">
-          Not everyone wants to fight all the time.
-          Not everyone wants to live in constant noise, pressure and distance.
+          Not everything needs to be fast, loud or optimized.
         </p>
 
         <p data-i18n="aboutP2">
-          This is a small place for people who still care about calm, kindness and real human connection.
+          This is a small independent project for people who want to slow down, think clearly and reconnect with what matters.
+        </p>
+
+        <p data-i18n="aboutP3">
+          We create simple tools — physical and digital — that help reduce noise and bring more presence into everyday life.
         </p>
       </div>
     </div>
   </section>
-  
-<section class="cta-section" id="mitmachen">
-  <div class="wrap">
-    <div class="section-kicker reveal" data-i18n="takePartKicker">Take Part</div>
-    <h3 class="section-title reveal" style="font-size:clamp(22px,2.3vw,30px); margin-top:0" data-i18n="takePartTitle">Share the Message</h3>
 
-    <div class="take-part-layout reveal">
-      <div class="cta-stack">
-        <a class="btn icon" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
-          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-            <path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/>
-          </svg>
-          <span data-i18n="ctaRequest">Request free sticker set</span>
-        </a>
-        <p class="hint" data-i18n="hintRequest">Limited free stickers. I cover printing and shipping — it may take a few weeks.</p>
+  <section id="projects" aria-labelledby="projects-title" data-testid="projects">
+    <div class="wrap">
+      <div class="section-kicker reveal" data-i18n="projectsKicker">Projects</div>
+      <div class="projects-grid">
+        <div class="projects-copy reveal">
+          <h2 class="section-title" id="projects-title" data-i18n="projectsTitle">We build and explore</h2>
+          <p class="projects-text" data-i18n="projectsText">
+            Small experiments, ideas and tools. Always evolving.
+          </p>
+          <div class="projects-actions">
+            <a class="projects-btn" href="log.html" data-i18n="projectsCta">View all experiments</a>
+          </div>
+        </div>
 
-        <a class="btn icon" href="https://raw.githubusercontent.com/DesignStraub/one-humanity-site/main/oneforall.pdf" target="_blank" rel="noopener" download>
-          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-            <path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5L13 3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z" fill="currentColor"/>
-          </svg>
-          <span data-i18n="ctaPdf">Download &amp; print yourself</span>
-        </a>
-        <p class="hint" data-i18n="hintPdf">Use the sticker freely. Print it, share it, place it anywhere.</p>
-
-        <a class="btn icon" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
-          <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-            <path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/>
-          </svg>
-          <span data-i18n="ctaSupport">Support the project</span>
-        </a>
-        <p class="hint" data-i18n="hintSupport">Get premium stickers and support printing and shipping for others.</p>
-      </div>
-
-      <div class="sticker-showcase">
-        <div class="sticker-card" id="stickerCard">
-          <div class="sticker" id="stickerTilt">
-            <img src="./sticker.png" alt="Sticker preview" id="stickerImage">
-            <div class="sticker-sheen" id="stickerSheen"></div>
+        <div class="projects-visual reveal" aria-hidden="true">
+          <div class="projects-placeholder" data-i18n="projectsPlaceholder">
+            Project preview<br>Image or mockup
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section class="cta-section" id="mitmachen">
+    <div class="wrap">
+      <div class="section-kicker reveal" data-i18n="takePartKicker">Take Part</div>
+      <h3 class="section-title reveal" style="font-size:clamp(22px,2.3vw,30px); margin-top:0" data-i18n="takePartTitle">Share the Message</h3>
+
+      <div class="take-part-layout reveal">
+        <div class="cta-stack">
+          <a class="btn icon" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/>
+            </svg>
+            <span data-i18n="ctaRequest">Request free sticker set</span>
+          </a>
+          <p class="hint" data-i18n="hintRequest">Limited free stickers. I cover printing and shipping — it may take a few weeks.</p>
+
+          <a class="btn icon" href="https://raw.githubusercontent.com/DesignStraub/one-humanity-site/main/oneforall.pdf" target="_blank" rel="noopener" download>
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M6 2h8l4 4v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 1.5V7h3.5L13 3.5zM8 12h8v2H8v-2zm0 4h8v2H8v-2z" fill="currentColor"/>
+            </svg>
+            <span data-i18n="ctaPdf">Download &amp; print yourself</span>
+          </a>
+          <p class="hint" data-i18n="hintPdf">Use the sticker freely. Print it, share it, place it anywhere.</p>
+
+          <a class="btn icon" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+              <path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/>
+            </svg>
+            <span data-i18n="ctaSupport">Support the project</span>
+          </a>
+          <p class="hint" data-i18n="hintSupport">Get premium stickers and help fund printing and shipping for others.</p>
+        </div>
+
+        <div class="sticker-showcase">
+          <div class="sticker-card" id="stickerCard">
+            <div class="sticker" id="stickerTilt">
+              <img src="./sticker.png" alt="Sticker preview" id="stickerImage">
+              <div class="sticker-sheen" id="stickerSheen"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <div class="foot">
       <div>© <span id="y"></span> OneHumanity</div>
-      <div>Instagram <a href="https://instagram.com/oneplanetonehumanitycom" target="_blank" rel="noopener">@oneplanetonehumanitycom</a></div>
+      <div><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Visit Etsy</a></div>
     </div>
   </footer>
 
@@ -798,41 +977,59 @@
         tools: 'Tools',
         legal: 'Impressum',
         privacy: 'Datenschutz',
-        headline: 'One Planet · One Humanity',
-        baseline: 'Mehr Frieden. Mehr Präsenz. Mehr Menschlichkeit.',
-        heroNote: 'Nimm dir Zeit. Schau dich in Ruhe um.',
+        headline: 'Die Welt ist laut.<br>Das hier ist ein stiller Ort.',
+        baseline: 'Einfache Tools, die helfen, langsamer zu werden, sich zu verbinden und wieder klarer zu denken.',
+        heroCtaPrimary: 'Kostenlose Sticker holen',
+        heroCtaPremium: 'Premium-Sticker holen',
+        heroCtaSecondary: 'Tools entdecken',
         aboutKicker: 'Über',
-        aboutTitle: 'Für Menschen, die sich weniger Lärm und mehr Menschlichkeit wünschen.',
-        aboutP1: 'Nicht jeder will die ganze Zeit kämpfen. Nicht jeder will in ständigem Lärm, Druck und Abstand leben.',
-        aboutP2: 'Das hier ist ein kleiner Ort für Menschen, denen Ruhe, Freundlichkeit und echte menschliche Verbindung noch etwas bedeuten.',
-  takePartKicker: 'Mitmachen',
-  takePartTitle: 'Teile die Botschaft',
-  ctaRequest: 'Kostenloses Sticker-Set anfragen',
-  hintRequest: 'Limitierte kostenlose Sticker. Druck und Versand übernehme ich — es kann ein paar Wochen dauern.',
-  ctaPdf: 'Herunterladen & selbst drucken',
-  hintPdf: 'Nutze den Sticker frei. Druck ihn, teile ihn, bring ihn an, wo du willst.',
-  ctaSupport: 'Projekt unterstützen',
-  hintSupport: 'Hol dir Premium-Sticker und unterstütze Druck und Versand für andere.'
+        aboutTitle: 'Ein stiller Ort in einer lauten Welt.',
+        aboutP1: 'Nicht alles muss schnell, laut oder optimiert sein.',
+        aboutP2: 'Das hier ist ein kleines unabhängiges Projekt für Menschen, die langsamer werden, klarer denken und sich wieder mit dem verbinden wollen, was wirklich zählt.',
+        aboutP3: 'Wir entwickeln einfache Tools — physisch und digital — die dabei helfen, Lärm zu reduzieren und mehr Präsenz in den Alltag zu bringen.',
+        projectsKicker: 'Projekte',
+        projectsTitle: 'Wir bauen und erforschen',
+        projectsText: 'Kleine Experimente, Ideen und Tools. Immer in Bewegung.',
+        projectsCta: 'Alle Experimente ansehen',
+        projectsPlaceholder: 'Projektvorschau<br>Bild oder Mockup',
+        takePartKicker: 'Mitmachen',
+        takePartTitle: 'Teile die Botschaft',
+        ctaRequest: 'Kostenloses Sticker-Set anfragen',
+        hintRequest: 'Limitierte kostenlose Sticker. Druck und Versand übernehme ich — es kann ein paar Wochen dauern.',
+        ctaPdf: 'Herunterladen & selbst drucken',
+        hintPdf: 'Nutze den Sticker frei. Druck ihn, teile ihn, bring ihn an, wo du willst.',
+        ctaSupport: 'Projekt unterstützen',
+        hintSupport: 'Hol dir Premium-Sticker und hilf dabei, Druck und Versand für andere zu finanzieren.',
+        footerEtsy: 'Etsy besuchen'
       },
       en: {
         tools: 'Tools',
         legal: 'Legal Notice',
         privacy: 'Privacy',
-        headline: 'One Planet · One Humanity',
-        baseline: 'More peace. More presence. More humanity.',
-        heroNote: 'Take your time. Look around.',
+        headline: 'The world is loud.<br>This is a quiet place.',
+        baseline: 'Simple tools to slow down, reconnect and think clearly again.',
+        heroCtaPrimary: 'Get free stickers',
+        heroCtaPremium: 'Get premium stickers',
+        heroCtaSecondary: 'Explore the tools',
         aboutKicker: 'About',
-        aboutTitle: 'For people who want less noise and more humanity.',
-        aboutP1: 'Not everyone wants to fight all the time. Not everyone wants to live in constant noise, pressure and distance.',
-        aboutP2: 'This is a small place for people who still care about calm, kindness and real human connection.',
-  takePartKicker: 'Take Part',
-  takePartTitle: 'Share the Message',
-  ctaRequest: 'Request free sticker set',
-  hintRequest: 'Limited free stickers. I cover printing and shipping — it may take a few weeks.',
-  ctaPdf: 'Download & print yourself',
-  hintPdf: 'Use the sticker freely. Print it, share it, place it anywhere.',
-  ctaSupport: 'Support the project',
-  hintSupport: 'Get premium stickers and support printing and shipping for others.'
+        aboutTitle: 'A quiet place in a noisy world.',
+        aboutP1: 'Not everything needs to be fast, loud or optimized.',
+        aboutP2: 'This is a small independent project for people who want to slow down, think clearly and reconnect with what matters.',
+        aboutP3: 'We create simple tools — physical and digital — that help reduce noise and bring more presence into everyday life.',
+        projectsKicker: 'Projects',
+        projectsTitle: 'We build and explore',
+        projectsText: 'Small experiments, ideas and tools. Always evolving.',
+        projectsCta: 'View all experiments',
+        projectsPlaceholder: 'Project preview<br>Image or mockup',
+        takePartKicker: 'Take Part',
+        takePartTitle: 'Share the Message',
+        ctaRequest: 'Request free sticker set',
+        hintRequest: 'Limited free stickers. I cover printing and shipping — it may take a few weeks.',
+        ctaPdf: 'Download & print yourself',
+        hintPdf: 'Use the sticker freely. Print it, share it, place it anywhere.',
+        ctaSupport: 'Support the project',
+        hintSupport: 'Get premium stickers and help fund printing and shipping for others.',
+        footerEtsy: 'Visit Etsy'
       }
     };
 
@@ -855,13 +1052,14 @@
     langButtons.de.addEventListener('click', () => setLang('de'));
     langButtons.en.addEventListener('click', () => setLang('en'));
 
-    setLang('en');
+    setLang(localStorage.getItem('onehumanity-lang') || 'en');
 
     (function runSmokeTests() {
       try {
         console.assert(document.querySelector('[data-testid="nav"]'), 'Nav fehlt');
         console.assert(document.querySelector('[data-testid="hero"]'), 'Hero fehlt');
         console.assert(document.querySelector('[data-testid="about"]'), 'Über-Sektion fehlt');
+        console.assert(document.querySelector('[data-testid="projects"]'), 'Projects-Sektion fehlt');
         console.assert(document.querySelector('#stickerImage'), 'Sticker Bild fehlt');
         console.assert(document.querySelector('#lang-de') && document.querySelector('#lang-en'), 'Sprachumschalter fehlt');
         console.log('[OneHumanity] Smoke-Tests ok');
