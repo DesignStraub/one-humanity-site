@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>OneHumanity</title>
-  <meta name="description" content="A quiet space for people who long for more peace, connection and humanity.">
+  <meta name="description" content="A quiet corner of the internet. Simple stickers and tools for overwhelmed humans who want less noise and more presence.">
   <meta name="theme-color" content="#314137">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P7JY8JDMNQ"></script>
@@ -383,98 +383,22 @@
       margin:0 0 26px;
     }
 
-    .projects-grid{
-      display:grid;
-      grid-template-columns:minmax(0, 1fr) 420px;
-      gap:56px;
-      align-items:center;
-      margin-top:18px;
-    }
-
-    .projects-copy{
-      max-width:640px;
-    }
-
-    .projects-text{
-      color:var(--c-fg-dim);
-      font-size:18px;
-      line-height:1.9;
-      margin:0 0 28px;
-      max-width:540px;
-    }
-
-    .projects-actions{
+    .pill-list{
       display:flex;
+      gap:10px;
       flex-wrap:wrap;
-      gap:12px;
+      margin-top:30px;
     }
 
-    .projects-btn{
-      min-height:50px;
-      padding:14px 20px;
+    .pill{
+      border:1px solid rgba(26,26,24,.10);
+      background:rgba(255,255,255,.46);
       border-radius:999px;
-      border:1px solid rgba(26,26,24,.12);
-      background:rgba(255,255,255,.58);
-      color:var(--c-fg);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:600;
-      box-shadow:0 12px 30px rgba(34,28,21,.05);
-      transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .projects-btn:hover{
-      transform:translateY(-1px);
-      background:rgba(255,255,255,.8);
-      border-color:rgba(26,26,24,.18);
-      box-shadow:0 18px 34px rgba(34,28,21,.08);
-    }
-
-    .projects-visual{
-      position:relative;
-      min-height:320px;
-      border-radius:32px;
-      background:
-        radial-gradient(circle at 24% 28%, rgba(184,198,207,.28), transparent 26%),
-        radial-gradient(circle at 76% 34%, rgba(217,199,178,.22), transparent 24%),
-        radial-gradient(circle at 52% 70%, rgba(188,200,188,.22), transparent 30%),
-        linear-gradient(180deg, rgba(255,255,255,.62), rgba(245,240,232,.84));
-      border:1px solid rgba(255,255,255,.5);
-      box-shadow:0 22px 52px rgba(34,28,21,.07);
-      overflow:hidden;
-      display:grid;
-      place-items:center;
-      padding:32px;
-    }
-
-    .projects-visual::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.32), transparent 34%);
-      pointer-events:none;
-    }
-
-    .projects-placeholder{
-      position:relative;
-      z-index:1;
-      width:min(100%, 290px);
-      aspect-ratio:4 / 3;
-      border-radius:24px;
-      border:1px solid rgba(26,26,24,.08);
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.72), rgba(250,247,241,.92));
-      box-shadow:0 14px 28px rgba(34,28,21,.06);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:var(--c-soft);
-      font-size:15px;
-      letter-spacing:.02em;
-      text-align:center;
-      padding:24px;
+      padding:9px 13px;
+      color:var(--c-fg-dim);
+      font-size:14px;
+      line-height:1.3;
+      box-shadow:0 8px 20px rgba(34,28,21,.035);
     }
 
     .cta-section{
@@ -492,6 +416,14 @@
 
     .cta-section .section-title{
       color:var(--c-forest-text);
+    }
+
+    .cta-intro{
+      max-width:720px;
+      color:rgba(238,244,235,.82);
+      font-size:17px;
+      line-height:1.85;
+      margin:0 0 28px;
     }
 
     .take-part-layout{
@@ -686,19 +618,7 @@
       .sticker-sheen,
       .sticker-card{ transition:none }
       .arrow-down{ animation:none }
-      .hero-btn,
-      .projects-btn{ transition:none }
-    }
-
-    @media (max-width: 980px){
-      .projects-grid{
-        grid-template-columns:1fr;
-        gap:32px;
-      }
-
-      .projects-visual{
-        min-height:260px;
-      }
+      .hero-btn{ transition:none }
     }
 
     @media (max-width: 900px){
@@ -780,12 +700,12 @@
 
         <h1 class="headline reveal" data-i18n="headline">The world is loud.<br>This is a quiet place.</h1>
 
-        <div class="baseline reveal" data-i18n="baseline">Simple tools to slow down, reconnect and think clearly again.</div>
+        <div class="baseline reveal" data-i18n="baseline">Stickers and simple tools for overwhelmed humans who want less noise, more presence and a small reminder that we are still connected.</div>
 
         <div class="hero-actions reveal">
           <a href="#mitmachen" class="hero-btn primary" data-i18n="heroCtaPrimary">Get free stickers</a>
           <a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" class="hero-btn secondary" data-i18n="heroCtaPremium">Get premium stickers</a>
-          <a href="#projects" class="hero-btn secondary" data-i18n="heroCtaSecondary">Explore the tools</a>
+          <a href="tools.html" class="hero-btn secondary" data-i18n="heroCtaSecondary">Explore the tools</a>
         </div>
 
         <div class="reveal">
@@ -798,42 +718,26 @@
   <section id="ueber" aria-labelledby="ueber-title" data-testid="about">
     <div class="wrap">
       <div class="section-kicker reveal" data-i18n="aboutKicker">About</div>
-      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A quiet place in a noisy world.</h2>
+      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A small signal against the noise.</h2>
 
       <div class="lead reveal" id="aboutText">
         <p data-i18n="aboutP1">
-          Not everything needs to be fast, loud or optimized.
+          One Planet, One Humanity is a small independent project about slowing down, thinking clearly and remembering that we are part of something bigger than the daily noise around us.
         </p>
 
         <p data-i18n="aboutP2">
-          This is a small independent project for people who want to slow down, think clearly and reconnect with what matters.
+          The idea is simple: create quiet visual reminders and practical tools that bring a little more presence into everyday life — on your laptop, in your room, on the street or inside your own head.
         </p>
 
         <p data-i18n="aboutP3">
-          We create simple tools — physical and digital — that help reduce noise and bring more presence into everyday life.
+          No big corporate mission. No perfect philosophy. Just a growing collection of stickers, focus tools and visual pieces for people who feel the world is too loud and still want to stay human.
         </p>
-      </div>
-    </div>
-  </section>
 
-  <section id="projects" aria-labelledby="projects-title" data-testid="projects">
-    <div class="wrap">
-      <div class="section-kicker reveal" data-i18n="projectsKicker">Projects</div>
-      <div class="projects-grid">
-        <div class="projects-copy reveal">
-          <h2 class="section-title" id="projects-title" data-i18n="projectsTitle">We build and explore</h2>
-          <p class="projects-text" data-i18n="projectsText">
-            Small experiments, ideas and tools. Always evolving.
-          </p>
-          <div class="projects-actions">
-            <a class="projects-btn" href="log.html" data-i18n="projectsCta">View all experiments</a>
-          </div>
-        </div>
-
-        <div class="projects-visual reveal" aria-hidden="true">
-          <div class="projects-placeholder" data-i18n="projectsPlaceholder">
-            Project preview<br>Image or mockup
-          </div>
+        <div class="pill-list" aria-label="Project focus">
+          <span class="pill" data-i18n="pill1">Less noise</span>
+          <span class="pill" data-i18n="pill2">More presence</span>
+          <span class="pill" data-i18n="pill3">Quiet tools</span>
+          <span class="pill" data-i18n="pill4">Human connection</span>
         </div>
       </div>
     </div>
@@ -842,7 +746,8 @@
   <section class="cta-section" id="mitmachen">
     <div class="wrap">
       <div class="section-kicker reveal" data-i18n="takePartKicker">Take Part</div>
-      <h3 class="section-title reveal" style="font-size:clamp(22px,2.3vw,30px); margin-top:0" data-i18n="takePartTitle">Share the Message</h3>
+      <h3 class="section-title reveal" style="font-size:clamp(24px,2.8vw,38px); margin-top:0" data-i18n="takePartTitle">Carry a quiet message.</h3>
+      <p class="cta-intro reveal" data-i18n="takePartIntro">The stickers are small physical reminders: slow down, breathe, reconnect. Keep one, share one, place one somewhere it can be found by another overwhelmed human.</p>
 
       <div class="take-part-layout reveal">
         <div class="cta-stack">
@@ -852,7 +757,7 @@
             </svg>
             <span data-i18n="ctaRequest">Request free sticker set</span>
           </a>
-          <p class="hint" data-i18n="hintRequest">Limited free stickers. I cover printing and shipping — it may take a few weeks.</p>
+          <p class="hint" data-i18n="hintRequest">Limited free stickers. I cover printing and shipping when I can — it may take a few weeks.</p>
 
           <a class="btn icon" href="https://raw.githubusercontent.com/DesignStraub/one-humanity-site/main/oneforall.pdf" target="_blank" rel="noopener" download>
             <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -860,7 +765,7 @@
             </svg>
             <span data-i18n="ctaPdf">Download &amp; print yourself</span>
           </a>
-          <p class="hint" data-i18n="hintPdf">Use the sticker freely. Print it, share it, place it anywhere.</p>
+          <p class="hint" data-i18n="hintPdf">Use the sticker freely. Print it, share it, place it somewhere kind.</p>
 
           <a class="btn icon" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
             <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -868,7 +773,7 @@
             </svg>
             <span data-i18n="ctaSupport">Support the project</span>
           </a>
-          <p class="hint" data-i18n="hintSupport">Get premium stickers and help fund printing and shipping for others.</p>
+          <p class="hint" data-i18n="hintSupport">Get premium stickers and help fund printing, testing and free sets for others.</p>
         </div>
 
         <div class="sticker-showcase">
@@ -978,28 +883,28 @@
         legal: 'Impressum',
         privacy: 'Datenschutz',
         headline: 'Die Welt ist laut.<br>Das hier ist ein stiller Ort.',
-        baseline: 'Einfache Tools, die helfen, langsamer zu werden, sich zu verbinden und wieder klarer zu denken.',
+        baseline: 'Sticker und einfache Tools für überreizte Menschen, die weniger Lärm, mehr Präsenz und eine kleine Erinnerung daran suchen, dass wir verbunden bleiben.',
         heroCtaPrimary: 'Kostenlose Sticker holen',
         heroCtaPremium: 'Premium-Sticker holen',
         heroCtaSecondary: 'Tools entdecken',
         aboutKicker: 'Über',
-        aboutTitle: 'Ein stiller Ort in einer lauten Welt.',
-        aboutP1: 'Nicht alles muss schnell, laut oder optimiert sein.',
-        aboutP2: 'Das hier ist ein kleines unabhängiges Projekt für Menschen, die langsamer werden, klarer denken und sich wieder mit dem verbinden wollen, was wirklich zählt.',
-        aboutP3: 'Wir entwickeln einfache Tools — physisch und digital — die dabei helfen, Lärm zu reduzieren und mehr Präsenz in den Alltag zu bringen.',
-        projectsKicker: 'Projekte',
-        projectsTitle: 'Wir bauen und erforschen',
-        projectsText: 'Kleine Experimente, Ideen und Tools. Immer in Bewegung.',
-        projectsCta: 'Alle Experimente ansehen',
-        projectsPlaceholder: 'Projektvorschau<br>Bild oder Mockup',
+        aboutTitle: 'Ein kleines Signal gegen den Lärm.',
+        aboutP1: 'One Planet, One Humanity ist ein kleines unabhängiges Projekt über langsamer werden, klarer denken und sich daran erinnern, dass wir Teil von etwas Größerem sind als dem täglichen Lärm um uns herum.',
+        aboutP2: 'Die Idee ist einfach: ruhige visuelle Erinnerungen und praktische Tools erschaffen, die etwas mehr Präsenz in den Alltag bringen — auf deinem Laptop, in deinem Zimmer, auf der Straße oder im eigenen Kopf.',
+        aboutP3: 'Keine große Corporate-Mission. Keine perfekte Philosophie. Nur eine wachsende Sammlung aus Stickern, Fokus-Tools und visuellen Pieces für Menschen, denen die Welt zu laut ist und die trotzdem menschlich bleiben wollen.',
+        pill1: 'Weniger Lärm',
+        pill2: 'Mehr Präsenz',
+        pill3: 'Ruhige Tools',
+        pill4: 'Menschliche Verbindung',
         takePartKicker: 'Mitmachen',
-        takePartTitle: 'Teile die Botschaft',
+        takePartTitle: 'Trage eine stille Botschaft weiter.',
+        takePartIntro: 'Die Sticker sind kleine physische Erinnerungen: langsamer werden, atmen, wieder verbinden. Behalte einen, teile einen oder platziere einen dort, wo ihn ein anderer überreizter Mensch finden kann.',
         ctaRequest: 'Kostenloses Sticker-Set anfragen',
-        hintRequest: 'Limitierte kostenlose Sticker. Druck und Versand übernehme ich — es kann ein paar Wochen dauern.',
+        hintRequest: 'Limitierte kostenlose Sticker. Druck und Versand übernehme ich, wenn es gerade möglich ist — es kann ein paar Wochen dauern.',
         ctaPdf: 'Herunterladen & selbst drucken',
-        hintPdf: 'Nutze den Sticker frei. Druck ihn, teile ihn, bring ihn an, wo du willst.',
+        hintPdf: 'Nutze den Sticker frei. Druck ihn, teile ihn, platziere ihn an einem guten Ort.',
         ctaSupport: 'Projekt unterstützen',
-        hintSupport: 'Hol dir Premium-Sticker und hilf dabei, Druck und Versand für andere zu finanzieren.',
+        hintSupport: 'Hol dir Premium-Sticker und hilf dabei, Druck, Tests und kostenlose Sets für andere zu finanzieren.',
         footerEtsy: 'Etsy besuchen'
       },
       en: {
@@ -1007,28 +912,28 @@
         legal: 'Legal Notice',
         privacy: 'Privacy',
         headline: 'The world is loud.<br>This is a quiet place.',
-        baseline: 'Simple tools to slow down, reconnect and think clearly again.',
+        baseline: 'Stickers and simple tools for overwhelmed humans who want less noise, more presence and a small reminder that we are still connected.',
         heroCtaPrimary: 'Get free stickers',
         heroCtaPremium: 'Get premium stickers',
         heroCtaSecondary: 'Explore the tools',
         aboutKicker: 'About',
-        aboutTitle: 'A quiet place in a noisy world.',
-        aboutP1: 'Not everything needs to be fast, loud or optimized.',
-        aboutP2: 'This is a small independent project for people who want to slow down, think clearly and reconnect with what matters.',
-        aboutP3: 'We create simple tools — physical and digital — that help reduce noise and bring more presence into everyday life.',
-        projectsKicker: 'Projects',
-        projectsTitle: 'We build and explore',
-        projectsText: 'Small experiments, ideas and tools. Always evolving.',
-        projectsCta: 'View all experiments',
-        projectsPlaceholder: 'Project preview<br>Image or mockup',
+        aboutTitle: 'A small signal against the noise.',
+        aboutP1: 'One Planet, One Humanity is a small independent project about slowing down, thinking clearly and remembering that we are part of something bigger than the daily noise around us.',
+        aboutP2: 'The idea is simple: create quiet visual reminders and practical tools that bring a little more presence into everyday life — on your laptop, in your room, on the street or inside your own head.',
+        aboutP3: 'No big corporate mission. No perfect philosophy. Just a growing collection of stickers, focus tools and visual pieces for people who feel the world is too loud and still want to stay human.',
+        pill1: 'Less noise',
+        pill2: 'More presence',
+        pill3: 'Quiet tools',
+        pill4: 'Human connection',
         takePartKicker: 'Take Part',
-        takePartTitle: 'Share the Message',
+        takePartTitle: 'Carry a quiet message.',
+        takePartIntro: 'The stickers are small physical reminders: slow down, breathe, reconnect. Keep one, share one, place one somewhere it can be found by another overwhelmed human.',
         ctaRequest: 'Request free sticker set',
-        hintRequest: 'Limited free stickers. I cover printing and shipping — it may take a few weeks.',
+        hintRequest: 'Limited free stickers. I cover printing and shipping when I can — it may take a few weeks.',
         ctaPdf: 'Download & print yourself',
-        hintPdf: 'Use the sticker freely. Print it, share it, place it anywhere.',
+        hintPdf: 'Use the sticker freely. Print it, share it, place it somewhere kind.',
         ctaSupport: 'Support the project',
-        hintSupport: 'Get premium stickers and help fund printing and shipping for others.',
+        hintSupport: 'Get premium stickers and help fund printing, testing and free sets for others.',
         footerEtsy: 'Visit Etsy'
       }
     };
@@ -1059,7 +964,7 @@
         console.assert(document.querySelector('[data-testid="nav"]'), 'Nav fehlt');
         console.assert(document.querySelector('[data-testid="hero"]'), 'Hero fehlt');
         console.assert(document.querySelector('[data-testid="about"]'), 'Über-Sektion fehlt');
-        console.assert(document.querySelector('[data-testid="projects"]'), 'Projects-Sektion fehlt');
+        console.assert(!document.querySelector('[data-testid="projects"]'), 'Projects-Sektion sollte entfernt sein');
         console.assert(document.querySelector('#stickerImage'), 'Sticker Bild fehlt');
         console.assert(document.querySelector('#lang-de') && document.querySelector('#lang-en'), 'Sprachumschalter fehlt');
         console.log('[OneHumanity] Smoke-Tests ok');
