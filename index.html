@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>OneHumanity</title>
-  <meta name="description" content="A quiet corner of the internet. Simple stickers and tools for overwhelmed humans who want less noise and more presence.">
-  <meta name="theme-color" content="#314137">
+  <meta name="description" content="A small human-made place for unity, presence and connection. Stickers, art and simple tools by OneHumanity.">
+  <meta name="theme-color" content="#101826">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-P7JY8JDMNQ"></script>
   <script>
@@ -20,30 +20,30 @@
     :root{
       --bg-hero: url('./images/earth-gray.jpg');
 
-      --c-bg:#f6f2eb;
-      --c-bg-soft:#fbf8f3;
-      --c-bg-warm:#efe7db;
+      --c-bg:#f7f3ea;
+      --c-bg-soft:#fffaf2;
+      --c-bg-warm:#efe5d6;
 
-      --c-fg:#1a1a18;
-      --c-fg-dim:#555149;
-      --c-soft:#797268;
-      --c-line:#e3dbcf;
+      --c-fg:#15161a;
+      --c-fg-dim:#4f5258;
+      --c-soft:#7a7e86;
+      --c-line:rgba(35,39,49,.10);
 
-      --c-sky:#b8c6cf;
-      --c-mist:#dbe3de;
-      --c-sand:#d9c7b2;
-      --c-sage:#bcc8bc;
-      --c-sage-soft:#d9e2d8;
+      --c-sky:#b9d8ea;
+      --c-mist:#e7edf1;
+      --c-sand:#ead3bd;
+      --c-sage:#c5d5ce;
+      --c-sage-soft:#e4ece8;
 
-      --c-forest:#4f6455;
-      --c-forest-mid:#5d7461;
-      --c-forest-deep:#314137;
-      --c-forest-ink:#dbe6d8;
-      --c-forest-text:#eef4eb;
-      --c-forest-soft:#bdd0bf;
+      --c-forest:#536f71;
+      --c-forest-mid:#657f87;
+      --c-forest-deep:#101826;
+      --c-forest-ink:#eef7f7;
+      --c-forest-text:#f4fbfb;
+      --c-forest-soft:#c9dde2;
 
-      --shadow:0 22px 52px rgba(34,28,21,.09);
-      --shadow-soft:0 12px 30px rgba(34,28,21,.06);
+      --shadow:0 30px 80px rgba(17,24,39,.12);
+      --shadow-soft:0 18px 44px rgba(17,24,39,.08);
       --radius:24px;
     }
 
@@ -58,7 +58,10 @@
       line-height:1.76;
       letter-spacing:.01em;
       background:
-        linear-gradient(180deg, #faf7f1 0%, #f5f1ea 22%, #f2ece3 58%, #ece4d8 100%);
+        radial-gradient(circle at 12% 8%, rgba(178,216,235,.32), transparent 30%),
+        radial-gradient(circle at 86% 10%, rgba(239,209,188,.30), transparent 28%),
+        radial-gradient(circle at 50% 78%, rgba(196,214,207,.24), transparent 34%),
+        linear-gradient(180deg, #fffaf2 0%, #f6f0e7 34%, #edf3f1 67%, #101826 100%);
     }
 
     a{color:var(--c-fg); text-decoration:none}
@@ -66,7 +69,7 @@
 
     .nav{
       position:fixed;
-      inset:0 0 auto 0;
+      inset:auto;
       min-height:68px;
       display:flex;
       flex-wrap:wrap;
@@ -74,9 +77,17 @@
       justify-content:space-between;
       padding:10px 20px;
       z-index:50;
-      background:rgba(49,65,55,.94);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid rgba(255,255,255,.05);
+      width:min(1180px, calc(100vw - 28px));
+      left:50%;
+      right:auto;
+      top:14px;
+      transform:translateX(-50%);
+      border-radius:999px;
+      background:linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.16));
+      backdrop-filter:blur(24px) saturate(1.35);
+      -webkit-backdrop-filter:blur(24px) saturate(1.35);
+      border:1px solid rgba(255,255,255,.34);
+      box-shadow:0 18px 50px rgba(16,24,38,.12), inset 0 1px 0 rgba(255,255,255,.45);
     }
 
     .brand{
@@ -88,13 +99,13 @@
     .brand .logo{
       width:28px;
       height:28px;
-      color:var(--c-forest-ink);
+      color:#18202a;
     }
 
     .brand .title{
       font-weight:600;
       letter-spacing:.02em;
-      color:var(--c-forest-ink);
+      color:#18202a;
     }
 
     .nav .right{
@@ -109,7 +120,7 @@
       padding:8px 12px;
       border-radius:999px;
       border:1px solid transparent;
-      color:var(--c-forest-ink);
+      color:#18202a;
       background:transparent;
       font:inherit;
       cursor:pointer;
@@ -118,9 +129,9 @@
 
     .nav a.item:hover,
     .lang-toggle button:hover{
-      border-color:rgba(211,221,208,.18);
-      background:rgba(211,221,208,.08);
-      color:#e6ede3;
+      border-color:rgba(255,255,255,.46);
+      background:rgba(255,255,255,.28);
+      color:#111821;
       transform:translateY(-1px);
     }
 
@@ -131,7 +142,7 @@
 
     .lang-toggle button.active{
       border-color:rgba(211,221,208,.16);
-      background:rgba(211,221,208,.10);
+      background:rgba(255,255,255,.32);
     }
 
     .hero{
@@ -156,18 +167,19 @@
 
     .hero::before{
       background-image:var(--bg-hero);
-      opacity:.05;
-      filter:grayscale(100%) brightness(.99) contrast(.92);
+      opacity:.075;
+      filter:grayscale(100%) brightness(1.08) contrast(.86);
       animation:kenburns 34s ease-in-out infinite alternate;
     }
 
     .hero::after{
       z-index:-1;
       background:
-        radial-gradient(circle at 18% 20%, rgba(184,198,207,.18), transparent 22%),
-        radial-gradient(circle at 82% 18%, rgba(217,199,178,.15), transparent 24%),
-        radial-gradient(circle at 52% 62%, rgba(188,200,188,.16), transparent 28%),
-        linear-gradient(180deg, rgba(251,248,243,.84), rgba(246,242,235,.96));
+        radial-gradient(circle at 18% 20%, rgba(185,216,234,.34), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(239,211,188,.28), transparent 25%),
+        radial-gradient(circle at 52% 62%, rgba(198,222,214,.28), transparent 30%),
+        radial-gradient(circle at 50% 48%, rgba(255,255,255,.52), transparent 42%),
+        linear-gradient(180deg, rgba(255,250,242,.78), rgba(246,240,231,.94));
     }
 
     @keyframes kenburns{
@@ -202,6 +214,91 @@
       max-width:940px;
       gap:10px;
     }
+
+    .nav.scrolled{
+      background:linear-gradient(135deg, rgba(255,255,255,.54), rgba(255,255,255,.22));
+      box-shadow:0 20px 58px rgba(16,24,38,.16), inset 0 1px 0 rgba(255,255,255,.50);
+    }
+
+    .glass-panel{
+      border:1px solid rgba(255,255,255,.42);
+      background:linear-gradient(135deg, rgba(255,255,255,.42), rgba(255,255,255,.16));
+      backdrop-filter:blur(28px) saturate(1.25);
+      -webkit-backdrop-filter:blur(28px) saturate(1.25);
+      box-shadow:0 24px 70px rgba(17,24,39,.11), inset 0 1px 0 rgba(255,255,255,.46);
+    }
+
+    .soft-orb{
+      position:absolute;
+      border-radius:999px;
+      pointer-events:none;
+      z-index:0;
+      filter:blur(2px);
+      opacity:.72;
+      animation:floatOrb 14s ease-in-out infinite alternate;
+    }
+
+    .soft-orb.one{
+      width:260px;
+      height:260px;
+      left:7vw;
+      top:19vh;
+      background:radial-gradient(circle, rgba(184,220,238,.34), transparent 64%);
+    }
+
+    .soft-orb.two{
+      width:320px;
+      height:320px;
+      right:5vw;
+      top:22vh;
+      background:radial-gradient(circle, rgba(238,204,183,.31), transparent 65%);
+      animation-delay:-4s;
+    }
+
+    .soft-orb.three{
+      width:240px;
+      height:240px;
+      left:38vw;
+      bottom:9vh;
+      background:radial-gradient(circle, rgba(194,219,209,.28), transparent 65%);
+      animation-delay:-8s;
+    }
+
+    @keyframes floatOrb{
+      from{ transform:translate3d(0,0,0) scale(1) }
+      to{ transform:translate3d(18px,-22px,0) scale(1.08) }
+    }
+
+    .art-row{
+      width:min(860px, 92vw);
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:16px;
+      margin:34px auto 2px;
+    }
+
+    .mini-art{
+      border-radius:28px;
+      padding:12px;
+      aspect-ratio:1;
+      display:grid;
+      place-items:center;
+      transform:translateY(0);
+      transition:transform .22s ease, box-shadow .22s ease;
+    }
+
+    .mini-art:nth-child(2){ transform:translateY(18px) }
+    .mini-art:hover{ transform:translateY(-4px) scale(1.015) }
+    .mini-art:nth-child(2):hover{ transform:translateY(12px) scale(1.015) }
+
+    .mini-art img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:0 12px 36px rgba(17,24,39,.10);
+    }
+
 
     .hero-copy::before{
       content:"";
@@ -356,6 +453,11 @@
       margin:0 auto;
     }
 
+    .about-glass{
+      padding:54px;
+      border-radius:36px;
+    }
+
     .section-kicker{
       color:var(--c-soft);
       text-transform:uppercase;
@@ -406,7 +508,9 @@
       padding-bottom:110px;
       border-top:1px solid rgba(255,255,255,.08);
       background:
-        linear-gradient(180deg, rgba(99,120,104,.96), rgba(79,100,85,.98));
+        radial-gradient(circle at 18% 18%, rgba(180,217,232,.22), transparent 28%),
+        radial-gradient(circle at 72% 24%, rgba(239,209,188,.16), transparent 30%),
+        linear-gradient(180deg, rgba(67,89,93,.98), rgba(16,24,38,.98));
       color:var(--c-forest-text);
     }
 
@@ -445,7 +549,9 @@
       padding:14px 18px;
       border:1px solid rgba(255,255,255,.12);
       border-radius:18px;
-      background:rgba(255,255,255,.08);
+      background:linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+      backdrop-filter:blur(18px) saturate(1.2);
+      -webkit-backdrop-filter:blur(18px) saturate(1.2);
       color:var(--c-forest-text);
       cursor:pointer;
       font-weight:600;
@@ -647,6 +753,14 @@
         order:-1;
         padding-top:0;
       }
+
+      .art-row{
+        grid-template-columns:1fr;
+        max-width:320px;
+      }
+
+      .mini-art:nth-child(2){ transform:none }
+      .mini-art:nth-child(2):hover{ transform:translateY(-4px) scale(1.015) }
     }
 
     @media (max-width: 560px){
@@ -659,6 +773,7 @@
       .headline{ font-size:clamp(34px, 11vw, 54px) }
       .hero-actions{ width:100% }
       .hero-btn{ width:100% }
+      .about-glass{ padding:32px 22px; border-radius:28px }
     }
   </style>
 </head>
@@ -682,8 +797,7 @@
     </div>
   </nav>
 
-  <header class="hero" id="top" aria-label="Intro" data-testid="hero">
-    <svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <header class="hero" id="top" aria-label="Intro" data-testid="hero"><svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
       <filter id="noise">
         <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
       </filter>
@@ -698,17 +812,15 @@
           </svg>
         </div>
 
-        <h1 class="headline reveal" data-i18n="headline">The world is loud.<br>This is a quiet place.</h1>
+        <h1 class="headline reveal" data-i18n="headline">One Planet.<br>One Humanity.</h1>
 
-        <div class="baseline reveal" data-i18n="baseline">Stickers and simple tools for overwhelmed humans who want less noise, more presence and a small reminder that we are still connected.</div>
+        <div class="baseline reveal" data-i18n="baseline">A small human-made place for unity, presence and quiet reminders that we are still connected.</div>
 
         <div class="hero-actions reveal">
           <a href="#mitmachen" class="hero-btn primary" data-i18n="heroCtaPrimary">Get free stickers</a>
           <a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" class="hero-btn secondary" data-i18n="heroCtaPremium">Get premium stickers</a>
           <a href="tools.html" class="hero-btn secondary" data-i18n="heroCtaSecondary">Explore the tools</a>
-        </div>
-
-        <div class="reveal">
+        </div><div class="reveal">
           <a href="#ueber" aria-label="Scroll down" class="arrow-down" title="Scroll down"></a>
         </div>
       </div>
@@ -716,28 +828,28 @@
   </header>
 
   <section id="ueber" aria-labelledby="ueber-title" data-testid="about">
-    <div class="wrap">
+    <div class="wrap glass-panel about-glass">
       <div class="section-kicker reveal" data-i18n="aboutKicker">About</div>
-      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">A small signal against the noise.</h2>
+      <h2 class="section-title reveal" id="ueber-title" data-i18n="aboutTitle">Somewhere between millions of people, we still found each other.</h2>
 
       <div class="lead reveal" id="aboutText">
         <p data-i18n="aboutP1">
-          One Planet, One Humanity is a small independent project about slowing down, thinking clearly and remembering that we are part of something bigger than the daily noise around us.
+          One Planet, One Humanity is a small independent project about remembering something simple: we are not separate from each other. We share this planet, this moment and the same need to feel seen.
         </p>
 
         <p data-i18n="aboutP2">
-          The idea is simple: create quiet visual reminders and practical tools that bring a little more presence into everyday life — on your laptop, in your room, on the street or inside your own head.
+          The stickers, art pieces and tools are made as small signals of connection — on a laptop, in a room, on the street or in the hands of a stranger who needed a softer moment.
         </p>
 
         <p data-i18n="aboutP3">
-          No big corporate mission. No perfect philosophy. Just a growing collection of stickers, focus tools and visual pieces for people who feel the world is too loud and still want to stay human.
+          No perfect philosophy. No brand pretending to save the world. Just a growing collection of human-made reminders: you belong here, and so does everyone else.
         </p>
 
         <div class="pill-list" aria-label="Project focus">
-          <span class="pill" data-i18n="pill1">Less noise</span>
-          <span class="pill" data-i18n="pill2">More presence</span>
-          <span class="pill" data-i18n="pill3">Quiet tools</span>
-          <span class="pill" data-i18n="pill4">Human connection</span>
+          <span class="pill" data-i18n="pill1">Shared presence</span>
+          <span class="pill" data-i18n="pill2">Human warmth</span>
+          <span class="pill" data-i18n="pill3">Small reminders</span>
+          <span class="pill" data-i18n="pill4">One Humanity</span>
         </div>
       </div>
     </div>
@@ -746,8 +858,8 @@
   <section class="cta-section" id="mitmachen">
     <div class="wrap">
       <div class="section-kicker reveal" data-i18n="takePartKicker">Take Part</div>
-      <h3 class="section-title reveal" style="font-size:clamp(24px,2.8vw,38px); margin-top:0" data-i18n="takePartTitle">Carry a quiet message.</h3>
-      <p class="cta-intro reveal" data-i18n="takePartIntro">The stickers are small physical reminders: slow down, breathe, reconnect. Keep one, share one, place one somewhere it can be found by another overwhelmed human.</p>
+      <h3 class="section-title reveal" style="font-size:clamp(24px,2.8vw,38px); margin-top:0" data-i18n="takePartTitle">Take one. Leave one somewhere kind.</h3>
+      <p class="cta-intro reveal" data-i18n="takePartIntro">The stickers are small physical reminders that a real person was here before you — and left a little warmth behind. Keep one, share one, or place one where another human might find it.</p>
 
       <div class="take-part-layout reveal">
         <div class="cta-stack">
@@ -882,23 +994,23 @@
         tools: 'Tools',
         legal: 'Impressum',
         privacy: 'Datenschutz',
-        headline: 'Die Welt ist laut.<br>Das hier ist ein stiller Ort.',
-        baseline: 'Sticker und einfache Tools für überreizte Menschen, die weniger Lärm, mehr Präsenz und eine kleine Erinnerung daran suchen, dass wir verbunden bleiben.',
+        headline: 'One Planet.<br>One Humanity.',
+        baseline: 'Ein kleiner, menschlich gemachter Ort für Einheit, Präsenz und warme Erinnerungen daran, dass wir verbunden sind.',
         heroCtaPrimary: 'Kostenlose Sticker holen',
         heroCtaPremium: 'Premium-Sticker holen',
         heroCtaSecondary: 'Tools entdecken',
         aboutKicker: 'Über',
-        aboutTitle: 'Ein kleines Signal gegen den Lärm.',
-        aboutP1: 'One Planet, One Humanity ist ein kleines unabhängiges Projekt über langsamer werden, klarer denken und sich daran erinnern, dass wir Teil von etwas Größerem sind als dem täglichen Lärm um uns herum.',
-        aboutP2: 'Die Idee ist einfach: ruhige visuelle Erinnerungen und praktische Tools erschaffen, die etwas mehr Präsenz in den Alltag bringen — auf deinem Laptop, in deinem Zimmer, auf der Straße oder im eigenen Kopf.',
-        aboutP3: 'Keine große Corporate-Mission. Keine perfekte Philosophie. Nur eine wachsende Sammlung aus Stickern, Fokus-Tools und visuellen Pieces für Menschen, denen die Welt zu laut ist und die trotzdem menschlich bleiben wollen.',
-        pill1: 'Weniger Lärm',
-        pill2: 'Mehr Präsenz',
-        pill3: 'Ruhige Tools',
-        pill4: 'Menschliche Verbindung',
+        aboutTitle: 'Zwischen Millionen Menschen haben wir uns trotzdem gefunden.',
+        aboutP1: 'One Planet, One Humanity ist ein kleines unabhängiges Projekt über eine einfache Erinnerung: Wir sind nicht voneinander getrennt. Wir teilen diesen Planeten, diesen Moment und das Bedürfnis, gesehen zu werden.',
+        aboutP2: 'Die Sticker, Artworks und Tools sind kleine Signale von Verbindung — auf einem Laptop, in einem Zimmer, auf der Straße oder in den Händen eines Menschen, der gerade einen weicheren Moment gebraucht hat.',
+        aboutP3: 'Keine perfekte Philosophie. Keine Brand, die so tut, als würde sie die Welt retten. Nur eine wachsende Sammlung menschlich gemachter Erinnerungen: Du gehörst hierher, und alle anderen auch.',
+        pill1: 'Geteilte Präsenz',
+        pill2: 'Menschliche Wärme',
+        pill3: 'Kleine Erinnerungen',
+        pill4: 'One Humanity',
         takePartKicker: 'Mitmachen',
-        takePartTitle: 'Trage eine stille Botschaft weiter.',
-        takePartIntro: 'Die Sticker sind kleine physische Erinnerungen: langsamer werden, atmen, wieder verbinden. Behalte einen, teile einen oder platziere einen dort, wo ihn ein anderer überreizter Mensch finden kann.',
+        takePartTitle: 'Nimm einen. Lass einen an einem guten Ort.',
+        takePartIntro: 'Die Sticker sind kleine physische Erinnerungen daran, dass vor dir ein echter Mensch hier war — und ein bisschen Wärme dagelassen hat. Behalte einen, teile einen oder platziere einen dort, wo ihn ein anderer Mensch finden kann.',
         ctaRequest: 'Kostenloses Sticker-Set anfragen',
         hintRequest: 'Limitierte kostenlose Sticker. Druck und Versand übernehme ich, wenn es gerade möglich ist — es kann ein paar Wochen dauern.',
         ctaPdf: 'Herunterladen & selbst drucken',
@@ -911,23 +1023,23 @@
         tools: 'Tools',
         legal: 'Legal Notice',
         privacy: 'Privacy',
-        headline: 'The world is loud.<br>This is a quiet place.',
-        baseline: 'Stickers and simple tools for overwhelmed humans who want less noise, more presence and a small reminder that we are still connected.',
+        headline: 'One Planet.<br>One Humanity.',
+        baseline: 'A small human-made place for unity, presence and warm reminders that we are still connected.',
         heroCtaPrimary: 'Get free stickers',
         heroCtaPremium: 'Get premium stickers',
         heroCtaSecondary: 'Explore the tools',
         aboutKicker: 'About',
-        aboutTitle: 'A small signal against the noise.',
-        aboutP1: 'One Planet, One Humanity is a small independent project about slowing down, thinking clearly and remembering that we are part of something bigger than the daily noise around us.',
-        aboutP2: 'The idea is simple: create quiet visual reminders and practical tools that bring a little more presence into everyday life — on your laptop, in your room, on the street or inside your own head.',
-        aboutP3: 'No big corporate mission. No perfect philosophy. Just a growing collection of stickers, focus tools and visual pieces for people who feel the world is too loud and still want to stay human.',
-        pill1: 'Less noise',
-        pill2: 'More presence',
-        pill3: 'Quiet tools',
-        pill4: 'Human connection',
+        aboutTitle: 'Somewhere between millions of people, we still found each other.',
+        aboutP1: 'One Planet, One Humanity is a small independent project about remembering something simple: we are not separate from each other. We share this planet, this moment and the same need to feel seen.',
+        aboutP2: 'The stickers, art pieces and tools are made as small signals of connection — on a laptop, in a room, on the street or in the hands of a stranger who needed a softer moment.',
+        aboutP3: 'No perfect philosophy. No brand pretending to save the world. Just a growing collection of human-made reminders: you belong here, and so does everyone else.',
+        pill1: 'Shared presence',
+        pill2: 'Human warmth',
+        pill3: 'Small reminders',
+        pill4: 'One Humanity',
         takePartKicker: 'Take Part',
-        takePartTitle: 'Carry a quiet message.',
-        takePartIntro: 'The stickers are small physical reminders: slow down, breathe, reconnect. Keep one, share one, place one somewhere it can be found by another overwhelmed human.',
+        takePartTitle: 'Take one. Leave one somewhere kind.',
+        takePartIntro: 'The stickers are small physical reminders that a real person was here before you — and left a little warmth behind. Keep one, share one, or place one where another human might find it.',
         ctaRequest: 'Request free sticker set',
         hintRequest: 'Limited free stickers. I cover printing and shipping when I can — it may take a few weeks.',
         ctaPdf: 'Download & print yourself',
