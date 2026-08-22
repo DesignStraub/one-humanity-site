@@ -1,85 +1,141 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-lang-fixed>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Datenschutzerklärung · OneHumanity / MorphicMoons</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Datenschutzerklärung — OneHumanity / MorphicMoons</title>
   <meta name="robots" content="index,follow">
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;margin:0;color:#111;background:#fafafa}
-    .wrap{max-width:860px;margin:0 auto;padding:32px 20px}
-    h1{margin:0 0 10px}
-    h2{margin:26px 0 8px;font-size:18px}
-    a{color:#000}
-    .box{background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:20px}
-    .muted{color:#666;font-size:14px}
-    header{background:#000;color:#fff;padding:14px 20px}
-    header a{color:#fff;text-decoration:none;margin-right:14px}
-    footer{border-top:1px solid #e5e5e5;margin-top:28px;padding:18px 0;color:#666}
-    ul{padding-left:20px}
-  </style>
+  <meta name="theme-color" content="#faf6ef">
+  <link rel="stylesheet" href="assets/site.css">
 </head>
-<body>
-<header>
-  <div class="wrap" style="padding:0">
-    <a href="index.html">← Zur Startseite</a>
-  </div>
-</header>
 
-<main class="wrap">
-  <h1>Datenschutzerklärung</h1>
-  <div class="box">
-    <p class="muted">Stand: 22.10.2025</p>
+<body class="page">
 
-    <h2>1. Verantwortlicher</h2>
-    <p><strong>Morphic Moons – Marcello Straub</strong><br>
-       Augustastraße 2, 52070 Aachen, Deutschland<br>
-       E-Mail: <a href="mailto:morphicmoons@protonmail.com">morphicmoons@protonmail.com</a></p>
+  <a class="visually-hidden" href="#main">Zum Inhalt</a>
 
-    <h2>2. Hosting & technische Protokolle</h2>
-    <p>Die Website wird über <strong>GitHub Pages</strong> bereitgestellt (GitHub, Inc., USA). Optional wird ein
-       CDN/Reverse-Proxy von <strong>Cloudflare</strong> (Cloudflare, Inc., USA) genutzt. Beim Aufruf der Seiten verarbeiten
-       die Dienste technische Protokolldaten (IP-Adresse, Datum/Uhrzeit, angeforderte Datei, Referrer, User-Agent).
-       <br><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse: stabile und sichere Bereitstellung).</p>
+  <nav class="nav" id="nav">
+    <a href="index.html" class="brand" aria-label="OneHumanity — Startseite">
+      <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
+      </svg>
+      <span class="title">OneHumanity</span>
+    </a>
 
-    <h2>3. Sticker-Anfragen (Google Forms)</h2>
-    <p>Für Bestellungen kostenloser Sticker verwenden wir <strong>Google Forms</strong> (Google Ireland Limited). Erfasste Daten:
-       Name, E-Mail, Lieferadresse, ausgewähltes Paket sowie freiwillige Angaben. Die Daten werden ausschließlich zur
-       Bearbeitung deiner Anfrage und zum Versand genutzt.</p>
-    <ul>
-      <li><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. b DSGVO (Vertrag/Anbahnung) und lit. f DSGVO (Missbrauchsprävention).</li>
-      <li><em>Speicherdauer:</em> bis zum Abschluss der Anfrage/Versand + <strong>90 Tage</strong> Nachhaltefrist (Beleg/Support), danach Löschung.</li>
-      <li><em>Empfänger/Drittland:</em> Google verarbeitet Daten ggf. in Drittländern; es gelten die EU-Standardvertragsklauseln (SCC).</li>
-    </ul>
+    <div class="nav-actions">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang="de">DE</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links"
+              aria-label="Menü" data-i18n-attr="aria-label:navMenu">
+        <span></span>
+      </button>
+    </div>
 
-    <h2>4. Ko-fi (freiwillige Unterstützung)</h2>
-    <p>Bei Klick auf den Ko-fi-Link verlässt du unsere Seite. Anbieter: <strong>Ko-fi Labs Limited</strong> (UK). Für die dortige
-       Datenverarbeitung ist Ko-fi verantwortlich (bitte die Datenschutzhinweise von Ko-fi beachten).</p>
+    <div class="nav-links" id="nav-links">
+      <a class="nav-link" href="index.html" data-i18n="navHome">Start</a>
+      <a class="nav-link" href="tools.html" data-i18n="navTools">Tools</a>
+      <a class="nav-link" href="lifebar.html" data-i18n="navLifebar">LifeBar</a>
+      <a class="nav-link" href="impressum.html" data-i18n="navLegal">Impressum</a>
+    </div>
+  </nav>
 
-    <h2>5. Cookies / Tracking</h2>
-    <p>Wir setzen kein eigenes Tracking und keine Marketing-Cookies ein. GitHub Pages bzw. Cloudflare können technisch
-       notwendige Cookies/Identifier einsetzen (z. B. zur Auslieferung, Caching, Sicherheit).
-       <br><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO.</p>
+  <main id="main">
+    <section style="padding-top:calc(var(--nav-h) + var(--sp-7))">
+      <div class="wrap narrow">
+        <p class="kicker">Rechtliches</p>
+        <h1 class="h1" style="margin-bottom:var(--sp-3)">Datenschutzerklärung</h1>
+        <p class="small muted" style="margin-bottom:var(--sp-5)">Stand: 22.10.2025</p>
 
-    <h2>6. Sicherheit</h2>
-    <p>Die Seite ist ausschließlich über <strong>HTTPS</strong> erreichbar. Zur Missbrauchsabwehr können (zeitlich begrenzt)
-       IP-basierte Schutzmechanismen eingesetzt werden.</p>
+        <div class="glass legal-doc">
+          <h2>1. Verantwortlicher</h2>
+          <p><strong>Morphic Moons – Marcello Straub</strong><br>
+            Augustastraße 2, 52070 Aachen, Deutschland<br>
+            E-Mail: <a href="mailto:morphicmoons@protonmail.com">morphicmoons@protonmail.com</a></p>
 
-    <h2>7. Deine Rechte</h2>
-    <p>Du hast die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit sowie Widerspruch
-       (Art. 15–21 DSGVO). Außerdem besteht ein Beschwerderecht bei einer Aufsichtsbehörde, z. B. der
-       <a href="https://www.ldi.nrw.de/" target="_blank" rel="noopener">LDI NRW</a>.</p>
+          <h2>2. Hosting &amp; technische Protokolle</h2>
+          <p>Die Website wird über <strong>GitHub Pages</strong> bereitgestellt (GitHub, Inc., USA). Optional wird ein
+            CDN/Reverse-Proxy von <strong>Cloudflare</strong> (Cloudflare, Inc., USA) genutzt. Beim Aufruf der Seiten
+            verarbeiten die Dienste technische Protokolldaten (IP-Adresse, Datum/Uhrzeit, angeforderte Datei, Referrer,
+            User-Agent).<br>
+            <em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse: stabile und sichere
+            Bereitstellung).</p>
 
-    <h2>8. Empfänger / Übermittlungen</h2>
-    <p>Im Rahmen der oben genannten Dienste kann es zu Übermittlungen in Drittländer (insb. USA/UK) kommen. Die Anbieter
-       verwenden hierfür u. a. die EU-Standardvertragsklauseln (SCC).</p>
+          <h2>3. Reichweitenmessung (Google Analytics)</h2>
+          <!-- TODO Marcello: Auf der Startseite ist Google Analytics (G-P7JY8JDMNQ) eingebaut.
+               Entweder (a) Consent-Banner einbauen und Analytics erst nach Einwilligung laden,
+               oder (b) die drei gtag-Zeilen in index.html löschen und diesen Abschnitt hier
+               wieder entfernen. Bis dahin beschreibt dieser Abschnitt den Ist-Zustand. -->
+          <p>Auf der Startseite wird <strong>Google Analytics 4</strong> (Google Ireland Limited) zur Messung der
+            Seitennutzung eingesetzt (Mess-ID G-P7JY8JDMNQ). Dabei werden Nutzungsdaten wie aufgerufene Seiten,
+            gekürzte IP-Adresse, Zeitpunkt, Referrer und Geräte-/Browserinformationen verarbeitet.
+            <br><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) bzw. § 25 Abs. 1 TDDDG.
+            <br><em>Empfänger/Drittland:</em> Google, Übermittlung in die USA möglich; es gelten die
+            EU-Standardvertragsklauseln (SCC).
+            <br><em>Widerruf:</em> Du kannst deine Einwilligung jederzeit widerrufen, z. B. durch Blockieren von
+            Analyse-Skripten in deinem Browser.</p>
 
+          <h2>4. Sticker-Anfragen (Google Forms)</h2>
+          <p>Für Bestellungen kostenloser Sticker verwenden wir <strong>Google Forms</strong> (Google Ireland Limited).
+            Erfasste Daten: Name, E-Mail, Lieferadresse, ausgewähltes Paket sowie freiwillige Angaben. Die Daten werden
+            ausschließlich zur Bearbeitung deiner Anfrage und zum Versand genutzt.</p>
+          <ul>
+            <li><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. b DSGVO (Vertrag/Anbahnung) und lit. f DSGVO
+              (Missbrauchsprävention).</li>
+            <li><em>Speicherdauer:</em> bis zum Abschluss der Anfrage/Versand + <strong>90 Tage</strong> Nachhaltefrist
+              (Beleg/Support), danach Löschung.</li>
+            <li><em>Empfänger/Drittland:</em> Google verarbeitet Daten ggf. in Drittländern; es gelten die
+              EU-Standardvertragsklauseln (SCC).</li>
+          </ul>
 
-  </div>
+          <h2>5. Etsy &amp; Ko-fi (Shop und freiwillige Unterstützung)</h2>
+          <p>Bei Klick auf einen Etsy- oder Ko-fi-Link verlässt du unsere Seite. Anbieter: <strong>Etsy Ireland
+            UC</strong> bzw. <strong>Ko-fi Labs Limited</strong> (UK). Für die dortige Datenverarbeitung sind diese
+            Anbieter verantwortlich (bitte die jeweiligen Datenschutzhinweise beachten).</p>
 
-  <footer>© <span id="y"></span> OneHumanity · Morphic Moons</footer>
-</main>
+          <h2>6. Cookies / lokale Speicherung</h2>
+          <p>Wir setzen keine Marketing-Cookies ein. Für die Sprachauswahl (DE/EN) wird ein technisch notwendiger
+            Eintrag im <strong>localStorage</strong> deines Browsers gespeichert; er enthält ausschließlich die gewählte
+            Sprache und keine personenbezogenen Daten. GitHub Pages bzw. Cloudflare können technisch notwendige
+            Cookies/Identifier einsetzen (z. B. zur Auslieferung, Caching, Sicherheit).
+            <br><em>Rechtsgrundlage:</em> Art. 6 Abs. 1 lit. f DSGVO.</p>
 
-<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+          <h2>7. Sicherheit</h2>
+          <p>Die Seite ist ausschließlich über <strong>HTTPS</strong> erreichbar. Zur Missbrauchsabwehr können
+            (zeitlich begrenzt) IP-basierte Schutzmechanismen eingesetzt werden.</p>
+
+          <h2>8. Deine Rechte</h2>
+          <p>Du hast die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit sowie
+            Widerspruch (Art. 15–21 DSGVO). Außerdem besteht ein Beschwerderecht bei einer Aufsichtsbehörde, z. B. der
+            <a href="https://www.ldi.nrw.de/" target="_blank" rel="noopener">LDI NRW</a>.</p>
+
+          <h2>9. Empfänger / Übermittlungen</h2>
+          <p>Im Rahmen der oben genannten Dienste kann es zu Übermittlungen in Drittländer (insb. USA/UK) kommen. Die
+            Anbieter verwenden hierfür u. a. die EU-Standardvertragsklauseln (SCC).</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
+        </svg>
+        <strong>One Planet, One Humanity</strong>
+        <span class="small">© <span data-year>2026</span> · MorphicMoons</span>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="index.html" data-i18n="navHome">Start</a></li>
+        <li><a href="tools.html" data-i18n="navTools">Tools</a></li>
+        <li><a href="lifebar.html" data-i18n="navLifebar">LifeBar</a></li>
+        <li><a href="impressum.html" data-i18n="navLegal">Impressum</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="assets/site.js"></script>
 </body>
 </html>
