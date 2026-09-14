@@ -1134,3 +1134,30 @@ figure.media figcaption{
   }
   .reveal{ opacity: 1; transform: none; }
 }
+
+/* ==========================================================================
+   Project status pills
+   Used on the project cards (index.html, tools.html). Colour is a hint only —
+   the label always carries the meaning.
+   ========================================================================== */
+.pill.status{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: var(--sp-3);
+}
+.pill.status::before{
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.pill.status.is-live{ color: #2F6B55; }
+.pill.status.is-wip{ color: #A8762A; }
+.pill.status.is-idea{ color: #55707E; }
+
+.on-deep .pill.status.is-live{ color: #8FD3B6; }
+.on-deep .pill.status.is-wip{ color: #E5C173; }
+.on-deep .pill.status.is-idea{ color: #A8C6D6; }

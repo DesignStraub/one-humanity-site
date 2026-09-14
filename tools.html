@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Tools — OneHumanity</title>
-  <meta name="description" content="Simple tools for clarity, focus and conscious action: Mode System, LifeBar and Proof.">
+  <title>Projects — One Planet, One Humanity</title>
+  <meta name="description" content="Everything I’m building, with an honest status: Mode System, LifeBar, Proof and the sketches that may never get finished.">
   <meta name="theme-color" content="#faf6ef">
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -47,14 +47,14 @@
       <span class="orb b" aria-hidden="true"></span>
       <div class="hero-inner">
         <div data-lang-content="en" class="active reveal">
-          <p class="kicker">Tools</p>
-          <h1 class="h1">Tools for clarity</h1>
-          <p class="lead">Not everything has to stay abstract. Some ideas become simple objects you can use in everyday life — built from real problems, designed to stay simple.</p>
+          <p class="kicker">Projects</p>
+          <h1 class="h1">Some get finished. Some don’t.</h1>
+          <p class="lead">Everything I’m building, with an honest status next to it. A few of these became products. Most started as a sketch in a notebook and are still somewhere on the way — that’s the normal case here, not the exception.</p>
         </div>
         <div data-lang-content="de" class="reveal">
-          <p class="kicker">Tools</p>
-          <h1 class="h1">Tools für Klarheit</h1>
-          <p class="lead">Nicht alles muss abstrakt bleiben. Manche Ideen werden zu einfachen Objekten, die du im Alltag benutzen kannst — aus echten Problemen entstanden, absichtlich simpel gehalten.</p>
+          <p class="kicker">Projekte</p>
+          <h1 class="h1">Manche werden fertig. Manche nicht.</h1>
+          <p class="lead">Alles, woran ich baue, mit ehrlichem Status daneben. Ein paar davon sind Produkte geworden. Das meiste fing als Skizze im Notizbuch an und ist noch irgendwo unterwegs — das ist hier der Normalfall, nicht die Ausnahme.</p>
         </div>
       </div>
     </header>
@@ -68,6 +68,7 @@
             <figure class="media" style="margin-bottom:var(--sp-4)">
               <img src="mode.jpeg" alt="Mode System cards" loading="lazy">
             </figure>
+            <span class="pill status is-live" data-i18n="statusLive">In use</span>
             <h2 class="h3" data-i18n="modeTitle">Mode System</h2>
             <p data-i18n="modeText">A simple system that helps you stop multitasking and stay in one clear state at a time. Five modes, a few rules, no app.</p>
             <div class="actions">
@@ -82,6 +83,7 @@
               <img src="img/lifebar-device.jpg" width="1500" height="899" loading="lazy"
                    alt="The LifeBar on a desk">
             </figure>
+            <span class="pill status is-wip" data-i18n="statusProto">Working prototype</span>
             <h2 class="h3" data-i18n="lifeTitle">LifeBar</h2>
             <p data-i18n="lifeText">Gamification for real life on its own hardware: an ESP32-S3 bar display that turns invested minutes into EXP, levels and earned titles. All data stays on the device.</p>
             <div class="actions">
@@ -97,6 +99,7 @@
               </svg>
               <figcaption class="ph-label" data-i18n="phProof">Photo: Proof tokens</figcaption>
             </figure>
+            <span class="pill status is-idea" data-i18n="statusConcept">Concept</span>
             <h2 class="h3" data-i18n="proofTitle">Proof</h2>
             <p data-i18n="proofText">See your day as it actually was. One token per thing that happened. No tracking, no pressure, no pretending.</p>
             <div class="actions">
@@ -104,10 +107,18 @@
             </div>
           </article>
 
-          <!-- Coming -->
+          <!-- Sketch -->
           <article class="card reveal">
-            <h2 class="h3" data-i18n="soonTitle">More tools coming</h2>
-            <p data-i18n="soonText">Additional tools are in development. Built from real problems, designed to stay simple. If you want to test an early version, just get in touch.</p>
+            <span class="pill status is-idea" data-i18n="statusSketch">Sketch</span>
+            <h2 class="h3" data-i18n="botTitle">Room Bot</h2>
+            <p data-i18n="botText">A small desk creature with a camera and a light sensor that takes its mood from the room it stands in — brightness, colour temperature, time of day. Currently two pages in a notebook. It may never be more than that.</p>
+          </article>
+
+          <!-- Open -->
+          <article class="card reveal">
+            <span class="pill status is-idea" data-i18n="statusOpen">Open</span>
+            <h2 class="h3" data-i18n="soonTitle">Whatever comes next</h2>
+            <p data-i18n="soonText">There is always something half-built on the desk. If you want to try an early version of any of this, or you have an idea you’d rather see built than keep, get in touch.</p>
             <div class="actions">
               <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener" data-i18n="soonCta">Get in touch</a>
             </div>
@@ -126,7 +137,7 @@
           <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
         </svg>
         <strong>One Planet, One Humanity</strong>
-        <span class="small" data-i18n="footerTagline">A small, human-made project.</span>
+        <span class="small" data-i18n="footerTagline">Made by one person, in Aachen.</span>
         <span class="small">© <span data-year>2026</span> · MorphicMoons</span>
       </div>
       <ul class="footer-nav">
@@ -142,6 +153,23 @@
   <script>
     window.OH_I18N = {
       de: {
+        navHome: 'Start',
+        navTools: 'Projekte',
+        navLifebar: 'LifeBar',
+        navLegal: 'Impressum',
+        navPrivacy: 'Datenschutz',
+        footerEtsy: 'Etsy',
+        footerTagline: 'Von einer Person gemacht, in Aachen.',
+        statusLive: 'Im Einsatz',
+        statusProto: 'Funktionierender Prototyp',
+        statusConcept: 'Konzept',
+        statusSketch: 'Skizze',
+        statusOpen: 'Offen',
+        botTitle: 'Room Bot',
+        botText: 'Ein kleines Tischwesen mit Kamera und Lichtsensor, das seine Stimmung aus dem Raum bezieht, in dem es steht — Helligkeit, Farbtemperatur, Tageszeit. Aktuell zwei Seiten im Notizbuch. Vielleicht wird nie mehr daraus.',
+        soonTitle: 'Was als Nächstes kommt',
+        soonText: 'Auf dem Tisch liegt immer etwas Halbfertiges. Wenn du eine frühe Version von irgendwas hier ausprobieren willst, oder eine Idee hast, die du lieber gebaut als behalten siehst: melde dich.',
+        soonCta: 'Kontakt aufnehmen',
         modeTitle: 'Mode System',
         modeText: 'Ein einfaches System, das dir hilft, mit Multitasking aufzuhören und in einem klaren Zustand zu bleiben. Fünf Modi, ein paar Regeln, keine App.',
         modeCta: 'Guide öffnen',
@@ -152,12 +180,26 @@
         phProof: 'Foto: Proof-Token',
         proofTitle: 'Proof',
         proofText: 'Sieh deinen Tag, wie er wirklich war. Ein Token pro Sache, die passiert ist. Kein Tracking, kein Druck, kein Schönreden.',
-        proofCta: 'Mehr lesen',
-        soonTitle: 'Weitere Tools kommen',
-        soonText: 'Weitere Tools sind in Entwicklung. Aus echten Problemen entstanden, absichtlich simpel gehalten. Wenn du eine frühe Version testen willst, melde dich einfach.',
-        soonCta: 'Kontakt aufnehmen'
+        proofCta: 'Mehr lesen'
       },
       en: {
+        navHome: 'Home',
+        navTools: 'Projects',
+        navLifebar: 'LifeBar',
+        navLegal: 'Legal notice',
+        navPrivacy: 'Privacy',
+        footerEtsy: 'Etsy',
+        footerTagline: 'Made by one person, in Aachen.',
+        statusLive: 'In use',
+        statusProto: 'Working prototype',
+        statusConcept: 'Concept',
+        statusSketch: 'Sketch',
+        statusOpen: 'Open',
+        botTitle: 'Room Bot',
+        botText: 'A small desk creature with a camera and a light sensor that takes its mood from the room it stands in — brightness, colour temperature, time of day. Currently two pages in a notebook. It may never be more than that.',
+        soonTitle: 'Whatever comes next',
+        soonText: 'There is always something half-built on the desk. If you want to try an early version of any of this, or you have an idea you\u2019d rather see built than keep, get in touch.',
+        soonCta: 'Get in touch',
         modeTitle: 'Mode System',
         modeText: 'A simple system that helps you stop multitasking and stay in one clear state at a time. Five modes, a few rules, no app.',
         modeCta: 'Open guide',
@@ -168,10 +210,7 @@
         phProof: 'Photo: Proof tokens',
         proofTitle: 'Proof',
         proofText: 'See your day as it actually was. One token per thing that happened. No tracking, no pressure, no pretending.',
-        proofCta: 'Read more',
-        soonTitle: 'More tools coming',
-        soonText: 'Additional tools are in development. Built from real problems, designed to stay simple. If you want to test an early version, just get in touch.',
-        soonCta: 'Get in touch'
+        proofCta: 'Read more'
       }
     };
   </script>
