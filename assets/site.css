@@ -1157,7 +1157,64 @@ figure.media figcaption{
 .pill.status.is-live{ color: #2F6B55; }
 .pill.status.is-wip{ color: #A8762A; }
 .pill.status.is-idea{ color: #55707E; }
+.pill.status.is-open{ color: #6C5B8C; }
 
 .on-deep .pill.status.is-live{ color: #8FD3B6; }
 .on-deep .pill.status.is-wip{ color: #E5C173; }
 .on-deep .pill.status.is-idea{ color: #A8C6D6; }
+.on-deep .pill.status.is-open{ color: #C0B2D8; }
+
+/* ==========================================================================
+   Project timeline
+   A short stage list per project. The current stage is marked; stages after
+   it are dimmed. Order carries the meaning, the dot is decoration.
+   ========================================================================== */
+.timeline{
+  list-style: none;
+  margin: var(--sp-4) 0 0;
+  padding: 0 0 0 var(--sp-4);
+  display: grid;
+  gap: var(--sp-2);
+  position: relative;
+}
+.timeline::before{
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: currentColor;
+  opacity: .18;
+}
+.timeline li{
+  position: relative;
+  font-size: .95em;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.timeline li::before{
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--sp-4) + 1px);
+  top: .55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: var(--paper, #fff);
+  opacity: .45;
+}
+.timeline li.done::before{ background: currentColor; opacity: .45; }
+.timeline li.now::before{ background: currentColor; opacity: 1; box-shadow: 0 0 0 3px rgba(0,0,0,.06); }
+.timeline li.now{ color: inherit; font-weight: 600; }
+.timeline li.next{ opacity: .6; }
+.timeline .tl-when{
+  display: block;
+  font-size: .8em;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+.on-deep .timeline li{ color: var(--on-deep-soft); }
+.on-deep .timeline li.now{ color: var(--on-deep, #fff); }
