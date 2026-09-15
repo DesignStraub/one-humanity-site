@@ -61,95 +61,7 @@
 
     <section>
       <div class="wrap">
-        <div class="grid cols-2">
-
-          <!-- Mode System -->
-          <article class="card hoverable reveal">
-            <figure class="media" style="margin-bottom:var(--sp-4)">
-              <img src="mode.jpeg" alt="The five printed Mode System cards" loading="lazy">
-            </figure>
-            <span class="pill status is-live" data-i18n="statusLive">In use</span>
-            <h2 class="h3" data-i18n="modeTitle">Mode System</h2>
-            <p data-i18n="modeText">Five things started, none of them finished. The cards put you in one state at a time and name what that state excludes. Five cards, a few rules, no app — one card and five minutes to start.</p>
-            <ol class="timeline">
-              <li class="done" data-i18n="modeT1">Written as a set of rules for myself</li>
-              <li class="done" data-i18n="modeT2">First printed and laminated series</li>
-              <li class="now" data-i18n="modeT3">In use daily, guide online, shipping from Etsy</li>
-              <li class="next" data-i18n="modeT4">Next: colour coding, new icons, an exit condition per mode</li>
-            </ol>
-            <div class="actions">
-              <a class="btn primary" href="Mode-system-guide.html" data-i18n="modeCta">Open guide</a>
-              <a class="btn" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="etsyCta">View on Etsy</a>
-            </div>
-          </article>
-
-          <!-- LifeBar -->
-          <article class="card hoverable reveal">
-            <figure class="media" style="margin-bottom:var(--sp-4)">
-              <img src="img/lifebar-device.jpg" width="1500" height="899" loading="lazy"
-                   alt="The LifeBar on a desk">
-            </figure>
-            <span class="pill status is-wip" data-i18n="statusProto">In testing</span>
-            <h2 class="h3" data-i18n="lifeTitle">LifeBar</h2>
-            <p data-i18n="lifeText">By Sunday you have no idea where the week went. An ESP32-S3 bar display that turns invested minutes into EXP, levels and earned titles. It sits on the desk and can’t be swiped away. All data stays on the device.</p>
-            <ol class="timeline">
-              <li class="done" data-i18n="lifeT1">Idea: a resource bar like in a strategy game</li>
-              <li class="done" data-i18n="lifeT2">First board, printed case, firmware running</li>
-              <li class="now" data-i18n="lifeT3">Running on my own desk — level 14 and counting</li>
-              <li class="next" data-i18n="lifeT4">Next: firmware published, build guide, parts list</li>
-            </ol>
-            <div class="actions">
-              <a class="btn primary" href="lifebar.html" data-i18n="lifeCta">Read the documentation</a>
-            </div>
-          </article>
-
-          <!-- Proof -->
-          <article class="card hoverable reveal">
-            <figure class="ph wide" style="margin-bottom:var(--sp-4)">
-              <svg class="ph-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2"/><path d="M3 17l5-4 4 3 3-2 6 4"/>
-              </svg>
-              <figcaption class="ph-label" data-i18n="phProof">Photo: Proof tokens</figcaption>
-            </figure>
-            <span class="pill status is-idea" data-i18n="statusConcept">In design</span>
-            <h2 class="h3" data-i18n="proofTitle">Proof</h2>
-            <p data-i18n="proofText">See your day as it actually was. One token per thing that happened. No tracking, no pressure, no pretending.</p>
-            <ol class="timeline">
-              <li class="done" data-i18n="proofT1">Concept and rules written down</li>
-              <li class="now" data-i18n="proofT2">Working out the physical form of a token</li>
-              <li class="next" data-i18n="proofT3">Next: a first set to test with</li>
-            </ol>
-            <div class="actions">
-              <a class="btn primary" href="proof.html" data-i18n="proofCta">Read more</a>
-            </div>
-          </article>
-
-          <!-- Room Bot -->
-          <article class="card hoverable reveal">
-            <figure class="media" style="margin-bottom:var(--sp-4)">
-              <img src="img/roombot-sketch.jpg" width="1500" height="1000" loading="lazy"
-                   alt="Notebook sketch of the Room Bot: a boxy device with an animated face, labelled with camera, live data, conversations and learning">
-            </figure>
-            <span class="pill status is-idea" data-i18n="statusSketch">Sketch</span>
-            <h2 class="h3" data-i18n="botTitle">Room Bot</h2>
-            <p data-i18n="botText">A small desk creature that takes its mood from the room it stands in — brightness, colour temperature, time of day — and shows it on an animated face. Two pages in a notebook so far.</p>
-            <ol class="timeline">
-              <li class="now" data-i18n="botT1">Sketched: sensors, face, what drives the mood</li>
-              <li class="next" data-i18n="botT2">Next: get light and colour readings onto a display</li>
-            </ol>
-          </article>
-
-          <!-- Open -->
-          <article class="card reveal">
-            <span class="pill status is-open" data-i18n="statusOpen">Open</span>
-            <h2 class="h3" data-i18n="soonTitle">Whatever comes next</h2>
-            <p data-i18n="soonText">There is always something on the desk that isn’t here yet. If you want to try an early version of any of this, or you have an idea you’d rather see built than keep, get in touch.</p>
-            <div class="actions">
-              <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener" data-i18n="soonCta">Get in touch</a>
-            </div>
-          </article>
-
-        </div>
+        <div class="grid cols-2" data-projects="all"></div>
       </div>
     </section>
 
@@ -178,93 +90,27 @@
   <script>
     window.OH_I18N = {
       de: {
-        statusProto: 'Im Test',
-        statusConcept: 'In Gestaltung',
-        statusOpen: 'Offen',
-        modeText: 'Fünf Sachen angefangen, keine fertig. Die Karten bringen dich in einen Zustand zur Zeit und benennen, was dieser Zustand ausschließt. Fünf Karten, ein paar Regeln, keine App — Start mit einer Karte und fünf Minuten.',
-        modeT1: 'Als Regelwerk für mich selbst aufgeschrieben',
-        modeT2: 'Erste Serie gedruckt und laminiert',
-        modeT3: 'Täglich im Einsatz, Guide online, Versand über Etsy',
-        modeT4: 'Als Nächstes: Farbcodierung, neue Icons, eine Ausstiegsbedingung pro Modus',
-        lifeText: 'Am Sonntag weißt du nicht, wo die Woche hin ist. Ein ESP32-S3-Balkendisplay, das investierte Minuten in EXP, Level und verdiente Titel verwandelt. Es steht auf dem Schreibtisch und lässt sich nicht wegwischen. Alle Daten bleiben auf dem Gerät.',
-        lifeT1: 'Idee: eine Ressourcenleiste wie im Strategiespiel',
-        lifeT2: 'Erstes Board, gedrucktes Gehäuse, Firmware läuft',
-        lifeT3: 'Läuft auf meinem eigenen Schreibtisch — Level 14 und weiter',
-        lifeT4: 'Als Nächstes: Firmware veröffentlicht, Bauanleitung, Teileliste',
-        proofT1: 'Konzept und Regeln aufgeschrieben',
-        proofT2: 'Die physische Form eines Tokens wird ausgearbeitet',
-        proofT3: 'Als Nächstes: ein erstes Set zum Testen',
-        botT1: 'Skizziert: Sensorik, Gesicht, was die Stimmung treibt',
-        botT2: 'Als Nächstes: Licht- und Farbwerte auf ein Display bringen',
-        soonText: 'Auf dem Tisch liegt immer etwas, das hier noch nicht steht. Wenn du eine frühe Version von irgendwas hier ausprobieren willst, oder eine Idee hast, die du lieber gebaut als behalten siehst: melde dich.',
         navHome: 'Start',
         navTools: 'Projekte',
         navLifebar: 'LifeBar',
         navLegal: 'Impressum',
         navPrivacy: 'Datenschutz',
         footerEtsy: 'Etsy',
-        footerTagline: 'Von einer Person gemacht, in Aachen.',
-        statusLive: 'Im Einsatz',
-        statusSketch: 'Skizze',
-        botTitle: 'Room Bot',
-        botText: 'Ein kleines Tischwesen mit Kamera und Lichtsensor, das seine Stimmung aus dem Raum bezieht, in dem es steht — Helligkeit, Farbtemperatur, Tageszeit. Aktuell zwei Seiten im Notizbuch. Vielleicht wird nie mehr daraus.',
-        soonTitle: 'Was als Nächstes kommt',
-        soonCta: 'Kontakt aufnehmen',
-        modeTitle: 'Mode System',
-        modeCta: 'Guide öffnen',
-        etsyCta: 'Auf Etsy ansehen',
-        lifeTitle: 'LifeBar',
-        lifeCta: 'Doku lesen',
-        phProof: 'Foto: Proof-Token',
-        proofTitle: 'Proof',
-        proofText: 'Sieh deinen Tag, wie er wirklich war. Ein Token pro Sache, die passiert ist. Kein Tracking, kein Druck, kein Schönreden.',
-        proofCta: 'Mehr lesen'
+        footerTagline: 'Von einer Person gemacht, in Aachen.'
       },
       en: {
-        statusProto: 'In testing',
-        statusConcept: 'In design',
-        statusOpen: 'Open',
-        modeText: 'Five things started, none of them finished. The cards put you in one state at a time and name what that state excludes. Five cards, a few rules, no app — one card and five minutes to start.',
-        modeT1: 'Written as a set of rules for myself',
-        modeT2: 'First printed and laminated series',
-        modeT3: 'In use daily, guide online, shipping from Etsy',
-        modeT4: 'Next: colour coding, new icons, an exit condition per mode',
-        lifeText: 'By Sunday you have no idea where the week went. An ESP32-S3 bar display that turns invested minutes into EXP, levels and earned titles. It sits on the desk and can\u2019t be swiped away. All data stays on the device.',
-        lifeT1: 'Idea: a resource bar like in a strategy game',
-        lifeT2: 'First board, printed case, firmware running',
-        lifeT3: 'Running on my own desk — level 14 and counting',
-        lifeT4: 'Next: firmware published, build guide, parts list',
-        proofT1: 'Concept and rules written down',
-        proofT2: 'Working out the physical form of a token',
-        proofT3: 'Next: a first set to test with',
-        botT1: 'Sketched: sensors, face, what drives the mood',
-        botT2: 'Next: get light and colour readings onto a display',
-        soonText: 'There is always something on the desk that isn\u2019t here yet. If you want to try an early version of any of this, or you have an idea you\u2019d rather see built than keep, get in touch.',
         navHome: 'Home',
         navTools: 'Projects',
         navLifebar: 'LifeBar',
         navLegal: 'Legal notice',
         navPrivacy: 'Privacy',
         footerEtsy: 'Etsy',
-        footerTagline: 'Made by one person, in Aachen.',
-        statusLive: 'In use',
-        statusSketch: 'Sketch',
-        botTitle: 'Room Bot',
-        botText: 'A small desk creature with a camera and a light sensor that takes its mood from the room it stands in — brightness, colour temperature, time of day. Currently two pages in a notebook. It may never be more than that.',
-        soonTitle: 'Whatever comes next',
-        soonCta: 'Get in touch',
-        modeTitle: 'Mode System',
-        modeCta: 'Open guide',
-        etsyCta: 'View on Etsy',
-        lifeTitle: 'LifeBar',
-        lifeCta: 'Read the documentation',
-        phProof: 'Photo: Proof tokens',
-        proofTitle: 'Proof',
-        proofText: 'See your day as it actually was. One token per thing that happened. No tracking, no pressure, no pretending.',
-        proofCta: 'Read more'
+        footerTagline: 'Made by one person, in Aachen.'
       }
     };
   </script>
+  <script src="assets/projects.data.js"></script>
+  <script src="assets/projects.render.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>

@@ -88,13 +88,13 @@
             <h2 class="section-title" id="ueber-title" data-i18n="aboutTitle">Hi, I’m Marcello.</h2>
 
             <div class="lead">
-              <p data-i18n="aboutP1">I work four days a week as a developer and spend the rest of the time in the workshop. Everything here is made by one person in Aachen, Germany — printed, cut, laminated and packed by hand.</p>
-              <p data-i18n="aboutP2">It started because the things that were supposed to help me pay attention kept doing the opposite. So I began building the offline versions: a bar display that can’t be swiped away, a card that names one mode, a sticker that just sits there and waits.</p>
-              <p data-i18n="aboutP3">No philosophy attached. I make things I wanted to exist, and I show them here whether or not they turn into products. If one of them is useful to you, good.</p>
+              <p data-i18n="aboutP1">I’m a software developer, and this is what I do with my free time. Everything here comes out of a small studio in Aachen, Germany — drawn, printed, cut, laminated and packed by hand.</p>
+              <p data-i18n="aboutP2">What I like most is building things by hand: a bar display that can’t be swiped away, a card that names one mode, a sticker that just sits there and waits. It started because the things that were supposed to help me pay attention kept doing the opposite.</p>
+              <p data-i18n="aboutP3">No philosophy attached. I make things I wanted to exist. Some become products, some stay on my own desk. If one of them is useful to you, good.</p>
             </div>
 
             <ul class="pill-list" aria-label="About this project">
-              <li class="pill" data-i18n="pill1">Made by one person</li>
+              <li class="pill" data-i18n="pill1">DIY, by one person</li>
               <li class="pill" data-i18n="pill2">No app, no account</li>
               <li class="pill" data-i18n="pill3">Physical objects</li>
               <li class="pill" data-i18n="pill4">Aachen, Germany</li>
@@ -104,8 +104,8 @@
           <div class="reveal">
             <figure class="media">
               <img src="img/marcello.jpg" width="1500" height="1000" loading="lazy"
-                   alt="Marcello at his desk in Aachen, working on the One Planet One Humanity artwork, with the LifeBar prototype next to the keyboard">
-              <figcaption data-i18n="aboutCaption">The whole operation: one desk in Aachen.</figcaption>
+                   alt="Marcello at his desk in the Aachen studio, drawing bookmark designs in Illustrator, with the LifeBar running next to the keyboard">
+              <figcaption data-i18n="aboutCaption">The studio: one desk in Aachen.</figcaption>
             </figure>
           </div>
         </div>
@@ -131,7 +131,7 @@
 
           <div class="reveal" style="display:grid;gap:var(--sp-4);justify-items:start">
             <figure class="media" style="width:min(100%,360px)">
-              <img src="img/lifebar-device.jpg" width="1500" height="899" loading="lazy"
+              <img src="img/lifebar-device.jpg" width="2000" height="1198" loading="lazy"
                    alt="The LifeBar on a desk: a blue printed case with a narrow bar display">
               <figcaption data-i18n="lbCaption">The prototype, showing the lock screen.</figcaption>
             </figure>
@@ -147,28 +147,7 @@
         <h2 class="section-title reveal" id="tools-title" data-i18n="toolsTitle">What’s on the desk right now.</h2>
         <p class="lead reveal" data-i18n="toolsIntro">Each one started as a problem I had, and each one says where it actually stands — in use, in testing, or still a drawing.</p>
 
-        <div class="grid cols-3 reveal" style="margin-top:var(--sp-6)">
-          <a class="card" href="Mode-system-guide.html">
-            <span class="pill status is-live" data-i18n="statusLive">In use</span>
-            <h3 class="h3" data-i18n="cardModeTitle">Mode System</h3>
-            <p data-i18n="cardModeText">Five things started, none of them finished? Five printed cards that put you in one state at a time. One card, five minutes, no app.</p>
-            <div class="actions"><span class="pill" data-i18n="cardModeMeta">Guide →</span></div>
-          </a>
-
-          <a class="card" href="lifebar.html">
-            <span class="pill status is-wip" data-i18n="statusProto">In testing</span>
-            <h3 class="h3" data-i18n="cardLifeTitle">LifeBar</h3>
-            <p data-i18n="cardLifeText">By Sunday you have no idea where the week went. This one sits on the desk and shows you — invested minutes as EXP, levels and earned titles.</p>
-            <div class="actions"><span class="pill" data-i18n="cardLifeMeta">Documentation →</span></div>
-          </a>
-
-          <a class="card" href="proof.html">
-            <span class="pill status is-idea" data-i18n="statusConcept">In design</span>
-            <h3 class="h3" data-i18n="cardProofTitle">Proof</h3>
-            <p data-i18n="cardProofText">See your day as it actually was. One token per thing that happened — no tracking, no pressure, no pretending.</p>
-            <div class="actions"><span class="pill" data-i18n="cardProofMeta">Read more →</span></div>
-          </a>
-        </div>
+        <div class="grid cols-3" data-projects="featured" style="margin-top:var(--sp-6)"></div>
 
         <div class="btn-row reveal" style="margin-top:var(--sp-6)">
           <a class="btn" href="tools.html" data-i18n="toolsAll">All projects and where they stand →</a>
@@ -254,11 +233,11 @@
 
         aboutKicker: 'Wer das macht',
         aboutTitle: 'Hi, ich bin Marcello.',
-        aboutP1: 'Ich arbeite vier Tage die Woche als Entwickler, den Rest der Zeit stehe ich in der Werkstatt. Alles hier macht eine Person in Aachen — gedruckt, geschnitten, laminiert und von Hand verpackt.',
-        aboutP2: 'Angefangen hat es damit, dass die Dinge, die mir beim Aufmerksamsein helfen sollten, genau das Gegenteil taten. Also habe ich die Offline-Versionen gebaut: eine Anzeige, die man nicht wegwischen kann, eine Karte, die einen Modus benennt, ein Sticker, der einfach daliegt und wartet.',
-        aboutP3: 'Keine Philosophie dazu. Ich baue Dinge, die es für mich geben sollte, und zeige sie hier — ob ein Produkt daraus wird oder nicht. Wenn dir eines davon nützt, gut.',
-        aboutCaption: 'Der ganze Betrieb: ein Schreibtisch in Aachen.',
-        pill1: 'Von einer Person gemacht',
+        aboutP1: 'Ich bin Softwareentwickler und mache das hier in meiner Freizeit. Alles entsteht in einem kleinen Studio in Aachen — gezeichnet, gedruckt, geschnitten, laminiert und von Hand verpackt.',
+        aboutP2: 'Am liebsten baue ich Dinge selbst: eine Anzeige, die man nicht wegwischen kann, eine Karte, die einen Modus benennt, ein Sticker, der einfach daliegt und wartet. Angefangen hat es damit, dass die Sachen, die mir beim Aufmerksamsein helfen sollten, genau das Gegenteil taten.',
+        aboutP3: 'Keine Philosophie dazu. Ich baue Dinge, die es für mich geben sollte. Manches wird ein Produkt, manches bleibt auf meinem eigenen Schreibtisch. Wenn dir eines davon nützt, gut.',
+        aboutCaption: 'Das Studio: ein Schreibtisch in Aachen.',
+        pill1: 'DIY, von einer Person',
         pill2: 'Keine App, kein Account',
         pill3: 'Physische Objekte',
         pill4: 'Aachen',
@@ -274,18 +253,6 @@
         toolsTitle: 'Was gerade auf dem Tisch liegt.',
         toolsIntro: 'Jedes davon fing mit einem Problem an, das ich selbst hatte. Und bei jedem steht, wo es wirklich steht — im Einsatz, im Test oder noch als Zeichnung.',
         toolsAll: 'Alle Projekte und ihr Stand →',
-        statusLive: 'Im Einsatz',
-        statusProto: 'Im Test',
-        statusConcept: 'In Gestaltung',
-        cardModeTitle: 'Mode System',
-        cardModeText: 'Fünf Sachen angefangen, keine fertig? Fünf gedruckte Karten, die dich in einen Zustand zur Zeit bringen. Eine Karte, fünf Minuten, keine App.',
-        cardModeMeta: 'Guide →',
-        cardLifeTitle: 'LifeBar',
-        cardLifeText: 'Am Sonntag weißt du nicht, wo die Woche hin ist. Das Gerät steht auf dem Tisch und zeigt es dir — investierte Minuten als EXP, Level und verdiente Titel.',
-        cardLifeMeta: 'Doku →',
-        cardProofTitle: 'Proof',
-        cardProofText: 'Sieh deinen Tag, wie er wirklich war. Ein Token pro Sache, die passiert ist — kein Tracking, kein Druck, kein Schönreden.',
-        cardProofMeta: 'Mehr lesen →',
 
         takePartKicker: 'Mitmachen',
         takePartTitle: 'Nimm einen. Lass einen an einem guten Ort.',
@@ -314,11 +281,11 @@
 
         aboutKicker: 'Who makes this',
         aboutTitle: 'Hi, I\u2019m Marcello.',
-        aboutP1: 'I work four days a week as a developer and spend the rest of the time in the workshop. Everything here is made by one person in Aachen, Germany — printed, cut, laminated and packed by hand.',
-        aboutP2: 'It started because the things that were supposed to help me pay attention kept doing the opposite. So I began building the offline versions: a bar display that can\u2019t be swiped away, a card that names one mode, a sticker that just sits there and waits.',
-        aboutP3: 'No philosophy attached. I make things I wanted to exist, and I show them here whether or not they turn into products. If one of them is useful to you, good.',
-        aboutCaption: 'The whole operation: one desk in Aachen.',
-        pill1: 'Made by one person',
+        aboutP1: 'I\u2019m a software developer, and this is what I do with my free time. Everything here comes out of a small studio in Aachen, Germany — drawn, printed, cut, laminated and packed by hand.',
+        aboutP2: 'What I like most is building things by hand: a bar display that can\u2019t be swiped away, a card that names one mode, a sticker that just sits there and waits. It started because the things that were supposed to help me pay attention kept doing the opposite.',
+        aboutP3: 'No philosophy attached. I make things I wanted to exist. Some become products, some stay on my own desk. If one of them is useful to you, good.',
+        aboutCaption: 'The studio: one desk in Aachen.',
+        pill1: 'DIY, by one person',
         pill2: 'No app, no account',
         pill3: 'Physical objects',
         pill4: 'Aachen, Germany',
@@ -334,18 +301,6 @@
         toolsTitle: 'What\u2019s on the desk right now.',
         toolsIntro: 'Each one started as a problem I had, and each one says where it actually stands — in use, in testing, or still a drawing.',
         toolsAll: 'All projects and where they stand →',
-        statusLive: 'In use',
-        statusProto: 'In testing',
-        statusConcept: 'In design',
-        cardModeTitle: 'Mode System',
-        cardModeText: 'Five things started, none of them finished? Five printed cards that put you in one state at a time. One card, five minutes, no app.',
-        cardModeMeta: 'Guide →',
-        cardLifeTitle: 'LifeBar',
-        cardLifeText: 'By Sunday you have no idea where the week went. This one sits on the desk and shows you — invested minutes as EXP, levels and earned titles.',
-        cardLifeMeta: 'Documentation →',
-        cardProofTitle: 'Proof',
-        cardProofText: 'See your day as it actually was. One token per thing that happened — no tracking, no pressure, no pretending.',
-        cardProofMeta: 'Read more →',
 
         takePartKicker: 'Take part',
         takePartTitle: 'Take one. Leave one somewhere kind.',
@@ -360,6 +315,8 @@
       }
     };
   </script>
+  <script src="assets/projects.data.js"></script>
+  <script src="assets/projects.render.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>

@@ -143,6 +143,10 @@
     });
 
     try { localStorage.setItem('onehumanity-lang', lang); } catch (e) { /* private mode */ }
+
+    /* let other scripts (projects.render.js) rebuild their markup */
+    window.OH_LANG = lang;
+    document.dispatchEvent(new CustomEvent('oh:langchange', { detail: { lang: lang } }));
   }
 
   langButtons.forEach(function (btn) {
