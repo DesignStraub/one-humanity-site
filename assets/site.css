@@ -1562,20 +1562,18 @@ figure.media figcaption{
    ========================================================================== */
 .about{
   display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
   gap: clamp(26px, 5vw, 60px);
   align-items: center;
 }
+/* full photo, natural 3:2 ratio — only the corners are rounded */
 .about img{
   width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 50%;
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-md);
 }
-@media (max-width: 700px){
+@media (max-width: 760px){
   .about{ grid-template-columns: 1fr; }
-  .about img{ width: 160px; }
 }
 
 /* ==========================================================================
