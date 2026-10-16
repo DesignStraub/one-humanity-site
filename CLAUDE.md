@@ -3,7 +3,7 @@
 ## Ziel
 Die Website neu aufstellen: professioneller erster Eindruck, klare Haltung, Projekte als Roadmap. Die alte Seite positionierte das Projekt als kleine Papier-/Sticker-Werkstatt ("No philosophy attached"). Das stimmt nicht mehr – die Seite soll die Vision zeigen.
 
-Arbeite auf einem eigenen Branch (`redesign`). Live-Seite (`main`) nicht anfassen, bis Marcello freigibt.
+Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem eigenen Branch vorbereiten und erst nach Freigabe nach `main` mergen. Nach einem Merge startet Pages manchmal keinen Build – dann `gh api -X POST repos/DesignStraub/one-humanity-site/pages/builds`.
 
 ## Marke
 - Markenname: **OneHumanity** (kurz, für Logo, Gehäuse, Roboter)
@@ -38,7 +38,9 @@ Marcello – Software-Entwickler, gelernter Handwerker (Lackierer), baut in Aach
 
 Jedes Projekt bekommt: Status-Label, kurze Beschreibung, Button "Selbst bauen" und – falls vorhanden – "Fertig kaufen".
 
-Mode System und Proof stehen nicht mehr auf der Startseite; ihre Seiten (Mode-system-guide.html, proof.html) bleiben online und erscheinen auf tools.html unter "Weitere Projekte".
+Mode System und Proof stehen nicht mehr auf der Startseite; ihre Seiten (Mode-system-guide.html, proof.html) bleiben online und erscheinen auf tools.html im Abschnitt "Archiv & Projekthistorie" (tools.html#archiv, verlinkt in Navigation und Footer).
+
+**Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
 ## Seitenstruktur Startseite
 1. Hero: Weltherz-Logo, Leitsatz, ein Satz Mission, Buttons "Projekte ansehen" / "Selbst bauen"
@@ -57,5 +59,6 @@ Mode System und Proof stehen nicht mehr auf der Startseite; ihre Seiten (Mode-sy
 - Bestehende Seiten (impressum.html, datenschutz.html, tools.html, lifebar.html) erhalten und im selben Design halten.
 - Schnell, leicht, responsive, Hell-/Dunkelmodus. Keine Tracker, keine externen Analytics (passt zu "keine Cloud").
 - Bilder/Logo liegen im Repo (img/). Nichts von fremden Servern einbinden, was Daten über Besucher sammelt (keine Webfonts, keine Embeds).
+- Nach CSS-/JS-Änderungen den Versionsparameter `?v=…` in allen HTML-Dateien hochzählen, sonst zeigen Browser (v. a. Safari) alte Dateien aus dem Cache.
 - Fehlende Links sind als `#TODO-…` markiert: `grep -rn "#TODO" .` zeigt alle.
 - Vor größeren Umbauten kurz Plan zeigen, dann umsetzen.

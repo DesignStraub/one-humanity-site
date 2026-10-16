@@ -107,6 +107,7 @@
       navTools: 'Projekte',
       navLifebar: 'LifeBar',
       navJoin: 'Mitmachen',
+      navArchive: 'Archiv',
       navLegal: 'Impressum',
       navPrivacy: 'Datenschutz',
       navMenu: 'Menü',
@@ -116,6 +117,7 @@
       footerOpen: 'Offen',
       footerLegal: 'Rechtliches',
       footerRoadmap: 'Roadmap im Detail',
+      footerArchive: 'Archiv & Projekthistorie',
       footerFiles: 'Dateien auf MakerWorld',
       footerEtsy: 'Etsy-Shop',
       footerBack: 'Zur Startseite'
@@ -127,6 +129,7 @@
       navTools: 'Projects',
       navLifebar: 'LifeBar',
       navJoin: 'Take part',
+      navArchive: 'Archive',
       navLegal: 'Legal notice',
       navPrivacy: 'Privacy',
       navMenu: 'Menu',
@@ -136,6 +139,7 @@
       footerOpen: 'Open',
       footerLegal: 'Legal',
       footerRoadmap: 'Roadmap in detail',
+      footerArchive: 'Archive & project history',
       footerFiles: 'Files on MakerWorld',
       footerEtsy: 'Etsy shop',
       footerBack: 'Back to home'
