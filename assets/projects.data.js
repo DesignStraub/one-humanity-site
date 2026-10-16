@@ -17,6 +17,8 @@
                { href, label?: { de, en } }
      buy       optional. "Buy it ready-made".
                { href, label?: { de, en } }
+     gallery   optional. More pictures under the card (tools.html and home).
+               [{ src, w, h, alt: { de, en }, caption?: { de, en } }]
      follow    optional. Extra link, e.g. updates on Instagram.
                { href, label: { de, en } }
      actions   optional, legacy. Free-form buttons for tools.html cards.
@@ -77,13 +79,31 @@ window.OH_PROJECTS = [
     status: 'wip',
     featured: true,
     image: {
-      src: 'img/roombot-sketch.jpg',
-      w: 1500, h: 1000,
+      src: 'img/yusu-sketch-side.jpg',
+      w: 1400, h: 1050,
       alt: {
-        de: 'Frühe Notizbuchskizze des Roboters: ein Kopf mit animiertem Gesicht, beschriftet mit Kamera, Live-Daten und Konversation',
-        en: 'Early notebook sketch of the robot: a head with an animated face, labelled camera, live data and conversation'
+        de: 'Buntstiftskizze des Roboterkopfs von vorn und von der Seite, beschriftet mit Screen, Kamera, Lautsprecher und Mikrofon-Array sowie LED-Streifen',
+        en: 'Coloured-pencil sketch of the robot head from the front and the side, labelled screen, camera, speaker and mic array, and LED strip'
       }
     },
+    gallery: [
+      {
+        src: 'img/yusu-eyes-display.jpg', w: 1440, h: 480,
+        caption: { de: 'Die Augen auf dem Display: zufrieden, verärgert, müde', en: 'The eyes on the display: content, annoyed, tired' },
+        alt: {
+          de: 'Drei Augenpaare in leuchtendem Blau auf schwarzem Grund, gerendert im Pixelraster des Displays',
+          en: 'Three pairs of glowing blue eyes on black, rendered in the display’s pixel grid'
+        }
+      },
+      {
+        src: 'img/yusu-eyes-states.jpg', w: 1600, h: 640,
+        caption: { de: 'Zehn Gefühlslagen, von ruhig bis gelangweilt', en: 'Ten moods, from calm to bored' },
+        alt: {
+          de: 'Übersicht von zehn Augenausdrücken: ruhig, zufrieden, freudig, neugierig, überrascht, traurig, besorgt, verärgert, müde, gelangweilt',
+          en: 'Overview of ten eye expressions: calm, content, happy, curious, surprised, sad, worried, annoyed, tired, bored'
+        }
+      }
+    ],
     build: { href: '#TODO-yusu-repo' },
     follow: {
       href: '#TODO-instagram',
@@ -92,22 +112,24 @@ window.OH_PROJECTS = [
     de: {
       title: 'Yusu – OneHumanity R1',
       tagline: 'Ein modularer Roboter. Begleiter statt Diener.',
-      text: 'Yusu zeigt Gefühle mit Display-Augen und einem LED-Mund, läuft komplett lokal und ist aus Modulen gebaut, die man einzeln tauschen, reparieren und weiterentwickeln kann. Wir fangen beim Kopf an.',
-      facts: ['Emotionale Mimik', 'Läuft lokal', 'Modular austauschbar'],
+      text: 'Yusu zeigt Gefühle mit Display-Augen und einem LED-Mund, läuft komplett lokal und ist aus Modulen gebaut, die man einzeln tauschen, reparieren und weiterentwickeln kann. Wir fangen beim Kopf an: Die Augen beherrschen schon zehn Gefühlslagen.',
+      facts: ['Emotionale Mimik', 'Kamera, Mikrofon, Lautsprecher', 'Läuft lokal', 'Modular austauschbar'],
       timeline: [
-        { state: 'done', text: 'Konzept und erste Skizzen' },
-        { state: 'now',  text: 'In Entwicklung: der Kopf – Augen, Mund, Mimik' },
+        { state: 'done', text: 'Konzept und Skizzen des Kopfes' },
+        { state: 'done', text: 'Augen-Engine: zehn Gefühlslagen, auf dem Display gerendert' },
+        { state: 'now',  text: 'In Entwicklung: Kopf-Gehäuse, Mund und Mimik' },
         { state: 'next', text: 'Als Nächstes: Dateien und Firmware des Kopfes veröffentlichen' }
       ]
     },
     en: {
       title: 'Yusu – OneHumanity R1',
       tagline: 'A modular robot. A companion, not a servant.',
-      text: 'Yusu shows emotion with display eyes and an LED mouth, runs entirely locally and is built from modules you can swap, repair and improve one at a time. We are starting with the head.',
-      facts: ['Expressive face', 'Runs locally', 'Modular and swappable'],
+      text: 'Yusu shows emotion with display eyes and an LED mouth, runs entirely locally and is built from modules you can swap, repair and improve one at a time. We are starting with the head: the eyes already know ten moods.',
+      facts: ['Expressive face', 'Camera, mic, speaker', 'Runs locally', 'Modular and swappable'],
       timeline: [
-        { state: 'done', text: 'Concept and first sketches' },
-        { state: 'now',  text: 'In development: the head – eyes, mouth, expressions' },
+        { state: 'done', text: 'Concept and sketches of the head' },
+        { state: 'done', text: 'Eye engine: ten moods, rendered on the display' },
+        { state: 'now',  text: 'In development: head shell, mouth and expressions' },
         { state: 'next', text: 'Next: publish files and firmware for the head' }
       ]
     }
@@ -118,6 +140,24 @@ window.OH_PROJECTS = [
     id: 'badge',
     status: 'new',
     featured: true,
+    image: {
+      src: 'img/badge-laptop.jpg',
+      w: 900, h: 1200,
+      alt: {
+        de: 'Das schwarz-weiße Weltherz-Badge auf einem silbernen Laptop-Deckel',
+        en: 'The black-and-white World Heart badge on a silver laptop lid'
+      }
+    },
+    gallery: [
+      {
+        src: 'img/badge.jpg', w: 900, h: 1200,
+        caption: { de: 'Zweifarbig gedruckt', en: 'Printed in two colours' },
+        alt: {
+          de: 'Nahaufnahme des runden Badges: weißes Herz mit schwarzer Weltkarte auf schwarzem Grund',
+          en: 'Close-up of the round badge: a white heart with a black world map on a black disc'
+        }
+      }
+    ],
     build: {
       href: '#TODO-makerworld-badge',
       label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }

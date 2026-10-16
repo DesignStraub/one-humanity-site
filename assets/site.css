@@ -1606,3 +1606,29 @@ figure.media figcaption{
   .lang-toggle button{ padding: 8px 9px; }
   .theme-toggle, .nav-toggle{ width: 40px; height: 40px; }
 }
+
+/* gallery row under a roadmap card — wide pictures take a full row */
+.roadmap-card .gallery{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: var(--sp-3);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--line);
+}
+.roadmap-card .gallery figure.media img{
+  width: 100%;
+  max-height: none;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+}
+.roadmap-card .gallery figure.media figcaption{ font-size: 13px; }
+/* panoramas (e.g. eye renders on black) are shown whole, not cropped */
+.roadmap-card .gallery figure.is-wide img{
+  object-fit: contain;
+  background: #05080d;
+}
+.roadmap-card .gallery figure.is-wide{ grid-column: 1 / -1; }
+.roadmap-card .gallery figure.is-wide img{ height: auto; }

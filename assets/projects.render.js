@@ -67,6 +67,23 @@
       '</figure>';
   }
 
+  /* Extra pictures under a roadmap card, e.g. the current state of a build. */
+  function galleryHTML(project, lang) {
+    var items = project.gallery || [];
+    if (!items.length) return '';
+    return '<div class="gallery">' + items.map(function (img) {
+      var caption = pick(img.caption, lang);
+      var wide = img.w && img.h && img.w / img.h >= 2;
+      return '<figure class="media' + (wide ? ' is-wide' : '') + '">' +
+        '<img src="' + esc(img.src) + '"' +
+        (img.w ? ' width="' + esc(img.w) + '"' : '') +
+        (img.h ? ' height="' + esc(img.h) + '"' : '') +
+        ' loading="lazy" alt="' + esc(pick(img.alt, lang)) + '">' +
+        (caption ? '<figcaption>' + esc(caption) + '</figcaption>' : '') +
+        '</figure>';
+    }).join('') + '</div>';
+  }
+
   function timelineHTML(project, lang) {
     var steps = (project[lang] && project[lang].timeline) || [];
     if (!steps.length) return '';
@@ -128,6 +145,7 @@
           (actions ? '<div class="actions">' + actions + '</div>' : '') +
         '</div>' +
         media +
+        galleryHTML(project, lang) +
       '</article>' +
     '</li>';
   }
