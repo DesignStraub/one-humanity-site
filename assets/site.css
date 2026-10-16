@@ -1632,3 +1632,5 @@ figure.media figcaption{
 }
 .roadmap-card .gallery figure.is-wide{ grid-column: 1 / -1; }
 .roadmap-card .gallery figure.is-wide img{ height: auto; }
+.hint a{ text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+.hint a:hover{ color: var(--ink); text-decoration-color: currentColor; }

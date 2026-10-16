@@ -159,7 +159,7 @@ window.OH_PROJECTS = [
       }
     ],
     build: {
-      href: '#TODO-makerworld-badge',
+      href: 'https://makerworld.com/models/3447099-heart-world-laptop-logo-badge-coaster',
       label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }
     },
     buy: { href: '#TODO-etsy-badge' },
