@@ -52,6 +52,30 @@
     });
   }
 
+  /* --- theme -----------------------------------------------------------
+     Follows the system until the visitor picks one. The choice is stored
+     locally and applied by a one-line script in each page's <head>, so
+     there is no flash of the wrong theme.
+  --------------------------------------------------------------------- */
+  var themeToggle = document.querySelector('[data-theme-toggle]');
+  if (themeToggle) {
+    var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    var currentTheme = function () {
+      return document.documentElement.getAttribute('data-theme') ||
+        (darkQuery.matches ? 'dark' : 'light');
+    };
+    var syncThemeButton = function () {
+      themeToggle.setAttribute('aria-pressed', currentTheme() === 'dark' ? 'true' : 'false');
+    };
+    themeToggle.addEventListener('click', function () {
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('onehumanity-theme', next); } catch (e) { /* private mode */ }
+      syncThemeButton();
+    });
+    syncThemeButton();
+  }
+
   /* --- reveal on scroll ------------------------------------------------ */
   var revealables = document.querySelectorAll('.reveal');
   if (revealables.length) {
@@ -78,24 +102,42 @@
   var BASE_I18N = {
     de: {
       navHome: 'Start',
-      navTools: 'Tools',
+      navPrinciples: 'Haltung',
+      navProjects: 'Projekte',
+      navTools: 'Projekte',
       navLifebar: 'LifeBar',
+      navJoin: 'Mitmachen',
       navLegal: 'Impressum',
       navPrivacy: 'Datenschutz',
       navMenu: 'Menü',
-      footerTagline: 'Ein kleines, menschlich gemachtes Projekt.',
-      footerEtsy: 'Etsy',
+      navTheme: 'Hell/Dunkel umschalten',
+      footerTagline: 'Offenes Hardware-Studio aus Aachen.',
+      footerProjects: 'Projekte',
+      footerOpen: 'Offen',
+      footerLegal: 'Rechtliches',
+      footerRoadmap: 'Roadmap im Detail',
+      footerFiles: 'Dateien auf MakerWorld',
+      footerEtsy: 'Etsy-Shop',
       footerBack: 'Zur Startseite'
     },
     en: {
       navHome: 'Home',
-      navTools: 'Tools',
+      navPrinciples: 'Principles',
+      navProjects: 'Projects',
+      navTools: 'Projects',
       navLifebar: 'LifeBar',
+      navJoin: 'Take part',
       navLegal: 'Legal notice',
       navPrivacy: 'Privacy',
       navMenu: 'Menu',
-      footerTagline: 'A small, human-made project.',
-      footerEtsy: 'Etsy',
+      navTheme: 'Toggle light/dark',
+      footerTagline: 'An open hardware studio from Aachen.',
+      footerProjects: 'Projects',
+      footerOpen: 'Open',
+      footerLegal: 'Legal',
+      footerRoadmap: 'Roadmap in detail',
+      footerFiles: 'Files on MakerWorld',
+      footerEtsy: 'Etsy shop',
       footerBack: 'Back to home'
     }
   };

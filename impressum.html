@@ -6,7 +6,10 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Impressum — OneHumanity / MorphicMoons</title>
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#faf6ef">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
+  <script>try{var t=localStorage.getItem('onehumanity-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
   <link rel="stylesheet" href="assets/site.css">
 </head>
 
@@ -15,7 +18,7 @@
   <a class="visually-hidden" href="#main">Zum Inhalt</a>
 
   <nav class="nav" id="nav">
-    <a href="index.html" class="brand" aria-label="OneHumanity — Startseite">
+    <a href="index.html" class="brand" aria-label="OneHumanity — home">
       <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
         <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
       </svg>
@@ -27,17 +30,22 @@
         <button type="button" data-lang="de">DE</button>
         <button type="button" data-lang="en">EN</button>
       </div>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"
+              aria-label="Toggle light/dark" data-i18n-attr="aria-label:navTheme">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z" fill="currentColor"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links"
-              aria-label="Menü" data-i18n-attr="aria-label:navMenu">
+              aria-label="Menu" data-i18n-attr="aria-label:navMenu">
         <span></span>
       </button>
     </div>
 
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="index.html" data-i18n="navHome">Start</a>
-      <a class="nav-link" href="tools.html" data-i18n="navTools">Projects</a>
+      <a class="nav-link" href="index.html#haltung" data-i18n="navPrinciples">Principles</a>
+      <a class="nav-link" href="index.html#projekte" data-i18n="navProjects">Projects</a>
       <a class="nav-link" href="lifebar.html" data-i18n="navLifebar">LifeBar</a>
-      <a class="nav-link" href="datenschutz.html" data-i18n="navPrivacy">Datenschutz</a>
+      <a class="nav-link" href="index.html#mitmachen" data-i18n="navJoin">Take part</a>
     </div>
   </nav>
 
@@ -97,15 +105,34 @@
         <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
           <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
         </svg>
-        <strong>One Planet, One Humanity</strong>
-        <span class="small">© <span data-year>2026</span> · MorphicMoons</span>
+        <strong class="manifest">One Planet, One Humanity</strong>
+        <span class="small" data-i18n="footerTagline">An open hardware studio from Aachen.</span>
+        <span class="small">© <span data-year>2026</span> OneHumanity · MorphicMoons, Aachen</span>
       </div>
-      <ul class="footer-nav">
-        <li><a href="index.html" data-i18n="navHome">Start</a></li>
-        <li><a href="tools.html" data-i18n="navTools">Projects</a></li>
-        <li><a href="lifebar.html" data-i18n="navLifebar">LifeBar</a></li>
-        <li><a href="datenschutz.html" data-i18n="navPrivacy">Datenschutz</a></li>
-      </ul>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h2 data-i18n="footerProjects">Projects</h2>
+          <ul class="footer-nav">
+            <li><a href="lifebar.html">LifeBar</a></li>
+            <li><a href="tools.html" data-i18n="footerRoadmap">Roadmap in detail</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 data-i18n="footerOpen">Open</h2>
+          <ul class="footer-nav">
+            <li><a href="https://github.com/DesignStraub" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener" data-i18n="footerFiles">Files on MakerWorld</a></li>
+            <li><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Etsy shop</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 data-i18n="footerLegal">Legal</h2>
+          <ul class="footer-nav">
+            <li><a href="impressum.html" data-i18n="navLegal">Legal notice</a></li>
+            <li><a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </footer>
 

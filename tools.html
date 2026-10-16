@@ -4,9 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>Projects — One Planet, One Humanity</title>
-  <meta name="description" content="Everything I’m building, with an honest status: Mode System, LifeBar, Proof and the sketches that may never get finished.">
-  <meta name="theme-color" content="#faf6ef">
+  <title>Roadmap — OneHumanity</title>
+  <meta name="description" content="The OneHumanity roadmap: LifeBar, the Yusu robot, the World Heart badge and free stickers – each with its current stage, open files and where to buy it ready-made.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
+  <script>try{var t=localStorage.getItem('onehumanity-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
   <link rel="stylesheet" href="assets/site.css">
 </head>
 
@@ -27,6 +30,11 @@
         <button type="button" data-lang="de">DE</button>
         <button type="button" data-lang="en">EN</button>
       </div>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"
+              aria-label="Toggle light/dark" data-i18n-attr="aria-label:navTheme">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z" fill="currentColor"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+      </button>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links"
               aria-label="Menu" data-i18n-attr="aria-label:navMenu">
         <span></span>
@@ -34,10 +42,10 @@
     </div>
 
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="index.html" data-i18n="navHome">Home</a>
+      <a class="nav-link" href="index.html#haltung" data-i18n="navPrinciples">Principles</a>
+      <a class="nav-link" href="index.html#projekte" data-i18n="navProjects">Projects</a>
       <a class="nav-link" href="lifebar.html" data-i18n="navLifebar">LifeBar</a>
-      <a class="nav-link" href="impressum.html" data-i18n="navLegal">Legal notice</a>
-      <a class="nav-link" href="datenschutz.html" data-i18n="navPrivacy">Privacy</a>
+      <a class="nav-link" href="index.html#mitmachen" data-i18n="navJoin">Take part</a>
     </div>
   </nav>
 
@@ -47,21 +55,29 @@
       <span class="orb b" aria-hidden="true"></span>
       <div class="hero-inner">
         <div data-lang-content="en" class="active reveal">
-          <p class="kicker">Projects</p>
-          <h1 class="h1">Everything I’m building, and where it stands</h1>
-          <p class="lead">Each project below starts from a problem I had myself. Some are printed and in daily use, some are running on a prototype, some are still a page in a notebook. The stage is written next to each one, so you can see what’s real today.</p>
+          <p class="kicker">Roadmap</p>
+          <h1 class="h1">Every project, every stage.</h1>
+          <p class="lead">From the desk display to the robot: what is in use today, what is in development, and what comes next. Everything here is open – build it yourself, or buy it ready-made where that exists.</p>
         </div>
         <div data-lang-content="de" class="reveal">
-          <p class="kicker">Projekte</p>
-          <h1 class="h1">Woran ich baue — und wo es steht</h1>
-          <p class="lead">Jedes Projekt hier fängt bei einem Problem an, das ich selbst hatte. Manches ist gedruckt und täglich im Einsatz, manches läuft auf einem Prototyp, manches ist noch eine Seite im Notizbuch. Der Stand steht jeweils daneben, damit du siehst, was heute wirklich da ist.</p>
+          <p class="kicker">Roadmap</p>
+          <h1 class="h1">Jedes Projekt, jede Etappe.</h1>
+          <p class="lead">Vom Schreibtisch-Display bis zum Roboter: was heute im Einsatz ist, was gerade entsteht und was als Nächstes kommt. Alles hier ist offen – selbst bauen oder, wo es das gibt, fertig kaufen.</p>
         </div>
       </div>
     </header>
 
-    <section>
+    <section aria-label="Roadmap">
       <div class="wrap">
-        <div class="grid cols-2" data-projects="all"></div>
+        <ol class="roadmap" data-projects="roadmap" data-timeline style="margin-top:0"></ol>
+      </div>
+    </section>
+
+    <section aria-labelledby="more-title">
+      <div class="wrap">
+        <p class="kicker reveal" data-i18n="moreKicker">More projects</p>
+        <h2 class="section-title reveal" id="more-title" data-i18n="moreTitle">Smaller things from the studio.</h2>
+        <div class="grid cols-2" data-projects="more" style="margin-top:var(--sp-5)"></div>
       </div>
     </section>
 
@@ -73,39 +89,46 @@
         <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
           <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
         </svg>
-        <strong>One Planet, One Humanity</strong>
-        <span class="small" data-i18n="footerTagline">Made by one person, in Aachen.</span>
-        <span class="small">© <span data-year>2026</span> · MorphicMoons</span>
+        <strong class="manifest">One Planet, One Humanity</strong>
+        <span class="small" data-i18n="footerTagline">An open hardware studio from Aachen.</span>
+        <span class="small">© <span data-year>2026</span> OneHumanity · MorphicMoons, Aachen</span>
       </div>
-      <ul class="footer-nav">
-        <li><a href="index.html" data-i18n="navHome">Home</a></li>
-        <li><a href="lifebar.html" data-i18n="navLifebar">LifeBar</a></li>
-        <li><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Etsy</a></li>
-        <li><a href="impressum.html" data-i18n="navLegal">Legal notice</a></li>
-        <li><a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a></li>
-      </ul>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h2 data-i18n="footerProjects">Projects</h2>
+          <ul class="footer-nav">
+            <li><a href="lifebar.html">LifeBar</a></li>
+            <li><a href="tools.html" data-i18n="footerRoadmap">Roadmap in detail</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 data-i18n="footerOpen">Open</h2>
+          <ul class="footer-nav">
+            <li><a href="https://github.com/DesignStraub" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener" data-i18n="footerFiles">Files on MakerWorld</a></li>
+            <li><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Etsy shop</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2 data-i18n="footerLegal">Legal</h2>
+          <ul class="footer-nav">
+            <li><a href="impressum.html" data-i18n="navLegal">Legal notice</a></li>
+            <li><a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </footer>
 
   <script>
     window.OH_I18N = {
       de: {
-        navHome: 'Start',
-        navTools: 'Projekte',
-        navLifebar: 'LifeBar',
-        navLegal: 'Impressum',
-        navPrivacy: 'Datenschutz',
-        footerEtsy: 'Etsy',
-        footerTagline: 'Von einer Person gemacht, in Aachen.'
+        moreKicker: 'Weitere Projekte',
+        moreTitle: 'Kleinere Dinge aus dem Studio.'
       },
       en: {
-        navHome: 'Home',
-        navTools: 'Projects',
-        navLifebar: 'LifeBar',
-        navLegal: 'Legal notice',
-        navPrivacy: 'Privacy',
-        footerEtsy: 'Etsy',
-        footerTagline: 'Made by one person, in Aachen.'
+        moreKicker: 'More projects',
+        moreTitle: 'Smaller things from the studio.'
       }
     };
   </script>
