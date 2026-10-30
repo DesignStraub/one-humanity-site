@@ -23,6 +23,7 @@
   var STATUS = {
     live:    { cls: 'is-live', de: 'Täglich im Einsatz', en: 'In daily use' },
     wip:     { cls: 'is-wip',  de: 'In Entwicklung',     en: 'In development' },
+    concept: { cls: 'is-idea', de: 'Designstudie',       en: 'Design study' },
     new:     { cls: 'is-new',  de: 'Neu',                en: 'New' },
     free:    { cls: 'is-open', de: 'Frei verfügbar',     en: 'Freely available' },
     testing: { cls: 'is-wip',  de: 'Im Test',            en: 'In testing' },
@@ -150,16 +151,22 @@
     '</li>';
   }
 
-  /* Card for the smaller, non-featured projects on tools.html. */
+  /* Card for the smaller projects (workshop, archive). */
   function moreCard(project, lang) {
     var copy = project[lang] || project.en || {};
+    var actions = project.actions
+      ? legacyActionsHTML(project, lang)
+      : '<div class="actions">' +
+          buttonHTML(project.build, LABELS.build, true, lang) +
+          buttonHTML(project.buy, LABELS.buy, false, lang) +
+        '</div>';
     return '<article class="card reveal in" id="project-' + esc(project.id) + '">' +
       imageHTML(project, lang, 'margin-bottom:var(--sp-4)') +
       statusHTML(project, lang) +
       '<h3 class="h3">' + esc(copy.title) + '</h3>' +
       '<p>' + esc(copy.text) + '</p>' +
-      timelineHTML(project, lang) +
-      legacyActionsHTML(project, lang) +
+      (project.group === 'archive' ? timelineHTML(project, lang) : '') +
+      actions +
       '</article>';
   }
 
@@ -167,9 +174,10 @@
     if (lang !== 'de' && lang !== 'en') lang = 'en';
     containers.forEach(function (container) {
       var mode = container.getAttribute('data-projects');
-      if (mode === 'more') {
+      /* workshop / archive: small cards for one group; "more" = everything not featured */
+      if (mode === 'workshop' || mode === 'archive' || mode === 'more') {
         container.innerHTML = projects
-          .filter(function (p) { return !p.featured; })
+          .filter(function (p) { return mode === 'more' ? !p.featured : p.group === mode; })
           .map(function (p) { return moreCard(p, lang); }).join('');
         return;
       }

@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>OneHumanity — One Planet, One Humanity</title>
-  <meta name="description" content="OneHumanity is an open hardware studio from Aachen. We build technology that serves you instead of using you up. Everything is open: build it yourself for free, or buy it ready-made.">
+  <title>OneHumanity Robotics — One Planet, One Humanity</title>
+  <meta name="description" content="OneHumanity Robotics aus Aachen: Roboter und Maschinen, die Menschen begleiten. Vom Konzept bis zum Prototyp – Schritt für Schritt gebaut und offen dokumentiert.">
   <link rel="canonical" href="https://oneplanetonehumanity.com/">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="OneHumanity — One Planet, One Humanity">
-  <meta property="og:description" content="An open hardware studio from Aachen. Technology that serves you. Build it yourself for free, or buy it ready-made.">
-  <meta property="og:image" content="https://oneplanetonehumanity.com/sticker.png">
+  <meta property="og:title" content="OneHumanity Robotics — One Planet, One Humanity">
+  <meta property="og:description" content="Robotics from Aachen. Robots and machines that accompany people – from concept to working prototype, step by step.">
+  <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
-  <link rel="stylesheet" href="assets/site.css?v=20261016b">
+  <link rel="stylesheet" href="assets/site.css?v=20261030">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
@@ -25,11 +25,11 @@
   <a class="visually-hidden" href="#main">Skip to content</a>
 
   <nav class="nav" id="nav">
-    <a href="#top" class="brand" aria-label="OneHumanity — home">
+    <a href="#top" class="brand" aria-label="OneHumanity Robotics — home">
       <svg width="26" height="26" class="logo" viewBox="0 0 64 64" aria-hidden="true">
         <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
       </svg>
-      <span class="title">OneHumanity</span>
+      <span class="title">OneHumanity <span class="suffix">Robotics</span></span>
     </a>
 
     <div class="nav-actions">
@@ -49,9 +49,9 @@
     </div>
 
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="#haltung" data-i18n="navPrinciples">Principles</a>
+      <a class="nav-link" href="#arbeitsweise" data-i18n="navWork">How we work</a>
       <a class="nav-link" href="#projekte" data-i18n="navProjects">Projects</a>
-      <a class="nav-link" href="lifebar.html" data-i18n="navLifebar">LifeBar</a>
+      <a class="nav-link" href="#werkstatt" data-i18n="navWorkshop">Workshop</a>
       <a class="nav-link" href="#mitmachen" data-i18n="navJoin">Take part</a>
       <a class="nav-link" href="tools.html#archiv" data-i18n="navArchive">Archive</a>
     </div>
@@ -74,53 +74,66 @@
           <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
         </svg>
 
-        <p class="brandline reveal">OneHumanity</p>
+        <p class="brandline reveal">OneHumanity Robotics</p>
         <h1 class="h-hero reveal">One Planet,<br>One Humanity</h1>
 
-        <p class="lead reveal" data-i18n="heroLead">We build technology that serves you instead of using you up. Everything is open: build it yourself for free – or buy it ready-made.</p>
+        <p class="lead reveal" data-i18n="heroLead">Robotics from Aachen. We develop robots and machines that accompany people – from the first concept to a working prototype. Step by step, openly documented, and seen through to the end.</p>
 
         <div class="btn-row reveal" style="justify-content:center">
           <a href="#projekte" class="btn primary" data-i18n="heroCtaProjects">See the projects</a>
-          <a href="https://github.com/DesignStraub" class="btn" target="_blank" rel="noopener" data-i18n="heroCtaBuild">Build it yourself</a>
+          <a href="https://www.youtube.com/@marcelloswigswag" class="btn" target="_blank" rel="noopener" data-i18n="heroCtaYoutube">Follow on YouTube</a>
         </div>
 
         <ul class="facts reveal">
-          <li data-i18n="heroFact1">Open hardware studio</li>
+          <li data-i18n="heroFact1">Robotics</li>
           <li data-i18n="heroFact2">Aachen, Germany</li>
-          <li data-i18n="heroFact3">No account, no cloud</li>
+          <li data-i18n="heroFact3">Concept &amp; prototypes</li>
         </ul>
 
-        <a href="#haltung" class="arrow-down reveal" aria-label="Scroll down"></a>
+        <figure class="hero-media reveal">
+          <img src="img/yusu-head-render.jpg" width="1600" height="1200" fetchpriority="high"
+               alt="Render of the Yusu robot head: white low-poly shell, dark visor with glowing blue eyes and an LED mouth" data-i18n-attr="alt:heroAlt">
+          <figcaption data-i18n="heroCaption">Yusu – OneHumanity R1, our first large robot. Current stage: the head.</figcaption>
+        </figure>
       </div>
     </header>
 
-    <!-- ================= PRINCIPLES ================= -->
-    <section id="haltung" aria-labelledby="haltung-title">
+    <!-- ================= WAY OF WORKING ================= -->
+    <section id="arbeitsweise" aria-labelledby="arbeitsweise-title">
       <div class="wrap">
-        <p class="kicker reveal" data-i18n="prKicker">What we stand for</p>
-        <h2 class="section-title reveal" id="haltung-title" data-i18n="prTitle">Technology that fits into your life – not the other way round.</h2>
-        <p class="lead reveal" data-i18n="prIntro">Three principles run through everything we build. They are less a promise than a way of working: you can check every one of them yourself.</p>
+        <p class="kicker reveal" data-i18n="wwKicker">How we work</p>
+        <h2 class="section-title reveal" id="arbeitsweise-title" data-i18n="wwTitle">Piece by piece. And through to the end.</h2>
+        <p class="lead reveal" data-i18n="wwIntro">Big machines are built from small, finished steps. Every project here runs through the same three stages – and a stage only counts as done when it works and is written down.</p>
 
         <ol class="principles">
           <li class="principle reveal">
-            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 2.5 12 8 18M16 6l5.5 6L16 18M13.5 4l-3 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
             <span class="num">01</span>
-            <h3 class="h3" data-i18n="pr1Title">Open source</h3>
-            <p data-i18n="pr1Text">Files, firmware and build guides are free to rebuild. You can open, repair and improve everything you get from us.</p>
+            <h3 class="h3" data-i18n="ww1Title">Concept</h3>
+            <p data-i18n="ww1Text">What should the machine do, how should it behave, where are its limits? Purpose, character and safety rules are set before anything is built.</p>
           </li>
           <li class="principle reveal">
-            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.9 7.5-9.5V6L12 3z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/><path d="m8.8 12 2.2 2.2 4.4-4.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.3-.2-.2-2.3 2.6-2.6z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/></svg></span>
             <span class="num">02</span>
-            <h3 class="h3" data-i18n="pr2Title">No account, no cloud, no feed</h3>
-            <p data-i18n="pr2Text">Our devices work on their own, right where they are. Your data stays with you – no sign-up, no subscription.</p>
+            <h3 class="h3" data-i18n="ww2Title">Prototype</h3>
+            <p data-i18n="ww2Text">Design, print, solder, program, test – in our own workshop in Aachen. Each module gets its own electronics and is tested on its own.</p>
           </li>
           <li class="principle reveal">
-            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/></svg></span>
+            <span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="m8.3 12.2 2.5 2.5 5-5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
             <span class="num">03</span>
-            <h3 class="h3" data-i18n="pr3Title">Built for people, not for metrics</h3>
-            <p data-i18n="pr3Text">We design for calm and attention, not for screen time. Living in harmony with technology instead of being swallowed by it.</p>
+            <h3 class="h3" data-i18n="ww3Title">Finish</h3>
+            <p data-i18n="ww3Text">A step is finished when it runs and is documented. Only then does the next one begin. That is how the LifeBar became a device in daily use.</p>
           </li>
         </ol>
+
+        <div class="values reveal">
+          <p class="kicker" data-i18n="valuesKicker">What we stand for</p>
+          <ul class="values-list">
+            <li><strong data-i18n="v1Title">Open</strong> <span data-i18n="v1Text">Files, firmware and guides are published wherever possible.</span></li>
+            <li><strong data-i18n="v2Title">Local</strong> <span data-i18n="v2Text">No account, no cloud – perception and data stay on the device.</span></li>
+            <li><strong data-i18n="v3Title">Human</strong> <span data-i18n="v3Text">Built for people, not for metrics. Robots that are honest about being robots.</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -128,14 +141,42 @@
     <section id="projekte" aria-labelledby="projekte-title">
       <div class="wrap">
         <p class="kicker reveal" data-i18n="rmKicker">Projects</p>
-        <h2 class="section-title reveal" id="projekte-title" data-i18n="rmTitle">The roadmap: from the desk to the robot.</h2>
-        <p class="lead reveal" data-i18n="rmIntro">Each project says honestly where it stands. Each one can be rebuilt – and where it exists, bought ready-made.</p>
+        <h2 class="section-title reveal" id="projekte-title" data-i18n="rmTitle">What we are building.</h2>
+        <p class="lead reveal" data-i18n="rmIntro">From the robot to the drone to the device on the desk – each project shows honestly where it stands today and what comes next.</p>
 
         <ol class="roadmap" data-projects="roadmap"></ol>
 
         <div class="btn-row reveal" style="margin-top:var(--sp-6)">
           <a class="btn" href="tools.html" data-i18n="rmAll">Roadmap in detail, with every stage →</a>
         </div>
+      </div>
+    </section>
+
+    <!-- ================= WORKSHOP ================= -->
+    <section id="werkstatt" aria-labelledby="werkstatt-title">
+      <div class="wrap">
+        <p class="kicker reveal" data-i18n="wsKicker">The workshop</p>
+        <h2 class="section-title reveal" id="werkstatt-title" data-i18n="wsTitle">Where the prototypes are made.</h2>
+        <p class="lead reveal" data-i18n="wsIntro">3D printing, electronics, soldering station and CAD – everything a first prototype needs is in one room in Aachen. Ideas turn into parts you can hold here.</p>
+
+        <div class="workshop-grid reveal">
+          <figure class="media wide">
+            <img src="img/workshop-bench.jpg" width="1600" height="1200" loading="lazy"
+                 alt="Workbench with pegboard, tools, cable spools, monitor and 3D-printed parts under a light bar" data-i18n-attr="alt:wsAlt1">
+          </figure>
+          <figure class="media">
+            <img src="img/workshop-evening.jpg" width="1600" height="1200" loading="lazy"
+                 alt="The workshop in the evening: wooden desk, pegboard wall and a large enclosed 3D printer" data-i18n-attr="alt:wsAlt2">
+          </figure>
+          <figure class="media">
+            <img src="img/yusu-head-parts.jpg" width="1600" height="1200" loading="lazy"
+                 alt="Freshly printed robot head parts on a silicone mat" data-i18n-attr="alt:wsAlt3">
+          </figure>
+        </div>
+
+        <h3 class="h3 reveal" style="margin-top:var(--sp-7);margin-bottom:var(--sp-2)" data-i18n="wsSmallTitle">Small things from the workshop</h3>
+        <p class="reveal muted" data-i18n="wsSmallIntro">What comes off the printer along the way – free to rebuild or ready-made from the shop.</p>
+        <div class="grid cols-2" data-projects="workshop" style="margin-top:var(--sp-4)"></div>
       </div>
     </section>
 
@@ -148,7 +189,7 @@
           <div>
             <p class="kicker" data-i18n="aboutKicker">Who is behind it</p>
             <h2 class="section-title" id="ueber-title" data-i18n="aboutTitle">Hi, I’m Marcello.</h2>
-            <p class="lead" data-i18n="aboutText">Software developer and trained craftsman – I learned the trade as a painter and coater. In Aachen I bring both together: code, electronics and things you can hold in your hand.</p>
+            <p class="lead" data-i18n="aboutText">Founder of OneHumanity Robotics. For now I work alone: I write the concepts, design the parts and build the first prototypes myself. Software developer by profession, trained craftsman by origin – I take things one piece at a time and see them through.</p>
           </div>
         </div>
       </div>
@@ -158,11 +199,23 @@
     <section id="mitmachen" aria-labelledby="mitmachen-title">
       <div class="wrap">
         <p class="kicker reveal" data-i18n="takePartKicker">Take part</p>
-        <h2 class="section-title reveal" id="mitmachen-title" data-i18n="takePartTitle">Take something with you.</h2>
-        <p class="lead reveal" data-i18n="takePartIntro">Free stickers for good places, open files for your own workbench, and updates as the robot grows.</p>
+        <h2 class="section-title reveal" id="mitmachen-title" data-i18n="takePartTitle">Follow the build.</h2>
+        <p class="lead reveal" data-i18n="takePartIntro">Videos of the projects, open files for your own workbench, and free stickers for good places.</p>
 
         <div class="split reveal" style="margin-top:var(--sp-6)">
           <div style="display:grid;gap:var(--sp-3)">
+            <a class="btn block" href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>
+              <span data-i18n="ctaYoutube">Videos on YouTube</span>
+            </a>
+            <p class="hint" data-i18n="hintYoutube">Walkthroughs and progress on the robot, the drone and everything else on the bench.</p>
+
+            <a class="btn block" href="https://github.com/DesignStraub" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 2.5 12 8 18M16 6l5.5 6L16 18M13.5 4l-3 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              <span data-i18n="ctaFiles">Files &amp; firmware on GitHub</span>
+            </a>
+            <p class="hint" data-i18n="hintFiles">Code, CAD, circuit boards and build guides. Print models are on <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.</p>
+
             <a class="btn block" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/></svg>
               <span data-i18n="ctaRequest">Request a free sticker set</span>
@@ -175,23 +228,11 @@
             </a>
             <p class="hint" data-i18n="hintPdf">Use the sticker freely. Print it, share it, place it somewhere kind.</p>
 
-            <a class="btn block" href="https://github.com/DesignStraub" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 2.5 12 8 18M16 6l5.5 6L16 18M13.5 4l-3 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              <span data-i18n="ctaFiles">Files &amp; firmware on GitHub</span>
-            </a>
-            <p class="hint" data-i18n="hintFiles">Everything we publish: code, case files, build guides. Print models are on <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.</p>
-
-            <a class="btn block is-todo" href="#TODO-instagram" aria-disabled="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" stroke-width="1.9" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.9" fill="none"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
-              <span data-i18n="ctaUpdates">Robot updates on Instagram</span>
-            </a>
-            <p class="hint" data-i18n="hintUpdates">Follow Yusu as it grows – from the first head to the finished robot.</p>
-
             <a class="btn block" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/></svg>
               <span data-i18n="ctaSupport">Visit the shop</span>
             </a>
-            <p class="hint" data-i18n="hintSupport">Stickers, bookmarks and finished pieces on Etsy. Every purchase funds the free sets and the next project.</p>
+            <p class="hint" data-i18n="hintSupport">Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next prototype.</p>
           </div>
 
           <div class="sticker-card" data-sticker>
@@ -213,13 +254,15 @@
           <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
         </svg>
         <strong class="manifest">One Planet, One Humanity</strong>
-        <span class="small" data-i18n="footerTagline">An open hardware studio from Aachen.</span>
-        <span class="small">© <span data-year>2026</span> OneHumanity · MorphicMoons, Aachen</span>
+        <span class="small" data-i18n="footerTagline">Robotics from Aachen.</span>
+        <span class="small">© <span data-year>2026</span> OneHumanity Robotics · MorphicMoons, Aachen</span>
       </div>
       <div class="footer-cols">
         <div class="footer-col">
           <h2 data-i18n="footerProjects">Projects</h2>
           <ul class="footer-nav">
+            <li><a href="#project-yusu">Yusu – R1</a></li>
+            <li><a href="#project-ringwheel">Ringwheel</a></li>
             <li><a href="lifebar.html">LifeBar</a></li>
             <li><a href="tools.html" data-i18n="footerRoadmap">Roadmap in detail</a></li>
             <li><a href="tools.html#archiv" data-i18n="footerArchive">Archive &amp; history</a></li>
@@ -228,6 +271,7 @@
         <div class="footer-col">
           <h2 data-i18n="footerOpen">Open</h2>
           <ul class="footer-nav">
+            <li><a href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">YouTube</a></li>
             <li><a href="https://github.com/DesignStraub" target="_blank" rel="noopener">GitHub</a></li>
             <li><a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener" data-i18n="footerFiles">Files on MakerWorld</a></li>
             <li><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Etsy shop</a></li>
@@ -247,93 +291,129 @@
   <script>
     window.OH_I18N = {
       de: {
-        heroLead: 'Wir bauen Technik, die dir dient, statt dich zu verbrauchen. Alles ist offen: Bau es selbst – kostenlos. Oder kauf es fertig gebaut.',
+        heroLead: 'Robotik aus Aachen. Wir entwickeln Roboter und Maschinen, die Menschen begleiten – vom ersten Konzept bis zum funktionierenden Prototyp. Schritt für Schritt, offen dokumentiert und zu Ende gebracht.',
         heroCtaProjects: 'Projekte ansehen',
-        heroCtaBuild: 'Selbst bauen',
-        heroFact1: 'Offenes Hardware-Studio',
+        heroCtaYoutube: 'Auf YouTube folgen',
+        heroFact1: 'Robotik',
         heroFact2: 'Aachen',
-        heroFact3: 'Kein Account, keine Cloud',
+        heroFact3: 'Konzept &amp; Prototypen',
+        heroAlt: 'Render des Roboterkopfs Yusu: weiße Low-Poly-Schale, dunkles Visier mit leuchtenden blauen Augen und LED-Mund',
+        heroCaption: 'Yusu – OneHumanity R1, unser erster großer Roboter. Aktueller Stand: der Kopf.',
 
-        prKicker: 'Wofür wir stehen',
-        prTitle: 'Technik, die sich in dein Leben fügt – nicht umgekehrt.',
-        prIntro: 'Drei Prinzipien ziehen sich durch alles, was wir bauen. Sie sind weniger ein Versprechen als eine Arbeitsweise: Du kannst jedes davon selbst nachprüfen.',
-        pr1Title: 'Open Source',
-        pr1Text: 'Dateien, Firmware und Anleitungen sind frei zum Nachbauen. Alles, was du von uns bekommst, kannst du öffnen, reparieren und verbessern.',
-        pr2Title: 'Kein Account, keine Cloud, kein Feed',
-        pr2Text: 'Unsere Geräte funktionieren für sich, genau da, wo sie stehen. Deine Daten bleiben bei dir – ohne Anmeldung, ohne Abo.',
-        pr3Title: 'Für Menschen gebaut, nicht für Kennzahlen',
-        pr3Text: 'Wir gestalten für Ruhe und Aufmerksamkeit, nicht für Bildschirmzeit. In Harmonie mit Technik leben, statt sich von ihr auffressen zu lassen.',
+        wwKicker: 'Arbeitsweise',
+        wwTitle: 'Stück für Stück. Und bis zum Ende.',
+        wwIntro: 'Große Maschinen entstehen aus kleinen, fertigen Schritten. Jedes Projekt hier läuft durch dieselben drei Stufen – und eine Stufe gilt erst als erledigt, wenn sie funktioniert und aufgeschrieben ist.',
+        ww1Title: 'Konzept',
+        ww1Text: 'Was soll die Maschine können, wie soll sie sich verhalten, wo sind ihre Grenzen? Zweck, Charakter und Sicherheitsregeln stehen fest, bevor gebaut wird.',
+        ww2Title: 'Prototyp',
+        ww2Text: 'Konstruieren, drucken, löten, programmieren, testen – in der eigenen Werkstatt in Aachen. Jedes Modul bekommt eigene Elektronik und wird einzeln erprobt.',
+        ww3Title: 'Abschließen',
+        ww3Text: 'Ein Schritt ist fertig, wenn er läuft und dokumentiert ist. Erst dann beginnt der nächste. So ist die LifeBar zum Gerät im täglichen Einsatz geworden.',
+        valuesKicker: 'Wofür wir stehen',
+        v1Title: 'Offen',
+        v1Text: 'Dateien, Firmware und Anleitungen werden veröffentlicht, wo immer es geht.',
+        v2Title: 'Lokal',
+        v2Text: 'Kein Account, keine Cloud – Wahrnehmung und Daten bleiben auf dem Gerät.',
+        v3Title: 'Menschlich',
+        v3Text: 'Für Menschen gebaut, nicht für Kennzahlen. Roboter, die ehrlich sagen, dass sie Roboter sind.',
 
         rmKicker: 'Projekte',
-        rmTitle: 'Die Roadmap: vom Schreibtisch zum Roboter.',
-        rmIntro: 'Bei jedem Projekt steht ehrlich, wo es gerade ist. Jedes lässt sich nachbauen – und wo es das gibt, auch fertig kaufen.',
+        rmTitle: 'Woran wir bauen.',
+        rmIntro: 'Vom Roboter über die Drohne bis zum Gerät auf dem Schreibtisch – jedes Projekt zeigt ehrlich, wo es heute steht und was als Nächstes kommt.',
         rmAll: 'Roadmap im Detail, mit allen Etappen →',
+
+        wsKicker: 'Die Werkstatt',
+        wsTitle: 'Hier entstehen die Prototypen.',
+        wsIntro: '3D-Druck, Elektronik, Lötstation und CAD – alles, was ein erster Prototyp braucht, steht in einem Raum in Aachen. Hier werden aus Ideen Teile, die man in die Hand nehmen kann.',
+        wsAlt1: 'Werkbank mit Lochwand, Werkzeug, Kabelrollen, Monitor und 3D-gedruckten Teilen unter einer Lichtleiste',
+        wsAlt2: 'Die Werkstatt am Abend: Holztisch, Lochwand und ein großer geschlossener 3D-Drucker',
+        wsAlt3: 'Frisch gedruckte Teile des Roboterkopfs auf einer Silikonmatte',
+        wsSmallTitle: 'Kleine Dinge aus der Werkstatt',
+        wsSmallIntro: 'Was nebenbei vom Drucker kommt – frei zum Nachbauen oder fertig aus dem Shop.',
 
         aboutKicker: 'Wer dahinter steckt',
         aboutTitle: 'Hi, ich bin Marcello.',
-        aboutText: 'Software-Entwickler und gelernter Handwerker – ursprünglich Lackierer. In Aachen bringe ich beides zusammen: Code, Elektronik und Dinge, die man in die Hand nehmen kann.',
+        aboutText: 'Gründer von OneHumanity Robotics. Bisher arbeite ich allein: Ich schreibe die Konzepte, konstruiere die Teile und baue die ersten Prototypen selbst. Von Beruf Software-Entwickler, vom Ursprung gelernter Handwerker – ich gehe Dinge Stück für Stück an und bringe sie zu Ende.',
         aboutAlt: 'Marcello an seinem Schreibtisch im Aachener Studio',
 
         takePartKicker: 'Mitmachen',
-        takePartTitle: 'Nimm dir etwas mit.',
-        takePartIntro: 'Freie Sticker für gute Orte, offene Dateien für die eigene Werkbank und Updates, während der Roboter wächst.',
+        takePartTitle: 'Begleite die Entwicklung.',
+        takePartIntro: 'Videos zu den Projekten, offene Dateien für die eigene Werkbank und freie Sticker für gute Orte.',
+        ctaYoutube: 'Videos auf YouTube',
+        hintYoutube: 'Walkthroughs und Fortschritte zum Roboter, zur Drohne und allem anderen auf der Werkbank.',
+        ctaFiles: 'Dateien &amp; Firmware auf GitHub',
+        hintFiles: 'Code, CAD, Platinen und Bauanleitungen. Druckmodelle liegen auf <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.',
         ctaRequest: 'Kostenloses Sticker-Set anfragen',
         hintRequest: 'Limitierte kostenlose Sets. Druck und Versand übernehmen wir – es kann ein paar Wochen dauern.',
-        ctaPdf: 'Herunterladen & selbst drucken',
+        ctaPdf: 'Herunterladen &amp; selbst drucken',
         hintPdf: 'Nutze den Sticker frei. Druck ihn, teil ihn, platzier ihn an einem guten Ort.',
-        ctaFiles: 'Dateien & Firmware auf GitHub',
-        hintFiles: 'Alles, was wir veröffentlichen: Code, Gehäusedateien, Bauanleitungen. Druckmodelle liegen auf <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.',
-        ctaUpdates: 'Roboter-Updates auf Instagram',
-        hintUpdates: 'Begleite Yusu beim Wachsen – vom ersten Kopf bis zum fertigen Roboter.',
         ctaSupport: 'Zum Shop',
-        hintSupport: 'Sticker, Lesezeichen und fertig gebaute Stücke auf Etsy. Jeder Kauf finanziert die freien Sets und das nächste Projekt.'
+        hintSupport: 'Sticker, Lesezeichen und fertige Stücke auf Etsy. Jeder Kauf fließt in den nächsten Prototyp.'
       },
       en: {
-        heroLead: 'We build technology that serves you instead of using you up. Everything is open: build it yourself for free – or buy it ready-made.',
+        heroLead: 'Robotics from Aachen. We develop robots and machines that accompany people – from the first concept to a working prototype. Step by step, openly documented, and seen through to the end.',
         heroCtaProjects: 'See the projects',
-        heroCtaBuild: 'Build it yourself',
-        heroFact1: 'Open hardware studio',
+        heroCtaYoutube: 'Follow on YouTube',
+        heroFact1: 'Robotics',
         heroFact2: 'Aachen, Germany',
-        heroFact3: 'No account, no cloud',
+        heroFact3: 'Concept &amp; prototypes',
+        heroAlt: 'Render of the Yusu robot head: white low-poly shell, dark visor with glowing blue eyes and an LED mouth',
+        heroCaption: 'Yusu – OneHumanity R1, our first large robot. Current stage: the head.',
 
-        prKicker: 'What we stand for',
-        prTitle: 'Technology that fits into your life – not the other way round.',
-        prIntro: 'Three principles run through everything we build. They are less a promise than a way of working: you can check every one of them yourself.',
-        pr1Title: 'Open source',
-        pr1Text: 'Files, firmware and build guides are free to rebuild. You can open, repair and improve everything you get from us.',
-        pr2Title: 'No account, no cloud, no feed',
-        pr2Text: 'Our devices work on their own, right where they are. Your data stays with you – no sign-up, no subscription.',
-        pr3Title: 'Built for people, not for metrics',
-        pr3Text: 'We design for calm and attention, not for screen time. Living in harmony with technology instead of being swallowed by it.',
+        wwKicker: 'How we work',
+        wwTitle: 'Piece by piece. And through to the end.',
+        wwIntro: 'Big machines are built from small, finished steps. Every project here runs through the same three stages – and a stage only counts as done when it works and is written down.',
+        ww1Title: 'Concept',
+        ww1Text: 'What should the machine do, how should it behave, where are its limits? Purpose, character and safety rules are set before anything is built.',
+        ww2Title: 'Prototype',
+        ww2Text: 'Design, print, solder, program, test – in our own workshop in Aachen. Each module gets its own electronics and is tested on its own.',
+        ww3Title: 'Finish',
+        ww3Text: 'A step is finished when it runs and is documented. Only then does the next one begin. That is how the LifeBar became a device in daily use.',
+        valuesKicker: 'What we stand for',
+        v1Title: 'Open',
+        v1Text: 'Files, firmware and guides are published wherever possible.',
+        v2Title: 'Local',
+        v2Text: 'No account, no cloud – perception and data stay on the device.',
+        v3Title: 'Human',
+        v3Text: 'Built for people, not for metrics. Robots that are honest about being robots.',
 
         rmKicker: 'Projects',
-        rmTitle: 'The roadmap: from the desk to the robot.',
-        rmIntro: 'Each project says honestly where it stands. Each one can be rebuilt – and where it exists, bought ready-made.',
+        rmTitle: 'What we are building.',
+        rmIntro: 'From the robot to the drone to the device on the desk – each project shows honestly where it stands today and what comes next.',
         rmAll: 'Roadmap in detail, with every stage →',
+
+        wsKicker: 'The workshop',
+        wsTitle: 'Where the prototypes are made.',
+        wsIntro: '3D printing, electronics, soldering station and CAD – everything a first prototype needs is in one room in Aachen. Ideas turn into parts you can hold here.',
+        wsAlt1: 'Workbench with pegboard, tools, cable spools, monitor and 3D-printed parts under a light bar',
+        wsAlt2: 'The workshop in the evening: wooden desk, pegboard wall and a large enclosed 3D printer',
+        wsAlt3: 'Freshly printed robot head parts on a silicone mat',
+        wsSmallTitle: 'Small things from the workshop',
+        wsSmallIntro: 'What comes off the printer along the way – free to rebuild or ready-made from the shop.',
 
         aboutKicker: 'Who is behind it',
         aboutTitle: 'Hi, I’m Marcello.',
-        aboutText: 'Software developer and trained craftsman – I learned the trade as a painter and coater. In Aachen I bring both together: code, electronics and things you can hold in your hand.',
+        aboutText: 'Founder of OneHumanity Robotics. For now I work alone: I write the concepts, design the parts and build the first prototypes myself. Software developer by profession, trained craftsman by origin – I take things one piece at a time and see them through.',
         aboutAlt: 'Marcello at his desk in the Aachen studio',
 
         takePartKicker: 'Take part',
-        takePartTitle: 'Take something with you.',
-        takePartIntro: 'Free stickers for good places, open files for your own workbench, and updates as the robot grows.',
+        takePartTitle: 'Follow the build.',
+        takePartIntro: 'Videos of the projects, open files for your own workbench, and free stickers for good places.',
+        ctaYoutube: 'Videos on YouTube',
+        hintYoutube: 'Walkthroughs and progress on the robot, the drone and everything else on the bench.',
+        ctaFiles: 'Files &amp; firmware on GitHub',
+        hintFiles: 'Code, CAD, circuit boards and build guides. Print models are on <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.',
         ctaRequest: 'Request a free sticker set',
         hintRequest: 'Limited free sets. We cover printing and shipping – it may take a few weeks.',
         ctaPdf: 'Download &amp; print yourself',
         hintPdf: 'Use the sticker freely. Print it, share it, place it somewhere kind.',
-        ctaFiles: 'Files &amp; firmware on GitHub',
-        hintFiles: 'Everything we publish: code, case files, build guides. Print models are on <a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>.',
-        ctaUpdates: 'Robot updates on Instagram',
-        hintUpdates: 'Follow Yusu as it grows – from the first head to the finished robot.',
         ctaSupport: 'Visit the shop',
-        hintSupport: 'Stickers, bookmarks and finished pieces on Etsy. Every purchase funds the free sets and the next project.'
+        hintSupport: 'Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next prototype.'
       }
     };
   </script>
-  <script src="assets/projects.data.js?v=20261016b"></script>
-  <script src="assets/projects.render.js?v=20261016b"></script>
-  <script src="assets/site.js?v=20261016b"></script>
+  <script src="assets/projects.data.js?v=20261030"></script>
+  <script src="assets/projects.render.js?v=20261030"></script>
+  <script src="assets/site.js?v=20261030"></script>
 </body>
 </html>
