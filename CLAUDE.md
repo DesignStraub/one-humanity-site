@@ -1,7 +1,7 @@
 # CLAUDE.md – oneplanetonehumanity.com (OneHumanity Robotics)
 
 ## Ziel
-Die Website von **OneHumanity Robotics**: Robotik aus Aachen, gerade in der Gründung. Kein Hobby-Projekt mehr, sondern ein Robotik-Vorhaben, das Konzepte und erste Prototypen zeigt. Die Seite soll vermitteln: Hier entsteht ernsthaft Robotik, Stück für Stück, und Dinge werden zu Ende gebracht.
+Die Website von **OneHumanity Robotics**: Robotik aus Aachen, gerade in der Gründung. Kein Hobby-Projekt mehr, sondern ein Robotik-Vorhaben, das Konzepte und erste Prototypen zeigt. Die Seite soll vermitteln: Hier entsteht ernsthaft Robotik, Schritt für Schritt – das zeigt sich an den Projekten selbst, nicht an Sprüchen.
 
 Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem eigenen Branch vorbereiten und erst nach Freigabe nach `main` mergen. Nach einem Merge startet Pages manchmal keinen Build – dann `gh api -X POST repos/DesignStraub/one-humanity-site/pages/builds`.
 
@@ -14,11 +14,11 @@ Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem ei
 - Sprachen: Deutsch und Englisch (DE/EN-Umschalter)
 
 ## Positionierung
-Robotik aus Aachen. Wir entwickeln Roboter und Maschinen, die Menschen begleiten – vom ersten Konzept bis zum funktionierenden Prototyp. Schritt für Schritt, offen dokumentiert, zu Ende gebracht.
+Robotik aus Aachen. Wir entwickeln Roboter und Maschinen, die Menschen begleiten – vom ersten Konzept bis zum funktionierenden Prototyp. Schritt für Schritt und offen dokumentiert.
 
 - Bisher eine Einzelperson (Marcello): Konzeption und erste Prototypen.
 - Gerade im Bau: der erste große Roboter (Yusu). Weitere Ideen werden festgehalten.
-- Kernbotschaft der Arbeitsweise: **Stück für Stück – und bis zum Ende.** Ein Schritt gilt erst als fertig, wenn er funktioniert und dokumentiert ist.
+- Kernbotschaft der Arbeitsweise: **Ein Schritt nach dem anderen.** Ein Schritt gilt erst als fertig, wenn er funktioniert und dokumentiert ist. Formulierungen wie „zu Ende bringen“ / „bis zum Ende“ vermeiden – wirkt aufgesetzt (Marcellos Feedback); die Arbeitsweise lieber zeigen als behaupten.
 
 ### Arbeitsweise (Abschnitt "Arbeitsweise")
 1. Konzept – Zweck, Charakter, Sicherheitsregeln stehen fest, bevor gebaut wird.
@@ -35,7 +35,7 @@ Robotik aus Aachen. Wir entwickeln Roboter und Maschinen, die Menschen begleiten
 - Professionell, aber persönlich. Kein Hobby-Entschuldigungston, aber auch nichts übertreiben: Status ehrlich angeben (Designstudie ist Designstudie).
 
 ## Wer dahinter steckt (kurz halten)
-Marcello – Gründer, Software-Entwickler, gelernter Handwerker (Lackierer), baut in Aachen. Geht Dinge Stück für Stück an und bringt sie zu Ende.
+Marcello – Gründer, Software-Entwickler, gelernter Handwerker (Lackierer), baut in Aachen. Arbeitet gründlich, Schritt für Schritt.
 
 ## Projekte
 Pflege nur in `assets/projects.data.js`. Gruppen: `robotics` (Roadmap Startseite + tools.html), `workshop` („Aus der Werkstatt“), `archive` (tools.html#archiv).
