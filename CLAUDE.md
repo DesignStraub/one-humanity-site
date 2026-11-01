@@ -55,14 +55,16 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 4. Die Werkstatt (Fotos)
 5. Wer dahinter steckt
 6. Mitmachen (YouTube, GitHub, MakerWorld/Cults3D, itch.io, freie Sticker, Shop)
-7. Footer: Bereiche, YouTube, GitHub, MakerWorld, Cults3D, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
+7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, Cults3D, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
 
 ## Links
 - YouTube (One Humanity Lab): https://www.youtube.com/@marcelloswigswag
 - GitHub: https://github.com/DesignStraub
 - MakerWorld: https://makerworld.com/@MarcelloStr
 - Etsy: https://oneplanetonehumanity.etsy.com
-- Cults3D, itch.io: Profil-URLs noch offen (`#TODO-cults3d`, `#TODO-itch`)
+- Cults3D: https://cults3d.com/en/users/MarcelloSwigSwag/3d-models
+- itch.io: https://onehumanity.itch.io (Links zu den einzelnen Spielen noch offen: `#TODO-itch-kometen`, `#TODO-itch-sprint`)
+- Instagram: https://www.instagram.com/marcelloswigswag/
 
 ## Technik / Regeln
 - Statische Seite, kein Build-Schritt. Gemeinsame Dateien in `assets/`:
