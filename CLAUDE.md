@@ -1,12 +1,13 @@
-# CLAUDE.md – oneplanetonehumanity.com (OneHumanity Robotics)
+# CLAUDE.md – oneplanetonehumanity.com (OneHumanity Labs)
 
 ## Ziel
-Die Website von **OneHumanity Robotics**: Robotik aus Aachen, gerade in der Gründung. Kein Hobby-Projekt mehr, sondern ein Robotik-Vorhaben, das Konzepte und erste Prototypen zeigt. Die Seite soll vermitteln: Hier entsteht ernsthaft Robotik, Schritt für Schritt – das zeigt sich an den Projekten selbst, nicht an Sprüchen.
+Die Website von **OneHumanity Labs**: ein unabhängiges Lab aus Aachen mit mehreren Bereichen – **Robotics, Games, Tools und 3D-Design**. Verschiedene Projekte, eine Haltung. Bisher eine Person (Marcello), künftig sollen weitere Menschen mitarbeiten. Die Seite zeigt die Projekte selbst – Ernsthaftigkeit entsteht durch echte Ergebnisse, nicht durch Sprüche.
 
 Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem eigenen Branch vorbereiten und erst nach Freigabe nach `main` mergen. Nach einem Merge startet Pages manchmal keinen Build – dann `gh api -X POST repos/DesignStraub/one-humanity-site/pages/builds`.
 
 ## Marke
-- Name: **OneHumanity Robotics** (kurz **OneHumanity** für Logo, Gehäuse, Roboter). Kein „i. G.“ o. ä. auf der Seite.
+- Name: **OneHumanity Labs** (kurz **OneHumanity** für Logo, Gehäuse, Roboter). Auf YouTube heißt der Kanal **One Humanity Lab** (@marcelloswigswag).
+- Persönlicher Handle auf den meisten Plattformen: **MarcelloSwigswag**.
 - Leitsatz / Manifest: **One Planet, One Humanity**
 - Logo: das Weltherz – steht für den Verbund der Menschheit
 - Rechtlicher Rahmen: MorphicMoons (Einzelunternehmen, Aachen) – nur im Impressum/Footer
@@ -14,54 +15,54 @@ Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem ei
 - Sprachen: Deutsch und Englisch (DE/EN-Umschalter)
 
 ## Positionierung
-Robotik aus Aachen. Wir entwickeln Roboter und Maschinen, die Menschen begleiten – vom ersten Konzept bis zum funktionierenden Prototyp. Schritt für Schritt und offen dokumentiert.
+Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge und gestalten 3D-Modelle zum Drucken. Verschiedene Projekte, eine Haltung: offen, lokal und für Menschen gemacht. Nicht auf einen Bereich (z. B. nur Robotik) verengen.
 
-- Bisher eine Einzelperson (Marcello): Konzeption und erste Prototypen.
-- Gerade im Bau: der erste große Roboter (Yusu). Weitere Ideen werden festgehalten.
-- Kernbotschaft der Arbeitsweise: **Ein Schritt nach dem anderen.** Ein Schritt gilt erst als fertig, wenn er funktioniert und dokumentiert ist. Formulierungen wie „zu Ende bringen“ / „bis zum Ende“ vermeiden – wirkt aufgesetzt (Marcellos Feedback); die Arbeitsweise lieber zeigen als behaupten.
+- Arbeitsweise: **Ein Schritt nach dem anderen.** Fertig = läuft + dokumentiert. Formulierungen wie „zu Ende bringen“ / „bis zum Ende“ vermeiden – wirkt aufgesetzt (Marcellos Feedback); lieber zeigen als behaupten.
 
 ### Arbeitsweise (Abschnitt "Arbeitsweise")
-1. Konzept – Zweck, Charakter, Sicherheitsregeln stehen fest, bevor gebaut wird.
-2. Prototyp – konstruieren, drucken, löten, programmieren, testen in der eigenen Werkstatt.
-3. Abschließen – fertig = läuft + dokumentiert; erst dann der nächste Schritt (Beleg: LifeBar).
+1. Konzept – Idee aufschreiben und durchdenken, bevor gebaut wird.
+2. Prototyp – konstruieren, drucken, löten, programmieren, testen; frühe Stände offen zeigen.
+3. Abschließen – fertig = läuft + dokumentiert (Gerät im Einsatz, spielbares Spiel, funktionierende Druckdatei).
 
 ### Wofür wir stehen
-- Offen – Dateien, Firmware, Anleitungen veröffentlichen, wo immer es geht.
-- Lokal – kein Account, keine Cloud; Wahrnehmung und Daten bleiben auf dem Gerät.
-- Menschlich – für Menschen gebaut, nicht für Kennzahlen; Roboter sagen ehrlich, dass sie Roboter sind.
+- Offen – Code, Dateien, Anleitungen veröffentlichen, wo immer es geht.
+- Lokal – kein Account, keine Cloud; Geräte und Werkzeuge funktionieren für sich.
+- Menschlich – für Menschen gemacht, nicht für Kennzahlen.
 
 ## Ton
 - Positiv, offen, einladend. Sagen, was wir wollen – nicht, wogegen wir sind.
 - Professionell, aber persönlich. Kein Hobby-Entschuldigungston, aber auch nichts übertreiben: Status ehrlich angeben (Designstudie ist Designstudie).
 
 ## Wer dahinter steckt (kurz halten)
-Marcello – Gründer, Software-Entwickler, gelernter Handwerker (Lackierer), baut in Aachen. Arbeitet gründlich, Schritt für Schritt.
+Marcello (MarcelloSwigswag) – Gründer, Software-Entwickler, gelernter Handwerker (Lackierer), baut in Aachen. Bisher allein, künftig mit weiteren Menschen.
 
 ## Projekte
-Pflege nur in `assets/projects.data.js`. Gruppen: `robotics` (Roadmap Startseite + tools.html), `workshop` („Aus der Werkstatt“), `archive` (tools.html#archiv).
+Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (große Karten je Bereich), `design` (kleine Karten „3D-Design“), `archive` (tools.html#archiv).
 
-- **Yusu – OneHumanity R1** (robotics, Flaggschiff) – modularer Roboter in Menschengröße, Begleiter statt Diener. Emotions-Engine, LED-Augen, LED-Mund, Sprache, alles lokal; eigener ESP32 pro Modul, Ziel Jetson. Stand: Phase 0 Kopf (v8 mit Visier gedruckt, Elektronik kommt rein). Code-Repo `DesignStraub/emotion-lab` ist privat → Button „Dateien & Code“ noch `#TODO-yusu-repo`. (Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es.)
-- **Ringwheel – Hybrid-Drohne** (robotics) – Propellerringe klappen um und werden Räder. Designstudie (nicht gebaut). Repo github.com/DesignStraub/ringwheel-hybrid-drone, Video youtube.com/shorts/o1WtWeNPCIw.
-- **LifeBar** (robotics) – fertig gebaut, täglich im Einsatz, Repo öffentlich. Seite lifebar.html.
-- **Laptop-Badge (Weltherz)**, **Sticker & Lesezeichen** (workshop).
-- **Mode System**, **Proof** (archive).
+- **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
+- **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.
+- **Tools:** LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short).
+- **3D-Design:** Laptop-Badge (Weltherz), LifeBar-Standfuß, Low-Profile-Tastenkappen, Skadis-Schreibtischwand, Gelber-Sack-Halterung (alle MakerWorld), Sticker & Lesezeichen.
+- **Archiv:** Mode System, Proof.
+- **Nicht auf die Seite:** NSFW-/Erotik-Modelle (z. B. auf MakerWorld/Cults3D) und das interne Bild-zu-3D-Projekt.
 
 **Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
 ## Seitenstruktur Startseite
-1. Hero: Weltherz-Logo, „OneHumanity Robotics“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Auf YouTube folgen“, Render des Roboterkopfs
+1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „One Humanity Lab auf YouTube“, vier Bereichs-Kacheln
 2. Arbeitsweise (3 Stufen) + Wofür wir stehen
-3. Projekte als Roadmap (robotics)
-4. Die Werkstatt (Fotos) + Kleine Dinge aus der Werkstatt (workshop)
+3. Bereiche: Robotics, Games, Tools, 3D-Design (je eigener Abschnitt)
+4. Die Werkstatt (Fotos)
 5. Wer dahinter steckt
-6. Mitmachen (YouTube, GitHub/MakerWorld, freie Sticker, Shop)
-7. Footer: Projekte, YouTube, GitHub, MakerWorld, Etsy, Impressum, Datenschutz, © MorphicMoons
+6. Mitmachen (YouTube, GitHub, MakerWorld/Cults3D, itch.io, freie Sticker, Shop)
+7. Footer: Bereiche, YouTube, GitHub, MakerWorld, Cults3D, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
 
 ## Links
-- YouTube: https://www.youtube.com/@marcelloswigswag
+- YouTube (One Humanity Lab): https://www.youtube.com/@marcelloswigswag
 - GitHub: https://github.com/DesignStraub
 - MakerWorld: https://makerworld.com/@MarcelloStr
 - Etsy: https://oneplanetonehumanity.etsy.com
+- Cults3D, itch.io: Profil-URLs noch offen (`#TODO-cults3d`, `#TODO-itch`)
 
 ## Technik / Regeln
 - Statische Seite, kein Build-Schritt. Gemeinsame Dateien in `assets/`:

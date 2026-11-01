@@ -7,12 +7,13 @@
 
    FIELDS
      id        short slug. Also the anchor: index.html#project-<id>
-     status    'live' | 'wip' | 'concept' | 'new' | 'free' | 'testing' | 'design' | 'sketch' | 'open'
+     status    'live' | 'wip' | 'concept' | 'playable' | 'new' | 'free' | 'testing' | 'design' | 'sketch' | 'open'
                Labels and colours live in projects.render.js.
-     featured  true  → on the home page roadmap (robotics)
-               false → not in the roadmap
-     group     'robotics' | 'workshop' | 'archive'
-               workshop → "Aus der Werkstatt" (home + tools.html)
+     featured  true  → large roadmap card in its area
+               false → small card
+     group     'robotics' | 'games' | 'tools' | 'design' | 'archive'
+               robotics/games/tools → large cards per area (home + tools.html)
+               design   → small cards ("3D-Design")
                archive  → "Archiv & Projekthistorie" (tools.html#archiv)
      link      optional. Page with more detail ("Learn more").
      image     optional. { src, w, h, alt: { de, en } }
@@ -169,12 +170,122 @@ window.OH_PROJECTS = [
     }
   },
 
+  /* ---------------- games --------------------------------------- */
+  {
+    id: 'kometen',
+    status: 'playable',
+    featured: true,
+    group: 'games',
+    image: {
+      src: 'img/game-kometen-cover.jpg',
+      w: 1260, h: 1000,
+      alt: {
+        de: 'Cover von Kometen & Kronen: Pixelgrafik mit drei Völkern – Säugetiere, Aliens und lebende Pflanzen – vor ihren Hauptsitzen, darüber ein Komet',
+        en: 'Kometen & Kronen cover: pixel art of three factions – mammals, aliens and living plants – in front of their headquarters, a comet above'
+      }
+    },
+    gallery: [
+      {
+        src: 'img/game-kometen-battle.jpg', w: 1600, h: 773,
+        caption: { de: 'Schlacht mit Mauern, Türmen und Konter-Einheiten', en: 'Battle with walls, towers and counter units' },
+        alt: { de: 'Screenshot einer Schlacht im Pixel-Strategiespiel', en: 'Screenshot of a battle in the pixel strategy game' }
+      }
+    ],
+    build: {
+      href: 'https://github.com/DesignStraub/aliens-in-earth',
+      label: { de: 'Code auf GitHub', en: 'Code on GitHub' }
+    },
+    buy: {
+      href: '#TODO-itch-kometen',
+      label: { de: 'Auf itch.io spielen', en: 'Play on itch.io' }
+    },
+    de: {
+      title: 'Kometen & Kronen',
+      tagline: 'Pixel-Echtzeitstrategie: Säugetiere, Aliens und lebende Pflanzen.',
+      text: 'Ein klassisches Echtzeit-Strategiespiel mit Wirtschaft, fünf Zeitaltern und Konter-Einheiten, gebaut mit Godot. Drei Völker kämpfen auf zufällig erzeugten Karten – gegen einen Computer-Gegner, der seine Wirtschaft aufbaut und in Wellen angreift. Alle Sounds entstehen zur Laufzeit.',
+      facts: ['Godot 4', '3 Völker', '5 Zeitalter', 'Bis zu 4 Spieler'],
+      timeline: [
+        { state: 'done', text: 'Völker, Wirtschaft, Zeitalter und KI-Gegner' },
+        { state: 'done', text: 'Pixelgrafik, Sounds, Menüs, Speichern & Laden' },
+        { state: 'now',  text: 'Spielbar, Code öffentlich' },
+        { state: 'next', text: 'Als Nächstes: Veröffentlichung auf itch.io' }
+      ]
+    },
+    en: {
+      title: 'Kometen & Kronen',
+      tagline: 'Pixel real-time strategy: mammals, aliens and living plants.',
+      text: 'A classic real-time strategy game with an economy, five ages and counter units, built in Godot. Three factions fight on randomly generated maps – against a computer opponent that builds its economy and attacks in waves. All sounds are synthesised at runtime.',
+      facts: ['Godot 4', '3 factions', '5 ages', 'Up to 4 players'],
+      timeline: [
+        { state: 'done', text: 'Factions, economy, ages and AI opponent' },
+        { state: 'done', text: 'Pixel art, sound, menus, save & load' },
+        { state: 'now',  text: 'Playable, code public' },
+        { state: 'next', text: 'Next: release on itch.io' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'sprint',
+    status: 'playable',
+    featured: true,
+    group: 'games',
+    image: {
+      src: 'img/game-sprint-cover.jpg',
+      w: 1260, h: 1000,
+      alt: {
+        de: 'Cover von Underground Sprint: ein getuntes blaues Auto mit Neonlicht in einer dunklen Garage, darüber der Titel',
+        en: 'Underground Sprint cover: a tuned blue car with neon lights in a dark garage, the title above'
+      }
+    },
+    gallery: [
+      {
+        src: 'img/game-sprint-nitro.jpg', w: 1600, h: 900,
+        caption: { de: 'Nachts durch die Stadt, mit Nitro', en: 'Through the city at night, with nitro' },
+        alt: { de: 'Screenshot: Auto mit Nitro-Effekt auf einer nächtlichen Straße mit Neonschildern', en: 'Screenshot: car with nitro effect on a night street with neon signs' }
+      }
+    ],
+    build: {
+      href: 'https://github.com/DesignStraub/underground-sprint',
+      label: { de: 'Code auf GitHub', en: 'Code on GitHub' }
+    },
+    buy: {
+      href: '#TODO-itch-sprint',
+      label: { de: 'Kostenlos auf itch.io', en: 'Free on itch.io' }
+    },
+    de: {
+      title: 'Underground Sprint',
+      tagline: 'Nächtliches Street-Racing im Stil der frühen 2000er.',
+      text: 'Low-Poly-3D mit Pixel-Look, gebaut mit Godot: Rennen durch die Stadt bei Nacht, Drift, Nitro und eine Garage zum Tunen. Siege schalten Autos, Strecken und Teile frei. Kostenlos, für Windows, macOS und Linux.',
+      facts: ['Godot 4', 'Tastatur + Gamepad', 'Windows · macOS · Linux'],
+      timeline: [
+        { state: 'done', text: 'Fahrphysik, Strecken, Garage und Tuning' },
+        { state: 'done', text: 'Builds für drei Plattformen, Trailer' },
+        { state: 'now',  text: 'Spielbar, Code öffentlich' },
+        { state: 'next', text: 'Als Nächstes: Veröffentlichung auf itch.io' }
+      ]
+    },
+    en: {
+      title: 'Underground Sprint',
+      tagline: 'Night street racing in the style of the early 2000s.',
+      text: 'Low-poly 3D with a pixel look, built in Godot: races through the city at night, drifting, nitro and a garage for tuning. Wins unlock cars, tracks and parts. Free, for Windows, macOS and Linux.',
+      facts: ['Godot 4', 'Keyboard + gamepad', 'Windows · macOS · Linux'],
+      timeline: [
+        { state: 'done', text: 'Driving physics, tracks, garage and tuning' },
+        { state: 'done', text: 'Builds for three platforms, trailer' },
+        { state: 'now',  text: 'Playable, code public' },
+        { state: 'next', text: 'Next: release on itch.io' }
+      ]
+    }
+  },
+
   /* ---------------------------------------------------------------- */
   {
     id: 'lifebar',
     status: 'live',
     featured: true,
-    group: 'robotics',
+    group: 'tools',
     link: 'lifebar.html',
     image: {
       src: 'img/lifebar-device.jpg',
@@ -187,7 +298,7 @@ window.OH_PROJECTS = [
     build: { href: 'https://github.com/DesignStraub/lifebar' },
     de: {
       title: 'LifeBar',
-      tagline: 'Fertig gebaut und täglich im Einsatz.',
+      tagline: 'Ein Werkzeug für die eigene Zeit – fertig gebaut und täglich im Einsatz.',
       text: 'Gamification fürs echte Leben auf eigener Hardware: ein Balkendisplay auf dem Schreibtisch, das investierte Minuten in EXP, Level und verdiente Titel verwandelt. Du siehst auf einen Blick, wohin deine Woche geht – ohne App, ohne Konto. Alles bleibt auf dem Gerät.',
       facts: ['ESP32-S3', 'Bar-Display', '100 % lokal', 'Gehäuse aus Fusion 360'],
       timeline: [
@@ -199,7 +310,7 @@ window.OH_PROJECTS = [
     },
     en: {
       title: 'LifeBar',
-      tagline: 'Built, finished and in daily use.',
+      tagline: 'A tool for your own time – built and in daily use.',
       text: 'Gamification for real life on its own hardware: a bar display on your desk that turns invested minutes into EXP, levels and earned titles. You see at a glance where your week is going – no app, no account. Everything stays on the device.',
       facts: ['ESP32-S3', 'Bar display', '100% local', 'Case designed in Fusion 360'],
       timeline: [
@@ -213,10 +324,56 @@ window.OH_PROJECTS = [
 
   /* ---------------------------------------------------------------- */
   {
+    id: 'glidesplit',
+    status: 'concept',
+    featured: true,
+    group: 'tools',
+    image: {
+      src: 'img/glidesplit-hero.jpg',
+      w: 1600, h: 1000,
+      alt: {
+        de: 'Render der GlideSplit: zwei Tastaturhälften mit je einem Maus-Griff hinten',
+        en: 'Render of GlideSplit: two keyboard halves, each with a mouse grip at the back'
+      }
+    },
+    build: {
+      href: 'https://github.com/DesignStraub/glidesplit',
+      label: { de: 'Konzept auf GitHub', en: 'Concept on GitHub' }
+    },
+    follow: {
+      href: 'https://youtube.com/shorts/S3FE6H6Afo0',
+      label: { de: 'Video ansehen', en: 'Watch the video' }
+    },
+    de: {
+      title: 'GlideSplit',
+      tagline: 'Eine kabellose Split-Tastatur, deren Hälften auch die Maus sind.',
+      text: 'Jede Hälfte hat hinten einen Maus-Griff und unten einen optischen Sensor. Beide bewegen den Cursor – die Hände bleiben auf der Tastatur. Gedacht für Büro und Alltag. Ein durchgerechnetes Konzept mit CAD, Teileliste und Firmware-Plan.',
+      facts: ['ZMK', 'nRF52840', 'PMW3610-Sensor', 'Kabellos'],
+      timeline: [
+        { state: 'done', text: 'Konzept, CAD, Teileliste, Kostenschätzung' },
+        { state: 'done', text: 'Veröffentlicht: Repo und Video' },
+        { state: 'next', text: 'Als Nächstes: erster Prototyp' }
+      ]
+    },
+    en: {
+      title: 'GlideSplit',
+      tagline: 'A wireless split keyboard whose halves are also the mouse.',
+      text: 'Each half has a mouse grip at the back and an optical sensor underneath. Both move the cursor – your hands stay on the keyboard. Meant for office and everyday use. A worked-out concept with CAD, parts list and firmware plan.',
+      facts: ['ZMK', 'nRF52840', 'PMW3610 sensor', 'Wireless'],
+      timeline: [
+        { state: 'done', text: 'Concept, CAD, parts list, cost estimate' },
+        { state: 'done', text: 'Published: repository and video' },
+        { state: 'next', text: 'Next: first prototype' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
     id: 'badge',
     status: 'new',
     featured: false,
-    group: 'workshop',
+    group: 'design',
     image: {
       src: 'img/badge-laptop.jpg',
       w: 900, h: 1200,
@@ -264,10 +421,86 @@ window.OH_PROJECTS = [
 
   /* ---------------------------------------------------------------- */
   {
+    id: 'lifebar-stand',
+    status: 'free',
+    featured: false,
+    group: 'design',
+    image: {
+      src: 'img/lifebar-stand.jpg',
+      w: 1400, h: 1050,
+      alt: { de: 'Render des LifeBar-Standfußes mit Display und Weltherz-Logo', en: 'Render of the LifeBar desk stand with display and World Heart logo' }
+    },
+    build: {
+      href: 'https://makerworld.com/models/3447599-lifebar-stand-waveshare-esp32-s3-touch-lcd-3-49',
+      label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }
+    },
+    de: { title: 'LifeBar-Standfuß', text: 'Schräger Tischständer für das Waveshare-ESP32-S3-Display der LifeBar, mit und ohne Logo.' },
+    en: { title: 'LifeBar desk stand', text: 'Angled desk stand for the LifeBar’s Waveshare ESP32-S3 display, with or without logo.' }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'keycaps',
+    status: 'free',
+    featured: false,
+    group: 'design',
+    image: {
+      src: 'img/keycaps-desk.jpg',
+      w: 1400, h: 1050,
+      alt: { de: 'Weiße Low-Profile-Tastatur mit minimalistischen gedruckten Tastenkappen auf dem Schreibtisch', en: 'White low-profile keyboard with minimalist printed keycaps on a desk' }
+    },
+    build: {
+      href: 'https://makerworld.com/models/3516612-minimalistic-low-profile-keycaps',
+      label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }
+    },
+    de: { title: 'Low-Profile-Tastenkappen', text: 'Minimalistische, flache Tastenkappen zum Selbstdrucken – getestet auf einer 65-%-Tastatur.' },
+    en: { title: 'Low-profile keycaps', text: 'Minimalist flat keycaps to print yourself – tested on a 65% keyboard.' }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'skadis',
+    status: 'free',
+    featured: false,
+    group: 'design',
+    image: {
+      src: 'img/workshop-bench.jpg',
+      w: 1600, h: 1200,
+      alt: { de: 'Werkbank mit Skadis-Lochwand, die an den Schreibtisch geklemmt ist', en: 'Workbench with a Skadis pegboard clamped to the desk' }
+    },
+    build: {
+      href: 'https://makerworld.com/models/3482229-skadis-desk-wall-clamp-on-pegboard-80-cm-desk',
+      label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }
+    },
+    de: { title: 'Skadis-Schreibtischwand', text: 'Klemm-Halterung, mit der eine Skadis-Lochwand ohne Bohren hinten am Schreibtisch steht.' },
+    en: { title: 'Skadis desk wall', text: 'Clamp mount that holds a Skadis pegboard at the back of a desk – no drilling.' }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'trash',
+    status: 'free',
+    featured: false,
+    group: 'design',
+    image: {
+      src: 'img/trash-holder.jpg',
+      w: 1400, h: 1050,
+      alt: { de: 'Render einer ausziehbaren Halterung unter der Tischplatte für den Gelben Sack', en: 'Render of a sliding under-desk holder for a recycling bag' }
+    },
+    build: {
+      href: 'https://makerworld.com/models/3518925-sliding-under-desk-holder-for-gelber-sack',
+      label: { de: 'Datei auf MakerWorld', en: 'File on MakerWorld' }
+    },
+    de: { title: 'Untertisch-Halterung für den Gelben Sack', text: 'Ausziehbarer Rahmen, der unter die Tischplatte geklemmt wird. Hält den Gelben Sack griffbereit und verschwindet danach wieder.' },
+    en: { title: 'Under-desk recycling bag holder', text: 'Sliding frame that clamps under the desk. Keeps the recycling bag within reach and slides away afterwards.' }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
     id: 'stickers',
     status: 'free',
     featured: false,
-    group: 'workshop',
+    group: 'design',
     image: {
       src: 'sticker.png',
       w: 720, h: 720,

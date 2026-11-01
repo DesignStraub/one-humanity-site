@@ -1700,3 +1700,69 @@ figure.media figcaption{
 @media (max-width: 420px){
   .brand .suffix{ display: none; }
 }
+
+/* ==========================================================================
+   Labs: area tiles in the hero
+   ========================================================================== */
+.area-tiles{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-3);
+  width: min(100%, 960px);
+  margin-top: var(--sp-6);
+}
+.area-tile{
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  aspect-ratio: 4 / 5;
+  background: var(--deep);
+  box-shadow: var(--shadow-md);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.area-tile:hover{ transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.area-tile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.area-tile:hover img{ transform: scale(1.04); }
+.area-tile::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, rgba(6,10,18,.78));
+}
+.area-tile span{
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  z-index: 1;
+  color: #fff;
+  font-weight: 650;
+  font-size: 17px;
+  letter-spacing: -.01em;
+  text-align: left;
+}
+@media (max-width: 760px){
+  .area-tiles{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .area-tile{ aspect-ratio: 1; }
+}
+
+/* six nav links need a little more room before the menu collapses */
+@media (max-width: 1040px){
+  .nav{ flex-wrap: wrap; padding: 8px 8px 8px 14px; border-radius: 28px; }
+  .nav-toggle{ display: inline-flex; }
+  .nav-actions{ order: 2; margin-left: auto; }
+  .nav-links{
+    display: none; order: 3; margin-left: 0; width: 100%;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    padding: 6px 4px 8px; border-top: 1px solid var(--line); margin-top: 8px;
+  }
+  .nav.open{ background: var(--nav-bg-open); box-shadow: var(--shadow-lg); }
+  .nav.open .nav-links{ display: flex; }
+  .nav-link{ padding: 12px 14px; font-size: 16px; }
+}

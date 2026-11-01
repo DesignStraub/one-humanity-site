@@ -5,9 +5,10 @@
    ==========================================================================
 
    Containers in the HTML:
-     <ol data-projects="roadmap">           featured projects as a roadmap
-     <ol data-projects="roadmap" data-timeline>   same, with the stage list
-     <div data-projects="more">             non-featured projects as cards
+     <ol data-projects="area:games">        large cards of one group (add data-timeline for stages)
+     <div data-projects="cards:design">     small cards of one group
+     <ol data-projects="roadmap">           all featured projects (legacy)
+     <div data-projects="workshop|archive|more">  small cards (legacy)
 
    Loads before site.js and renders immediately, so the reveal observer and
    the language switch in site.js pick the markup up like any other.
@@ -24,6 +25,7 @@
     live:    { cls: 'is-live', de: 'Täglich im Einsatz', en: 'In daily use' },
     wip:     { cls: 'is-wip',  de: 'In Entwicklung',     en: 'In development' },
     concept: { cls: 'is-idea', de: 'Designstudie',       en: 'Design study' },
+    playable:{ cls: 'is-live', de: 'Spielbar',           en: 'Playable' },
     new:     { cls: 'is-new',  de: 'Neu',                en: 'New' },
     free:    { cls: 'is-open', de: 'Frei verfügbar',     en: 'Freely available' },
     testing: { cls: 'is-wip',  de: 'Im Test',            en: 'In testing' },
@@ -174,6 +176,15 @@
     if (lang !== 'de' && lang !== 'en') lang = 'en';
     containers.forEach(function (container) {
       var mode = container.getAttribute('data-projects');
+      /* "area:games" → large cards of one group, "cards:design" → small cards of one group */
+      var parts = mode.split(':');
+      if (parts.length === 2) {
+        var inGroup = projects.filter(function (p) { return p.group === parts[1]; });
+        container.innerHTML = inGroup.map(function (p) {
+          return parts[0] === 'cards' ? moreCard(p, lang) : roadmapItem(p, lang, container.hasAttribute('data-timeline'));
+        }).join('');
+        return;
+      }
       /* workshop / archive: small cards for one group; "more" = everything not featured */
       if (mode === 'workshop' || mode === 'archive' || mode === 'more') {
         container.innerHTML = projects
