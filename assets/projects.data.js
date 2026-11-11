@@ -235,8 +235,8 @@ window.OH_PROJECTS = [
       src: 'img/game-sprint-cover.jpg',
       w: 1260, h: 1000,
       alt: {
-        de: 'Cover von Underground Sprint: ein getuntes blaues Auto mit Neonlicht in einer dunklen Garage, darüber der Titel',
-        en: 'Underground Sprint cover: a tuned blue car with neon lights in a dark garage, the title above'
+        de: 'Cover von Need for Geschwindigkeit: ein getuntes blaues Auto mit Neonlicht in einer dunklen Garage, darüber der Titel',
+        en: 'Need for Geschwindigkeit cover: a tuned blue car with neon lights in a dark garage, the title above'
       }
     },
     gallery: [
@@ -251,31 +251,29 @@ window.OH_PROJECTS = [
       label: { de: 'Code auf GitHub', en: 'Code on GitHub' }
     },
     buy: {
-      href: '#TODO-itch-sprint',
+      href: 'https://onehumanity.itch.io/need-for-geschwindigkeit',
       label: { de: 'Kostenlos auf itch.io', en: 'Free on itch.io' }
     },
     de: {
-      title: 'Underground Sprint',
+      title: 'Need for Geschwindigkeit',
       tagline: 'Nächtliches Street-Racing im Stil der frühen 2000er.',
-      text: 'Low-Poly-3D mit Pixel-Look, gebaut mit Godot: Rennen durch die Stadt bei Nacht, Drift, Nitro und eine Garage zum Tunen. Siege schalten Autos, Strecken und Teile frei. Kostenlos, für Windows, macOS und Linux.',
+      text: 'Früher „Underground Sprint“. Low-Poly-3D mit Pixel-Look, gebaut mit Godot: Rennen durch die Stadt bei Nacht, Drift, Nitro und eine Garage zum Tunen. Siege schalten Autos, Strecken und Teile frei. Kostenlos, für Windows, macOS und Linux.',
       facts: ['Godot 4', 'Tastatur + Gamepad', 'Windows · macOS · Linux'],
       timeline: [
         { state: 'done', text: 'Fahrphysik, Strecken, Garage und Tuning' },
         { state: 'done', text: 'Builds für drei Plattformen, Trailer' },
-        { state: 'now',  text: 'Spielbar, Code öffentlich' },
-        { state: 'next', text: 'Als Nächstes: Veröffentlichung auf itch.io' }
+        { state: 'now',  text: 'Auf itch.io kostenlos spielbar, Code öffentlich' }
       ]
     },
     en: {
-      title: 'Underground Sprint',
+      title: 'Need for Geschwindigkeit',
       tagline: 'Night street racing in the style of the early 2000s.',
-      text: 'Low-poly 3D with a pixel look, built in Godot: races through the city at night, drifting, nitro and a garage for tuning. Wins unlock cars, tracks and parts. Free, for Windows, macOS and Linux.',
+      text: 'Formerly “Underground Sprint”. Low-poly 3D with a pixel look, built in Godot: races through the city at night, drifting, nitro and a garage for tuning. Wins unlock cars, tracks and parts. Free, for Windows, macOS and Linux.',
       facts: ['Godot 4', 'Keyboard + gamepad', 'Windows · macOS · Linux'],
       timeline: [
         { state: 'done', text: 'Driving physics, tracks, garage and tuning' },
         { state: 'done', text: 'Builds for three platforms, trailer' },
-        { state: 'now',  text: 'Playable, code public' },
-        { state: 'next', text: 'Next: release on itch.io' }
+        { state: 'now',  text: 'Free to play on itch.io, code public' }
       ]
     }
   },
@@ -532,6 +530,48 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'First sets printed and sent out' },
         { state: 'now',  text: 'Freely available: PDF, free sets, Etsy shop' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'nixie',
+    status: 'sketch',
+    featured: true,
+    group: 'tools',
+    image: {
+      src: 'img/nixie-clock-walnuss.jpg',
+      w: 1600, h: 900,
+      alt: {
+        de: 'Render der Nixie-Uhr an der Wand: vier leuchtend orangene Röhren zeigen die Ziffern 1, 2, 4 und 8 auf einem Walnussbrett',
+        en: 'Render of the nixie clock on the wall: four glowing orange tubes show the digits 1, 2, 4 and 8 on a walnut board'
+      }
+    },
+    build: {
+      href: '#TODO-nixie-repo',
+      label: { de: 'Dateien & Anleitung', en: 'Files & guide' }
+    },
+    de: {
+      title: 'Nixie-Uhr 4× IN-12',
+      tagline: 'Eine Wanduhr mit vier Nixie-Röhren, jede mit eigenem Treiber.',
+      text: 'Vier IN-12B-Röhren in Walnuss oder Ahorn, gesteuert von einem ESP32-C5 mit WLAN für 2,4 und 5 GHz. Jede Röhre erzeugt ihre Hochspannung selbst. Die Schaltung pro Röhre stammt aus dem Open-Source-Projekt cnixxi. Die Platine ist entworfen; die Uhr ist ein technisches Konzept.',
+      facts: ['4× IN-12B', 'ESP32-C5 · WLAN 2,4/5 GHz', 'Eigener Treiber pro Röhre', 'USB-C 5 V'],
+      timeline: [
+        { state: 'done', text: 'Schaltplan und vierlagige Platine entworfen (KiCad)' },
+        { state: 'done', text: 'Fertigungsdaten, Stückliste und Firmware-Entwurf erstellt' },
+        { state: 'next', text: 'Als Nächstes: Platine bestellen und in Betrieb nehmen' }
+      ]
+    },
+    en: {
+      title: 'Nixie clock 4× IN-12',
+      tagline: 'A wall clock with four nixie tubes, each with its own driver.',
+      text: 'Four IN-12B tubes in walnut or maple, driven by an ESP32-C5 with 2.4 and 5 GHz Wi-Fi. Each tube generates its high voltage itself. The circuit per tube comes from the open-source cnixxi project. The board is designed; the clock is a technical concept.',
+      facts: ['4× IN-12B', 'ESP32-C5 · Wi-Fi 2.4/5 GHz', 'Own driver per tube', 'USB-C 5 V'],
+      timeline: [
+        { state: 'done', text: 'Schematic and four-layer board designed (KiCad)' },
+        { state: 'done', text: 'Production files, parts list and firmware draft ready' },
+        { state: 'next', text: 'Next: order the board and commission it' }
       ]
     }
   },
