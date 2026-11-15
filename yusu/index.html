@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Yusu – Begleiter | OneHumanity Labs</title>
+  <meta name="description" content="Yusu als Begleiter im Browser: Augen, Persönlichkeit und Gespräch – ein früher Prototyp von OneHumanity Labs.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Yusu">
+  <link rel="stylesheet" href="app.css?v=20261115">
+</head>
+<body>
+  <header id="top" class="chrome">
+    <a class="brand" href="../">OneHumanity</a>
+    <span id="status" class="status" role="status"></span>
+    <button id="open-settings" class="icon-btn" type="button" aria-label="Persönlichkeit und Einstellungen">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </button>
+  </header>
+
+  <main id="stage" aria-label="Gesicht – antippen für eine Reaktion">
+    <div id="face">
+      <div id="lights">
+        <canvas id="glow" aria-hidden="true"></canvas>
+        <canvas id="eyes" role="img" aria-label="Augen"></canvas>
+      </div>
+      <div id="mouth" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <p id="said" aria-live="polite"></p>
+  </main>
+
+  <form id="talk" class="chrome" autocomplete="off">
+    <button id="mic" class="icon-btn" type="button" aria-label="Sprechen" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
+    </button>
+    <label class="sr-only" for="text">Nachricht</label>
+    <input id="text" type="text" inputmode="text" enterkeyhint="send" maxlength="500" placeholder="Schreib etwas …">
+    <button id="send" class="icon-btn solid" type="submit" aria-label="Senden">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog" class="sheet">
+      <div class="sheet-head">
+        <h1 id="settings-title">Persönlichkeit</h1>
+        <button class="icon-btn" value="close" aria-label="Schließen">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <section>
+        <label class="field"><span>Name</span>
+          <input id="p-name" type="text" maxlength="30" autocomplete="off"></label>
+        <fieldset class="field"><legend>Stimme</legend>
+          <div class="seg">
+            <label><input type="radio" name="p-voice" value="weiblich"><span>weiblich</span></label>
+            <label><input type="radio" name="p-voice" value="männlich"><span>männlich</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="field"><legend>Augenfarbe</legend>
+          <div id="p-colors" class="swatches"></div>
+        </fieldset>
+        <label class="field"><span>Charakterbogen</span>
+          <textarea id="p-charakter" rows="10" spellcheck="false"></textarea>
+          <small><code>{name}</code> wird durch den Namen ersetzt, <code>[[weiblich|männlich]]</code> durch die Form zur gewählten Stimme.</small>
+        </label>
+        <div class="row">
+          <button id="p-export" class="btn" type="button">Als Datei speichern</button>
+          <button id="p-import" class="btn" type="button">Datei laden</button>
+          <button id="p-reset" class="btn ghost" type="button">Zurücksetzen</button>
+          <input id="p-file" type="file" accept="application/json,.json" hidden>
+        </div>
+        <small>Die Datei enthält Name, Stimme, Augenfarbe und Charakterbogen. So lässt sich eine Persönlichkeit sichern und später per Kabel auf den Roboter übertragen.</small>
+      </section>
+
+      <section>
+        <h2>Sprache</h2>
+        <label class="check"><input id="s-tts" type="checkbox"><span>Antworten vorlesen</span></label>
+        <label class="field"><span>Vorlese-Stimme des Geräts</span>
+          <select id="s-voice"></select></label>
+        <label class="check" id="s-stt-row"><input id="s-stt" type="checkbox"><span>Spracheingabe (Mikrofon-Taste)</span></label>
+        <small id="s-stt-note">Die Spracheingabe nutzt die Erkennung deines Browsers. Je nach Browser wird die Aufnahme dafür an dessen Anbieter geschickt. Sie ist deshalb erst einmal aus.</small>
+      </section>
+
+      <section>
+        <h2>Sprachmodell</h2>
+        <p id="llm-state" class="state"></p>
+        <label class="field"><span>Adresse (leer = automatisch suchen)</span>
+          <input id="s-url" type="url" inputmode="url" placeholder="http://localhost:11434" autocomplete="off"></label>
+        <label class="field"><span>Modell</span>
+          <input id="s-model" type="text" autocomplete="off"></label>
+        <button id="s-connect" class="btn" type="button">Neu verbinden</button>
+        <small>Die App spricht mit einem Ollama-Server. Am einfachsten: <code>python3 yusu/lokal.py</code> im Website-Ordner starten und die App über die angezeigte Adresse öffnen.</small>
+      </section>
+
+      <section>
+        <small>Prototyp. Einstellungen bleiben nur in diesem Browser gespeichert; Gespräche werden nicht gespeichert.</small>
+      </section>
+    </form>
+  </dialog>
+
+  <script src="eyes.js?v=20261115"></script>
+  <script src="persona.js?v=20261115"></script>
+  <script src="app.js?v=20261115"></script>
+  <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

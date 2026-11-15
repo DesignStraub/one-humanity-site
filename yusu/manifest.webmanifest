@@ -1,0 +1,14 @@
+{
+  "name": "Yusu – Begleiter",
+  "short_name": "Yusu",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    { "src": "../favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
