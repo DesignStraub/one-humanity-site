@@ -17,12 +17,7 @@ Die Seite ist live (`main` → GitHub Pages). Größere Änderungen auf einem ei
 ## Positionierung
 Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge und gestalten 3D-Modelle zum Drucken. Verschiedene Projekte, eine Haltung: offen, lokal und für Menschen gemacht. Nicht auf einen Bereich (z. B. nur Robotik) verengen.
 
-- Arbeitsweise: **Ein Schritt nach dem anderen.** Fertig = läuft + dokumentiert. Formulierungen wie „zu Ende bringen“ / „bis zum Ende“ vermeiden – wirkt aufgesetzt (Marcellos Feedback); lieber zeigen als behaupten.
-
-### Arbeitsweise (Abschnitt "Arbeitsweise")
-1. Konzept – Idee aufschreiben und durchdenken, bevor gebaut wird.
-2. Prototyp – konstruieren, drucken, löten, programmieren, testen; frühe Stände offen zeigen.
-3. Abschließen – fertig = läuft + dokumentiert (Gerät im Einsatz, spielbares Spiel, funktionierende Druckdatei).
+- Kein Abschnitt „Arbeitsweise“ und keine Sätze wie „Ein Schritt nach dem anderen“ / „Stück für Stück“ / „zu Ende bringen“ – klingt aufgesetzt (Marcellos Feedback, zuletzt 15.11.2026: Abschnitt von der Startseite entfernt). Lieber zeigen als behaupten.
 
 ### Wofür wir stehen
 - Offen – Code, Dateien, Anleitungen veröffentlichen, wo immer es geht.
@@ -39,6 +34,7 @@ Marcello (MarcelloSwigswag) – Gründer, Software-Entwickler, gelernter Handwer
 ## Projekte
 Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (große Karten je Bereich), `design` (kleine Karten „3D-Design“), `archive` (tools.html#archiv).
 
+- **Yusu-Begleit-App:** `yusu/` (eigene dunkle Seite ohne Site-CSS, Prototyp, `noindex`): Augen, Persönlichkeits-Editor, Gespräch nur mit lokalem Ollama über `python3 yusu/lokal.py`. Verlinkt im Hero und auf der Yusu-Karte (Feld `demo`).
 - **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
 - **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.
 - **Tools:** LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short).
@@ -49,20 +45,20 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 **Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
 ## Seitenstruktur Startseite
-1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „One Humanity Lab auf YouTube“, vier Bereichs-Kacheln
-2. Arbeitsweise (3 Stufen) + Wofür wir stehen
+1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ (→ `yusu/`) / „One Humanity Lab auf YouTube“, vier Bereichs-Kacheln
+2. Wofür wir stehen (Offen, Lokal, Menschlich)
 3. Bereiche: Robotics, Games, Tools, 3D-Design (je eigener Abschnitt)
 4. Die Werkstatt (Fotos)
 5. Wer dahinter steckt
-6. Mitmachen (YouTube, GitHub, MakerWorld/Cults3D, itch.io, freie Sticker, Shop)
-7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, Cults3D, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
+6. Mitmachen (YouTube, GitHub, MakerWorld, itch.io, freie Sticker, Shop)
+7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
 
 ## Links
 - YouTube (One Humanity Lab): https://www.youtube.com/@marcelloswigswag
 - GitHub: https://github.com/DesignStraub
 - MakerWorld: https://makerworld.com/@MarcelloStr
 - Etsy: https://oneplanetonehumanity.etsy.com
-- Cults3D: https://cults3d.com/en/users/MarcelloSwigSwag/3d-models
+- Cults3D: https://cults3d.com/en/users/MarcelloSwigSwag/3d-models – **auf der Seite nicht verlinken** (Marcello, 15.11.2026)
 - itch.io: https://onehumanity.itch.io (Links zu den einzelnen Spielen noch offen: `#TODO-itch-kometen`, `#TODO-itch-sprint`)
 - Instagram: https://www.instagram.com/marcelloswigswag/
 

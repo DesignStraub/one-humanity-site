@@ -23,6 +23,8 @@
                { href, label?: { de, en } }
      gallery   optional. More pictures under the card (tools.html and home).
                [{ src, w, h, alt: { de, en }, caption?: { de, en } }]
+     demo      optional. "Try it" — something that runs in the browser.
+               { href, label: { de, en } }
      follow    optional. Extra link, e.g. updates on Instagram.
                { href, label: { de, en } }
      actions   optional, legacy. Free-form buttons for tools.html cards.
@@ -74,8 +76,36 @@ window.OH_PROJECTS = [
           de: 'Drei Augenpaare in leuchtendem Blau auf schwarzem Grund, gerendert im Pixelraster des Displays',
           en: 'Three pairs of glowing blue eyes on black, rendered in the display’s pixel grid'
         }
+      },
+      {
+        src: 'img/yusu-eyes-firmware.jpg', w: 960, h: 480,
+        caption: { de: 'Direkt aus dem Display im Kopf: freudig und überrascht', en: 'Straight from the display in the head: joyful and surprised' },
+        alt: {
+          de: 'Zwei Augenpaare aus dem Bildspeicher des Displays: lachende Sichel-Augen und weit geöffnete runde Augen in Hellblau',
+          en: 'Two pairs of eyes from the display’s frame buffer: laughing crescent eyes and wide round eyes in light blue'
+        }
+      },
+      {
+        src: 'img/yusu-app.jpg', w: 1400, h: 700,
+        caption: { de: 'Die Begleit-App im Browser (Prototyp)', en: 'The companion app in the browser (prototype)' },
+        alt: {
+          de: 'Bildschirmfoto der Begleit-App: zwei leuchtende Augen und sechs Mund-Punkte auf Schwarz, unten ein Eingabefeld',
+          en: 'Screenshot of the companion app: two glowing eyes and six mouth dots on black, a text field below'
+        }
+      },
+      {
+        src: 'img/yusu-body-concept.jpg', w: 1000, h: 1500,
+        caption: { de: 'Konzept des ganzen Roboters – bisher nur ein Render', en: 'Concept of the whole robot – so far only a render' },
+        alt: {
+          de: 'Render eines schlanken weißen Low-Poly-Roboters mit schwarzen Gelenken, leuchtend blauen Augen und Turnschuhen',
+          en: 'Render of a slim white low-poly robot with black joints, glowing blue eyes and sneakers'
+        }
       }
     ],
+    demo: {
+      href: 'yusu/',
+      label: { de: 'Im Browser ansehen', en: 'See it in the browser' }
+    },
     build: {
       href: '#TODO-yusu-repo',
       label: { de: 'Dateien & Code', en: 'Files & code' }
@@ -87,26 +117,34 @@ window.OH_PROJECTS = [
     de: {
       title: 'Yusu – OneHumanity R1',
       tagline: 'Ein modularer Roboter in Menschengröße. Begleiter statt Diener.',
-      text: 'Unser erster großer Roboter. Yusu nimmt Gesichter, Licht und Sprache wahr, leitet daraus einen eigenen emotionalen Zustand ab und zeigt ihn über leuchtende Augen und einen LED-Mund. Alles läuft lokal auf dem Gerät. Gebaut wird in Modulen, Schritt für Schritt – angefangen beim Kopf.',
-      facts: ['Gesichts- und Spracherkennung lokal', 'Emotions-Engine', 'Eigener ESP32 pro Modul', 'Zielplattform Jetson'],
+      text: 'Unser erster großer Roboter. Yusu nimmt Gesichter, Licht und Sprache wahr, leitet daraus einen eigenen emotionalen Zustand ab und zeigt ihn über leuchtende Augen und einen LED-Mund. Alles läuft lokal auf dem Gerät, ganz ohne Funk. Name, Stimme und Augenfarbe wählt, wer ihn einrichtet. Gebaut wird in Modulen, zuerst der Kopf.',
+      facts: ['Komplett offline, kein Funk', 'Gesichts- und Spracherkennung lokal', 'Gedächtnis nur mit Einwilligung', 'Eigener ESP32 pro Modul', 'Zielplattform Jetson'],
       timeline: [
         { state: 'done', text: 'Konzept, Charakter und Sicherheitsregeln festgelegt' },
         { state: 'done', text: 'Emotions-Engine, Augen und Sprache laufen am Rechner' },
         { state: 'done', text: 'Kopf konstruiert und gedruckt (Version 8 mit Visier)' },
-        { state: 'now',  text: 'Phase 0: Elektronik in den Kopf – Kameras, Display, Mikrofone' },
+        { state: 'done', text: 'Eigene Stimmung, Tag-Nacht-Rhythmus und Gedächtnis mit Einwilligung' },
+        { state: 'done', text: 'Ersteinrichtung: Name, Stimme und Augenfarbe frei wählbar' },
+        { state: 'done', text: 'Hals-Servo: Der Kopf dreht sich zur Person' },
+        { state: 'done', text: 'Begleit-App im Browser als Prototyp' },
+        { state: 'now',  text: 'Elektronik in den Kopf – Kameras, Display, Mikrofone – und Umzug auf den Jetson' },
         { state: 'next', text: 'Danach: Rumpf und erste Bewegung' }
       ]
     },
     en: {
       title: 'Yusu – OneHumanity R1',
       tagline: 'A modular, human-sized robot. A companion, not a servant.',
-      text: 'Our first large robot. Yusu perceives faces, light and speech, derives its own emotional state from them and shows it through glowing eyes and an LED mouth. Everything runs locally on the device. It is built in modules, step by step – starting with the head.',
-      facts: ['Local face and speech recognition', 'Emotion engine', 'Own ESP32 per module', 'Target platform: Jetson'],
+      text: 'Our first large robot. Yusu perceives faces, light and speech, derives its own emotional state from them and shows it through glowing eyes and an LED mouth. Everything runs locally on the device, with no radio at all. Whoever sets it up chooses its name, voice and eye colour. It is built in modules, head first.',
+      facts: ['Fully offline, no radio', 'Local face and speech recognition', 'Memory only with consent', 'Own ESP32 per module', 'Target platform: Jetson'],
       timeline: [
         { state: 'done', text: 'Concept, character and safety rules defined' },
         { state: 'done', text: 'Emotion engine, eyes and speech running on the computer' },
         { state: 'done', text: 'Head designed and printed (version 8 with visor)' },
-        { state: 'now',  text: 'Phase 0: electronics into the head – cameras, display, microphones' },
+        { state: 'done', text: 'Own mood, day-night rhythm and memory with consent' },
+        { state: 'done', text: 'First setup: name, voice and eye colour are yours to choose' },
+        { state: 'done', text: 'Neck servo: the head turns towards the person' },
+        { state: 'done', text: 'Companion app in the browser as a prototype' },
+        { state: 'now',  text: 'Electronics into the head – cameras, display, microphones – and the move to the Jetson' },
         { state: 'next', text: 'Then: torso and first movement' }
       ]
     }
@@ -262,7 +300,8 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Fahrphysik, Strecken, Garage und Tuning' },
         { state: 'done', text: 'Builds für drei Plattformen, Trailer' },
-        { state: 'now',  text: 'Auf itch.io kostenlos spielbar, Code öffentlich' }
+        { state: 'done', text: 'Auf itch.io kostenlos spielbar, Code öffentlich' },
+        { state: 'now',  text: 'Version 2.35 im Repo: mehrere Städte mit Schnellreise, Fahrer-Level, neues Drift-Modell, Vinyls' }
       ]
     },
     en: {
@@ -273,7 +312,8 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Driving physics, tracks, garage and tuning' },
         { state: 'done', text: 'Builds for three platforms, trailer' },
-        { state: 'now',  text: 'Free to play on itch.io, code public' }
+        { state: 'done', text: 'Free to play on itch.io, code public' },
+        { state: 'now',  text: 'Version 2.35 in the repository: several cities with fast travel, driver level, new drift model, vinyls' }
       ]
     }
   },
@@ -293,6 +333,16 @@ window.OH_PROJECTS = [
         en: 'The LifeBar on a desk: blue printed case with a narrow bar display, lock screen showing time, level and EXP'
       }
     },
+    gallery: [
+      {
+        src: 'img/lifebar-deck-cad.jpg', w: 1600, h: 1022,
+        caption: { de: 'In Arbeit: Gehäuse mit drei Tasten und Drehknopf (CAD, noch nicht gedruckt)', en: 'In progress: case with three keys and a knob (CAD, not printed yet)' },
+        alt: {
+          de: 'CAD-Ansicht eines weißen Pultgehäuses mit Balkendisplay, drei Medientasten, Drehknopf und kleinem Weltherz-Logo vorn',
+          en: 'CAD view of a white desk console with a bar display, three media keys, a knob and a small World Heart logo on the front'
+        }
+      }
+    ],
     build: { href: 'https://github.com/DesignStraub/lifebar' },
     de: {
       title: 'LifeBar',
@@ -302,8 +352,9 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Idee: eine Ressourcenleiste wie im Strategiespiel' },
         { state: 'done', text: 'Eigenes Board-Setup, gedrucktes Gehäuse, Firmware läuft' },
+        { state: 'done', text: 'Bedienung über Tasten, Oberfläche neu in Schwarz-Weiß' },
         { state: 'now',  text: 'Täglich im Einsatz, Repo öffentlich' },
-        { state: 'next', text: 'Als Nächstes: Bauanleitung und Teileliste ausbauen' }
+        { state: 'next', text: 'Als Nächstes: Gehäuse mit Tasten und Drehknopf drucken, Bauanleitung ausbauen' }
       ]
     },
     en: {
@@ -314,8 +365,9 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Idea: a resource bar like in a strategy game' },
         { state: 'done', text: 'Board set up, printed case, firmware running' },
+        { state: 'done', text: 'Hardware controls, interface restyled in black and white' },
         { state: 'now',  text: 'In daily use, repository public' },
-        { state: 'next', text: 'Next: expand the build guide and parts list' }
+        { state: 'next', text: 'Next: print the case with keys and knob, expand the build guide' }
       ]
     }
   },

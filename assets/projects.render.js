@@ -129,7 +129,8 @@
     var media = imageHTML(project, lang);
 
     var actions =
-      buttonHTML(project.build, LABELS.build, true, lang) +
+      buttonHTML(project.demo, project.demo && project.demo.label, true, lang) +
+      buttonHTML(project.build, LABELS.build, !project.demo, lang) +
       buttonHTML(project.buy, LABELS.buy, false, lang) +
       buttonHTML(project.follow, project.follow && project.follow.label, false, lang) +
       (project.link
