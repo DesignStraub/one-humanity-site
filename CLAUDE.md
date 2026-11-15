@@ -73,7 +73,7 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
   - `projects.data.js` – **einzige Stelle, um Projekte zu pflegen**
   - `projects.render.js` – baut die Karten
 - Bestehende Seiten (impressum.html, datenschutz.html, tools.html, lifebar.html, Mode-system-guide.html, proof.html) erhalten und im selben Design halten.
-- Schnell, leicht, responsive, Hell-/Dunkelmodus. Keine Tracker, keine externen Analytics, keine Embeds (auch kein YouTube-Embed – nur Links).
+- Schnell, leicht, responsive, Hell-/Dunkelmodus. Keine Tracker, keine Embeds (auch kein YouTube-Embed – nur Links). Einzige Ausnahme: GoatCounter (`onehumanity.goatcounter.com`) auf allen Seiten, nur für Seitenaufrufzahlen, cookielos. Keine weiteren Analytics-Dienste ohne Freigabe.
 - Bilder liegen im Repo (img/). Fotos vor dem Einbinden verkleinern und Metadaten (EXIF/GPS) entfernen.
 - Nach CSS-/JS-Änderungen den Versionsparameter `?v=…` in allen HTML-Dateien hochzählen, sonst zeigen Browser (v. a. Safari) alte Dateien aus dem Cache.
 - Fehlende Links sind als `#TODO-…` markiert: `grep -rn "#TODO" .` zeigt alle.
