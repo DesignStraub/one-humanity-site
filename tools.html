@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
   <script>try{var t=localStorage.getItem('onehumanity-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
-  <link rel="stylesheet" href="assets/site.css?v=20261115">
+  <link rel="stylesheet" href="assets/site.css?v=20261119">
 </head>
 
 <body class="page">
@@ -42,10 +42,8 @@
     </div>
 
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="index.html#robotics">Robotics</a>
-      <a class="nav-link" href="index.html#games">Games</a>
-      <a class="nav-link" href="index.html#tools">Tools</a>
-      <a class="nav-link" href="index.html#design" data-i18n="navDesign">3D design</a>
+      <a class="nav-link" href="index.html#projekte" data-i18n="navProjects">Projects</a>
+      <a class="nav-link" href="tools.html" data-i18n="navAllProjects">All projects</a>
       <a class="nav-link" href="index.html#mitmachen" data-i18n="navJoin">Take part</a>
       <a class="nav-link" href="tools.html#archiv" data-i18n="navArchive">Archive</a>
     </div>
@@ -68,6 +66,14 @@
         </div>
       </div>
     </header>
+
+    <nav class="wrap chips jump" aria-label="Areas" data-i18n-attr="aria-label:jumpLabel">
+      <a class="chip" href="#robotics">Robotics</a>
+      <a class="chip" href="#games">Games</a>
+      <a class="chip" href="#tools">Tools</a>
+      <a class="chip" href="#design" data-i18n="navDesign">3D design</a>
+      <a class="chip" href="#archiv" data-i18n="navArchive">Archive</a>
+    </nav>
 
     <section id="robotics" aria-labelledby="robotics-title">
       <div class="wrap">
@@ -106,7 +112,7 @@
         <p class="kicker reveal" data-i18n="moreKicker">Archive &amp; project history</p>
         <h2 class="section-title reveal" id="more-title" data-i18n="moreTitle">Where it all started.</h2>
         <p class="lead reveal" data-i18n="moreIntro">Earlier projects from the studio. Their pages stay online – including the Mode System guide that the QR code on the cards points to.</p>
-        <div class="grid cols-2" data-projects="archive" style="margin-top:var(--sp-5)"></div>
+        <ol class="index-list reveal" data-projects="index:archive"></ol>
       </div>
     </section>
 
@@ -177,9 +183,9 @@
       }
     };
   </script>
-  <script src="assets/projects.data.js?v=20261115"></script>
-  <script src="assets/projects.render.js?v=20261115"></script>
-  <script src="assets/site.js?v=20261115"></script>
+  <script src="assets/projects.data.js?v=20261119"></script>
+  <script src="assets/projects.render.js?v=20261119"></script>
+  <script src="assets/site.js?v=20261119"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -1766,3 +1766,255 @@ figure.media figcaption{
   .nav.open .nav-links{ display: flex; }
   .nav-link{ padding: 12px 14px; font-size: 16px; }
 }
+
+/* ==========================================================================
+   Home: project rail (horizontal, scroll-snap) + filter chips
+   ========================================================================== */
+.anchor{ position: absolute; top: 0; }
+
+.rail-head{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+.rail-head .section-title{ margin-bottom: 0; }
+.rail-arrows{ display: flex; gap: var(--sp-2); flex: 0 0 auto; }
+.rail-arrow{
+  width: 44px; height: 44px;
+  display: inline-grid; place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .2s ease, opacity .2s ease;
+}
+.rail-arrow:hover:not(:disabled){ background: var(--surface-hover); }
+.rail-arrow:disabled{ opacity: .35; cursor: default; }
+.rail-arrow:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+.chip{
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: var(--t-small);
+  font-weight: 550;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.chip:hover{ color: var(--ink); border-color: var(--line-strong); }
+.chip[aria-pressed="true"]{
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.chip:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* The row runs edge to edge, but starts where the page content starts. */
+.rail{
+  --rail-inset: max(var(--gutter), (100% - 1120px) / 2);
+  display: flex;
+  gap: var(--sp-3);
+  margin: var(--sp-5) 0 0;
+  padding: 4px var(--rail-inset) var(--sp-4);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--rail-inset);
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar{ display: none; }
+.rail-item{
+  flex: 0 0 clamp(250px, 30vw, 330px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+.rail-item[hidden]{ display: none; }
+.rail-card{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.rail-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow-md); background: var(--surface-hover); }
+.rail-card:focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
+.rail-media{
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--deep-mid);
+}
+.rail-media img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.rail-card:hover .rail-media img{ transform: scale(1.03); }
+.rail-body{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--sp-3) var(--sp-4) var(--sp-4) ;
+}
+.rail-meta{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--ink-dim);
+}
+.rail-status{ display: inline-flex; align-items: center; gap: 6px; }
+.rail-status::before{
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.rail-status.is-live{ color: var(--st-live); }
+.rail-status.is-wip{  color: var(--st-wip); }
+.rail-status.is-idea{ color: var(--st-idea); }
+.rail-status.is-open{ color: var(--st-open); }
+.rail-status.is-new{  color: var(--st-new); }
+.rail-title{
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -.015em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.rail-line{
+  font-size: var(--t-small);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rail-foot{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-3);
+}
+.more-link{
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+}
+.more-link:hover{ color: var(--ink); text-decoration-color: currentColor; }
+
+@media (max-width: 640px){
+  .rail-item{ flex-basis: 78vw; }
+  .rail-arrows{ display: none; }   /* swipe on phones */
+}
+
+/* dark mode: status colours need more light on dark surfaces */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .rail-status.is-live{ color: #8FD3B6; }
+  :root:not([data-theme="light"]) .rail-status.is-wip{  color: #E5C173; }
+  :root:not([data-theme="light"]) .rail-status.is-idea{ color: #A8C6D6; }
+  :root:not([data-theme="light"]) .rail-status.is-open{ color: #C0B2D8; }
+  :root:not([data-theme="light"]) .rail-status.is-new{  color: #9CC7EC; }
+}
+:root[data-theme="dark"] .rail-status.is-live{ color: #8FD3B6; }
+:root[data-theme="dark"] .rail-status.is-wip{  color: #E5C173; }
+:root[data-theme="dark"] .rail-status.is-idea{ color: #A8C6D6; }
+:root[data-theme="dark"] .rail-status.is-open{ color: #C0B2D8; }
+:root[data-theme="dark"] .rail-status.is-new{  color: #9CC7EC; }
+
+/* ==========================================================================
+   Home: "Take part" link tiles
+   ========================================================================== */
+.link-tiles{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.link-tile{
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 14px;
+  row-gap: 4px;
+  align-content: start;
+  padding: var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.link-tile:hover{ background: var(--surface-hover); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.link-tile:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
+.link-tile svg{ width: 22px; height: 22px; grid-row: 1 / span 2; margin-top: 1px; color: var(--ink); }
+.link-tile strong{ font-weight: 650; color: var(--ink); line-height: 1.35; }
+.link-tile span{ font-size: var(--t-small); line-height: 1.55; color: var(--ink-dim); }
+@media (max-width: 640px){
+  .link-tiles{ grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Projects page: jump chips + compact archive list
+   ========================================================================== */
+.chips.jump{ justify-content: center; margin-top: 0; }
+.chips.jump .chip{ text-decoration: none; }
+
+.index-list{
+  margin: var(--sp-5) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.index-row{
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-4);
+  margin: 0;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--line);
+}
+.index-title{ font-weight: 650; }
+.index-title a{ color: var(--ink); text-decoration: none; }
+.index-title a:hover{ text-decoration: underline; text-underline-offset: 4px; }
+.index-text{ color: var(--ink-soft); font-size: var(--t-small); line-height: 1.55; }
+.index-row .pill.status{ justify-self: end; }
+@media (max-width: 640px){
+  .index-row{ grid-template-columns: 1fr; }
+  .index-row .pill.status{ justify-self: start; }
+}
+.index-row .pill.status{ margin-bottom: 0; }
+.chips.jump + section{ padding-top: clamp(40px, 5vw, 72px); }
+
+/* Workshop photos: one calm row on wide screens instead of a tall stack */
+@media (min-width: 761px){
+  .workshop-grid{ grid-template-columns: 1.4fr 1fr 1fr; }
+  .workshop-grid .wide{ grid-column: auto; }
+  .workshop-grid img,
+  .workshop-grid .wide img{ aspect-ratio: auto; width: 100%; height: clamp(240px, 28vw, 360px); object-fit: cover; }
+}

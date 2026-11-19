@@ -37,7 +37,7 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 - **Yusu-Begleit-App:** `yusu/` (eigene dunkle Seite ohne Site-CSS, Prototyp, `noindex`): Augen, Persönlichkeits-Editor, Gespräch nur mit lokalem Ollama über `python3 yusu/lokal.py`. Verlinkt im Hero und auf der Yusu-Karte (Feld `demo`).
 - **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
 - **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.
-- **Tools:** LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short).
+- **Tools:** TubeShield (Open-Source-Adblocker für Safari mit YouTube-Auto-Pause-Block, Repo `tubeshield`, bleibt immer Open Source, weitere Funktionen folgen), LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short), Nixie-Uhr (Skizze).
 - **3D-Design:** Laptop-Badge (Weltherz), LifeBar-Standfuß, Low-Profile-Tastenkappen, Skadis-Schreibtischwand, Gelber-Sack-Halterung (alle MakerWorld), Sticker & Lesezeichen.
 - **Archiv:** Mode System, Proof.
 - **Nicht auf die Seite:** NSFW-/Erotik-Modelle (z. B. auf MakerWorld/Cults3D) und das interne Bild-zu-3D-Projekt.
@@ -45,13 +45,16 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 **Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
 ## Seitenstruktur Startseite
-1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ (→ `yusu/`) / „One Humanity Lab auf YouTube“, vier Bereichs-Kacheln
-2. Wofür wir stehen (Offen, Lokal, Menschlich)
-3. Bereiche: Robotics, Games, Tools, 3D-Design (je eigener Abschnitt)
-4. Die Werkstatt (Fotos)
+Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, nicht vollgepackt. Details gehören auf `tools.html`.
+1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ / „One Humanity Lab auf YouTube“
+2. Projekte: horizontale Leiste (`data-projects="rail"`) mit allen Projekten außer Archiv, Filter-Chips (Alle, Robotics, Games, Tools, 3D-Design) und Pfeilen. Projekte mit Status `new` stehen vorn. Jede Karte verlinkt auf `tools.html#project-<id>`. Alte Links `#robotics`, `#games`, `#tools`, `#design` setzen den passenden Filter.
+3. Wofür wir stehen (Offen, Lokal, Menschlich)
+4. Die Werkstatt (drei Fotos in einer Reihe)
 5. Wer dahinter steckt
-6. Mitmachen (YouTube, GitHub, MakerWorld, itch.io, freie Sticker, Shop)
+6. Mitmachen (Kacheln: YouTube, GitHub, MakerWorld, itch.io, freie Sticker, Shop – daneben der Sticker)
 7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
+
+`tools.html` („Alle Projekte“): Sprung-Chips, große Karten mit allen Etappen je Bereich, 3D-Design-Karten, Archiv als kompakte Liste (`data-projects="index:archive"`).
 
 ## Links
 - YouTube (One Humanity Lab): https://www.youtube.com/@marcelloswigswag

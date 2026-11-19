@@ -13,7 +13,7 @@
   <meta property="og:description" content="An independent lab from Aachen: robotics, games, tools and 3D design.">
   <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
-  <link rel="stylesheet" href="assets/site.css?v=20261115">
+  <link rel="stylesheet" href="assets/site.css?v=20261119">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
@@ -49,10 +49,8 @@
     </div>
 
     <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="#robotics">Robotics</a>
-      <a class="nav-link" href="#games">Games</a>
-      <a class="nav-link" href="#tools">Tools</a>
-      <a class="nav-link" href="#design" data-i18n="navDesign">3D design</a>
+      <a class="nav-link" href="#projekte" data-i18n="navProjects">Projects</a>
+      <a class="nav-link" href="#werkstatt" data-i18n="navWorkshop">Workshop</a>
       <a class="nav-link" href="#mitmachen" data-i18n="navJoin">Take part</a>
       <a class="nav-link" href="tools.html#archiv" data-i18n="navArchive">Archive</a>
     </div>
@@ -61,7 +59,7 @@
   <main id="main">
 
     <!-- ================= HERO ================= -->
-    <header class="hero tall" id="top">
+    <header class="hero" id="top">
       <svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter>
         <rect width="100" height="100" filter="url(#noise)"></rect>
@@ -86,26 +84,43 @@
           <a href="https://www.youtube.com/@marcelloswigswag" class="btn" target="_blank" rel="noopener" data-i18n="heroCtaYoutube">One Humanity Lab on YouTube</a>
         </div>
 
-        <nav class="area-tiles reveal" aria-label="Areas" data-i18n-attr="aria-label:areasLabel">
-          <a class="area-tile" href="#robotics">
-            <img src="img/yusu-head-render.jpg" width="1600" height="1200" loading="eager" alt="Render of the Yusu robot head" data-i18n-attr="alt:altRobotics">
-            <span data-i18n="areaRobotics">Robotics</span>
-          </a>
-          <a class="area-tile" href="#games">
-            <img src="img/game-sprint-cover.jpg" width="1260" height="1000" loading="eager" alt="Cover of the game Need for Geschwindigkeit" data-i18n-attr="alt:altGames">
-            <span data-i18n="areaGames">Games</span>
-          </a>
-          <a class="area-tile" href="#tools">
-            <img src="img/glidesplit-hero.jpg" width="1600" height="1000" loading="eager" alt="Render of the GlideSplit keyboard" data-i18n-attr="alt:altTools">
-            <span data-i18n="areaTools">Tools</span>
-          </a>
-          <a class="area-tile" href="#design">
-            <img src="img/keycaps-desk.jpg" width="1400" height="1050" loading="eager" alt="Printed low-profile keycaps on a keyboard" data-i18n-attr="alt:altDesign">
-            <span data-i18n="areaDesign">3D design</span>
-          </a>
-        </nav>
       </div>
     </header>
+
+    <!-- ================= PROJECTS (rail) ================= -->
+    <section id="projekte" class="projects" data-rail aria-labelledby="projekte-title">
+      <span class="anchor" id="robotics"></span><span class="anchor" id="games"></span><span class="anchor" id="tools"></span><span class="anchor" id="design"></span>
+      <div class="wrap">
+        <div class="rail-head reveal">
+          <div>
+            <p class="kicker" data-i18n="projKicker">Projects</p>
+            <h2 class="section-title" id="projekte-title" data-i18n="projTitle">What we are building.</h2>
+          </div>
+          <div class="rail-arrows">
+            <button type="button" class="rail-arrow" data-rail-prev aria-label="Back" data-i18n-attr="aria-label:railPrev">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </button>
+            <button type="button" class="rail-arrow" data-rail-next aria-label="Next" data-i18n-attr="aria-label:railNext">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="chips reveal" role="group" aria-label="Filter" data-i18n-attr="aria-label:railFilter">
+          <button type="button" class="chip" data-rail-filter="all" aria-pressed="true" data-i18n="chipAll">All</button>
+          <button type="button" class="chip" data-rail-filter="robotics" aria-pressed="false">Robotics</button>
+          <button type="button" class="chip" data-rail-filter="games" aria-pressed="false">Games</button>
+          <button type="button" class="chip" data-rail-filter="tools" aria-pressed="false">Tools</button>
+          <button type="button" class="chip" data-rail-filter="design" aria-pressed="false" data-i18n="navDesign">3D design</button>
+        </div>
+      </div>
+      <ol class="rail reveal" data-projects="rail"></ol>
+      <div class="wrap">
+        <div class="rail-foot reveal">
+          <a class="btn" href="tools.html" data-i18n="rmAll">Every project in detail →</a>
+          <a class="more-link" href="tools.html#archiv" data-i18n="rmArchive">Archive</a>
+        </div>
+      </div>
+    </section>
 
     <!-- ================= VALUES ================= -->
     <section id="haltung" aria-labelledby="haltung-title">
@@ -120,51 +135,6 @@
         </div>
       </div>
     </section>
-
-    <div id="projekte">
-    <section id="robotics" class="area" aria-labelledby="robotics-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="robKicker">Robotics</p>
-        <h2 class="section-title reveal" id="robotics-title" data-i18n="robTitle">Machines that accompany people.</h2>
-        <p class="lead reveal" data-i18n="robIntro">Our biggest projects: a modular robot and a drone that can drive.</p>
-        <ol class="roadmap" data-projects="area:robotics"></ol>
-      </div>
-    </section>
-
-    <section id="games" class="area" aria-labelledby="games-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="gamesKicker">Games</p>
-        <h2 class="section-title reveal" id="games-title" data-i18n="gamesTitle">Games we would want to play ourselves.</h2>
-        <p class="lead reveal" data-i18n="gamesIntro">Built in Godot, free to play, with open source code.</p>
-        <ol class="roadmap" data-projects="area:games"></ol>
-      </div>
-    </section>
-
-    <section id="tools" class="area" aria-labelledby="tools-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="toolsKicker">Tools</p>
-        <h2 class="section-title reveal" id="tools-title" data-i18n="toolsTitle">Tools for the desk and for everyday work.</h2>
-        <p class="lead reveal" data-i18n="toolsIntro">Devices and inventions that make work a little better – built, tested and documented.</p>
-        <ol class="roadmap" data-projects="area:tools"></ol>
-      </div>
-    </section>
-
-    <section id="design" class="area" aria-labelledby="design-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="designKicker">3D design</p>
-        <h2 class="section-title reveal" id="design-title" data-i18n="designTitle">Designed, printed, shared.</h2>
-        <p class="lead reveal" data-i18n="designIntro">Practical things from the 3D printer – free files on MakerWorld, some also ready-made in the shop.</p>
-        <div class="grid cols-3" data-projects="cards:design" style="margin-top:var(--sp-5)"></div>
-        <div class="btn-row reveal">
-          <a class="btn" href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a>
-        </div>
-      </div>
-    </section>
-
-      <div class="wrap reveal" style="padding-bottom:var(--sp-section)">
-        <a class="btn" href="tools.html" data-i18n="rmAll">All projects with every stage, plus the archive →</a>
-      </div>
-    </div>
 
     <!-- ================= WORKSHOP ================= -->
     <section id="werkstatt" aria-labelledby="werkstatt-title">
@@ -213,42 +183,37 @@
         <p class="lead reveal" data-i18n="takePartIntro">Videos of the projects, open files and code, free games – and free stickers for good places.</p>
 
         <div class="split reveal" style="margin-top:var(--sp-6)">
-          <div style="display:grid;gap:var(--sp-3)">
-            <a class="btn block" href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">
+          <div class="link-tiles">
+            <a class="link-tile" href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>
-              <span data-i18n="ctaYoutube">One Humanity Lab on YouTube</span>
+              <strong data-i18n="ctaYoutube">One Humanity Lab on YouTube</strong>
+              <span data-i18n="hintYoutube">Walkthroughs and progress on robots, games and everything else on the bench.</span>
             </a>
-            <p class="hint" data-i18n="hintYoutube">Walkthroughs and progress on robots, games and everything else on the bench.</p>
-
-            <a class="btn block" href="https://github.com/DesignStraub" target="_blank" rel="noopener">
+            <a class="link-tile" href="https://github.com/DesignStraub" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 2.5 12 8 18M16 6l5.5 6L16 18M13.5 4l-3 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              <span data-i18n="ctaFiles">Code &amp; files on GitHub</span>
+              <strong data-i18n="ctaFiles">Code &amp; files on GitHub</strong>
+              <span data-i18n="hintFiles">Games, firmware, CAD and circuit boards.</span>
             </a>
-            <p class="hint" data-i18n="hintFiles">Games, firmware, CAD and circuit boards.</p>
-
-            <a class="btn block" href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">
+            <a class="link-tile" href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 7.4v9.2l-8 4.6-8-4.6V7.4z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/><path d="M4 7.4l8 4.6 8-4.6M12 12v9.2" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/></svg>
-              <span data-i18n="ctaPrint">3D models on MakerWorld</span>
+              <strong data-i18n="ctaPrint">3D models on MakerWorld</strong>
+              <span data-i18n="hintPrint">Print files for everything from the 3D design section.</span>
             </a>
-            <p class="hint" data-i18n="hintPrint">Print files for everything from the 3D design section.</p>
-
-            <a class="btn block" href="https://onehumanity.itch.io" target="_blank" rel="noopener">
+            <a class="link-tile" href="https://onehumanity.itch.io" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="5.5" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="M7.5 10.5v4M5.5 12.5h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="15.5" cy="11.5" r="1.1" fill="currentColor"/><circle cx="17.8" cy="13.6" r="1.1" fill="currentColor"/></svg>
-              <span data-i18n="ctaItch">Games on itch.io</span>
+              <strong data-i18n="ctaItch">Games on itch.io</strong>
+              <span data-i18n="hintItch">Download and play for free – Windows, macOS and Linux.</span>
             </a>
-            <p class="hint" data-i18n="hintItch">Download and play for free – Windows, macOS and Linux.</p>
-
-            <a class="btn block" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
+            <a class="link-tile" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/></svg>
-              <span data-i18n="ctaRequest">Request a free sticker set</span>
+              <strong data-i18n="ctaRequest">Request a free sticker set</strong>
+              <span data-i18n="hintRequest">Limited free sets. We cover printing and shipping – it may take a few weeks.</span>
             </a>
-            <p class="hint" data-i18n="hintRequest">Limited free sets. We cover printing and shipping – it may take a few weeks.</p>
-
-            <a class="btn block" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
+            <a class="link-tile" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
               <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/></svg>
-              <span data-i18n="ctaSupport">Visit the shop</span>
+              <strong data-i18n="ctaSupport">Visit the shop</strong>
+              <span data-i18n="hintSupport">Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next project.</span>
             </a>
-            <p class="hint" data-i18n="hintSupport">Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next project.</p>
           </div>
 
           <div class="sticker-card" data-sticker>
@@ -313,15 +278,6 @@
         heroCtaProjects: 'Projekte ansehen',
         heroCtaYusu: 'Yusu im Browser ansehen',
         heroCtaYoutube: 'One Humanity Lab auf YouTube',
-        areasLabel: 'Bereiche',
-        areaRobotics: 'Robotics',
-        areaGames: 'Games',
-        areaTools: 'Tools',
-        areaDesign: '3D-Design',
-        altRobotics: 'Render des Roboterkopfs Yusu',
-        altGames: 'Cover des Spiels Need for Geschwindigkeit',
-        altTools: 'Render der Tastatur GlideSplit',
-        altDesign: 'Gedruckte Low-Profile-Tastenkappen auf einer Tastatur',
         valuesKicker: 'Wofür wir stehen',
         v1Title: 'Offen',
         v1Text: 'Code, Dateien und Anleitungen werden veröffentlicht, wo immer es geht.',
@@ -329,19 +285,14 @@
         v2Text: 'Kein Account, keine Cloud – unsere Geräte und Werkzeuge funktionieren für sich.',
         v3Title: 'Menschlich',
         v3Text: 'Für Menschen gemacht, nicht für Kennzahlen.',
-        robKicker: 'Robotics',
-        robTitle: 'Maschinen, die Menschen begleiten.',
-        robIntro: 'Unsere größten Projekte: ein modularer Roboter und eine Drohne, die fahren kann.',
-        gamesKicker: 'Games',
-        gamesTitle: 'Spiele, die wir selbst spielen wollen.',
-        gamesIntro: 'Gebaut mit Godot, kostenlos spielbar, der Code ist offen.',
-        toolsKicker: 'Tools',
-        toolsTitle: 'Werkzeuge für Schreibtisch und Alltag.',
-        toolsIntro: 'Geräte und Erfindungen, die die Arbeit ein Stück besser machen – gebaut, getestet und dokumentiert.',
-        designKicker: '3D-Design',
-        designTitle: 'Entworfen, gedruckt, geteilt.',
-        designIntro: 'Praktische Dinge aus dem 3D-Drucker – freie Dateien auf MakerWorld, manches auch fertig im Shop.',
-        rmAll: 'Alle Projekte mit allen Etappen, dazu das Archiv →',
+        projKicker: 'Projekte',
+        projTitle: 'Woran wir bauen.',
+        chipAll: 'Alle',
+        railFilter: 'Nach Bereich filtern',
+        railPrev: 'Zurück',
+        railNext: 'Weiter',
+        rmAll: 'Alle Projekte im Detail →',
+        rmArchive: 'Archiv',
         wsKicker: 'Die Werkstatt',
         wsTitle: 'Wo alles zusammenkommt.',
         wsIntro: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
@@ -373,15 +324,6 @@
         heroCtaProjects: 'See the projects',
         heroCtaYusu: 'Meet Yusu in the browser',
         heroCtaYoutube: 'One Humanity Lab on YouTube',
-        areasLabel: 'Areas',
-        areaRobotics: 'Robotics',
-        areaGames: 'Games',
-        areaTools: 'Tools',
-        areaDesign: '3D design',
-        altRobotics: 'Render of the Yusu robot head',
-        altGames: 'Cover of the game Need for Geschwindigkeit',
-        altTools: 'Render of the GlideSplit keyboard',
-        altDesign: 'Printed low-profile keycaps on a keyboard',
         valuesKicker: 'What we stand for',
         v1Title: 'Open',
         v1Text: 'Code, files and guides are published wherever possible.',
@@ -389,19 +331,14 @@
         v2Text: 'No account, no cloud – our devices and tools work on their own.',
         v3Title: 'Human',
         v3Text: 'Made for people, not for metrics.',
-        robKicker: 'Robotics',
-        robTitle: 'Machines that accompany people.',
-        robIntro: 'Our biggest projects: a modular robot and a drone that can drive.',
-        gamesKicker: 'Games',
-        gamesTitle: 'Games we would want to play ourselves.',
-        gamesIntro: 'Built in Godot, free to play, with open source code.',
-        toolsKicker: 'Tools',
-        toolsTitle: 'Tools for the desk and for everyday work.',
-        toolsIntro: 'Devices and inventions that make work a little better – built, tested and documented.',
-        designKicker: '3D design',
-        designTitle: 'Designed, printed, shared.',
-        designIntro: 'Practical things from the 3D printer – free files on MakerWorld, some also ready-made in the shop.',
-        rmAll: 'All projects with every stage, plus the archive →',
+        projKicker: 'Projects',
+        projTitle: 'What we are building.',
+        chipAll: 'All',
+        railFilter: 'Filter by area',
+        railPrev: 'Back',
+        railNext: 'Next',
+        rmAll: 'Every project in detail →',
+        rmArchive: 'Archive',
         wsKicker: 'The workshop',
         wsTitle: 'Where it all comes together.',
         wsIntro: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
@@ -430,9 +367,9 @@
       }
     };
   </script>
-  <script src="assets/projects.data.js?v=20261115"></script>
-  <script src="assets/projects.render.js?v=20261115"></script>
-  <script src="assets/site.js?v=20261115"></script>
+  <script src="assets/projects.data.js?v=20261119"></script>
+  <script src="assets/projects.render.js?v=20261119"></script>
+  <script src="assets/site.js?v=20261119"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

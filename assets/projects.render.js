@@ -5,6 +5,12 @@
    ==========================================================================
 
    Containers in the HTML:
+     <div data-projects="rail">              home page: one horizontal row of every
+                                             project (not the archive), with filter
+                                             chips [data-rail-filter] and arrows
+                                             [data-rail-prev] / [data-rail-next]
+                                             inside the same [data-rail] section
+     <ol data-projects="index:archive">      compact list rows of one group
      <ol data-projects="area:games">        large cards of one group (add data-timeline for stages)
      <div data-projects="cards:design">     small cards of one group
      <ol data-projects="roadmap">           all featured projects (legacy)
@@ -39,8 +45,19 @@
     buy:   { de: 'Fertig kaufen',  en: 'Buy it ready-made' },
     more:  { de: 'Mehr erfahren',  en: 'Learn more' },
     soon:  { de: 'bald',           en: 'soon' },
-    soonTitle: { de: 'Link folgt in Kürze', en: 'Link coming soon' }
+    soonTitle: { de: 'Link folgt in Kürze', en: 'Link coming soon' },
+    open:  { de: 'Öffnen', en: 'Open' }
   };
+
+  /* Area names for the rail and the archive list. */
+  var GROUPS = {
+    robotics: { de: 'Robotics',  en: 'Robotics' },
+    games:    { de: 'Games',     en: 'Games' },
+    tools:    { de: 'Tools',     en: 'Tools' },
+    design:   { de: '3D-Design', en: '3D design' },
+    archive:  { de: 'Archiv',    en: 'Archive' }
+  };
+  var RAIL_GROUPS = ['robotics', 'games', 'tools', 'design'];
 
   function esc(value) {
     return String(value == null ? '' : value)
@@ -173,10 +190,73 @@
       '</article>';
   }
 
+  /* Rail card: picture, area · status, title, one line. Links to the full
+     card with all stages on tools.html. */
+  function railCard(project, lang) {
+    var copy = project[lang] || project.en || {};
+    var s = STATUS[project.status] || {};
+    var img = project.image;
+    var line = copy.tagline || copy.text || '';
+    var media = img && img.src
+      ? '<img src="' + esc(img.src) + '"' +
+          (img.w ? ' width="' + esc(img.w) + '"' : '') +
+          (img.h ? ' height="' + esc(img.h) + '"' : '') +
+          ' loading="lazy" alt="' + esc(pick(img.alt, lang)) + '">'
+      : '';
+    return '<li class="rail-item" data-group="' + esc(project.group) + '">' +
+      '<a class="rail-card" href="tools.html#project-' + esc(project.id) + '">' +
+        '<span class="rail-media">' + media + '</span>' +
+        '<span class="rail-body">' +
+          '<span class="rail-meta">' +
+            '<span>' + esc(pick(GROUPS[project.group], lang)) + '</span>' +
+            (s[lang] ? '<span class="rail-status ' + (s.cls || '') + '">' + esc(s[lang]) + '</span>' : '') +
+          '</span>' +
+          '<span class="rail-title">' + esc(copy.title) + '</span>' +
+          '<span class="rail-line">' + esc(line) + '</span>' +
+        '</span>' +
+      '</a>' +
+    '</li>';
+  }
+
+  /* Order for the rail: new big projects first, then the other big
+     projects (in data order), then the 3D designs. */
+  function railProjects() {
+    var inRail = projects.filter(function (p) { return RAIL_GROUPS.indexOf(p.group) !== -1; });
+    var big = inRail.filter(function (p) { return p.featured; });
+    return big.filter(function (p) { return p.status === 'new'; })
+      .concat(big.filter(function (p) { return p.status !== 'new'; }))
+      .concat(inRail.filter(function (p) { return !p.featured; }));
+  }
+
+  /* Compact archive row: title, area, status, one line, link. */
+  function indexRow(project, lang) {
+    var copy = project[lang] || project.en || {};
+    var href = project.link || (project.actions && project.actions[0] && project.actions[0].href) || '';
+    var title = href
+      ? '<a href="' + esc(href) + '">' + esc(copy.title) + ' →</a>'
+      : esc(copy.title);
+    return '<li class="index-row" id="project-' + esc(project.id) + '">' +
+      '<span class="index-title">' + title + '</span>' +
+      '<span class="index-text">' + esc(copy.tagline || copy.text) + '</span>' +
+      statusHTML(project, lang) +
+    '</li>';
+  }
+
   function render(lang) {
     if (lang !== 'de' && lang !== 'en') lang = 'en';
     containers.forEach(function (container) {
       var mode = container.getAttribute('data-projects');
+      if (mode === 'rail') {
+        container.innerHTML = railProjects().map(function (p) { return railCard(p, lang); }).join('');
+        return;
+      }
+      if (mode.indexOf('index:') === 0) {
+        var group = mode.slice(6);
+        container.innerHTML = projects
+          .filter(function (p) { return p.group === group; })
+          .map(function (p) { return indexRow(p, lang); }).join('');
+        return;
+      }
       /* "area:games" → large cards of one group, "cards:design" → small cards of one group */
       var parts = mode.split(':');
       if (parts.length === 2) {
@@ -207,7 +287,81 @@
   var browserLang = (navigator.language || 'en').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
   render(stored || browserLang);
 
+  /* Cards are built by script, so the browser may not find
+     tools.html#project-… on its own – scroll there once everything is in. */
+  if (location.hash.indexOf('#project-') === 0) {
+    window.addEventListener('load', function () {
+      var target = document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView({ behavior: 'instant' });
+    });
+  }
+
   document.addEventListener('oh:langchange', function (event) {
     render(event.detail && event.detail.lang);
+    applyFilter();
   });
+
+  /* --- rail: filter chips, arrows, #robotics-style links -------------- */
+  var rail = document.querySelector('[data-rail]');
+  var filter = 'all';
+
+  function applyFilter() {
+    if (!rail) return;
+    var track = rail.querySelector('[data-projects="rail"]');
+    rail.querySelectorAll('[data-rail-filter]').forEach(function (chip) {
+      chip.setAttribute('aria-pressed', chip.getAttribute('data-rail-filter') === filter ? 'true' : 'false');
+    });
+    track.querySelectorAll('.rail-item').forEach(function (item) {
+      item.hidden = filter !== 'all' && item.getAttribute('data-group') !== filter;
+    });
+    track.scrollLeft = 0;
+    updateArrows();
+  }
+
+  function updateArrows() {
+    if (!rail) return;
+    var track = rail.querySelector('[data-projects="rail"]');
+    var prev = rail.querySelector('[data-rail-prev]');
+    var next = rail.querySelector('[data-rail-next]');
+    var max = track.scrollWidth - track.clientWidth - 2;
+    if (prev) prev.disabled = track.scrollLeft <= 2;
+    if (next) next.disabled = track.scrollLeft >= max;
+  }
+
+  function filterFromHash() {
+    var id = location.hash.slice(1);
+    if (RAIL_GROUPS.indexOf(id) !== -1) { filter = id; applyFilter(); }
+  }
+
+  if (rail) {
+    var track = rail.querySelector('[data-projects="rail"]');
+    rail.querySelectorAll('[data-rail-filter]').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        filter = chip.getAttribute('data-rail-filter');
+        applyFilter();
+      });
+    });
+    var step = function (dir) {
+      var card = track.querySelector('.rail-item:not([hidden])');
+      var width = card ? card.getBoundingClientRect().width + 16 : 320;
+      var count = Math.max(1, Math.floor(track.clientWidth / width));
+      var from = track.scrollLeft;
+      var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      track.scrollBy({ left: dir * count * width, behavior: smooth ? 'smooth' : 'auto' });
+      /* some browsers skip smooth scrolling (e.g. power saving) – jump instead */
+      setTimeout(function () {
+        if (track.scrollLeft === from) track.scrollLeft = from + dir * count * width;
+        updateArrows();
+      }, 350);
+    };
+    var prevBtn = rail.querySelector('[data-rail-prev]');
+    var nextBtn = rail.querySelector('[data-rail-next]');
+    if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    window.addEventListener('hashchange', filterFromHash);
+    filterFromHash();
+    applyFilter();
+  }
 })();

@@ -320,6 +320,50 @@ window.OH_PROJECTS = [
 
   /* ---------------------------------------------------------------- */
   {
+    id: 'tubeshield',
+    status: 'new',
+    featured: true,
+    group: 'tools',
+    image: {
+      src: 'img/tubeshield-cover.svg',
+      w: 1600, h: 1200,
+      alt: {
+        de: 'Grafik: das TubeShield-Popup in Safari mit Schild-Symbol und zwei eingeschalteten Schaltern',
+        en: 'Illustration: the TubeShield popup in Safari with a shield icon and two switches turned on'
+      }
+    },
+    build: {
+      href: 'https://github.com/DesignStraub/tubeshield',
+      label: { de: 'Code auf GitHub', en: 'Code on GitHub' }
+    },
+    de: {
+      title: 'TubeShield',
+      tagline: 'Ein Open-Source-Adblocker für Safari – mit YouTube-Auto-Pause-Block.',
+      text: 'Blockiert Werbung und Tracker auf allen Websites und überspringt Werbung auf YouTube. Dazu bestätigt TubeShield YouTubes Frage „Video pausiert. Weiterschauen?“ automatisch, damit Musik und lange Videos einfach weiterlaufen. Keine Konten, keine Telemetrie, keine Daten – das Blockieren übernimmt Safari selbst. TubeShield bleibt immer Open Source; weitere Funktionen kommen dazu.',
+      facts: ['Safari · macOS', '≈ 93.000 Filterregeln', 'Sammelt keine Daten', 'Open Source · GPL-3.0'],
+      timeline: [
+        { state: 'done', text: 'Werbung und Tracker auf allen Websites blockieren (EasyList, EasyPrivacy, EasyList Germany)' },
+        { state: 'done', text: 'YouTube: Werbung überspringen, Premium-Dialoge schließen, Auto-Pause verhindern' },
+        { state: 'now',  text: 'Version 1.2 im täglichen Einsatz, Code öffentlich auf GitHub' },
+        { state: 'next', text: 'Als Nächstes: weitere Funktionen' }
+      ]
+    },
+    en: {
+      title: 'TubeShield',
+      tagline: 'An open-source ad blocker for Safari – with a YouTube auto-pause block.',
+      text: 'Blocks ads and trackers on every website and skips ads on YouTube. TubeShield also answers YouTube’s “Video paused. Continue watching?” prompt for you, so music and long videos simply keep playing. No accounts, no telemetry, no data – Safari does the blocking itself. TubeShield will always stay open source; more features are on the way.',
+      facts: ['Safari · macOS', '≈ 93,000 filter rules', 'Collects no data', 'Open source · GPL-3.0'],
+      timeline: [
+        { state: 'done', text: 'Block ads and trackers on every website (EasyList, EasyPrivacy, EasyList Germany)' },
+        { state: 'done', text: 'YouTube: skip ads, close Premium dialogs, prevent auto-pause' },
+        { state: 'now',  text: 'Version 1.2 in daily use, code public on GitHub' },
+        { state: 'next', text: 'Next: more features' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
     id: 'lifebar',
     status: 'live',
     featured: true,
