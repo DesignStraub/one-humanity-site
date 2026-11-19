@@ -1768,7 +1768,7 @@ figure.media figcaption{
 }
 
 /* ==========================================================================
-   Home: project rail (horizontal, scroll-snap) + filter chips
+   Home: project grid (two rows, "show all") + filter chips
    ========================================================================== */
 .anchor{ position: absolute; top: 0; }
 
@@ -1779,20 +1779,6 @@ figure.media figcaption{
   gap: var(--sp-4);
 }
 .rail-head .section-title{ margin-bottom: 0; }
-.rail-arrows{ display: flex; gap: var(--sp-2); flex: 0 0 auto; }
-.rail-arrow{
-  width: 44px; height: 44px;
-  display: inline-grid; place-items: center;
-  border: 1px solid var(--line-strong);
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--ink);
-  cursor: pointer;
-  transition: background .2s ease, opacity .2s ease;
-}
-.rail-arrow:hover:not(:disabled){ background: var(--surface-hover); }
-.rail-arrow:disabled{ opacity: .35; cursor: default; }
-.rail-arrow:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
 
 .chips{
   display: flex;
@@ -1821,27 +1807,24 @@ figure.media figcaption{
 }
 .chip:focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; }
 
-/* The row runs edge to edge, but starts where the page content starts. */
-.rail{
-  --rail-inset: max(var(--gutter), (100% - 1120px) / 2);
-  display: flex;
-  gap: var(--sp-3);
+/* Grid: two rows are shown, the rest opens with "Show all". */
+.proj-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-4);
   margin: var(--sp-5) 0 0;
-  padding: 4px var(--rail-inset) var(--sp-4);
+  padding: 0;
   list-style: none;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--rail-inset);
-  scrollbar-width: none;
 }
-.rail::-webkit-scrollbar{ display: none; }
-.rail-item{
-  flex: 0 0 clamp(250px, 30vw, 330px);
-  margin: 0;
-  scroll-snap-align: start;
+.rail-item{ margin: 0; min-width: 0; }
+.rail-item[hidden],
+.proj-grid:not(.is-open) .rail-item[data-over]{ display: none; }
+.proj-more{
+  display: flex;
+  justify-content: center;
+  margin-top: var(--sp-5);
 }
-.rail-item[hidden]{ display: none; }
+.proj-more .btn[hidden]{ display: none; }
 .rail-card{
   display: flex;
   flex-direction: column;
@@ -1928,9 +1911,15 @@ figure.media figcaption{
 }
 .more-link:hover{ color: var(--ink); text-decoration-color: currentColor; }
 
-@media (max-width: 640px){
-  .rail-item{ flex-basis: 78vw; }
-  .rail-arrows{ display: none; }   /* swipe on phones */
+@media (max-width: 900px){
+  .proj-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px){
+  .proj-grid{ gap: var(--sp-3); }
+  .rail-body{ padding: 10px 12px 14px; gap: 4px; }
+  .rail-meta{ font-size: 11.5px; }
+  .rail-title{ font-size: 15.5px; }
+  .rail-line{ font-size: 13px; line-height: 1.45; }
 }
 
 /* dark mode: status colours need more light on dark surfaces */

@@ -5,11 +5,11 @@
    ==========================================================================
 
    Containers in the HTML:
-     <div data-projects="rail">              home page: one horizontal row of every
+     <ol data-projects="rail">               home page: grid (two rows + "show all") of every
                                              project (not the archive), with filter
-                                             chips [data-rail-filter] and arrows
-                                             [data-rail-prev] / [data-rail-next]
-                                             inside the same [data-rail] section
+                                             chips [data-rail-filter] and the button
+                                             [data-rail-more] inside the same
+                                             [data-rail] section
      <ol data-projects="index:archive">      compact list rows of one group
      <ol data-projects="area:games">        large cards of one group (add data-timeline for stages)
      <div data-projects="cards:design">     small cards of one group
@@ -301,65 +301,77 @@
     applyFilter();
   });
 
-  /* --- rail: filter chips, arrows, #robotics-style links -------------- */
+  /* --- project grid: filter chips, "show all", #robotics-style links --- */
   var rail = document.querySelector('[data-rail]');
   var filter = 'all';
+  var open = false;
+
+  function moreLabel(key, n) {
+    var lang = document.documentElement.lang === 'de' ? 'de' : 'en';
+    var dict = (window.OH_I18N && window.OH_I18N[lang]) || {};
+    var fallback = { railMore: 'Show all {n} projects', railLess: 'Show fewer' };
+    return (dict[key] || fallback[key]).replace('{n}', n);
+  }
+
+  /* two rows: as many cards as the grid has columns, times two */
+  function rowLimit(grid) {
+    var cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+    return Math.max(1, cols) * 2;
+  }
 
   function applyFilter() {
     if (!rail) return;
-    var track = rail.querySelector('[data-projects="rail"]');
+    var grid = rail.querySelector('[data-projects="rail"]');
+    var more = rail.querySelector('[data-rail-more]');
     rail.querySelectorAll('[data-rail-filter]').forEach(function (chip) {
       chip.setAttribute('aria-pressed', chip.getAttribute('data-rail-filter') === filter ? 'true' : 'false');
     });
-    track.querySelectorAll('.rail-item').forEach(function (item) {
-      item.hidden = filter !== 'all' && item.getAttribute('data-group') !== filter;
+    var limit = rowLimit(grid);
+    var shown = 0;
+    grid.querySelectorAll('.rail-item').forEach(function (item) {
+      var match = filter === 'all' || item.getAttribute('data-group') === filter;
+      item.hidden = !match;
+      if (match) shown += 1;
+      if (match && shown > limit) item.setAttribute('data-over', '');
+      else item.removeAttribute('data-over');
     });
-    track.scrollLeft = 0;
-    updateArrows();
-  }
-
-  function updateArrows() {
-    if (!rail) return;
-    var track = rail.querySelector('[data-projects="rail"]');
-    var prev = rail.querySelector('[data-rail-prev]');
-    var next = rail.querySelector('[data-rail-next]');
-    var max = track.scrollWidth - track.clientWidth - 2;
-    if (prev) prev.disabled = track.scrollLeft <= 2;
-    if (next) next.disabled = track.scrollLeft >= max;
+    grid.classList.toggle('is-open', open);
+    if (more) {
+      more.hidden = shown <= limit;
+      more.textContent = open ? moreLabel('railLess', shown) : moreLabel('railMore', shown);
+      more.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
   }
 
   function filterFromHash() {
     var id = location.hash.slice(1);
-    if (RAIL_GROUPS.indexOf(id) !== -1) { filter = id; applyFilter(); }
+    if (RAIL_GROUPS.indexOf(id) !== -1) { filter = id; open = false; applyFilter(); }
   }
 
   if (rail) {
-    var track = rail.querySelector('[data-projects="rail"]');
     rail.querySelectorAll('[data-rail-filter]').forEach(function (chip) {
       chip.addEventListener('click', function () {
         filter = chip.getAttribute('data-rail-filter');
+        open = false;
         applyFilter();
       });
     });
-    var step = function (dir) {
-      var card = track.querySelector('.rail-item:not([hidden])');
-      var width = card ? card.getBoundingClientRect().width + 16 : 320;
-      var count = Math.max(1, Math.floor(track.clientWidth / width));
-      var from = track.scrollLeft;
-      var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      track.scrollBy({ left: dir * count * width, behavior: smooth ? 'smooth' : 'auto' });
-      /* some browsers skip smooth scrolling (e.g. power saving) – jump instead */
-      setTimeout(function () {
-        if (track.scrollLeft === from) track.scrollLeft = from + dir * count * width;
-        updateArrows();
-      }, 350);
-    };
-    var prevBtn = rail.querySelector('[data-rail-prev]');
-    var nextBtn = rail.querySelector('[data-rail-next]');
-    if (prevBtn) prevBtn.addEventListener('click', function () { step(-1); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { step(1); });
-    track.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
+    var moreBtn = rail.querySelector('[data-rail-more]');
+    if (moreBtn) moreBtn.addEventListener('click', function () {
+      open = !open;
+      applyFilter();
+      /* when closing, keep the grid in view instead of leaving the reader far below */
+      if (!open) {
+        var top = rail.querySelector('[data-projects="rail"]').getBoundingClientRect().top;
+        if (top < 0) rail.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+    });
+    var resizeQueued = false;
+    window.addEventListener('resize', function () {
+      if (resizeQueued) return;
+      resizeQueued = true;
+      requestAnimationFrame(function () { resizeQueued = false; applyFilter(); });
+    });
     window.addEventListener('hashchange', filterFromHash);
     filterFromHash();
     applyFilter();
