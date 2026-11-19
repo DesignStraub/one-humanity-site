@@ -13,7 +13,7 @@
   <meta property="og:description" content="An independent lab from Aachen: robotics, games, tools and 3D design.">
   <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
-  <link rel="stylesheet" href="assets/site.css?v=20261119">
+  <link rel="stylesheet" href="assets/site.css?v=20261119b">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
@@ -96,14 +96,6 @@
             <p class="kicker" data-i18n="projKicker">Projects</p>
             <h2 class="section-title" id="projekte-title" data-i18n="projTitle">What we are building.</h2>
           </div>
-          <div class="rail-arrows">
-            <button type="button" class="rail-arrow" data-rail-prev aria-label="Back" data-i18n-attr="aria-label:railPrev">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-            </button>
-            <button type="button" class="rail-arrow" data-rail-next aria-label="Next" data-i18n-attr="aria-label:railNext">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-            </button>
-          </div>
         </div>
         <div class="chips reveal" role="group" aria-label="Filter" data-i18n-attr="aria-label:railFilter">
           <button type="button" class="chip" data-rail-filter="all" aria-pressed="true" data-i18n="chipAll">All</button>
@@ -112,9 +104,10 @@
           <button type="button" class="chip" data-rail-filter="tools" aria-pressed="false">Tools</button>
           <button type="button" class="chip" data-rail-filter="design" aria-pressed="false" data-i18n="navDesign">3D design</button>
         </div>
-      </div>
-      <ol class="rail reveal" data-projects="rail"></ol>
-      <div class="wrap">
+        <ol class="proj-grid reveal" data-projects="rail"></ol>
+        <div class="proj-more">
+          <button type="button" class="btn" data-rail-more aria-expanded="false" hidden></button>
+        </div>
         <div class="rail-foot reveal">
           <a class="btn" href="tools.html" data-i18n="rmAll">Every project in detail →</a>
           <a class="more-link" href="tools.html#archiv" data-i18n="rmArchive">Archive</a>
@@ -289,8 +282,8 @@
         projTitle: 'Woran wir bauen.',
         chipAll: 'Alle',
         railFilter: 'Nach Bereich filtern',
-        railPrev: 'Zurück',
-        railNext: 'Weiter',
+        railMore: 'Alle {n} Projekte zeigen',
+        railLess: 'Weniger zeigen',
         rmAll: 'Alle Projekte im Detail →',
         rmArchive: 'Archiv',
         wsKicker: 'Die Werkstatt',
@@ -335,8 +328,8 @@
         projTitle: 'What we are building.',
         chipAll: 'All',
         railFilter: 'Filter by area',
-        railPrev: 'Back',
-        railNext: 'Next',
+        railMore: 'Show all {n} projects',
+        railLess: 'Show fewer',
         rmAll: 'Every project in detail →',
         rmArchive: 'Archive',
         wsKicker: 'The workshop',
@@ -367,9 +360,9 @@
       }
     };
   </script>
-  <script src="assets/projects.data.js?v=20261119"></script>
-  <script src="assets/projects.render.js?v=20261119"></script>
-  <script src="assets/site.js?v=20261119"></script>
+  <script src="assets/projects.data.js?v=20261119b"></script>
+  <script src="assets/projects.render.js?v=20261119b"></script>
+  <script src="assets/site.js?v=20261119b"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -37,7 +37,7 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 - **Yusu-Begleit-App:** `yusu/` (eigene dunkle Seite ohne Site-CSS, Prototyp, `noindex`): Augen, Persönlichkeits-Editor, Gespräch nur mit lokalem Ollama über `python3 yusu/lokal.py`. Verlinkt im Hero und auf der Yusu-Karte (Feld `demo`).
 - **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
 - **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.
-- **Tools:** TubeShield (Open-Source-Adblocker für Safari mit YouTube-Auto-Pause-Block, Repo `tubeshield`, bleibt immer Open Source, weitere Funktionen folgen), LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short), Nixie-Uhr (Skizze).
+- **Tools:** TubeShield (Open-Source-Adblocker für Safari mit YouTube-Auto-Pause-Block, optional Startseite ohne Vorschläge und Shorts ausblenden; Repo `tubeshield`, lokal `~/Projekte/tubeshield`; Bild ist ein echter Screenshot `img/tubeshield-screenshot.svg`, bleibt immer Open Source, weitere Funktionen folgen), LifeBar (fertig, täglich im Einsatz), GlideSplit (Konzept, Repo + YouTube-Short), Nixie-Uhr (Skizze).
 - **3D-Design:** Laptop-Badge (Weltherz), LifeBar-Standfuß, Low-Profile-Tastenkappen, Skadis-Schreibtischwand, Gelber-Sack-Halterung (alle MakerWorld), Sticker & Lesezeichen.
 - **Archiv:** Mode System, Proof.
 - **Nicht auf die Seite:** NSFW-/Erotik-Modelle (z. B. auf MakerWorld/Cults3D) und das interne Bild-zu-3D-Projekt.
@@ -47,7 +47,7 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 ## Seitenstruktur Startseite
 Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, nicht vollgepackt. Details gehören auf `tools.html`.
 1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ / „One Humanity Lab auf YouTube“
-2. Projekte: horizontale Leiste (`data-projects="rail"`) mit allen Projekten außer Archiv, Filter-Chips (Alle, Robotics, Games, Tools, 3D-Design) und Pfeilen. Projekte mit Status `new` stehen vorn. Jede Karte verlinkt auf `tools.html#project-<id>`. Alte Links `#robotics`, `#games`, `#tools`, `#design` setzen den passenden Filter.
+2. Projekte: Raster (`data-projects="rail"`, 3 Spalten Desktop, 2 Tablet/Handy) mit allen Projekten außer Archiv, Filter-Chips (Alle, Robotics, Games, Tools, 3D-Design). Es sind zwei Reihen sichtbar, der Button „Alle N Projekte zeigen“ klappt den Rest auf (Marcello, 19.11.2026: horizontale Leiste wirkte unnatürlich). Projekte mit Status `new` stehen vorn. Jede Karte verlinkt auf `tools.html#project-<id>`. Alte Links `#robotics`, `#games`, `#tools`, `#design` setzen den passenden Filter.
 3. Wofür wir stehen (Offen, Lokal, Menschlich)
 4. Die Werkstatt (drei Fotos in einer Reihe)
 5. Wer dahinter steckt
