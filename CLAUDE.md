@@ -45,15 +45,15 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 
 **Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
-## Seitenstruktur Startseite
-Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, nicht vollgepackt. Details gehören auf `tools.html`.
-1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ / „One Humanity Lab auf YouTube“
-2. Projekte: Raster (`data-projects="rail"`, 3 Spalten Desktop, 2 Tablet/Handy) mit allen Projekten außer Archiv, Filter-Chips (Alle, Robotics, Games, Tools, 3D-Design). Es sind zwei Reihen sichtbar, der Button „Alle N Projekte zeigen“ klappt den Rest auf (Marcello, 19.11.2026: horizontale Leiste wirkte unnatürlich). Projekte mit Status `new` stehen vorn. Jede Karte verlinkt auf `tools.html#project-<id>`. Alte Links `#robotics`, `#games`, `#tools`, `#design` setzen den passenden Filter.
-3. Wofür wir stehen (Offen, Lokal, Menschlich)
-4. Die Werkstatt (drei Fotos in einer Reihe)
-5. Wer dahinter steckt
-6. Mitmachen (Kacheln: YouTube, GitHub, MakerWorld, itch.io, freie Sticker, Shop – daneben der Sticker)
-7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
+## Startseite: begehbare 3D-Galerie
+Entscheidung (Marcello, 25.11.2026): Die Startseite ist eine 3D-Galerie, durch die man läuft – ähnlich dem Raumplaner. Code: `assets/gallery.js` (Szene), `assets/gallery.css` (Overlay), three.js r160 liegt im Repo unter `assets/vendor/` (kein CDN).
+- Willkommenskarte (HTML, auch für Suchmaschinen): Logo, Leitsatz, Kurztext, „Rundgang starten“ / „Als Liste ansehen“.
+- Räume um ein Foyer: **Foyer** (Willkommen, Wofür wir stehen, Marcello, Lageplan, Mitmachen), **Robotics** (Hauptraum: Yusu-Kopf aus dem echten CAD auf dem Sockel, Augen animiert, dreht sich zum Besucher; Westwand Entstehung = `image` + `gallery`, Ostwand aktueller Stand = `now` mit Videos, Nordwand Etappen aus `timeline`; weitere Robotik-Projekte am Eingang), **Games** (Automaten pro Spiel, itch.io), **Werkstatt** (Tools an Tischen, 3D-Design an der Lochwand, Werkstatt-Fotos), **Kunst** (Bilder aus `assets/artworks.data.js`, solange leer: Platzhalter mit Instagram-Link).
+- Bedienung: Ziehen = umsehen, Boden klicken = hingehen, Exponat klicken = Info-Tafel (Texte/Buttons aus `projects.data.js`), WASD/Pfeile, Raumleiste unten. Links `index.html#robotics|games|tools|design|kunst|mitmachen|project-<id>` führen direkt in den Raum.
+- Neue Projekte erscheinen automatisch im passenden Raum. Kunstwerke nur in `artworks.data.js` pflegen (Bilder nach `img/art/`, verkleinert, ohne EXIF).
+- Yusu-Kopf: `assets/models/yusu-head.bin`, erzeugt mit `tools-dev/stl_to_mesh.py` aus den STLs in `Emotional Robot/emotion_lab/hardware/kopf/export/stl/` (Befehl steht im Skript).
+- `?debug` an der Adresse stellt `window.OH_GALLERY` zum Testen bereit.
+- Die bisherige Startseite liegt als `uebersicht.html` („Als Liste ansehen“): Projekte-Raster mit Filter, Wofür wir stehen, Werkstatt, Wer dahinter steckt, Mitmachen.
 
 `tools.html` („Alle Projekte“): Sprung-Chips, große Karten mit allen Etappen je Bereich, 3D-Design-Karten, Archiv als kompakte Liste (`data-projects="index:archive"`).
 
@@ -71,7 +71,9 @@ Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, ni
   - `site.css` – Design-System (Tokens oben, Hell-/Dunkelmodus über Tokens)
   - `site.js` – Navigation, Sprache, Theme-Umschalter, Reveal
   - `projects.data.js` – **einzige Stelle, um Projekte zu pflegen**
-  - `projects.render.js` – baut die Karten
+  - `projects.render.js` – baut die Karten (stellt `window.OH_RENDER` für die Galerie bereit)
+  - `artworks.data.js` – **einzige Stelle, um Kunstwerke zu pflegen**
+  - `gallery.js` / `gallery.css` – 3D-Galerie der Startseite
 - Bestehende Seiten (impressum.html, datenschutz.html, tools.html, lifebar.html, Mode-system-guide.html, proof.html) erhalten und im selben Design halten.
 - Schnell, leicht, responsive, Hell-/Dunkelmodus. Keine Tracker, keine Embeds (auch kein YouTube-Embed – nur Links). Einzige Ausnahme: GoatCounter (`onehumanity.goatcounter.com`) auf allen Seiten, nur für Seitenaufrufzahlen, cookielos. Keine weiteren Analytics-Dienste ohne Freigabe.
 - Bilder liegen im Repo (img/). Fotos vor dem Einbinden verkleinern und Metadaten (EXIF/GPS) entfernen.

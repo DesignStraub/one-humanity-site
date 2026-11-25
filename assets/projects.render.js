@@ -24,8 +24,6 @@
 
   var projects = window.OH_PROJECTS || [];
   var containers = document.querySelectorAll('[data-projects]');
-  if (!containers.length || !projects.length) return;
-
   /* Status labels live here — one place for all projects. */
   var STATUS = {
     live:    { cls: 'is-live', de: 'Täglich im Einsatz', en: 'In daily use' },
@@ -320,6 +318,15 @@
 
   /* Initial paint uses the same preference logic as site.js, then site.js
      fires oh:langchange on load and we re-render with the final choice. */
+  /* The 3D gallery on the start page builds its info panels from the same
+     pieces, so labels and buttons look the same everywhere. */
+  window.OH_RENDER = {
+    STATUS: STATUS, LABELS: LABELS, GROUPS: GROUPS,
+    esc: esc, pick: pick, statusHTML: statusHTML, buttonHTML: buttonHTML
+  };
+
+  if (!containers.length || !projects.length) return;
+
   var stored = null;
   try { stored = localStorage.getItem('onehumanity-lang'); } catch (e) { /* private mode */ }
   var browserLang = (navigator.language || 'en').toLowerCase().indexOf('de') === 0 ? 'de' : 'en';
