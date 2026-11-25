@@ -52,6 +52,53 @@ window.OH_PROJECTS = [
         en: 'Render of the robot head: white low-poly shell, dark visor with glowing blue eyes and an LED mouth behind it, on a black stand'
       }
     },
+    /* Current state: shown above the older pictures, only on tools.html.
+       Videos are short clips without sound; the still is the poster frame. */
+    now: {
+      title: { de: 'Aktueller Stand · November 2026', en: 'Current state · November 2026' },
+      items: [
+        {
+          src: 'img/yusu-now-0820.jpg', w: 1050, h: 1400,
+          caption: { de: 'Der Kopf mit Elektronik auf der Werkbank', en: 'The head with its electronics on the bench' },
+          alt: {
+            de: 'Weißer Low-Poly-Roboterkopf auf der Werkbank, im Gesicht ein Display mit zwei leuchtend blauen Augen, dahinter Lötstation und Werkzeugwand',
+            en: 'White low-poly robot head on the workbench, a display with two glowing blue eyes in its face, soldering station and tool wall behind it'
+          }
+        },
+        {
+          video: 'img/yusu-video-face.mp4', poster: 'img/yusu-video-face.jpg', w: 540, h: 960,
+          caption: { de: 'Augen und LED-Mund im ersten Test', en: 'Eyes and LED mouth in a first test' },
+          alt: {
+            de: 'Video: Der Roboterkopf auf seinem Ständer, die Augen wechseln den Ausdruck, der Mund leuchtet auf',
+            en: 'Video: the robot head on its stand, the eyes change expression and the mouth lights up'
+          }
+        },
+        {
+          video: 'img/yusu-video-blush.mp4', poster: 'img/yusu-video-blush.jpg', w: 540, h: 960,
+          caption: { de: 'Verlegen – mit roten Wangen', en: 'Bashful – with blushing cheeks' },
+          alt: {
+            de: 'Video: Der Roboterkopf im violetten Licht, die Augen werden zu Halbmonden mit roten Wangen',
+            en: 'Video: the robot head in violet light, the eyes turn into crescents with blushing cheeks'
+          }
+        },
+        {
+          src: 'img/yusu-now-0819.jpg', w: 1050, h: 1400,
+          caption: { de: 'Offen: Display, Platinen und Kabel im Kopf', en: 'Opened up: display, boards and wiring inside the head' },
+          alt: {
+            de: 'Aufgeklappte weiße Kopfschale auf der Silikonmatte, innen Platinen und rote und schwarze Kabel',
+            en: 'Opened white head shell on the silicone mat, boards and red and black wires inside'
+          }
+        },
+        {
+          video: 'img/yusu-video-visor.mp4', poster: 'img/yusu-video-visor.jpg', w: 540, h: 960,
+          caption: { de: 'Licht hinter dem Visier', en: 'Light behind the visor' },
+          alt: {
+            de: 'Video: Der Kopf mit geschlossenem Visier, dahinter leuchtet das Display hell durch',
+            en: 'Video: the head with its visor closed, the display shining brightly through it'
+          }
+        }
+      ]
+    },
     gallery: [
       {
         src: 'img/yusu-head-print.jpg', w: 1050, h: 1400,

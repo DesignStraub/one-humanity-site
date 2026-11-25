@@ -34,6 +34,7 @@ Marcello (MarcelloSwigswag) – Gründer, Software-Entwickler, gelernter Handwer
 ## Projekte
 Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (große Karten je Bereich), `design` (kleine Karten „3D-Design“), `archive` (tools.html#archiv).
 
+- **Aktueller Stand eines Projekts:** Feld `now` in `projects.data.js` (Fotos und kurze Videos ohne Ton, `img/*.mp4` + Poster-JPG). Wird nur auf `tools.html` gezeigt, nicht in der Übersicht; die ältere `gallery` klappt dann unter „Frühere Stände“ ein. Videos: H.264, 540 px breit, ohne Ton und Metadaten, keine Personen im Bild.
 - **Yusu-Begleit-App:** `yusu/` (eigene dunkle Seite ohne Site-CSS, Prototyp, `noindex`): Augen, Persönlichkeits-Editor, Gespräch nur mit lokalem Ollama über `python3 yusu/lokal.py`. Verlinkt im Hero und auf der Yusu-Karte (Feld `demo`).
 - **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
 - **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.

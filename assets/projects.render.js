@@ -46,7 +46,10 @@
     more:  { de: 'Mehr erfahren',  en: 'Learn more' },
     soon:  { de: 'bald',           en: 'soon' },
     soonTitle: { de: 'Link folgt in Kürze', en: 'Link coming soon' },
-    open:  { de: 'Öffnen', en: 'Open' }
+    open:  { de: 'Öffnen', en: 'Open' },
+    play:  { de: 'Video abspielen', en: 'Play video' },
+    past:  { de: 'Frühere Stände', en: 'Earlier stages' },
+    pictures: { de: 'Bilder', en: 'pictures' }
   };
 
   /* Area names for the rail and the archive list. */
@@ -87,10 +90,44 @@
       '</figure>';
   }
 
-  /* Extra pictures under a roadmap card, e.g. the current state of a build. */
+  /* Current state of a build: a few photos and short clips. Clips play
+     muted on hover, or on a tap of the play button. */
+  function nowHTML(project, lang) {
+    var now = project.now;
+    if (!now || !(now.items || []).length) return '';
+    return '<div class="now">' +
+      '<h4 class="now-title">' + esc(pick(now.title, lang)) + '</h4>' +
+      '<div class="now-grid">' + now.items.map(function (item) {
+        var caption = pick(item.caption, lang);
+        var alt = esc(pick(item.alt, lang));
+        var size = (item.w ? ' width="' + esc(item.w) + '"' : '') + (item.h ? ' height="' + esc(item.h) + '"' : '');
+        var media = item.video
+          ? '<video src="' + esc(item.video) + '" poster="' + esc(item.poster) + '"' + size +
+              ' muted loop playsinline preload="none" aria-label="' + alt + '"></video>' +
+            '<button class="now-play" type="button" aria-label="' + esc(pick(LABELS.play, lang)) + '">' +
+              '<svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>' +
+              '<svg class="icon-pause" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>' +
+            '</button>'
+          : '<a href="' + esc(item.src) + '" target="_blank" rel="noopener">' +
+              '<img src="' + esc(item.src) + '"' + size + ' loading="lazy" alt="' + alt + '"></a>';
+        return '<figure class="now-item' + (item.video ? ' is-video' : '') + '">' +
+          '<div class="now-frame">' + media + '</div>' +
+          (caption ? '<figcaption>' + esc(caption) + '</figcaption>' : '') +
+          '</figure>';
+      }).join('') + '</div>' +
+    '</div>';
+  }
+
+  /* Extra pictures under a roadmap card. With a current state above them
+     they are the older stages and fold away. */
   function galleryHTML(project, lang) {
     var items = project.gallery || [];
     if (!items.length) return '';
+    if (project.now) {
+      return '<details class="gallery-past"><summary>' +
+        esc(pick(LABELS.past, lang)) + ' · ' + items.length + ' ' + esc(pick(LABELS.pictures, lang)) +
+        '</summary>' + galleryHTML({ gallery: items }, lang) + '</details>';
+    }
     return '<div class="gallery">' + items.map(function (img) {
       var caption = pick(img.caption, lang);
       var wide = img.w && img.h && img.w / img.h >= 2;
@@ -166,6 +203,7 @@
           (actions ? '<div class="actions">' + actions + '</div>' : '') +
         '</div>' +
         media +
+        nowHTML(project, lang) +
         galleryHTML(project, lang) +
       '</article>' +
     '</li>';
@@ -299,6 +337,39 @@
   document.addEventListener('oh:langchange', function (event) {
     render(event.detail && event.detail.lang);
     applyFilter();
+  });
+
+  /* --- clips in the current state: hover previews, the button toggles --- */
+  function setPlaying(figure, play) {
+    var video = figure.querySelector('video');
+    if (!video) return;
+    if (play) {
+      var started = video.play();
+      if (started && started.catch) started.catch(function () { /* autoplay refused */ });
+    } else {
+      video.pause();
+    }
+    figure.classList.toggle('is-playing', play);
+  }
+  var canHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  if (canHover) {
+    document.addEventListener('mouseover', function (event) {
+      var figure = event.target.closest && event.target.closest('.now-item.is-video');
+      if (figure && !figure.contains(event.relatedTarget)) setPlaying(figure, true);
+    });
+    document.addEventListener('mouseout', function (event) {
+      var figure = event.target.closest && event.target.closest('.now-item.is-video');
+      if (figure && !figure.contains(event.relatedTarget) && !figure.hasAttribute('data-pinned')) setPlaying(figure, false);
+    });
+  }
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest && event.target.closest('.now-play');
+    if (!button) return;
+    var figure = button.closest('.now-item');
+    var play = !figure.hasAttribute('data-pinned');
+    figure.toggleAttribute('data-pinned', play);
+    button.setAttribute('aria-pressed', String(play));
+    setPlaying(figure, play);
   });
 
   /* --- project grid: filter chips, "show all", #robotics-style links --- */
