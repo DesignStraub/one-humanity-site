@@ -366,6 +366,52 @@ window.OH_PROJECTS = [
 
   /* ---------------------------------------------------------------- */
   {
+    id: 'raumplaner',
+    status: 'new',
+    featured: true,
+    group: 'tools',
+    image: {
+      src: 'img/raumplaner-screenshot.jpg',
+      w: 1600, h: 1000,
+      alt: {
+        de: 'Screenshot des Raumplaners: Grundriss einer 3-Zimmer-Wohnung mit farbigen Räumen, links Werkzeuge und Voreinstellungen, rechts die Raumliste mit Flächen',
+        en: 'Screenshot of the room planner: floor plan of a three-room flat with coloured rooms, tools and defaults on the left, the room list with areas on the right'
+      }
+    },
+    demo: {
+      href: 'https://designstraub.github.io/raumplaner/',
+      label: { de: 'Im Browser öffnen', en: 'Open in the browser' }
+    },
+    build: {
+      href: 'https://github.com/DesignStraub/raumplaner',
+      label: { de: 'Code auf GitHub', en: 'Code on GitHub' }
+    },
+    de: {
+      title: 'Raumplaner',
+      tagline: 'Grundriss zeichnen und die Wohnung in 3D einrichten – direkt im Browser.',
+      text: 'Grundriss zeichnen oder Vorlage wählen, Räume benennen und die Wohnung in 3D einrichten – Wandtexturen, Böden, Türen und Fenster. Läuft im Browser und auf dem Handy.',
+      facts: ['Browser · Handy', 'three.js', 'Eine HTML-Datei', 'Kein Konto'],
+      timeline: [
+        { state: 'done', text: 'Grundriss-Editor: Vorlagen, Rechteck und Vieleck, Räume benennen' },
+        { state: 'done', text: '3D-Einrichtung: Texturen pro Wandseite und Boden, Türen und Fenster, begehbar' },
+        { state: 'now',  text: 'Online über GitHub Pages, Code öffentlich' }
+      ]
+    },
+    en: {
+      title: 'Room Planner',
+      tagline: 'Draw a floor plan and furnish the flat in 3D – right in the browser.',
+      text: 'Draw a floor plan or pick a template, name the rooms and fit out the flat in 3D – wall textures, floors, doors and windows. Runs in the browser and on your phone.',
+      facts: ['Browser · phone', 'three.js', 'A single HTML file', 'No account'],
+      timeline: [
+        { state: 'done', text: 'Floor plan editor: templates, rectangles and polygons, room names' },
+        { state: 'done', text: '3D fit-out: textures per wall side and floor, doors and windows, walkable' },
+        { state: 'now',  text: 'Online via GitHub Pages, code public' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
     id: 'lifebar',
     status: 'live',
     featured: true,
