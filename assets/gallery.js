@@ -2169,47 +2169,75 @@ const NOISE_GLSL = `
 `;
 
 const PLANET_DIR = new THREE.Vector3(0.48, 0.4, -1).normalize();
+// the planet's own sun: from the side, so we see about half in daylight and
+// half at night, with the cities glowing on the dark side
+const PLANET_SUN = SUN_DIR.clone().addScaledVector(PLANET_DIR, -SUN_DIR.dot(PLANET_DIR)).normalize().addScaledVector(PLANET_DIR, 0.12).normalize();
 let planet = null;
 function buildPlanet() {
   const R = 24;
   const group = new THREE.Group();
   group.position.copy(PLANET_DIR).multiplyScalar(150);
   const mat = new THREE.ShaderMaterial({
-    uniforms: { uTime: skyUniforms.uTime, uSun: { value: SUN_DIR } },
+    uniforms: { uTime: skyUniforms.uTime, uSun: { value: PLANET_SUN } },
     vertexShader: `varying vec3 vObj; varying vec3 vN; varying vec3 vView;
       void main(){ vObj = position; vN = normalize(mat3(modelMatrix) * normal); vec4 wp = modelMatrix * vec4(position, 1.0);
         vView = normalize(cameraPosition - wp.xyz); gl_Position = projectionMatrix * viewMatrix * wp; }`,
     fragmentShader: NOISE_GLSL + `uniform float uTime; uniform vec3 uSun; varying vec3 vObj; varying vec3 vN; varying vec3 vView;
+      float fbm8(vec3 p){ float a = 0.5, s = 0.0; for (int i = 0; i < 8; i++){ s += a * noise(p); p = p * 2.02 + vec3(1.7, 9.2, 3.1); a *= 0.5; } return s; }
       void main(){
         vec3 p = normalize(vObj);
-        float e = fbm(p * 2.1 + vec3(3.1, 1.7, 0.4));
-        float land = smoothstep(0.515, 0.535, e);
-        vec3 ocean = mix(vec3(0.01, 0.04, 0.14), vec3(0.03, 0.15, 0.34), smoothstep(0.3, 0.52, e));
-        vec3 ground = mix(vec3(0.09, 0.22, 0.09), vec3(0.45, 0.38, 0.22), smoothstep(0.56, 0.72, e));
+        // continents from warped noise: natural, ragged coastlines
+        vec3 w = vec3(fbm(p * 3.0 + 11.0), fbm(p * 3.0 + 23.0), fbm(p * 3.0 + 37.0)) - 0.5;
+        float e = fbm8(p * 2.1 + vec3(3.1, 1.7, 0.4) + w * 0.55);
+        const float coast = 0.515;
+        float land = smoothstep(coast, coast + 0.006, e);
+        float h = clamp((e - coast) / 0.22, 0.0, 1.0);
+        float lat = abs(p.y);
+        // oceans: deep blue, lighter over the shelves along the coasts
+        float shelf = smoothstep(coast - 0.07, coast, e);
+        vec3 ocean = mix(vec3(0.004, 0.025, 0.09), vec3(0.02, 0.14, 0.3), shelf);
+        ocean = mix(ocean, vec3(0.05, 0.3, 0.42), smoothstep(coast - 0.015, coast, e) * 0.55);
+        // land: forest and grass, deserts in the subtropics, rock up high
+        float moist = fbm(p * 6.0 + 5.0);
+        vec3 ground = mix(vec3(0.05, 0.15, 0.05), vec3(0.2, 0.26, 0.1), smoothstep(0.4, 0.62, moist));
+        float dry = smoothstep(0.16, 0.3, lat) * (1.0 - smoothstep(0.4, 0.52, lat));
+        ground = mix(ground, vec3(0.6, 0.48, 0.29), clamp(dry * 1.5 - moist * 0.7 + 0.15, 0.0, 1.0));
+        ground = mix(ground, vec3(0.34, 0.3, 0.26), smoothstep(0.55, 0.95, h));
+        ground *= 0.82 + 0.36 * noise(p * 95.0);
         vec3 col = mix(ocean, ground, land);
-        col = mix(col, vec3(0.92, 0.95, 1.0), smoothstep(0.8, 0.88, abs(p.y) + e * 0.12));
+        float ice = smoothstep(0.8, 0.87, lat + (e - 0.5) * 0.25 + noise(p * 26.0) * 0.05);
+        col = mix(col, vec3(0.88, 0.93, 1.0), ice);
+        // clouds drift slowly, in swirls
         float t = uTime * 0.012;
-        vec3 q = vec3(p.x * cos(t) - p.z * sin(t), p.y * 1.7, p.x * sin(t) + p.z * cos(t));
-        float cloud = smoothstep(0.52, 0.78, fbm(q * 3.0 + 7.0));
-        col = mix(col, vec3(1.0), cloud * 0.8);
+        vec3 q = vec3(p.x * cos(t) - p.z * sin(t), p.y * 1.6, p.x * sin(t) + p.z * cos(t));
+        q += (vec3(fbm(q * 2.0 + 3.0), fbm(q * 2.0 + 8.0), 0.0) - 0.5) * 0.6;
+        float cloud = smoothstep(0.5, 0.78, fbm8(q * 3.2 + 7.0));
         vec3 n = normalize(vN);
+        vec3 v = normalize(vView);
         float d = dot(n, uSun);
         float day = smoothstep(-0.12, 0.3, d);
-        vec3 c = col * (0.015 + day * 1.2);
-        float city = step(0.8, noise(p * 170.0)) * smoothstep(0.42, 0.68, noise(p * 14.0)) * land * (1.0 - cloud) * (1.0 - smoothstep(-0.25, 0.05, d));
-        c += vec3(1.0, 0.72, 0.38) * city * 0.9;
-        float rim = pow(1.0 - max(dot(n, normalize(vView)), 0.0), 2.6);
+        vec3 c = col * (0.015 + day * 1.15);
+        c = mix(c, vec3(1.0) * (0.02 + day * 1.05), cloud * 0.85);
+        // the sun glinting on the sea
+        float spec = pow(max(dot(n, normalize(uSun + v)), 0.0), 140.0) * (1.0 - land) * (1.0 - cloud) * day;
+        c += vec3(1.0, 0.9, 0.75) * spec * 0.45;
+        // city lights on the night side: clusters of fine dots
+        float cluster = smoothstep(0.4, 0.66, noise(p * 14.0));
+        float dots = smoothstep(0.72, 0.84, noise(p * 230.0)) + 0.5 * smoothstep(0.74, 0.86, noise(p * 95.0));
+        float city = dots * cluster * land * (1.0 - ice) * (1.0 - cloud * 0.85) * (1.0 - smoothstep(-0.25, 0.05, d));
+        c += vec3(1.0, 0.74, 0.4) * city * 1.5;
+        float rim = pow(1.0 - max(dot(n, v), 0.0), 2.6);
         c += vec3(0.3, 0.55, 1.0) * rim * (0.08 + day * 0.9);
         gl_FragColor = vec4(c, 1.0);
         #include <colorspace_fragment>
       }`,
     fog: false
   });
-  const ball = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), mat);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(R, 160, 112), mat);
   ball.rotation.z = 0.35;
   group.add(ball);
   const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.09, 64, 48), new THREE.ShaderMaterial({
-    uniforms: { uSun: { value: SUN_DIR } },
+    uniforms: { uSun: { value: PLANET_SUN } },
     vertexShader: `varying vec3 vN; varying vec3 vW; void main(){ vN = normalize(normalMatrix * normal); vW = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: `uniform vec3 uSun; varying vec3 vN; varying vec3 vW;
       void main(){ float i = pow(max(0.0, 0.72 - dot(vN, vec3(0.0, 0.0, 1.0))), 2.4); float lit = 0.25 + 0.75 * smoothstep(-0.4, 0.4, dot(-vW, uSun));
