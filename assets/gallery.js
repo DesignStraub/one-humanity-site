@@ -56,7 +56,7 @@ const TEXT = {
     foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Werkstatt', kunst: 'Kunst', apps: 'Apps',
     appsTitle: 'Online ausprobieren', appsNote: 'Läuft im Browser – ohne Konto, ohne Installation.', appOpen: 'Jetzt öffnen ↗',
     werkstattSub: 'Tools & 3D-Design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Hauptraum · Yusu',
-    gamesSub: 'Spielbar im Browser und zum Download',
+    gamesSub: 'Dahinter: Apps zum Ausprobieren',
     welcomeLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst. Verschiedene Projekte, eine Haltung.',
     values: 'Wofür wir stehen',
     v1: 'Offen', v1t: 'Code, Dateien und Anleitungen werden veröffentlicht, wo immer es geht.',
@@ -69,6 +69,7 @@ const TEXT = {
     map: 'Lageplan', mapHint: 'Raum anklicken zum Hingehen',
     pastTitle: 'So ist Yusu entstanden', nowTitle: 'Aktueller Stand',
     designTitle: '3D-Design', designSub: 'Druckdateien auf MakerWorld',
+    planTitle: 'Etappen', openMore: 'Antippen für mehr →',
     toolsTitle: 'Tools', benchTitle: 'Auf der Werkbank', workshopTitle: 'Die Werkstatt',
     workshopText: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
     artSoon: 'Artworks folgen', comingSoon: 'Bald hier', artDoorText: 'Bis dahin findest du alle Bilder auf Instagram.', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
@@ -99,7 +100,7 @@ const TEXT = {
     foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Workshop', kunst: 'Art', apps: 'Apps',
     appsTitle: 'Try it online', appsNote: 'Runs in the browser – no account, nothing to install.', appOpen: 'Open now ↗',
     werkstattSub: 'Tools & 3D design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Main hall · Yusu',
-    gamesSub: 'Playable in the browser and as a download',
+    gamesSub: 'Behind it: apps to try out',
     welcomeLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art. Different projects, one attitude.',
     values: 'What we stand for',
     v1: 'Open', v1t: 'Code, files and guides are published wherever possible.',
@@ -112,6 +113,7 @@ const TEXT = {
     map: 'Floor plan', mapHint: 'Click a room to walk there',
     pastTitle: 'How Yusu came to be', nowTitle: 'Current state',
     designTitle: '3D design', designSub: 'Print files on MakerWorld',
+    planTitle: 'Milestones', openMore: 'Tap for more →',
     toolsTitle: 'Tools', benchTitle: 'On the workbench', workshopTitle: 'The workshop',
     workshopText: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
     artSoon: 'Artworks coming soon', comingSoon: 'Coming soon', artDoorText: 'Until then, all the pictures are on Instagram.', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
@@ -1147,39 +1149,50 @@ function buildRobotics() {
       (item) => () => openMedia(item, { kicker: pick(yusu.now.title), back: yusu }));
   }
 
-  // the plan on the north wall
-  const plan = board(9.0, 4.2, (ctx, w, h) => {
-    const copy = yusu[lang()] || yusu.en;
+  // the plan on the north wall: two boards left and right of the hologram,
+  // so Yusu never stands in front of the text
+  const copy = () => yusu[lang()] || yusu.en;
+  const intro = board(4.2, 3.0, (ctx, w, h) => {
     ctx.fillStyle = '#121820';
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = 'rgba(143,216,255,.85)';
-    ctx.font = `700 ${Math.round(h * 0.04)}px ${FONT}`;
-    ctx.fillText('ONEHUMANITY R1 · ' + (R ? pick(R.STATUS[yusu.status]) : '').toUpperCase(), w * 0.05, h * 0.07);
+    ctx.font = `700 ${Math.round(h * 0.05)}px ${FONT}`;
+    ctx.fillText('ONEHUMANITY R1 · ' + (R ? pick(R.STATUS[yusu.status]) : '').toUpperCase(), w * 0.07, h * 0.09, w * 0.86);
     ctx.fillStyle = '#f2f7f8';
-    ctx.font = `800 ${Math.round(h * 0.11)}px ${FONT}`;
-    ctx.fillText(copy.title, w * 0.05, h * 0.13, w * 0.9);
-    ctx.fillStyle = 'rgba(242,247,248,.75)';
-    ctx.font = `500 ${Math.round(h * 0.045)}px ${FONT}`;
-    ctx.fillText(copy.tagline || '', w * 0.05, h * 0.27, w * 0.9);
-    const steps = copy.timeline || [];
-    const colW = w * 0.44;
-    const rows = Math.ceil(steps.length / 2);
+    ctx.font = `800 ${Math.round(h * 0.13)}px ${FONT}`;
+    ctx.fillText(copy().title, w * 0.07, h * 0.17, w * 0.86);
+    ctx.fillStyle = 'rgba(242,247,248,.78)';
+    ctx.font = `500 ${Math.round(h * 0.058)}px ${FONT}`;
+    wrapText(ctx, copy().tagline || '', w * 0.07, h * 0.38, w * 0.86, h * 0.08, 3);
+    ctx.fillStyle = 'rgba(143,216,255,.9)';
+    ctx.font = `700 ${Math.round(h * 0.05)}px ${FONT}`;
+    ctx.fillText(t('openMore'), w * 0.07, h * 0.84, w * 0.86);
+  }, { px: 1400 });
+  place(intro, wallSpot('robotics', 'n', -4.4, 2.6));
+  addExhibit({ id: 'yusu-plan', root: intro, meshes: [intro], room: 'robotics', open: () => openProject(yusu) });
+
+  const plan = board(4.2, 3.0, (ctx, w, h) => {
+    ctx.fillStyle = '#121820';
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = 'rgba(143,216,255,.85)';
+    ctx.font = `700 ${Math.round(h * 0.05)}px ${FONT}`;
+    ctx.fillText(t('planTitle').toUpperCase(), w * 0.07, h * 0.09, w * 0.86);
+    const steps = copy().timeline || [];
+    const gap = Math.min(h * 0.15, (h * 0.8) / Math.max(1, steps.length));
     steps.forEach((step, i) => {
-      const col = i < rows ? 0 : 1;
-      const row = i < rows ? i : i - rows;
-      const x = w * 0.05 + col * (colW + w * 0.02);
-      const y = h * 0.4 + row * h * 0.115;
+      const x = w * 0.07;
+      const y = h * 0.19 + i * gap;
       ctx.beginPath();
-      ctx.arc(x + h * 0.016, y + h * 0.024, h * 0.014, 0, Math.PI * 2);
+      ctx.arc(x + h * 0.02, y + h * 0.03, h * 0.018, 0, Math.PI * 2);
       ctx.fillStyle = step.state === 'done' ? '#8fd8ff' : step.state === 'now' ? '#f5c46b' : 'rgba(242,247,248,.35)';
       ctx.fill();
       ctx.fillStyle = step.state === 'next' ? 'rgba(242,247,248,.55)' : step.state === 'now' ? '#f5c46b' : 'rgba(242,247,248,.9)';
-      ctx.font = `${step.state === 'now' ? 700 : 500} ${Math.round(h * 0.036)}px ${FONT}`;
-      wrapText(ctx, step.text, x + h * 0.05, y, colW - h * 0.06, h * 0.045, 2);
+      ctx.font = `${step.state === 'now' ? 700 : 500} ${Math.round(h * 0.05)}px ${FONT}`;
+      wrapText(ctx, step.text, x + h * 0.07, y, w * 0.86 - h * 0.07, h * 0.06, 2);
     });
-  }, { px: 2048 });
-  place(plan, wallSpot('robotics', 'n', 0, 3.0));
-  addExhibit({ id: 'yusu-plan', root: plan, meshes: [plan], room: 'robotics', open: () => openProject(yusu) });
+  }, { px: 1400 });
+  place(plan, wallSpot('robotics', 'n', 4.4, 2.6));
+  addExhibit({ id: 'yusu-steps', root: plan, meshes: [plan], room: 'robotics', open: () => openProject(yusu) });
 
   // the hall belongs to Yusu alone; other robot ideas live in the workshop
 }
@@ -2263,7 +2276,10 @@ function arrive(id, then) {
   const fromPitch = state.pitch;
   const focus = id === 'robotics' ? new THREE.Vector3(HEAD_SPOT.x, 2.5, HEAD_SPOT.z) : e.look;
   // first you zoom into the planet from the welcome view, then dive in
-  state.arriving = { phase: 'zoom', t: 0, e, from, fromYaw, fromPitch, focus, then, id, fov: camera.fov };
+  // been here before: a shorter flight, no hands
+  let seen = false;
+  try { seen = localStorage.getItem('oh-arrived') === '1'; } catch (err) { /* private mode */ }
+  state.arriving = { phase: 'zoom', t: 0, e, from, fromYaw, fromPitch, focus, then, id, fov: camera.fov, quick: seen };
 }
 
 /* Field of view for the welcome view: the planet fills a good part of the
@@ -2293,7 +2309,7 @@ function stepArrival(dt, time) {
   const a = state.arriving;
   a.t += dt;
   if (a.phase === 'zoom') {
-    const T = 1.6;
+    const T = a.quick ? 1.0 : 1.6;
     const k = clamp01(a.t / T);
     const kk = k * k * k;
     // the planet moves to the centre and grows until it fills the screen
@@ -2339,6 +2355,7 @@ function stepArrival(dt, time) {
     state.pitch = a.fromPitch + (wantPitch - a.fromPitch) * turn;
     state.fovKick = Math.sin(k * Math.PI) * 0.9 + k * 0.5;
     if (a.t > T - 0.2) state.flashTarget = 1;
+    if (a.t >= T && a.quick) { finishArrival(a.then); return; }
     if (a.t >= T) {
       a.phase = 'hands';
       a.t = 0;
@@ -2385,6 +2402,7 @@ function finishArrival(then) {
   }
   if (a) { state.yaw = a.e.yaw; state.pitch = a.e.pitch; }
   state.arriving = null;
+  try { localStorage.setItem('oh-arrived', '1'); } catch (err) { /* private mode */ }
   state.flashTarget = 0;
   state.lightTarget = 1;
   hands.visible = false;

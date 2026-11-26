@@ -398,7 +398,7 @@ window.OH_PROJECTS = [
     },
     de: {
       title: 'Pfandpanik Aachen',
-      tagline: 'Satirisches Arena-Survival mitten in Aachen – mit Pfand, Pech und Printen.',
+      tagline: 'Ein Penner-Survival aus Öcher Gassen. Mit Pfand, Pech und Printen.',
       text: 'Ein Arena-Roguelite im Stil von Brotato, gebaut mit Godot. 20 Wellen vom Bushof über die Pontstraße und den Elisenbrunnen bis zum Markt, Pfandflaschen als Währung und ein Kiosk zwischen den Wellen. Gegner sind Tauben, Ordnungsamt, Hipster mit Lastenrad und Immobilienmakler – am Ende warten zwei Aachener Baustellen als Endbosse.',
       facts: ['Godot 4', '6 Figuren', '16 Waffen', 'Im Browser spielbar'],
       timeline: [
@@ -410,7 +410,7 @@ window.OH_PROJECTS = [
     },
     en: {
       title: 'Pfandpanik Aachen',
-      tagline: 'Satirical arena survival in the middle of Aachen – with bottle deposits, bad luck and Printen.',
+      tagline: 'A tramp survival game from the back streets of Aachen. With bottle deposits, bad luck and Printen.',
       text: 'An arena roguelite in the style of Brotato, built in Godot. 20 waves from the bus station via Pontstraße and the Elisenbrunnen to the market square, deposit bottles as currency and a kiosk between waves. Enemies include pigeons, wardens, hipsters on cargo bikes and estate agents – two Aachen building sites wait as final bosses.',
       facts: ['Godot 4', '6 characters', '16 weapons', 'Playable in the browser'],
       timeline: [
