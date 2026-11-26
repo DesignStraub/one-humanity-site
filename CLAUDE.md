@@ -56,6 +56,7 @@ Entscheidung (Marcello, 25.11.2026): eine 3D-Galerie, durch die man läuft – �
 - Neue Projekte erscheinen automatisch im passenden Raum. Kunstwerke nur in `artworks.data.js` pflegen (Bilder nach `img/art/`, verkleinert, ohne EXIF).
 - Echtes CAD des Yusu-Kopfs: `assets/models/yusu-head.bin` (erzeugt mit `tools-dev/stl_to_mesh.py` aus `Emotional Robot/emotion_lab/hardware/kopf/export/stl/`). Kein Display hinter dem Visier mehr (passte nicht), stattdessen Augen als Leuchten auf dem Visier.
 - Hände bei der Ankunft: Roboterhände wie Yusus Körperkonzept (weiße facettierte Schalen, schwarze Gelenke), bauen sich mit blauem Lichtrand auf.
+- Handy-Sparmodus (`coarse`): höchstens 60 FPS, Auflösung max. 1,25, keine Kantenglättung, nur 2 wandernde Raumlampen (aktueller Raum + Foyer, `placeLamps`) statt 6, weniger Sterne/Partikel.
 - Leistung: Auflösung passt sich an (unter ca. 40 FPS gröber, mit Luft wieder schärfer, `adaptQuality`); möglichst keine zusätzlichen Punktlichter – Leuchtschimmer (Sprites) statt Lampen.
 - `?debug` an der Adresse stellt `window.OH_GALLERY` zum Testen bereit (`advance(sek)` spult die Szene vor, nützlich im verdeckten Browser-Fenster).
 - „Webansicht“ (mobil „Web“) in der Galerie führt zur Übersicht `uebersicht.html`.
