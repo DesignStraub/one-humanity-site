@@ -67,7 +67,7 @@ const TEXT = {
     map: 'Lageplan', mapHint: 'Raum anklicken zum Hingehen',
     pastTitle: 'So ist Yusu entstanden', nowTitle: 'Aktueller Stand',
     designTitle: '3D-Design', designSub: 'Druckdateien auf MakerWorld',
-    toolsTitle: 'Tools', workshopTitle: 'Die Werkstatt',
+    toolsTitle: 'Tools', benchTitle: 'Auf der Werkbank', workshopTitle: 'Die Werkstatt',
     workshopText: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
     artSoon: 'Artworks folgen', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
     artWall: 'Bilder, Zeichnungen, Experimente.',
@@ -77,6 +77,8 @@ const TEXT = {
     renderCaption: 'Der erste Entwurf als Render',
     hintMouse: 'Ziehen zum Umsehen · Boden anklicken zum Hingehen · WASD zum Laufen · Leertaste zum Springen',
     beamPrep: 'Gleich geht’s los – der Beam wird vorbereitet …',
+    greet1: 'Hallo! Schön, dass du da bist.',
+    greet2: 'Ich bin noch im Bau – schau dich ruhig um.',
     hintTouch: 'Wischen zum Umsehen · Boden antippen zum Hingehen · Bild antippen für mehr',
     ready: 'Bereit.', loading: 'Galerie wird geladen …',
     noWebgl: 'Dein Browser kann die 3D-Galerie leider nicht anzeigen – die Übersicht funktioniert überall.',
@@ -107,7 +109,7 @@ const TEXT = {
     map: 'Floor plan', mapHint: 'Click a room to walk there',
     pastTitle: 'How Yusu came to be', nowTitle: 'Current state',
     designTitle: '3D design', designSub: 'Print files on MakerWorld',
-    toolsTitle: 'Tools', workshopTitle: 'The workshop',
+    toolsTitle: 'Tools', benchTitle: 'On the workbench', workshopTitle: 'The workshop',
     workshopText: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
     artSoon: 'Artworks coming soon', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
     artWall: 'Pictures, drawings, experiments.',
@@ -117,6 +119,8 @@ const TEXT = {
     renderCaption: 'The first design as a render',
     hintMouse: 'Drag to look around · click the floor to walk there · WASD to move · space to jump',
     beamPrep: 'Almost there – preparing the beam …',
+    greet1: 'Hi! Nice to have you here.',
+    greet2: 'I’m still being built – have a look around.',
     hintTouch: 'Swipe to look around · tap the floor to walk there · tap a picture for more',
     ready: 'Ready.', loading: 'Loading the gallery …',
     noWebgl: 'Your browser can’t show the 3D gallery – the overview works everywhere.',
@@ -139,15 +143,15 @@ const t = (key) => TEXT[lang()][key] ?? TEXT.en[key] ?? key;
    two walls ever share a plane. x → east, z → south, y → up.
    -------------------------------------------------------------------------- */
 const ROOMS = {
-  foyer:     { x: 0,     z: 0,     w: 14, d: 12, h: 4.6, accent: 0xf3d7a2, wall: 0x161b2d, floor: 0x343f5e,
+  foyer:     { x: 0,     z: 0,     w: 14, d: 12, h: 4.6, accent: 0xf3d7a2, wall: 0x0b1020, floor: 0x121b36,
                doors: ['n', 'e', 's', 'w'] },
-  robotics:  { x: 0,     z: -18.2, w: 20, d: 22, h: 6.5, accent: 0x8fd8ff, wall: 0x111a2c, floor: 0x2c3a5a,
+  robotics:  { x: 0,     z: -18.2, w: 20, d: 22, h: 6.5, accent: 0x8fd8ff, wall: 0x091022, floor: 0x0f1a36,
                doors: ['s'] },
-  games:     { x: 15.2,  z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x1b1434, floor: 0x3a2d5e,
+  games:     { x: 15.2,  z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x120c26, floor: 0x1a1334,
                doors: ['w'] },
-  kunst:     { x: -15.2, z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x17142b, floor: 0x362f58,
+  kunst:     { x: -15.2, z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
                doors: ['e'] },
-  werkstatt: { x: 0,     z: 14.2,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x1b1922, floor: 0x40363a,
+  werkstatt: { x: 0,     z: 14.2,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x13111a, floor: 0x1e1820,
                doors: ['n'] }
 };
 const ROOM_ORDER = ['foyer', 'robotics', 'games', 'werkstatt', 'kunst'];
@@ -199,18 +203,18 @@ if (!renderer) {
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.1;
+renderer.toneMappingExposure = 1.05;
 stage.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x03050c);
-scene.fog = new THREE.FogExp2(0x060a17, 0.011);
+scene.fog = new THREE.FogExp2(0x02040d, 0.012);
 const camera = new THREE.PerspectiveCamera(coarse ? 70 : 62, window.innerWidth / window.innerHeight, 0.05, 400);
 scene.add(camera); // the hands for the arrival hang on the camera
 
 /* Where the welcome card floats: outside, south of the building, looking
    past the rooms at the planet. */
-const ORBIT = { pos: new THREE.Vector3(0, 15, 42), look: new THREE.Vector3(0, 9, -14) };
+const ORBIT = { pos: new THREE.Vector3(0, 15, 42), look: new THREE.Vector3(0, 16.5, -14) };
 
 const state = {
   pos: new THREE.Vector3(...ENTRY.foyer.pos),
@@ -227,25 +231,32 @@ const state = {
   jumpY: 0,
   jumpV: 0,
   bob: 0,
-  bobPhase: 0,
+  vel: new THREE.Vector3(),
   fovKick: 0,
   flash: 0,
-  flashTarget: 0
+  flashTarget: 0,
+  light: 1,
+  lightTarget: 1
 };
 
 /* Lights: a cool night light from the sky, the sun far away, a coloured
    glow in every room. */
 const SUN_DIR = new THREE.Vector3(1, 0.32, 0.18).normalize();
-scene.add(new THREE.HemisphereLight(0x8d9cff, 0x2a1a44, 1.25));
+const hemi = new THREE.HemisphereLight(0x5f74d0, 0x0a0c24, 0.8);
+scene.add(hemi);
 const sun = new THREE.DirectionalLight(0xfff1de, 0.7);
 sun.position.copy(SUN_DIR).multiplyScalar(30);
 scene.add(sun);
+const lamps = [];
 for (const id of ROOM_ORDER) {
   const r = ROOMS[id];
   const lamp = new THREE.PointLight(r.accent, id === 'robotics' ? 30 : 16, 0, 1.6);
   lamp.position.set(r.x, r.h - 0.6, r.z);
+  lamp.userData.full = lamp.intensity;
   scene.add(lamp);
+  lamps.push(lamp);
 }
+hemi.userData.full = hemi.intensity;
 
 /* --------------------------------------------------------------------------
    Collections used for picking and walking
@@ -495,7 +506,7 @@ const MAT = {
   plinthLight: new THREE.MeshStandardMaterial({ color: 0xf1eee8, roughness: 0.7 }),
   wood: new THREE.MeshStandardMaterial({ color: 0x6b4c34, roughness: 0.6 }),
   trim: new THREE.MeshStandardMaterial({ color: 0x0e1322, roughness: 0.35, metalness: 0.5 }),
-  slab: new THREE.MeshStandardMaterial({ color: 0x0b0f1c, roughness: 0.7, metalness: 0.3 })
+  glass: new THREE.MeshStandardMaterial({ color: 0x0d1530, roughness: 0.2, metalness: 0.3, transparent: true, opacity: 0.6 })
 };
 
 function box(w, h, d, material) {
@@ -532,16 +543,18 @@ function glowMat(color, opacity = 1) {
 }
 
 /* A room: polished floor, starry walls with glowing edges, no ceiling –
-   the sky is the roof. Underneath, a slab, so from outside every room is a
-   module floating in space. */
+   the sky is the roof, and through the glass floor you see stars below:
+   every room is a module floating in space. */
 function buildRoom(id) {
   const r = ROOMS[id];
   const group = new THREE.Group();
   const accent = glowMat(r.accent);
   const accentSoft = glowMat(r.accent, 0.55);
 
+  // a glass floor: you walk on light, the stars go on underneath
   const floorMat = new THREE.MeshStandardMaterial({
-    color: 0xffffff, roughness: 0.58, metalness: 0.15, envMapIntensity: 1.6,
+    color: 0xffffff, roughness: 0.2, metalness: 0.3, envMapIntensity: 1.2,
+    transparent: true, opacity: 0.5, depthWrite: true,
     map: canvasTexture(floorTexture(r.floor, r.accent), [r.w / 4, r.d / 4])
   });
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.d), floorMat);
@@ -549,15 +562,11 @@ function buildRoom(id) {
   floor.position.set(r.x, 0, r.z);
   group.add(floor);
   floors.push(floor);
-
-  const slab = box(r.w + 0.5, 0.9, r.d + 0.5, MAT.slab);
-  slab.position.set(r.x, -0.46, r.z);
-  group.add(slab);
-  // glowing seam around the slab, seen from outside
-  for (const [w, d, x, z] of [[r.w + 0.52, 0.04, 0, -(r.d + 0.5) / 2], [r.w + 0.52, 0.04, 0, (r.d + 0.5) / 2],
-    [0.04, r.d + 0.52, -(r.w + 0.5) / 2, 0], [0.04, r.d + 0.52, (r.w + 0.5) / 2, 0]]) {
-    const seam = box(w, 0.04, d, accentSoft);
-    seam.position.set(r.x + x, -0.08, r.z + z);
+  // glowing rim around the floor plate
+  for (const [w, d, x, z] of [[r.w + 0.06, 0.05, 0, -r.d / 2], [r.w + 0.06, 0.05, 0, r.d / 2],
+    [0.05, r.d + 0.06, -r.w / 2, 0], [0.05, r.d + 0.06, r.w / 2, 0]]) {
+    const seam = box(w, 0.05, d, accentSoft);
+    seam.position.set(r.x + x, -0.03, r.z + z);
     group.add(seam);
   }
 
@@ -638,14 +647,11 @@ function buildPassage(id) {
   const mat = new THREE.MeshStandardMaterial({ color: 0x141a2a, roughness: 0.7 });
   const light = glowMat(r.accent, 0.8);
 
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(along ? DOOR_W : len, along ? len : DOOR_W), MAT.trim);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(along ? DOOR_W : len, along ? len : DOOR_W), MAT.glass);
   floor.rotation.x = -Math.PI / 2;
   floor.position.set(along ? 0 : mid, 0.001, along ? mid : 0);
   scene.add(floor);
   floors.push(floor);
-  const under = along ? box(DOOR_W + 0.6, 0.5, len, MAT.slab) : box(len, 0.5, DOOR_W + 0.6, MAT.slab);
-  under.position.set(along ? 0 : mid, -0.26, along ? mid : 0);
-  scene.add(under);
   for (const s of [-1, 1]) {
     const side = along ? box(WALL, DOOR_H, len, mat) : box(len, DOOR_H, WALL, mat);
     side.position.set(along ? s * (DOOR_W / 2 + WALL / 2) : mid, DOOR_H / 2, along ? mid : s * (DOOR_W / 2 + WALL / 2));
@@ -1108,11 +1114,7 @@ function buildRobotics() {
   place(plan, wallSpot('robotics', 'n', 0, 3.0));
   addExhibit({ id: 'yusu-plan', root: plan, meshes: [plan], room: 'robotics', open: () => openProject(yusu) });
 
-  // other robots on easels by the entrance
-  projectsIn('robotics').filter((p) => p.id !== 'yusu').forEach((p, i) => {
-    const along = (i % 2 ? 1 : -1) * (5.2 + Math.floor(i / 2) * 3.4);
-    projectFrame(p, 'robotics', 's', along, { y: 2.1, maxW: 2.4, maxH: 1.6, dark: true });
-  });
+  // the hall belongs to Yusu alone; other robot ideas live in the workshop
 }
 
 /* A heading painted straight onto a wall. */
@@ -1174,6 +1176,7 @@ function projectFrame(p, roomId, side, along, { y = 1.75, maxW = 1.7, maxH = 1.2
    head is packed in assets/models/yusu-head.bin for later.)
    -------------------------------------------------------------------------- */
 let eyes = null;
+let faceMat = null;
 
 function roundedRect(w, h, r) {
   const s = new THREE.Shape();
@@ -1231,7 +1234,8 @@ function buildYusuFace(group, color) {
   // ShapeGeometry UVs are in shape units: map them to 0..1
   const uv = faceGeo.attributes.uv;
   for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) / 1.5 + 0.5, uv.getY(i) / 0.96 + 0.5);
-  const face = new THREE.Mesh(faceGeo, new THREE.MeshBasicMaterial({ map: eyes.texture, toneMapped: false, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+  faceMat = new THREE.MeshBasicMaterial({ map: eyes.texture, toneMapped: false, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+  const face = new THREE.Mesh(faceGeo, faceMat);
   face.position.set(0, 0.02, front + 0.06);
   group.add(face);
 
@@ -1352,6 +1356,14 @@ function createEyes() {
   let acc = 0;
   return {
     texture,
+    /* look straight at the visitor and talk for a moment */
+    greet(mood) {
+      s.mood = mood;
+      s.lookTarget = 0;
+      s.talk = mood === 'happy' ? 1.6 : 2.2;
+      s.next = 3.5;
+      s.blink = 0;
+    },
     update(dt) {
       s.time += dt;
       s.next -= dt;
@@ -1466,11 +1478,12 @@ function arcadeCabinet(p, accent) {
    -------------------------------------------------------------------------- */
 function buildWorkshop() {
   const r = ROOMS.werkstatt;
-  const tools = projectsIn('tools').filter((p) => p.featured !== false);
+  // tools, plus robot ideas that are still future topics (e.g. Ringwheel)
+  const tools = [...projectsIn('tools').filter((p) => p.featured !== false), ...projectsIn('robotics').filter((p) => p.id !== 'yusu')];
   const east = tools.slice(0, Math.ceil(tools.length / 2));
   const west = tools.slice(Math.ceil(tools.length / 2));
   wallTitle('werkstatt', 'e', 0, r.h - 0.75, () => t('toolsTitle'));
-  wallTitle('werkstatt', 'w', 0, r.h - 0.75, () => t('toolsTitle'));
+  wallTitle('werkstatt', 'w', 0, r.h - 0.75, () => t('benchTitle'));
   [['e', east], ['w', west]].forEach(([side, list]) => {
     const n = list.length;
     list.forEach((p, i) => {
@@ -1639,13 +1652,13 @@ function nebulaTexture() {
   const c = makeCanvas(W, H);
   const ctx = c.getContext('2d');
   const g = ctx.createLinearGradient(0, 0, 0, H);
-  g.addColorStop(0, '#02030a');
-  g.addColorStop(0.5, '#070a1c');
-  g.addColorStop(1, '#030409');
+  g.addColorStop(0, '#010208');
+  g.addColorStop(0.5, '#030615');
+  g.addColorStop(1, '#010207');
   ctx.fillStyle = g;
   ctx.fillRect(0, 0, W, H);
   const rnd = rng(42);
-  const colors = [[110, 70, 210], [40, 90, 210], [190, 60, 160], [30, 150, 180], [90, 60, 200]];
+  const colors = [[30, 60, 170], [20, 45, 130], [60, 50, 160], [25, 90, 150], [90, 50, 150]];
   ctx.globalCompositeOperation = 'lighter';
   const blob = (x, y, r, [cr, cg, cb], a) => {
     for (const ox of [-W, 0, W]) {
@@ -1661,13 +1674,13 @@ function nebulaTexture() {
   for (let i = 0; i < 220; i++) {
     const x = rnd() * W;
     const y = H * 0.5 + Math.sin((x / W) * Math.PI * 2 + 0.8) * H * 0.18 + (rnd() - 0.5) * H * 0.16;
-    blob(x, y, 30 + rnd() * 140, colors[Math.floor(rnd() * colors.length)], 0.025 + rnd() * 0.05);
+    blob(x, y, 30 + rnd() * 140, colors[Math.floor(rnd() * colors.length)], 0.012 + rnd() * 0.028);
   }
   for (let i = 0; i < 26; i++) {
-    blob(rnd() * W, H * (0.15 + rnd() * 0.7), 120 + rnd() * 260, colors[Math.floor(rnd() * colors.length)], 0.02 + rnd() * 0.035);
+    blob(rnd() * W, H * (0.15 + rnd() * 0.7), 120 + rnd() * 260, colors[Math.floor(rnd() * colors.length)], 0.008 + rnd() * 0.016);
   }
   // dust of very faint stars
-  for (let i = 0; i < 9000; i++) {
+  for (let i = 0; i < 16000; i++) {
     const x = rnd() * W;
     const band = H * 0.5 + Math.sin((x / W) * Math.PI * 2 + 0.8) * H * 0.18;
     const y = rnd() < 0.5 ? band + (rnd() - 0.5) * H * 0.22 : rnd() * H;
@@ -1731,7 +1744,7 @@ const NOISE_GLSL = `
   float fbm(vec3 p){ float a = 0.5, s = 0.0; for (int i = 0; i < 5; i++){ s += a * noise(p); p *= 2.03; a *= 0.5; } return s; }
 `;
 
-const PLANET_DIR = new THREE.Vector3(0.24, 0.36, -1).normalize();
+const PLANET_DIR = new THREE.Vector3(0.48, 0.4, -1).normalize();
 let planet = null;
 function buildPlanet() {
   const R = 24;
@@ -2061,6 +2074,7 @@ function beamTo(id, then) {
   state.flashTarget = 1;
   state.fovKick = 1;
   state.beam = { id, t: 0, jumped: false, then };
+  sound.beam();
 }
 
 function stepBeam(dt) {
@@ -2071,9 +2085,11 @@ function stepBeam(dt) {
     state.pos.copy(e.pos); state.yaw = e.yaw; state.pitch = e.pitch;
     b.jumped = true;
     state.glide = null; // a walk planned in the old room must not continue here
+    state.vel.set(0, 0, 0);
     state.flashTarget = 0;
     beamFx(e.pos, ROOMS[b.id].accent);
     updateRoom();
+    if (!b.then) placeCard(b.id);
   }
   if (b.t >= 0.5) {
     state.beam = null;
@@ -2092,8 +2108,8 @@ function arrive(id, then) {
   const from = camera.position.clone();
   const fromYaw = state.yaw;
   const fromPitch = state.pitch;
-  const above = new THREE.Vector3(e.pos.x, 9, e.pos.z + 4);
-  state.arriving = { phase: 'dive', t: 0, e, from, fromYaw, fromPitch, above, then, id };
+  const focus = id === 'robotics' ? new THREE.Vector3(HEAD_SPOT.x, 2.5, HEAD_SPOT.z) : e.look;
+  state.arriving = { phase: 'dive', t: 0, e, from, fromYaw, fromPitch, focus, then, id };
 }
 
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
@@ -2103,19 +2119,24 @@ function stepArrival(dt, time) {
   const a = state.arriving;
   a.t += dt;
   if (a.phase === 'dive') {
-    const T = 1.7;
+    const T = 2.6;
     const k = ease(clamp01(a.t / T));
-    // a curve: up and over, then down onto the spot
-    const p0 = a.from, p1 = a.above, p2 = a.e.pos;
-    const mid = new THREE.Vector3(p1.x, p1.y + 4, p1.z + 6);
+    // a curve: out over the building, then down through the open roof
+    const p0 = a.from, p2 = a.e.pos;
+    const mid = new THREE.Vector3(p2.x, 15, p2.z + 10);
     const q = (1 - k) * (1 - k);
     const m = 2 * (1 - k) * k;
     const kk = k * k;
-    state.pos.set(q * p0.x + m * mid.x + kk * p2.x, q * p0.y + m * mid.y + kk * (p2.y + 1.5), q * p0.z + m * mid.z + kk * p2.z);
-    state.yaw = a.fromYaw + (shortestAngle(a.fromYaw, a.e.yaw) - a.fromYaw) * k;
-    state.pitch = a.fromPitch + (-1.2 - a.fromPitch) * Math.sin(k * Math.PI / 2);
-    state.fovKick = k * 1.4;
-    if (a.t > T - 0.18) state.flashTarget = 1;
+    state.pos.set(q * p0.x + m * mid.x + kk * p2.x, q * p0.y + m * mid.y + kk * (p2.y + 2.2), q * p0.z + m * mid.z + kk * p2.z);
+    // turn from the welcome view towards what the room is about
+    const f = a.focus;
+    const wantYaw = yawTo(f.x - state.pos.x, f.z - state.pos.z);
+    const wantPitch = Math.atan2(f.y - state.pos.y, Math.hypot(f.x - state.pos.x, f.z - state.pos.z));
+    const turn = ease(clamp01(a.t / (T * 0.55)));
+    state.yaw = a.fromYaw + (shortestAngle(a.fromYaw, wantYaw) - a.fromYaw) * turn;
+    state.pitch = a.fromPitch + (wantPitch - a.fromPitch) * turn;
+    state.fovKick = Math.sin(k * Math.PI) * 0.9 + k * 0.5;
+    if (a.t > T - 0.2) state.flashTarget = 1;
     if (a.t >= T) {
       a.phase = 'hands';
       a.t = 0;
@@ -2124,10 +2145,14 @@ function stepArrival(dt, time) {
       state.pitch = -0.95;
       state.flashTarget = 0;
       state.fovKick = 0.6;
+      // you materialise in the dark; the room powers up when you look up
+      state.light = 0.12;
+      state.lightTarget = 0.12;
       hands.visible = true;
       handUniforms.uReveal.value = 0;
       handUniforms.uAlpha.value = 1;
       beamFx(a.e.pos, ROOMS[a.id].accent);
+      sound.beam();
       updateRoom();
     }
     return;
@@ -2137,30 +2162,250 @@ function stepArrival(dt, time) {
   handUniforms.uReveal.value = clamp01(t / 1.1);
   const flex = clamp01((t - 0.9) / 1.2);
   const curl = Math.sin(flex * Math.PI) * 0.75 + 0.08;
-  const up = ease(clamp01((t - 2.0) / 1.2));
+  const up = ease(clamp01((t - 2.1) / 1.6));
+  if (t > 2.1 && state.lightTarget < 1) { state.lightTarget = 1; sound.powerUp(); }
   poseHands(up * 0.45, curl, time);
   handUniforms.uAlpha.value = 1 - up;
   state.yaw = a.e.yaw + Math.sin(t * 0.8) * 0.04 * (1 - up);
   state.pitch = -0.95 + (a.e.pitch + 0.95) * up;
-  if (t >= 3.2) finishArrival(a.then);
+  if (t >= 3.7) finishArrival(a.then);
 }
+
+/* A click or key skips the arrival, once it has properly begun. */
+const canSkip = () => !!state.arriving && state.arriving.t > (state.arriving.phase === 'dive' ? 0.8 : 0.4);
 
 function finishArrival(then) {
   const a = state.arriving;
   if (a && a.phase === 'dive') {
     state.pos.copy(a.e.pos);
     beamFx(a.e.pos, ROOMS[a.id].accent);
+    sound.beam();
   }
   if (a) { state.yaw = a.e.yaw; state.pitch = a.e.pitch; }
   state.arriving = null;
   state.flashTarget = 0;
+  state.lightTarget = 1;
   hands.visible = false;
   state.started = true;
+  document.body.classList.remove('is-cinematic');
   updateRoom();
-  toast(coarse ? t('hintTouch') : t('hintMouse'));
   const next = then || (a && a.then);
+  if (state.room === 'robotics' && !next) greet();
+  else { placeCard(state.room); setTimeout(showHint, 3300); }
   if (next) next();
 }
+
+/* Yusu notices you and says hello. */
+let greeted = false;
+function greet() {
+  if (greeted) { showHint(); return; }
+  greeted = true;
+  const lines = [t('greet1'), t('greet2')];
+  let i = 0;
+  const say = () => {
+    if (i >= lines.length) { subtitle(''); showHint(); return; }
+    if (eyes) eyes.greet(i === 0 ? 'happy' : 'neutral');
+    sound.chatter(i === 0 ? 1.6 : 2.2);
+    subtitle('<b>Yusu:</b> ' + esc(lines[i]));
+    i++;
+    setTimeout(say, i === 1 ? 3000 : 3600);
+  };
+  setTimeout(say, 450);
+}
+
+/* Name of the room, like a location card in a film. */
+function placeCard(id) {
+  if (!id || !TEXT.en[id]) return;
+  const sub = { foyer: '', robotics: 'roboticsSub', games: 'gamesSub', werkstatt: 'werkstattSub', kunst: 'kunstSub' }[id];
+  subtitle('<b>' + esc(t(id)) + '</b>' + (sub ? ' · ' + esc(t(sub)) : ''), 2600);
+}
+
+const subtitleEl = document.querySelector('[data-subtitle]');
+let subtitleTimer = 0;
+function subtitle(html, ms) {
+  clearTimeout(subtitleTimer);
+  if (!html) {
+    subtitleEl.classList.add('is-fading');
+    subtitleTimer = setTimeout(() => { subtitleEl.hidden = true; }, 500);
+    return;
+  }
+  subtitleEl.innerHTML = html;
+  subtitleEl.hidden = false;
+  subtitleEl.classList.remove('is-fading');
+  if (ms) subtitleTimer = setTimeout(() => subtitle(''), ms);
+}
+
+let hinted = false;
+function showHint() {
+  if (hinted) return;
+  hinted = true;
+  toast(coarse ? t('hintTouch') : t('hintMouse'), 6500);
+}
+
+/* --------------------------------------------------------------------------
+   Sound, made on the spot with the Web Audio API (no files): a quiet space
+   drone, a whoosh for the flight, the beam, Yusu's little voice.
+   Off with the speaker button; the choice is remembered.
+   -------------------------------------------------------------------------- */
+const sound = (() => {
+  const btn = document.querySelector('[data-sound]');
+  let ctx = null;
+  let master = null;
+  let enabled = true;
+  try { enabled = localStorage.getItem('oh-sound') !== 'off'; } catch (e) { /* private mode */ }
+  const show = () => { if (btn) btn.setAttribute('aria-pressed', String(enabled)); };
+  show();
+  const live = () => ctx && enabled && ctx.state === 'running';
+
+  function noise(seconds = 2) {
+    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seconds), ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    return src;
+  }
+  function drone() {
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 650;
+    const out = ctx.createGain();
+    out.gain.value = 0.05;
+    lp.connect(out).connect(master);
+    [55, 82.41, 110, 164.81, 246.94].forEach((f, i) => {
+      const o = ctx.createOscillator();
+      o.type = i % 2 ? 'triangle' : 'sine';
+      o.frequency.value = f;
+      o.detune.value = (i - 2) * 5;
+      const g = ctx.createGain();
+      g.gain.value = i > 2 ? 0.08 : 0.22;
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.04 + i * 0.025;
+      const depth = ctx.createGain();
+      depth.gain.value = g.gain.value * 0.6;
+      lfo.connect(depth).connect(g.gain);
+      o.connect(g).connect(lp);
+      o.start();
+      lfo.start();
+    });
+    // a breath of air moving through
+    const n = noise(4);
+    n.loop = true;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 700;
+    bp.Q.value = 0.5;
+    const ng = ctx.createGain();
+    ng.gain.value = 0.01;
+    const sweep = ctx.createOscillator();
+    sweep.frequency.value = 0.06;
+    const sweepDepth = ctx.createGain();
+    sweepDepth.gain.value = 350;
+    sweep.connect(sweepDepth).connect(bp.frequency);
+    n.connect(bp).connect(ng).connect(master);
+    n.start();
+    sweep.start();
+  }
+  function init() {
+    if (ctx || !enabled) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    try { ctx = new AC(); } catch (e) { ctx = null; return; }
+    master = ctx.createGain();
+    master.gain.value = 0;
+    master.connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
+    drone();
+  }
+  function tone(type, f0, f1, at, len, vol) {
+    const o = ctx.createOscillator();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, at);
+    if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, at + len);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.03, len / 4));
+    g.gain.exponentialRampToValueAtTime(0.0001, at + len);
+    o.connect(g).connect(master);
+    o.start(at);
+    o.stop(at + len + 0.05);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) ctx.suspend();
+    else if (enabled) ctx.resume();
+  });
+  if (btn) btn.addEventListener('click', () => {
+    enabled = !enabled;
+    try { localStorage.setItem('oh-sound', enabled ? 'on' : 'off'); } catch (e) { /* private mode */ }
+    if (enabled) {
+      init();
+      if (ctx) {
+        ctx.resume();
+        master.gain.cancelScheduledValues(ctx.currentTime);
+        master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+        master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 0.6);
+      }
+    } else if (ctx) {
+      master.gain.cancelScheduledValues(ctx.currentTime);
+      master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+    }
+    show();
+    btn.blur();
+  });
+
+  return {
+    /* call from a click or key press: browsers only allow sound after one */
+    unlock() {
+      if (!enabled) return;
+      init();
+      if (ctx && ctx.state === 'suspended') ctx.resume();
+    },
+    whoosh(len = 2.6) {
+      if (!live()) return;
+      const at = ctx.currentTime;
+      const n = noise(len + 0.2);
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.Q.value = 1.1;
+      bp.frequency.setValueAtTime(160, at);
+      bp.frequency.exponentialRampToValueAtTime(2600, at + len * 0.9);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, at);
+      g.gain.exponentialRampToValueAtTime(0.28, at + len * 0.75);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + len);
+      n.connect(bp).connect(g).connect(master);
+      n.start(at);
+      n.stop(at + len + 0.1);
+    },
+    beam() {
+      if (!live()) return;
+      const at = ctx.currentTime;
+      tone('sine', 1600, 160, at, 0.7, 0.14);
+      tone('triangle', 660, 660, at + 0.05, 1.8, 0.05);
+      tone('triangle', 990, 990, at + 0.1, 2.0, 0.035);
+      tone('sine', 1320, 1320, at + 0.16, 2.2, 0.025);
+    },
+    powerUp() {
+      if (!live()) return;
+      const at = ctx.currentTime;
+      tone('sine', 110, 220, at, 1.6, 0.08);
+      tone('sine', 220, 440, at + 0.2, 1.4, 0.04);
+    },
+    chatter(len) {
+      if (!live()) return;
+      let at = ctx.currentTime + 0.05;
+      const end = at + len;
+      while (at < end) {
+        const f = 520 + Math.random() * 620;
+        const d = 0.05 + Math.random() * 0.07;
+        tone('sine', f, f * (0.85 + Math.random() * 0.4), at, d, 0.05);
+        at += d + 0.03 + Math.random() * 0.08;
+      }
+    }
+  };
+})();
 
 /* --------------------------------------------------------------------------
    Info panel
@@ -2382,6 +2627,7 @@ function travel(to, look, done) {
     if (done) done();
     return;
   }
+  state.vel.set(0, 0, 0);
   state.glide = { points: planPath(state.pos, target), endYaw, endPitch, look: !!look, done, settle: 0 };
 }
 
@@ -2417,7 +2663,7 @@ function hitAt(clientX, clientY) {
 }
 
 renderer.domElement.addEventListener('pointerdown', (e) => {
-  if (state.arriving && state.arriving.phase === 'hands' && state.arriving.t > 0.6) { finishArrival(); return; }
+  if (canSkip()) { finishArrival(); return; }
   if (!state.started) return;
   drag.active = true;
   drag.id = e.pointerId;
@@ -2481,12 +2727,12 @@ renderer.domElement.addEventListener('wheel', (e) => {
 const MOVE_KEYS = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyQ', 'KeyE', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ShiftLeft', 'ShiftRight'];
 function jump() {
   if (state.jumpY > 0.001 || state.jumpV !== 0) return;
-  state.jumpV = 4.6;
+  state.jumpV = 4.4;
 }
 const inField = (el) => el && el.closest && el.closest('input, textarea, select, [contenteditable]');
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !panel.hidden) { hidePanel(); return; }
-  if (state.arriving && state.arriving.phase === 'hands' && state.arriving.t > 0.6 && (e.code === 'Space' || e.code === 'Escape' || e.code === 'Enter')) {
+  if (canSkip() && (e.code === 'Space' || e.code === 'Escape' || e.code === 'Enter')) {
     e.preventDefault();
     finishArrival();
     return;
@@ -2585,16 +2831,22 @@ function choose(id, ex) {
   }
   intro.classList.add('is-hidden');
   intro.setAttribute('aria-hidden', 'true');
-  document.body.classList.add('is-touring');
+  document.body.classList.add('is-touring', 'is-cinematic');
+  sound.whoosh(2.6);
   arrive(id, ex ? () => visit(ex) : null);
 }
 
 choiceButtons.forEach((el) => el.addEventListener('click', (e) => {
   e.preventDefault();
   const id = el.getAttribute('data-choice');
-  history.replaceState(null, '', id === 'foyer' ? location.pathname + location.search : '#' + id);
+  // the big button just enters; the small links keep their address
+  const plain = el.classList.contains('g-enter') || id === 'foyer';
+  history.replaceState(null, '', plain ? location.pathname + location.search : '#' + id);
+  sound.unlock();
   choose(id);
 }));
+// arriving through a link starts without a click: sound waits for the first one
+['pointerdown', 'keydown'].forEach((type) => window.addEventListener(type, () => sound.unlock(), { once: true, capture: true }));
 
 document.addEventListener('oh:langchange', () => {
   labels.forEach((repaint) => repaint());
@@ -2653,23 +2905,31 @@ function stepGlide(dt) {
   }
 }
 
+/* Keys set a wish; the body follows with a little inertia, so walking
+   feels like gliding through weightless space rather than stepping. */
 function stepKeys(dt) {
   const k = state.keys;
-  if (!k.size) return;
-  // always at a brisk pace; Shift is for really running
-  const speed = (k.has('ShiftLeft') || k.has('ShiftRight') ? 10 : 6.5) * dt;
-  const forward = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
-  const strafe = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
-  const turn = (k.has('ArrowLeft') || k.has('KeyQ') ? 1 : 0) - (k.has('ArrowRight') || k.has('KeyE') ? 1 : 0);
-  state.yaw += turn * dt * 1.9;
-  const sin = Math.sin(state.yaw);
-  const cos = Math.cos(state.yaw);
-  const dx = (-sin * forward + cos * strafe) * speed;
-  const dz = (-cos * forward - sin * strafe) * speed;
-  if (dx || dz) {
-    tryMove(dx, dz);
-    state.bobPhase += dt * (speed / dt) * 1.5;
+  let wx = 0;
+  let wz = 0;
+  if (k.size) {
+    // always at a brisk pace; Shift is for really running
+    const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 10 : 6.5;
+    const forward = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
+    const strafe = (k.has('KeyD') ? 1 : 0) - (k.has('KeyA') ? 1 : 0);
+    const turn = (k.has('ArrowLeft') || k.has('KeyQ') ? 1 : 0) - (k.has('ArrowRight') || k.has('KeyE') ? 1 : 0);
+    state.yaw += turn * dt * 1.9;
+    const sin = Math.sin(state.yaw);
+    const cos = Math.cos(state.yaw);
+    const len = Math.hypot(forward, strafe) || 1;
+    wx = (-sin * forward + cos * strafe) / len * speed;
+    wz = (-cos * forward - sin * strafe) / len * speed;
   }
+  const v = state.vel;
+  const rate = k.size ? 5 : 2.6; // speeds up quickly, drifts out slowly
+  v.x += (wx - v.x) * Math.min(1, dt * rate);
+  v.z += (wz - v.z) * Math.min(1, dt * rate);
+  if (Math.abs(v.x) < 0.01 && Math.abs(v.z) < 0.01) { v.x = 0; v.z = 0; return; }
+  if (!tryMove(v.x * dt, v.z * dt)) { v.x *= 0.5; v.z *= 0.5; }
 }
 
 function stepHover() {
@@ -2692,7 +2952,6 @@ function frame(dt, time) {
   skyUniforms.uTime.value = time;
   for (const m of beams) m.uniforms.uTime.value = time;
 
-  const moving = state.keys.size > 0;
   if (state.arriving) {
     stepArrival(dt, time);
   } else if (state.started) {
@@ -2710,14 +2969,15 @@ function frame(dt, time) {
   }
   if (state.started && !state.arriving) updateRoom();
 
-  // jump and a gentle step rhythm while walking
+  // low gravity: jumps float up and sink back down slowly
   if (state.jumpV !== 0 || state.jumpY > 0) {
-    state.jumpV -= 13 * dt;
+    state.jumpV -= (state.jumpV > 0 ? 6.5 : 4.2) * dt;
     state.jumpY += state.jumpV * dt;
-    if (state.jumpY <= 0) { state.jumpY = 0; state.jumpV = 0; state.bob = -0.06; }
+    if (state.jumpY <= 0) { state.jumpY = 0; state.jumpV = 0; state.bob = -0.04; }
   }
-  const bobWant = moving && state.jumpY === 0 && !reduceMotion ? Math.sin(state.bobPhase) * 0.035 : 0;
-  state.bob += (bobWant - state.bob) * Math.min(1, dt * 10);
+  // and even standing still you hover a little, like in water
+  const hover = state.started && !reduceMotion ? Math.sin(time * 0.7) * 0.035 + Math.sin(time * 0.31) * 0.02 : 0;
+  state.bob += (hover - state.bob) * Math.min(1, dt * 3);
 
   // the beam flash and a short widening of the view
   state.flash += (state.flashTarget - state.flash) * Math.min(1, dt * (state.flashTarget > state.flash ? 14 : 3.2));
@@ -2727,6 +2987,13 @@ function frame(dt, time) {
   const fov = baseFov + state.fovKick * 14;
   if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
 
+  // the room lights (dimmed while you materialise)
+  if (Math.abs(state.light - state.lightTarget) > 0.001) {
+    state.light += (state.lightTarget - state.light) * Math.min(1, dt * (state.lightTarget > state.light ? 1.1 : 6));
+    for (const lamp of lamps) lamp.intensity = lamp.userData.full * state.light;
+    hemi.intensity = hemi.userData.full * (0.25 + 0.75 * state.light);
+    if (faceMat) faceMat.opacity = clamp01((state.light - 0.35) / 0.65);
+  }
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i].update(dt)) effects.splice(i, 1);
   for (const fn of animated) fn(dt, time);
 
@@ -2763,7 +3030,8 @@ function frame(dt, time) {
   }
 
   camera.position.set(state.pos.x, state.pos.y + state.jumpY + state.bob, state.pos.z);
-  camera.rotation.set(state.pitch, state.yaw, 0, 'YXZ');
+  const roll = state.started && !reduceMotion && !state.arriving ? Math.sin(time * 0.4) * 0.006 - state.vel.x * Math.cos(state.yaw) * 0.002 + state.vel.z * Math.sin(state.yaw) * 0.002 : 0;
+  camera.rotation.set(state.pitch, state.yaw, roll, 'YXZ');
   sky.position.copy(camera.position);
   renderer.render(scene, camera);
 }
