@@ -1565,7 +1565,7 @@ function buildYusuHalo(group, color) {
 /* Layouts for the eye canvas: the hologram face, and the real visor
    (4 px per mm, x −50…50 mm, z 70…−60 mm in the CAD). */
 const EYES_FACE = { W: 512, H: 328, ex: 128, ey: 132, k: 1, mouthY: 272, step: 30, led: 9, blushX: 150, blushY: 224, glow: 1, scan: true };
-const EYES_VISOR = { W: 400, H: 520, ex: 78, ey: 160, k: 0.56, mouthY: 444, step: 28, led: 9, blushX: 118, blushY: 250, glow: 0.8, scan: false, grid: 8, color: '#3aa6ff' };
+const EYES_VISOR = { W: 400, H: 520, ex: 78, ey: 160, k: 0.56, mouthY: 444, step: 26, led: 5.5, blushX: 118, blushY: 250, glow: 0.8, scan: false, photos: true };
 /* The eyes are drawn like the firmware does: two glowing shapes that change
    expression now and then, with blinking in between. */
 function createEyes(L = EYES_FACE) {
@@ -1573,8 +1573,9 @@ function createEyes(L = EYES_FACE) {
   const canvas = makeCanvas(W, H);
   const ctx = canvas.getContext('2d');
   const texture = canvasTexture(canvas);
-  const moods = ['neutral', 'happy', 'neutral', 'curious', 'blush', 'neutral', 'surprised', 'happy'];
-  const s = { mood: 'neutral', next: 3, blink: 0, nextBlink: 2, look: 0, lookTarget: 0, talk: 0, moodIndex: 0, time: 0 };
+  const moods = L.photos ? ['neutral', 'happy', 'neutral', 'surprised', 'blush', 'neutral', 'tired', 'happy'] : ['neutral', 'happy', 'neutral', 'curious', 'blush', 'neutral', 'surprised', 'happy'];
+  const s = { mood: 'neutral', prev: null, fade: 1, next: 3, blink: 0, nextBlink: 2, look: 0, lookTarget: 0, talk: 0, moodIndex: 0, time: 0 };
+  const setMood = (m) => { if (m !== s.mood) { s.prev = s.mood; s.fade = 0; s.mood = m; } };
   const EYE_COLOR = L.color || '#9fe0ff';
 
   function eye(cx, cy, mood, open) {
@@ -1609,6 +1610,41 @@ function createEyes(L = EYES_FACE) {
     ctx.restore();
   }
 
+  // screenshots of the real display (two eyes per 480 px cell)
+  const PHOTO_SET = {
+    neutral:   ['img/yusu-eyes-display.jpg', 0],
+    happy:     ['img/yusu-eyes-firmware.jpg', 0],
+    blush:     ['img/yusu-eyes-firmware.jpg', 0],
+    surprised: ['img/yusu-eyes-firmware.jpg', 480],
+    curious:   ['img/yusu-eyes-firmware.jpg', 480],
+    tired:     ['img/yusu-eyes-display.jpg', 960]
+  };
+  const photos = L.photos ? {} : null;
+  if (photos) {
+    for (const [src] of Object.values(PHOTO_SET)) {
+      if (photos[src]) continue;
+      const img = new Image();
+      img.onload = () => draw();
+      img.src = src;
+      photos[src] = img;
+    }
+  }
+  function photoEyes(mood, open, dx, alpha) {
+    const [src, sx] = PHOTO_SET[mood] || PHOTO_SET.neutral;
+    const img = photos[src];
+    if (!img || !img.complete || !img.naturalWidth || alpha <= 0) return;
+    // crop: eyes sit around y 220 of the 480 px cell; scale so they are ~40 mm apart
+    const k = (L.ex * 2) / 220;
+    const dw = 480 * k;
+    const dh = 320 * k;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.translate(W / 2 + dx * 0.5, L.ey);
+    ctx.scale(1, Math.max(0.06, open));
+    ctx.drawImage(img, sx, 60, 480, 320, -dw / 2, -dh / 2, dw, dh);
+    ctx.restore();
+  }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
     // faint scan lines, it is a hologram after all
@@ -1618,8 +1654,16 @@ function createEyes(L = EYES_FACE) {
     }
     const open = s.blink > 0 ? Math.abs(Math.cos(s.blink * Math.PI)) : 1;
     const dx = s.look * 34;
-    eye(W / 2 - L.ex + dx * L.k, L.ey, s.mood, open);
-    eye(W / 2 + L.ex + dx * L.k, L.ey, s.mood, open * (s.mood === 'curious' ? 0.7 : 1));
+    if (photos) {
+      // the real eyes, straight from the display: fade from the last
+      // expression to the new one, squash for a blink
+      const fade = Math.min(1, s.fade);
+      if (fade < 1 && s.prev) photoEyes(s.prev, open, dx, 1 - fade);
+      photoEyes(s.mood, open, dx, fade);
+    } else {
+      eye(W / 2 - L.ex + dx * L.k, L.ey, s.mood, open);
+      eye(W / 2 + L.ex + dx * L.k, L.ey, s.mood, open * (s.mood === 'curious' ? 0.7 : 1));
+    }
     if (s.mood === 'blush') {
       ctx.save();
       ctx.fillStyle = 'rgba(255,120,150,.8)';
@@ -1632,15 +1676,6 @@ function createEyes(L = EYES_FACE) {
           ctx.fill();
         }
       }
-      ctx.restore();
-    }
-    // the LED matrix of the real eyes: a fine dark grid over them
-    if (L.grid) {
-      ctx.save();
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = 'rgba(0,0,0,.7)';
-      for (let x = 0; x < W; x += L.grid) ctx.fillRect(x, 0, 2.6, L.mouthY - 40);
-      for (let y = 0; y < L.mouthY - 40; y += L.grid) ctx.fillRect(0, y, W, 2.6);
       ctx.restore();
     }
     // the six mouth LEDs
@@ -1664,7 +1699,7 @@ function createEyes(L = EYES_FACE) {
     texture,
     /* look straight at the visitor and talk for a moment */
     greet(mood) {
-      s.mood = mood;
+      setMood(mood);
       s.lookTarget = 0;
       s.talk = mood === 'happy' ? 1.6 : 2.2;
       s.next = 3.5;
@@ -1676,8 +1711,8 @@ function createEyes(L = EYES_FACE) {
       s.nextBlink -= dt;
       if (s.next <= 0) {
         s.moodIndex = (s.moodIndex + 1) % moods.length;
-        s.mood = moods[s.moodIndex];
-        s.next = 2.5 + Math.random() * 2.5;
+        setMood(moods[s.moodIndex]);
+        s.next = L.photos ? 4 + Math.random() * 3 : 2.5 + Math.random() * 2.5;
         s.lookTarget = Math.random() < 0.5 ? 0 : (Math.random() - 0.5) * 1.4;
         s.talk = s.mood === 'happy' ? 1.6 : 0;
       }
@@ -1685,6 +1720,7 @@ function createEyes(L = EYES_FACE) {
       if (s.blink > 0) { s.blink += dt * 5; if (s.blink >= 1) s.blink = 0; }
       s.look += (s.lookTarget - s.look) * Math.min(1, dt * 4);
       s.talk = Math.max(0, s.talk - dt);
+      s.fade = Math.min(1, s.fade + dt * 3);
       acc += dt;
       if (acc > 1 / 24) { acc = 0; draw(); }
     }
