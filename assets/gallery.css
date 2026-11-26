@@ -417,11 +417,16 @@
     animation-name: g-panel-up;
   }
   @keyframes g-panel-up{ from{ opacity: 0; transform: translateY(24px); } }
-  .g-brand > span{ display: none; }
-  .g-brand{ padding: 0 10px; }
+  .g-brand{ padding: 0 11px 0 9px; gap: 5px; font-size: 13px; min-height: 36px; }
+  .g-brand .suffix{ display: none; }
+  .g-hud-top{ gap: 6px; left: 10px; right: 10px; }
+  .g-hud-actions{ gap: 4px; }
+  .g-pill{ min-height: 36px; padding: 0 10px; font-size: 13px; }
+  .g-sound{ width: 36px; }
+  .g-hud-actions .lang-toggle button{ padding: 7px 8px; font-size: 12px; }
   .g-hud-top{ flex-wrap: wrap; row-gap: 8px; }
   .g-rooms{ order: 3; flex: 1 1 100%; justify-content: flex-start; }
-  .g-rooms button{ flex: 1 1 auto; padding: 0 8px; font-size: 13px; min-height: 34px; }
+  .g-rooms button{ flex: 1 1 auto; padding: 0 5px; font-size: 12.5px; min-height: 34px; }
 }
 @media (min-width: 701px) and (max-width: 980px){
   .g-brand .suffix{ display: none; }
@@ -517,3 +522,8 @@
 @media (pointer: coarse) and (prefers-reduced-motion: reduce){
   .g-touch, .g-stick i{ transition: none; }
 }
+
+/* the planet sits behind the lower part of the welcome card: keep the text readable */
+.g-intro-lead, .g-intro-status, .g-intro-rooms{ text-shadow: 0 1px 3px rgba(0, 0, 0, .95), 0 0 14px rgba(0, 0, 0, .85); }
+.g-intro-rooms a{ color: #e6eef2; }
+.g-enter{ background: rgba(6, 14, 30, .55); }
