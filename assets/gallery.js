@@ -1207,7 +1207,12 @@ function buildRobotics() {
   head = new THREE.Group();
   head.position.set(HEAD_SPOT.x, 2.55, HEAD_SPOT.z);
   scene.add(head);
-  buildYusuFace(head, cyan);
+  buildYusuHalo(head, cyan);
+  // the real head from the CAD; if it cannot load, the drawn face
+  pendingImages++;
+  loadYusuHead(head)
+    .catch(() => buildYusuFace(head))
+    .finally(() => { pendingImages--; });
 
   const headExhibit = addExhibit({
     id: 'project-yusu', root: plinth, meshes: [plinth, stageMesh], room: 'robotics',
@@ -1236,9 +1241,16 @@ function buildRobotics() {
   // history: render + gallery on the west wall
   const past = [];
   if (yusu.image) past.push({ ...yusu.image, caption: { de: TEXT.de.renderCaption, en: TEXT.en.renderCaption } });
-  (yusu.gallery || []).forEach((g) => past.push(g));
+  // one picture per step: the app hangs in the apps room, and of the several
+  // face close-ups the first one is enough here
+  let faces = 0;
+  (yusu.gallery || []).forEach((g) => {
+    if (/yusu-app\./.test(g.src)) return;
+    if (/eyes/.test(g.src) && faces++ > 0) return;
+    past.push(g);
+  });
   wallTitle('robotics', 'w', 0, r.h - 1.1, () => t('pastTitle'), true);
-  rowOnWall('robotics', 'w', past, { y: 2.35, from: -9.2, to: 9.2, maxW: 2.1, maxH: 1.55, style: 'dark', dark: true, timeline: true },
+  rowOnWall('robotics', 'w', past, { y: 2.4, from: -7.6, to: 7.6, maxW: 2.6, maxH: 1.8, style: 'dark', dark: true, timeline: true },
     (item, i) => () => openMedia(item, { kicker: t('pastTitle') + ' · ' + (i + 1), back: yusu }));
 
   // current state on the east wall, clips play while you are in the hall
@@ -1394,7 +1406,67 @@ function beamMaterial(color, strength = 0.6) {
   return m;
 }
 
-function buildYusuFace(group, color) {
+/* Yusu's real head, packed from the CAD (tools-dev/stl_to_mesh.py): white
+   low-poly shell, black parts, the frosted visor. Eyes and LED mouth glow
+   on the visor itself, mapped straight from the front, so they always sit
+   where the display is. */
+const HEAD_SCALE = 0.0074; // mm → m: a hologram about 1.9 m tall
+async function loadYusuHead(group) {
+  const res = await fetch('assets/models/yusu-head.bin?v=1');
+  if (!res.ok) throw new Error('head model missing');
+  const buf = await res.arrayBuffer();
+  const view = new DataView(buf);
+  const headerLength = view.getUint32(0, true);
+  const header = JSON.parse(new TextDecoder().decode(new Uint8Array(buf, 4, headerLength)));
+  const span = header.max.map((m, i) => m - header.min[i]);
+  let offset = 4 + headerLength;
+
+  eyes = createEyes(EYES_VISOR);
+  const white = new THREE.MeshStandardMaterial({ color: 0xf3f1ec, roughness: 0.42, metalness: 0.05, flatShading: true, envMapIntensity: 1.1 });
+  const black = new THREE.MeshStandardMaterial({ color: 0x1a1d22, roughness: 0.5, flatShading: true });
+  const visor = new THREE.MeshStandardMaterial({
+    color: 0x7d8891, roughness: 0.26, metalness: 0.35, flatShading: true, envMapIntensity: 1.2,
+    emissive: 0xffffff, emissiveMap: eyes.texture, emissiveIntensity: 0.7
+  });
+  eyes.texture.wrapS = eyes.texture.wrapT = THREE.ClampToEdgeWrapping;
+  const materials = { white, white2: white, black, black2: black, neck: black, visor };
+
+  // CAD is z-up with the face towards −y: stand it up, face to +z, centred
+  const model = new THREE.Group();
+  model.rotation.x = -Math.PI / 2;
+  model.scale.setScalar(HEAD_SCALE);
+  model.position.y = -((header.min[2] + header.max[2]) / 2) * HEAD_SCALE;
+  group.add(model);
+
+  for (const part of header.parts) {
+    const q = new Uint16Array(buf, offset, part.vertices * 3);
+    offset += part.posBytes;
+    const index = part.wide ? new Uint32Array(buf, offset, part.indices) : new Uint16Array(buf, offset, part.indices);
+    offset += part.indBytes;
+    const pos = new Float32Array(q.length);
+    for (let i = 0; i < q.length; i++) {
+      const a = i % 3;
+      pos[i] = header.min[a] + (q[i] / 65535) * span[a];
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setIndex(new THREE.BufferAttribute(index, 1));
+    if (part.name === 'visor') {
+      // the eye canvas covers x −50…50 mm and z −60…70 mm, seen from the front
+      const uv = new Float32Array(part.vertices * 2);
+      for (let i = 0; i < part.vertices; i++) {
+        uv[i * 2] = (pos[i * 3] + 50) / 100;
+        uv[i * 2 + 1] = (pos[i * 3 + 2] + 60) / 130;
+      }
+      geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    }
+    geo.computeVertexNormals();
+    model.add(new THREE.Mesh(geo, materials[part.name] || white));
+  }
+}
+
+/* The drawn face, if the CAD head is not available. */
+function buildYusuFace(group) {
   const W = 1.9, H = 1.42, D = 0.62;
   const shell = new THREE.Mesh(
     new THREE.ExtrudeGeometry(roundedRect(W, H, 0.5), { depth: D, bevelEnabled: true, bevelThickness: 0.1, bevelSize: 0.1, bevelSegments: 6, curveSegments: 20 }),
@@ -1419,18 +1491,10 @@ function buildYusuFace(group, color) {
   face.position.set(0, 0.02, front + 0.06);
   group.add(face);
 
-  // small ear pods with light rings
-  for (const s of [-1, 1]) {
-    const pod = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.22, 0.14, 32), MAT.plinth);
-    pod.rotation.z = Math.PI / 2;
-    pod.position.set(s * (W / 2 + 0.16), 0, -0.05);
-    group.add(pod);
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.015, 8, 40), glowMat(color));
-    ring.rotation.y = Math.PI / 2;
-    ring.position.set(s * (W / 2 + 0.235), 0, -0.05);
-    group.add(ring);
-  }
+}
 
+/* Around the head: light rings, a soft glow and the gentle float. */
+function buildYusuHalo(group, color) {
   // hologram rings around the head
   const rings = [];
   for (const [radius, tilt, speed] of [[1.45, 0.35, 0.4], [1.6, -0.5, -0.28]]) {
@@ -1454,10 +1518,14 @@ function buildYusuFace(group, color) {
   });
 }
 
+/* Layouts for the eye canvas: the hologram face, and the real visor
+   (4 px per mm, x −50…50 mm, z 70…−60 mm in the CAD). */
+const EYES_FACE = { W: 512, H: 328, ex: 128, ey: 132, k: 1, mouthY: 272, step: 30, led: 9, blushX: 150, blushY: 224, glow: 1, scan: true };
+const EYES_VISOR = { W: 400, H: 520, ex: 78, ey: 160, k: 0.56, mouthY: 444, step: 28, led: 9, blushX: 118, blushY: 250, glow: 0.8, scan: false };
 /* The eyes are drawn like the firmware does: two glowing shapes that change
    expression now and then, with blinking in between. */
-function createEyes() {
-  const W = 512, H = 328;
+function createEyes(L = EYES_FACE) {
+  const W = L.W, H = L.H;
   const canvas = makeCanvas(W, H);
   const ctx = canvas.getContext('2d');
   const texture = canvasTexture(canvas);
@@ -1467,8 +1535,11 @@ function createEyes() {
 
   function eye(cx, cy, mood, open) {
     ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(L.k, L.k);
+    cx = 0; cy = 0;
     ctx.shadowColor = 'rgba(143,216,255,.95)';
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 30 * L.glow;
     ctx.fillStyle = EYE_COLOR;
     ctx.strokeStyle = EYE_COLOR;
     const w = 96;
@@ -1497,21 +1568,23 @@ function createEyes() {
   function draw() {
     ctx.clearRect(0, 0, W, H);
     // faint scan lines, it is a hologram after all
-    ctx.fillStyle = 'rgba(143,216,255,.05)';
-    for (let y = (s.time * 40) % 6; y < H; y += 6) ctx.fillRect(0, y, W, 2);
+    if (L.scan) {
+      ctx.fillStyle = 'rgba(143,216,255,.05)';
+      for (let y = (s.time * 40) % 6; y < H; y += 6) ctx.fillRect(0, y, W, 2);
+    }
     const open = s.blink > 0 ? Math.abs(Math.cos(s.blink * Math.PI)) : 1;
     const dx = s.look * 34;
-    eye(W / 2 - 128 + dx, 132, s.mood, open);
-    eye(W / 2 + 128 + dx, 132, s.mood, open * (s.mood === 'curious' ? 0.7 : 1));
+    eye(W / 2 - L.ex + dx * L.k, L.ey, s.mood, open);
+    eye(W / 2 + L.ex + dx * L.k, L.ey, s.mood, open * (s.mood === 'curious' ? 0.7 : 1));
     if (s.mood === 'blush') {
       ctx.save();
       ctx.fillStyle = 'rgba(255,120,150,.8)';
       ctx.shadowColor = 'rgba(255,120,150,.95)';
       ctx.shadowBlur = 18;
-      for (const cx of [W / 2 - 150, W / 2 + 150]) {
+      for (const cx of [W / 2 - L.blushX, W / 2 + L.blushX]) {
         for (let k = 0; k < 3; k++) {
           ctx.beginPath();
-          ctx.ellipse(cx - 26 + k * 26, 224, 7, 12, 0.5, 0, Math.PI * 2);
+          ctx.ellipse(cx + (-26 + k * 26) * L.k, L.blushY, 7 * L.k, 12 * L.k, 0.5, 0, Math.PI * 2);
           ctx.fill();
         }
       }
@@ -1525,7 +1598,7 @@ function createEyes() {
       const base = s.talk > 0 ? 0.35 + 0.65 * Math.abs(Math.sin(s.time * 9 + i * 0.9)) : (i === 0 || i === 5 ? 0.3 : 0.65);
       ctx.fillStyle = `rgba(159,224,255,${base})`;
       ctx.beginPath();
-      ctx.arc(W / 2 - 75 + i * 30, 272, 9, 0, Math.PI * 2);
+      ctx.arc(W / 2 + (i - 2.5) * L.step, L.mouthY, L.led, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.restore();
@@ -2151,78 +2224,102 @@ flashEl.className = 'g-flash';
 flashEl.setAttribute('aria-hidden', 'true');
 document.body.appendChild(flashEl);
 
+/* Robot hands like Yusu's body concept: white low-poly shells, black
+   joints. They take shape from the wrist up with a glowing edge, and fade
+   out when you look up. */
+function robotHandMat(color, glow) {
+  const m = new THREE.MeshStandardMaterial({
+    color, roughness: 0.45, metalness: 0.08, flatShading: true, transparent: true,
+    emissive: color, emissiveIntensity: glow
+  });
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, handUniforms);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nvarying vec3 vHP;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\nvHP = mvPosition.xyz;');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', `#include <common>
+        varying vec3 vHP; uniform float uReveal; uniform float uAlpha; uniform float uTime; uniform vec3 uColor;
+        float hh(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }`)
+      .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+        float k = (vHP.y + 0.36) / 0.36 + hh(floor(vHP * 160.0)) * 0.22;
+        float thr = uReveal * 1.45;
+        if (k > thr) discard;
+        float edge = 1.0 - smoothstep(0.0, 0.12, thr - k);`)
+      .replace('#include <dithering_fragment>', `#include <dithering_fragment>
+        float fres = pow(1.0 - abs(dot(normalize(normal), normalize(vViewPosition))), 2.0);
+        gl_FragColor.rgb += uColor * (fres * 0.6 + edge * 2.2) + vec3(edge * 0.8);
+        gl_FragColor.a *= uAlpha;`);
+  };
+  return m;
+}
 const handUniforms = {
   uReveal: { value: 0 }, uAlpha: { value: 1 }, uTime: skyUniforms.uTime, uColor: { value: new THREE.Color(0x8fd8ff) }
 };
-const handMat = new THREE.ShaderMaterial({
-  uniforms: handUniforms,
-  vertexShader: `varying vec3 vN; varying vec3 vV; varying vec3 vP;
-    void main(){ vec4 mv = modelViewMatrix * vec4(position, 1.0); vP = mv.xyz; vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix * mv; }`,
-  fragmentShader: `uniform float uReveal; uniform float uAlpha; uniform float uTime; uniform vec3 uColor; varying vec3 vN; varying vec3 vV; varying vec3 vP;
-    float h(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
-    void main(){
-      float fres = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 2.0);
-      float grain = h(floor(vP * 160.0));
-      float k = (vP.y + 0.36) / 0.36 + grain * 0.22;
-      float thr = uReveal * 1.45;
-      if (k > thr) discard;
-      float edge = 1.0 - smoothstep(0.0, 0.14, thr - k);
-      float scan = 0.82 + 0.18 * sin(vP.y * 420.0 - uTime * 8.0);
-      vec3 col = uColor * (0.35 + fres * 1.5) + vec3(1.0) * edge * 1.4;
-      float a = (0.16 + fres * 0.8 + edge * 0.9) * scan * uAlpha;
-      gl_FragColor = vec4(col, a);
-      #include <colorspace_fragment>
-    }`,
-  transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, fog: false
-});
+const HAND_WHITE = robotHandMat(0xeef0f2, 0.22);
+const HAND_BLACK = robotHandMat(0x1b1e24, 0.05);
 
-/* A hand from simple shapes: palm, four fingers with two joints, thumb,
-   forearm. side = 1 right hand, -1 left. Palm faces the viewer. */
+/* A robot hand: palm plate, four two-part fingers on black joints, thumb,
+   wrist joint and a six-sided forearm. side = 1 right hand, −1 left. */
 function buildHand(side) {
   const g = new THREE.Group();
-  const part = (geo) => { const m = new THREE.Mesh(geo, handMat); m.renderOrder = 50; return m; };
-  const palm = part(new THREE.SphereGeometry(1, 24, 16));
-  palm.scale.set(0.041, 0.05, 0.016);
+  const part = (geo, mat = HAND_WHITE) => { const m = new THREE.Mesh(geo, mat); m.renderOrder = 50; return m; };
+  const palm = part(new THREE.BoxGeometry(0.078, 0.082, 0.022));
   palm.position.y = 0.004;
   g.add(palm);
-  // the knuckle line is wider than the wrist
-  const knuckles = part(new THREE.CapsuleGeometry(0.014, 0.05, 4, 12));
-  knuckles.rotation.z = Math.PI / 2;
-  knuckles.position.set(0, 0.038, 0);
-  g.add(knuckles);
-  const arm = part(new THREE.CapsuleGeometry(0.027, 0.24, 6, 14));
-  arm.position.set(0, -0.17, -0.01);
+  // a black panel line across the back of the hand
+  const seam = part(new THREE.BoxGeometry(0.06, 0.006, 0.024), HAND_BLACK);
+  seam.position.y = -0.012;
+  g.add(seam);
+  const wrist = part(new THREE.CylinderGeometry(0.02, 0.02, 0.05, 10), HAND_BLACK);
+  wrist.rotation.z = Math.PI / 2;
+  wrist.position.y = -0.045;
+  g.add(wrist);
+  const arm = part(new THREE.CylinderGeometry(0.03, 0.026, 0.24, 6));
+  arm.position.set(0, -0.18, -0.006);
   g.add(arm);
+  const cuff = part(new THREE.CylinderGeometry(0.031, 0.031, 0.012, 6), HAND_BLACK);
+  cuff.position.set(0, -0.075, -0.006);
+  g.add(cuff);
   const fingers = [];
-  const lengths = [0.07, 0.078, 0.073, 0.056];
+  const lengths = [0.066, 0.074, 0.07, 0.054];
   lengths.forEach((L, i) => {
     const root = new THREE.Group();
-    root.position.set(side * (0.027 - i * 0.018), 0.05, 0);
-    root.rotation.z = -side * (1.5 - i) * 0.085;
-    const a = L * 0.56;
-    const b = L * 0.44;
-    const seg1 = part(new THREE.CapsuleGeometry(0.0088, a, 4, 10));
-    seg1.position.y = a / 2;
+    root.position.set(side * (0.028 - i * 0.0187), 0.047, 0);
+    root.rotation.z = -side * (1.5 - i) * 0.06;
+    const knuckle = part(new THREE.SphereGeometry(0.0085, 8, 6), HAND_BLACK);
+    root.add(knuckle);
+    const a = L * 0.55;
+    const b = L * 0.45;
+    const seg1 = part(new THREE.BoxGeometry(0.0145, a - 0.006, 0.015));
+    seg1.position.y = a / 2 + 0.002;
     root.add(seg1);
     const joint = new THREE.Group();
-    joint.position.y = a;
-    const seg2 = part(new THREE.CapsuleGeometry(0.008, b, 4, 10));
-    seg2.position.y = b / 2;
+    joint.position.y = a + 0.003;
+    const jball = part(new THREE.SphereGeometry(0.0075, 8, 6), HAND_BLACK);
+    joint.add(jball);
+    const seg2 = part(new THREE.BoxGeometry(0.013, b - 0.006, 0.014));
+    seg2.position.y = b / 2 + 0.002;
     joint.add(seg2);
+    const tip = part(new THREE.BoxGeometry(0.011, 0.006, 0.01), HAND_BLACK);
+    tip.position.set(0, b - 0.002, 0.004);
+    joint.add(tip);
     root.add(joint);
     g.add(root);
     fingers.push({ root, joint, i });
   });
   const thumb = new THREE.Group();
-  thumb.position.set(side * 0.034, -0.026, 0.008);
-  thumb.rotation.z = -side * 0.62;
+  thumb.position.set(side * 0.04, -0.022, 0.008);
+  thumb.rotation.z = -side * 0.7;
   thumb.rotation.y = side * 0.45;
-  const t1 = part(new THREE.CapsuleGeometry(0.011, 0.04, 4, 10));
+  thumb.add(part(new THREE.SphereGeometry(0.0095, 8, 6), HAND_BLACK));
+  const t1 = part(new THREE.BoxGeometry(0.017, 0.036, 0.016));
   t1.position.y = 0.02;
   thumb.add(t1);
   const tj = new THREE.Group();
-  tj.position.y = 0.042;
-  const t2 = part(new THREE.CapsuleGeometry(0.0098, 0.03, 4, 10));
+  tj.position.y = 0.04;
+  tj.add(part(new THREE.SphereGeometry(0.008, 8, 6), HAND_BLACK));
+  const t2 = part(new THREE.BoxGeometry(0.015, 0.026, 0.014));
   t2.position.y = 0.015;
   tj.add(t2);
   thumb.add(tj);
