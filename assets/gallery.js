@@ -69,7 +69,7 @@ const TEXT = {
     map: 'Lageplan', mapHint: 'Raum anklicken zum Hingehen',
     pastTitle: 'So ist Yusu entstanden', nowTitle: 'Aktueller Stand',
     designTitle: '3D-Design', designSub: 'Druckdateien auf MakerWorld',
-    planTitle: 'Etappen', openMore: 'Antippen für mehr →',
+    planTitle: 'Etappen', planDone: '{n} von {m} geschafft', openMore: 'Antippen für mehr →',
     toolsTitle: 'Tools', benchTitle: 'Auf der Werkbank', workshopTitle: 'Die Werkstatt',
     workshopText: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
     artSoon: 'Artworks folgen', comingSoon: 'Bald hier', artDoorText: 'Bis dahin findest du alle Bilder auf Instagram.', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
@@ -113,7 +113,7 @@ const TEXT = {
     map: 'Floor plan', mapHint: 'Click a room to walk there',
     pastTitle: 'How Yusu came to be', nowTitle: 'Current state',
     designTitle: '3D design', designSub: 'Print files on MakerWorld',
-    planTitle: 'Milestones', openMore: 'Tap for more →',
+    planTitle: 'Milestones', planDone: '{n} of {m} done', openMore: 'Tap for more →',
     toolsTitle: 'Tools', benchTitle: 'On the workbench', workshopTitle: 'The workshop',
     workshopText: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
     artSoon: 'Artworks coming soon', comingSoon: 'Coming soon', artDoorText: 'Until then, all the pictures are on Instagram.', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
@@ -245,6 +245,7 @@ const state = {
   glide: null,
   keys: new Set(),
   stick: { x: 0, y: 0 }, // touch joystick, -1..1
+  shake: 0,
   hovered: null,
   viewShift: 0,
   viewShiftY: 0,
@@ -1286,22 +1287,36 @@ function buildRobotics() {
   const plan = board(4.2, 3.0, (ctx, w, h) => {
     ctx.fillStyle = '#121820';
     ctx.fillRect(0, 0, w, h);
+    const all = copy().timeline || [];
+    const done = all.filter((st) => st.state === 'done');
+    // short: how far along, the last two steps, what is happening now and next
+    const steps = [...done.slice(-2), ...all.filter((st) => st.state === 'now'), ...all.filter((st) => st.state === 'next').slice(0, 1)];
     ctx.fillStyle = 'rgba(143,216,255,.85)';
     ctx.font = `700 ${Math.round(h * 0.05)}px ${FONT}`;
-    ctx.fillText(t('planTitle').toUpperCase(), w * 0.07, h * 0.09, w * 0.86);
-    const steps = copy().timeline || [];
-    const gap = Math.min(h * 0.15, (h * 0.8) / Math.max(1, steps.length));
-    steps.forEach((step, i) => {
+    ctx.fillText(t('planTitle').toUpperCase(), w * 0.07, h * 0.08, w * 0.86);
+    ctx.fillStyle = '#f2f7f8';
+    ctx.font = `800 ${Math.round(h * 0.085)}px ${FONT}`;
+    ctx.fillText(t('planDone').replace('{n}', done.length).replace('{m}', all.length), w * 0.07, h * 0.15, w * 0.86);
+    // progress bar
+    ctx.fillStyle = 'rgba(242,247,248,.12)';
+    ctx.fillRect(w * 0.07, h * 0.27, w * 0.86, h * 0.014);
+    ctx.fillStyle = '#8fd8ff';
+    ctx.fillRect(w * 0.07, h * 0.27, w * 0.86 * (done.length / Math.max(1, all.length)), h * 0.014);
+    const lh = h * 0.058;
+    let y = h * 0.34;
+    steps.forEach((step) => {
       const x = w * 0.07;
-      const y = h * 0.19 + i * gap;
       ctx.beginPath();
-      ctx.arc(x + h * 0.02, y + h * 0.03, h * 0.018, 0, Math.PI * 2);
+      ctx.arc(x + h * 0.02, y + h * 0.026, h * 0.016, 0, Math.PI * 2);
       ctx.fillStyle = step.state === 'done' ? '#8fd8ff' : step.state === 'now' ? '#f5c46b' : 'rgba(242,247,248,.35)';
       ctx.fill();
-      ctx.fillStyle = step.state === 'next' ? 'rgba(242,247,248,.55)' : step.state === 'now' ? '#f5c46b' : 'rgba(242,247,248,.9)';
-      ctx.font = `${step.state === 'now' ? 700 : 500} ${Math.round(h * 0.05)}px ${FONT}`;
-      wrapText(ctx, step.text, x + h * 0.07, y, w * 0.86 - h * 0.07, h * 0.06, 2);
+      ctx.fillStyle = step.state === 'next' ? 'rgba(242,247,248,.6)' : step.state === 'now' ? '#f5c46b' : 'rgba(242,247,248,.88)';
+      ctx.font = `${step.state === 'now' ? 700 : 500} ${Math.round(h * 0.047)}px ${FONT}`;
+      y = wrapText(ctx, step.text, x + h * 0.06, y, w * 0.86 - h * 0.06, lh, 2) + h * 0.035;
     });
+    ctx.fillStyle = 'rgba(143,216,255,.9)';
+    ctx.font = `700 ${Math.round(h * 0.045)}px ${FONT}`;
+    ctx.fillText(t('openMore'), w * 0.07, h * 0.9, w * 0.86);
   }, { px: 1400 });
   place(plan, wallSpot('robotics', 'n', 4.4, 2.6));
   addExhibit({ id: 'yusu-steps', root: plan, meshes: [plan], room: 'robotics', open: () => openProject(yusu) });
@@ -1422,10 +1437,10 @@ async function loadYusuHead(group) {
   let offset = 4 + headerLength;
 
   eyes = createEyes(EYES_VISOR);
-  const white = new THREE.MeshStandardMaterial({ color: 0xf3f1ec, roughness: 0.42, metalness: 0.05, flatShading: true, envMapIntensity: 1.1 });
+  const white = new THREE.MeshStandardMaterial({ color: 0xe4e2dd, roughness: 0.6, metalness: 0.02, flatShading: true, envMapIntensity: 0.55 });
   const black = new THREE.MeshStandardMaterial({ color: 0x1a1d22, roughness: 0.5, flatShading: true });
   const visor = new THREE.MeshStandardMaterial({
-    color: 0x7d8891, roughness: 0.26, metalness: 0.35, flatShading: true, envMapIntensity: 1.2,
+    color: 0x5e6973, roughness: 0.34, metalness: 0.3, flatShading: true, envMapIntensity: 0.9,
     emissive: 0xffffff, emissiveMap: eyes.texture, emissiveIntensity: 0.7
   });
   eyes.texture.wrapS = eyes.texture.wrapT = THREE.ClampToEdgeWrapping;
@@ -1463,7 +1478,36 @@ async function loadYusuHead(group) {
     geo.computeVertexNormals();
     model.add(new THREE.Mesh(geo, materials[part.name] || white));
   }
+  visorMat = visor;
+
+  // the camera in the forehead with its ring of six small LEDs (CAD: x 0, z 77)
+  const cam = new THREE.Group();
+  cam.position.set(0, -75.5, 77);
+  cam.rotation.x = Math.PI / 3; // the forehead slopes back
+  const lens = new THREE.Mesh(new THREE.CircleGeometry(4.6, 24), new THREE.MeshStandardMaterial({ color: 0x050608, roughness: 0.15, metalness: 0.6 }));
+  lens.position.z = 0.6;
+  cam.add(lens);
+  const glint = new THREE.Mesh(new THREE.CircleGeometry(1.3, 12), new THREE.MeshBasicMaterial({ color: 0x4a7cff, transparent: true, opacity: 0.6 }));
+  glint.position.set(1.2, 1.2, 0.8);
+  cam.add(glint);
+  const ledMat = new THREE.MeshBasicMaterial({ color: 0xe8f6ff, toneMapped: false });
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + Math.PI / 6;
+    const led = new THREE.Mesh(new THREE.CircleGeometry(1.0, 10), ledMat);
+    led.position.set(Math.cos(a) * 9.5, Math.sin(a) * 9.5, 0.7);
+    cam.add(led);
+  }
+  model.add(cam);
+
+  // a key light from the side brings out the facets of the shell
+  const key = new THREE.DirectionalLight(0xffffff, 0.9);
+  key.position.set(-1.6, 1.4, 1.2);
+  const aim = new THREE.Object3D();
+  group.add(aim);
+  key.target = aim;
+  group.add(key);
 }
+let visorMat = null;
 
 /* The drawn face, if the CAD head is not available. */
 function buildYusuFace(group) {
@@ -1521,7 +1565,7 @@ function buildYusuHalo(group, color) {
 /* Layouts for the eye canvas: the hologram face, and the real visor
    (4 px per mm, x −50…50 mm, z 70…−60 mm in the CAD). */
 const EYES_FACE = { W: 512, H: 328, ex: 128, ey: 132, k: 1, mouthY: 272, step: 30, led: 9, blushX: 150, blushY: 224, glow: 1, scan: true };
-const EYES_VISOR = { W: 400, H: 520, ex: 78, ey: 160, k: 0.56, mouthY: 444, step: 28, led: 9, blushX: 118, blushY: 250, glow: 0.8, scan: false };
+const EYES_VISOR = { W: 400, H: 520, ex: 78, ey: 160, k: 0.56, mouthY: 444, step: 28, led: 9, blushX: 118, blushY: 250, glow: 0.8, scan: false, grid: 8, color: '#3aa6ff' };
 /* The eyes are drawn like the firmware does: two glowing shapes that change
    expression now and then, with blinking in between. */
 function createEyes(L = EYES_FACE) {
@@ -1531,7 +1575,7 @@ function createEyes(L = EYES_FACE) {
   const texture = canvasTexture(canvas);
   const moods = ['neutral', 'happy', 'neutral', 'curious', 'blush', 'neutral', 'surprised', 'happy'];
   const s = { mood: 'neutral', next: 3, blink: 0, nextBlink: 2, look: 0, lookTarget: 0, talk: 0, moodIndex: 0, time: 0 };
-  const EYE_COLOR = '#9fe0ff';
+  const EYE_COLOR = L.color || '#9fe0ff';
 
   function eye(cx, cy, mood, open) {
     ctx.save();
@@ -1588,6 +1632,15 @@ function createEyes(L = EYES_FACE) {
           ctx.fill();
         }
       }
+      ctx.restore();
+    }
+    // the LED matrix of the real eyes: a fine dark grid over them
+    if (L.grid) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = 'rgba(0,0,0,.7)';
+      for (let x = 0; x < W; x += L.grid) ctx.fillRect(x, 0, 2.6, L.mouthY - 40);
+      for (let y = 0; y < L.mouthY - 40; y += L.grid) ctx.fillRect(0, y, W, 2.6);
       ctx.restore();
     }
     // the six mouth LEDs
@@ -2224,6 +2277,63 @@ flashEl.className = 'g-flash';
 flashEl.setAttribute('aria-hidden', 'true');
 document.body.appendChild(flashEl);
 
+/* Warp: streaks of light rushing past while you fall towards the planet,
+   and a title card over it. Drawn in 2D on top of the scene. */
+const warpEl = document.createElement('canvas');
+warpEl.className = 'g-warp';
+warpEl.setAttribute('aria-hidden', 'true');
+document.body.appendChild(warpEl);
+const titleEl = document.createElement('p');
+titleEl.className = 'g-title-card';
+titleEl.setAttribute('aria-hidden', 'true');
+titleEl.innerHTML = '<span>One Planet</span><span>One Humanity</span>';
+document.body.appendChild(titleEl);
+const warp = (() => {
+  const ctx = warpEl.getContext('2d');
+  const stars = Array.from({ length: coarse ? 140 : 220 }, () => ({ a: Math.random() * Math.PI * 2, d: Math.random(), v: 0.4 + Math.random() * 0.9, w: 0.6 + Math.random() * 1.6 }));
+  let on = false;
+  return {
+    step(k, dt) {
+      if (k <= 0) {
+        if (on) { ctx.clearRect(0, 0, warpEl.width, warpEl.height); warpEl.style.opacity = '0'; on = false; }
+        return;
+      }
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const W = Math.round(window.innerWidth * dpr);
+      const H = Math.round(window.innerHeight * dpr);
+      if (warpEl.width !== W || warpEl.height !== H) { warpEl.width = W; warpEl.height = H; }
+      on = true;
+      warpEl.style.opacity = '1';
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2;
+      const cy = H / 2;
+      const R = Math.hypot(W, H) / 2;
+      const speed = 0.25 + k * k * 3.2;
+      const len = 0.01 + k * k * 0.32;
+      ctx.lineCap = 'round';
+      for (const st of stars) {
+        st.d += dt * st.v * speed;
+        if (st.d > 1.15) { st.d = 0.05 + Math.random() * 0.1; st.a = Math.random() * Math.PI * 2; }
+        const d0 = Math.pow(st.d, 1.6);
+        const d1 = Math.pow(Math.min(1.3, st.d + len), 1.6);
+        const alpha = Math.min(1, k * 1.4) * Math.min(1, st.d * 3);
+        ctx.strokeStyle = `rgba(${190 + st.w * 30},${225 + st.w * 10},255,${alpha.toFixed(3)})`;
+        ctx.lineWidth = st.w * dpr * (0.6 + k);
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(st.a) * d0 * R, cy + Math.sin(st.a) * d0 * R);
+        ctx.lineTo(cx + Math.cos(st.a) * d1 * R, cy + Math.sin(st.a) * d1 * R);
+        ctx.stroke();
+      }
+    }
+  };
+})();
+/* The landing hits: a jolt, a low boom, a buzz on phones. */
+function impact() {
+  state.shake = 1;
+  sound.impact();
+  try { if (navigator.vibrate) navigator.vibrate([35, 40, 90]); } catch (e) { /* not supported */ }
+}
+
 /* Robot hands like Yusu's body concept: white low-poly shells, black
    joints. They take shape from the wrist up with a glowing edge, and fade
    out when you look up. */
@@ -2497,7 +2607,7 @@ function stepArrival(dt, time) {
   const a = state.arriving;
   a.t += dt;
   if (a.phase === 'zoom') {
-    const T = a.quick ? 1.0 : 1.6;
+    const T = a.quick ? 1.2 : 2.9;
     const k = clamp01(a.t / T);
     const kk = k * k * k;
     // the planet moves to the centre and grows until it fills the screen
@@ -2508,9 +2618,15 @@ function stepArrival(dt, time) {
     state.yaw = yawTo(PLANET_DIR.x, PLANET_DIR.z);
     state.pitch = base + THREE.MathUtils.degToRad(start) * lift * (1 - ease(k));
     if (k > 0.78) state.flashTarget = 1;
+    warp.step(ease(k), dt);
+    state.shake = Math.max(state.shake, kk * 0.35);
+    if (!a.quick) titleEl.classList.toggle('is-on', k > 0.06 && k < 0.82);
     if (k >= 1) {
       a.zoomFov = null;
       state.flash = 1;
+      warp.step(0, dt);
+      titleEl.classList.remove('is-on');
+      impact();
       // later visits: straight into the room
       if (a.quick) { finishArrival(a.then); return; }
       // out of the light you take shape in the room, still dim; the room
@@ -2559,6 +2675,8 @@ function finishArrival(then) {
   }
   if (a) { state.yaw = a.e.yaw; state.pitch = a.e.pitch; }
   state.arriving = null;
+  warp.step(0, 0);
+  titleEl.classList.remove('is-on');
   try { localStorage.setItem('oh-arrived', '1'); } catch (err) { /* private mode */ }
   state.flashTarget = 0;
   state.lightTarget = 1;
@@ -2764,6 +2882,23 @@ const sound = (() => {
       tone('triangle', 660, 660, at + 0.05, 1.8, 0.05);
       tone('triangle', 990, 990, at + 0.1, 2.0, 0.035);
       tone('sine', 1320, 1320, at + 0.16, 2.2, 0.025);
+    },
+    impact() {
+      if (!live()) return;
+      const at = ctx.currentTime;
+      tone('sine', 95, 32, at, 1.3, 0.3);
+      tone('triangle', 190, 60, at, 0.5, 0.08);
+      const n = noise(1.2);
+      const lp = ctx.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(900, at);
+      lp.frequency.exponentialRampToValueAtTime(80, at + 1.0);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.25, at);
+      g.gain.exponentialRampToValueAtTime(0.0001, at + 1.1);
+      n.connect(lp).connect(g).connect(master);
+      n.start(at);
+      n.stop(at + 1.2);
     },
     powerUp() {
       if (!live()) return;
@@ -3272,7 +3407,7 @@ function choose(id, ex) {
   intro.classList.add('is-hidden');
   intro.setAttribute('aria-hidden', 'true');
   document.body.classList.add('is-touring', 'is-cinematic');
-  sound.whoosh(2.6);
+  sound.whoosh(3.0);
   arrive(id, ex ? () => visit(ex) : (id === 'kunst' && !ART_OPEN ? () => openArt(null) : null));
 }
 
@@ -3447,6 +3582,7 @@ function frame(dt, time) {
     for (const lamp of lamps) lamp.intensity = lamp.userData.full * state.light;
     hemi.intensity = hemi.userData.full * (0.25 + 0.75 * state.light);
     if (faceMat) faceMat.opacity = clamp01((state.light - 0.35) / 0.65);
+    if (visorMat) visorMat.emissiveIntensity = 0.7 * clamp01((state.light - 0.35) / 0.65);
   }
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i].update(dt)) effects.splice(i, 1);
   for (const fn of animated) fn(dt, time);
@@ -3485,7 +3621,10 @@ function frame(dt, time) {
 
   camera.position.set(state.pos.x, state.pos.y + state.jumpY + state.bob, state.pos.z);
   const roll = state.started && !reduceMotion && !state.arriving ? Math.sin(time * 0.4) * 0.006 - state.vel.x * Math.cos(state.yaw) * 0.002 + state.vel.z * Math.sin(state.yaw) * 0.002 : 0;
-  camera.rotation.set(state.pitch, state.yaw, roll, 'YXZ');
+  // a jolt that dies away (landing, the rush into the planet)
+  state.shake *= Math.exp(-dt * 3.2);
+  const sh = reduceMotion || state.shake < 0.002 ? 0 : state.shake;
+  camera.rotation.set(state.pitch + (Math.random() - 0.5) * sh * 0.03, state.yaw + (Math.random() - 0.5) * sh * 0.03, roll + (Math.random() - 0.5) * sh * 0.02, 'YXZ');
   sky.position.copy(camera.position);
   renderer.render(scene, camera);
 }
