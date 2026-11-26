@@ -34,6 +34,7 @@ Marcello (MarcelloSwigswag) – Gründer, Software-Entwickler, gelernter Handwer
 ## Projekte
 Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (große Karten je Bereich), `design` (kleine Karten „3D-Design“), `archive` (tools.html#archiv).
 
+- **Aktueller Stand eines Projekts:** Feld `now` in `projects.data.js` (Fotos und kurze Videos ohne Ton, `img/*.mp4` + Poster-JPG). Wird nur auf `tools.html` gezeigt, nicht in der Übersicht; die ältere `gallery` klappt dann unter „Frühere Stände“ ein. Videos: H.264, 540 px breit, ohne Ton und Metadaten, keine Personen im Bild.
 - **Yusu-Begleit-App:** `yusu/` (eigene dunkle Seite ohne Site-CSS, Prototyp, `noindex`): Augen, Persönlichkeits-Editor, Gespräch nur mit lokalem Ollama über `python3 yusu/lokal.py`. Verlinkt im Hero und auf der Yusu-Karte (Feld `demo`).
 - **Robotics:** Yusu – OneHumanity R1 (Flaggschiff, Phase 0 Kopf; Code-Repo `emotion-lab` privat → `#TODO-yusu-repo`; Persönlichkeit heißt im Code „Roxy“ – auf der Seite nicht verwenden, außer Marcello will es), Ringwheel – Hybrid-Drohne (Designstudie, Repo + YouTube-Short).
 - **Games (Godot):** Kometen & Kronen (Repo `aliens-in-earth`), Underground Sprint (Repo `underground-sprint`). itch.io-Seiten noch `#TODO-itch-…`.
@@ -44,15 +45,18 @@ Pflege nur in `assets/projects.data.js`. Gruppen: `robotics`, `games`, `tools` (
 
 **Wichtig:** Auf den gedruckten Mode-System-Karten ist ein QR-Code zu `https://oneplanetonehumanity.com/Mode-system-guide.html`. Diese Datei nie umbenennen, verschieben oder löschen (GitHub Pages unterscheidet Groß-/Kleinschreibung). Generell: bestehende URLs bleiben erreichbar.
 
-## Seitenstruktur Startseite
-Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, nicht vollgepackt. Details gehören auf `tools.html`.
-1. Hero: Weltherz-Logo, „OneHumanity Labs“, Leitsatz, Mission, Buttons „Projekte ansehen“ / „Yusu im Browser ansehen“ / „One Humanity Lab auf YouTube“
-2. Projekte: Raster (`data-projects="rail"`, 3 Spalten Desktop, 2 Tablet/Handy) mit allen Projekten außer Archiv, Filter-Chips (Alle, Robotics, Games, Tools, 3D-Design). Es sind zwei Reihen sichtbar, der Button „Alle N Projekte zeigen“ klappt den Rest auf (Marcello, 19.11.2026: horizontale Leiste wirkte unnatürlich). Projekte mit Status `new` stehen vorn. Jede Karte verlinkt auf `tools.html#project-<id>`. Alte Links `#robotics`, `#games`, `#tools`, `#design` setzen den passenden Filter.
-3. Wofür wir stehen (Offen, Lokal, Menschlich)
-4. Die Werkstatt (drei Fotos in einer Reihe)
-5. Wer dahinter steckt
-6. Mitmachen (Kacheln: YouTube, GitHub, MakerWorld, itch.io, freie Sticker, Shop – daneben der Sticker)
-7. Footer: Bereiche, YouTube, Instagram, GitHub, MakerWorld, itch.io, Etsy, Impressum, Datenschutz, © MorphicMoons
+## 3D-Galerie (`galerie.html`)
+Entscheidung (Marcello, 25.11.2026): eine 3D-Galerie, durch die man läuft – ähnlich dem Raumplaner. Seit 26.11.2026 erstmal **nicht** als Startseite, sondern als eigene Seite `galerie.html`, erreichbar über „3D-Galerie“ im Top-Menü aller Seiten. Die Startseite `index.html` ist wieder die bisherige Übersicht. Überarbeitet 26.11.2026: **Sternemuseum** – mystisch, wie im Weltall, kein normales Museum; man soll sich fühlen, als schwebe man durchs All, und die Ankunft soll cinematic sein. Code: `assets/gallery.js` (Szene), `assets/gallery.css` (Overlay), three.js r160 liegt im Repo unter `assets/vendor/` (kein CDN).
+- Look: dunkel, nachtblau bis schwarz. Räume ohne Decke unter Sternenhimmel (ein Planet mit Stadtlichtern auf der Nachtseite = „One Planet“), Glasböden, durch die man Sterne unter sich sieht. Wände mit Sternbildern, leuchtende Kanten in der Raumfarbe (Foyer gold, Robotics cyan, Games pink, Werkstatt amber, Kunst violett), schwebende Lichtpartikel. Bewegung mit Trägheit, leichtes Schweben im Stand, Sprünge mit wenig Schwerkraft.
+- Start (HTML, auch für Suchmaschinen): Filmtitel über dem All mit schwarzen Balken, ein Knopf **„Eintreten“** → man landet direkt im Robotics-Raum. Kleine Direktlinks zu den anderen Räumen und zur Liste.
+- Ankunft: Flug über das Gebäude auf Yusu zu, Lichtblitz, Ring und Lichtsäule, im Dunkeln die eigenen holografischen Hände, dann gehen die Lichter an, Yusus Gesicht fährt hoch und Yusu begrüßt einen (Untertitel + Piepsstimme). Danach Balken weg, Bedienung frei. Klick/Leertaste überspringt. Andere Räume zeigen beim Ankommen/Beamen den Raumnamen als Untertitel.
+- Ton: erzeugt mit Web Audio (keine Dateien) – leiser Weltraum-Klang, Whoosh, Beam, Yusus Stimme. Lautsprecher-Knopf oben schaltet ihn aus, die Wahl wird im Browser gemerkt.
+- Räume um ein Foyer, mit kurzen Brücken dazwischen (`GAP` in gallery.js): **Foyer** (Willkommen, Wofür wir stehen, Marcello, Sternkarte/Lageplan, Mitmachen, schwebendes Weltherz), **Robotics** (nur für Yusu – andere Roboter-Ideen wie Ringwheel stehen in der Werkstatt „Auf der Werkbank“; Yusu als Hologramm – stilisierter weißer Kopf mit dem echten Gesicht: Augen, LED-Mund, rote Wangen; schwebt über einem Projektor und dreht sich zum Besucher; Westwand Entstehung = `image` + `gallery`, Ostwand aktueller Stand = `now` mit Videos, Nordwand Etappen aus `timeline`), **Games** (Automaten pro Spiel, itch.io), **Werkstatt** (Tools und weitere Robotik-Projekte an Tischen, 3D-Design an der Lochwand, Werkstatt-Fotos), **Kunst** (Bilder aus `assets/artworks.data.js`; solange die Liste leer ist, bleibt die Tür im Foyer zu: „Bald hier“ + Instagram, Klick öffnet den Instagram-Link – sobald Artworks eingetragen sind, öffnet sich der Raum von selbst).
+- Bedienung: Ziehen = umsehen (Maus: Blick folgt der Hand; Touch: Welt ziehen), Boden klicken = hingehen, Exponat klicken = Info-Tafel (Texte/Buttons aus `projects.data.js`), WASD/Pfeile laufen zügig, Shift rennt, Leertaste springt, Schnellnavigation oben beamt in die Räume. Links `galerie.html#robotics|games|tools|design|kunst|mitmachen|project-<id>` beamen direkt in den Raum.
+- Neue Projekte erscheinen automatisch im passenden Raum. Kunstwerke nur in `artworks.data.js` pflegen (Bilder nach `img/art/`, verkleinert, ohne EXIF).
+- Echtes CAD des Yusu-Kopfs: `assets/models/yusu-head.bin` (erzeugt mit `tools-dev/stl_to_mesh.py` aus `Emotional Robot/emotion_lab/hardware/kopf/export/stl/`) ist derzeit **nicht eingebunden** – Visier und Display passten nicht zusammen (Marcello, 26.11.2026: „erstmal nur das Gesicht“).
+- `?debug` an der Adresse stellt `window.OH_GALLERY` zum Testen bereit (`advance(sek)` spult die Szene vor, nützlich im verdeckten Browser-Fenster).
+- „Liste“ in der Galerie führt zur Startseite `index.html`.
 
 `tools.html` („Alle Projekte“): Sprung-Chips, große Karten mit allen Etappen je Bereich, 3D-Design-Karten, Archiv als kompakte Liste (`data-projects="index:archive"`).
 
@@ -70,7 +74,9 @@ Ziel (Marcello, 19.11.2026): übersichtlich wie bei großen Tech-Seiten/Labs, ni
   - `site.css` – Design-System (Tokens oben, Hell-/Dunkelmodus über Tokens)
   - `site.js` – Navigation, Sprache, Theme-Umschalter, Reveal
   - `projects.data.js` – **einzige Stelle, um Projekte zu pflegen**
-  - `projects.render.js` – baut die Karten
+  - `projects.render.js` – baut die Karten (stellt `window.OH_RENDER` für die Galerie bereit)
+  - `artworks.data.js` – **einzige Stelle, um Kunstwerke zu pflegen**
+  - `gallery.js` / `gallery.css` – 3D-Galerie der Startseite
 - Bestehende Seiten (impressum.html, datenschutz.html, tools.html, lifebar.html, Mode-system-guide.html, proof.html) erhalten und im selben Design halten.
 - Schnell, leicht, responsive, Hell-/Dunkelmodus. Keine Tracker, keine Embeds (auch kein YouTube-Embed – nur Links). Einzige Ausnahme: GoatCounter (`onehumanity.goatcounter.com`) auf allen Seiten, nur für Seitenaufrufzahlen, cookielos. Keine weiteren Analytics-Dienste ohne Freigabe.
 - Bilder liegen im Repo (img/). Fotos vor dem Einbinden verkleinern und Metadaten (EXIF/GPS) entfernen.
