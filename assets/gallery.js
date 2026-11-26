@@ -1022,26 +1022,25 @@ function buildFoyer() {
   inlay.position.set(0, 0.006, 0);
   scene.add(inlay);
 
-  // the world heart, floating above the ring
-  const heart = new THREE.Mesh(worldHeartGeometry(1.5, 0.09), new THREE.MeshStandardMaterial({
-    color: 0xfff3dc, roughness: 0.25, metalness: 0.35, emissive: gold, emissiveIntensity: 0.55, envMapIntensity: 1.5
+  // the world heart floats high over the foyer, above the walls under the
+  // stars, so it never hides the signs over the doors
+  const HEART_Y = 5.6;
+  const heart = new THREE.Mesh(worldHeartGeometry(2.0, 0.12), new THREE.MeshStandardMaterial({
+    color: 0xfff3dc, roughness: 0.25, metalness: 0.35, emissive: gold, emissiveIntensity: 0.7, envMapIntensity: 1.5
   }));
-  heart.position.set(0, 3.25, 0);
+  heart.position.set(0, HEART_Y, 0);
   scene.add(heart);
   const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: DOT, color: gold, transparent: true, opacity: 0.45, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
-  halo.scale.setScalar(3.4);
+  halo.scale.setScalar(4.4);
   halo.position.copy(heart.position);
   scene.add(halo);
-  const heartLight = new THREE.PointLight(gold, 6, 9, 1.8);
-  heartLight.position.set(0, 3.2, 0);
-  scene.add(heartLight);
-  heart.userData.size = [1.4, 1.4];
+  heart.userData.size = [2.0, 2.0];
   const heartEx = addExhibit({ id: 'heart', root: heart, meshes: [heart], room: 'foyer', open: () => openText('welcome'), viewDist: 3.6 });
   heartEx.noHover = true;
   heartEx.normal.set(0, 0, 1);
   animated.push((dt, time) => {
     heart.rotation.y = time * 0.45;
-    heart.position.y = 3.25 + Math.sin(time * 0.9) * 0.08;
+    heart.position.y = HEART_Y + Math.sin(time * 0.9) * 0.1;
     halo.position.y = heart.position.y;
     halo.material.opacity = 0.38 + Math.sin(time * 1.7) * 0.08;
   });
@@ -1552,9 +1551,6 @@ function buildYusuHalo(group, color) {
   glow.scale.set(4.2, 3.4, 1);
   glow.position.z = -0.4;
   group.add(glow);
-  const faceLight = new THREE.PointLight(color, 3, 4, 2);
-  faceLight.position.set(0, -0.6, 1.2);
-  group.add(faceLight);
 
   animated.push((dt, time) => {
     group.position.y = 2.55 + Math.sin(time * 1.1) * 0.06;
@@ -3572,8 +3568,33 @@ function stepHover() {
 }
 
 let debugTime = 0;
+/* Keep it smooth: on a device that cannot keep up, render a little coarser;
+   when there is room again, sharpen back up. */
+const MAX_PR = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75);
+const MIN_PR = Math.min(MAX_PR, coarse ? 0.8 : 1);
+const perf = { sum: 0, n: 0, good: 0 };
+function adaptQuality(raw) {
+  if (document.hidden || raw > 0.25 || state.arriving) return;
+  perf.sum += raw;
+  perf.n++;
+  if (perf.sum < 2) return;
+  const avg = perf.sum / perf.n;
+  perf.sum = 0;
+  perf.n = 0;
+  const pr = renderer.getPixelRatio();
+  if (avg > 1 / 40 && pr > MIN_PR + 0.01) {
+    renderer.setPixelRatio(Math.max(MIN_PR, pr - 0.2));
+    perf.good = 0;
+  } else if (avg < 1 / 56 && pr < MAX_PR - 0.01) {
+    if (++perf.good >= 3) { renderer.setPixelRatio(Math.min(MAX_PR, pr + 0.2)); perf.good = 0; }
+  } else {
+    perf.good = 0;
+  }
+}
 function tick() {
-  frame(Math.min(clock.getDelta(), 0.05), clock.elapsedTime + debugTime);
+  const raw = clock.getDelta();
+  adaptQuality(raw);
+  frame(Math.min(raw, 0.05), clock.elapsedTime + debugTime);
 }
 function frame(dt, time) {
   skyUniforms.uTime.value = time;
