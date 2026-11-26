@@ -17,6 +17,7 @@
    jump, room bar at the top to beam between rooms.
    ========================================================================== */
 import * as THREE from './vendor/three.module.min.js';
+import WORLD_HEART from './models/world-heart.js?v=20261126i';
 
 const PROJECTS = window.OH_PROJECTS || [];
 const ARTWORKS = window.OH_ARTWORKS || [];
@@ -907,7 +908,7 @@ function buildFoyer() {
   scene.add(inlay);
 
   // the world heart, floating above the ring
-  const heart = new THREE.Mesh(heartGeometry(1.15, 0.16), new THREE.MeshStandardMaterial({
+  const heart = new THREE.Mesh(worldHeartGeometry(1.5, 0.09), new THREE.MeshStandardMaterial({
     color: 0xfff3dc, roughness: 0.25, metalness: 0.35, emissive: gold, emissiveIntensity: 0.55, envMapIntensity: 1.5
   }));
   heart.position.set(0, 3.25, 0);
@@ -969,20 +970,26 @@ function artDoor() {
   addExhibit({ id: 'art-door', root: door, meshes: [door], room: 'foyer', open: () => openArt(null), viewDist: 3.4 });
 }
 
-/* The heart from the logo as a solid, centred, `size` metres tall. */
-function heartGeometry(size, depth) {
-  const k = size / 30;
-  const P = (x, y) => [(x - 37.9) * k, -(y - 32.7) * k];
-  const shape = new THREE.Shape();
-  shape.moveTo(...P(20, 28));
-  shape.bezierCurveTo(...P(20, 22.5), ...P(24.5, 18), ...P(30, 18));
-  shape.bezierCurveTo(...P(33.1, 18), ...P(36, 19.5), ...P(37.9, 22));
-  shape.bezierCurveTo(...P(39.8, 19.5), ...P(42.7, 18), ...P(45.8, 18));
-  shape.bezierCurveTo(...P(51.3, 18), ...P(55.8, 22.5), ...P(55.8, 28));
-  shape.bezierCurveTo(...P(55.8, 39.8), ...P(37.7, 47.4), ...P(37.7, 47.4));
-  shape.bezierCurveTo(...P(37.7, 47.4), ...P(20, 39.8), ...P(20, 28));
+/* The logo – the world heart – as a solid, `size` metres wide and centred.
+   The continents are cut out, so you look through them into the stars.
+   Shape data comes from the logo SVG (tools-dev/svg_to_shape.py). */
+function worldHeartGeometry(size, depth) {
+  const o = WORLD_HEART.outer;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let i = 0; i < o.length; i += 2) {
+    minX = Math.min(minX, o[i]); maxX = Math.max(maxX, o[i]);
+    minY = Math.min(minY, o[i + 1]); maxY = Math.max(maxY, o[i + 1]);
+  }
+  const k = size / (maxX - minX);
+  const pts = (a) => {
+    const out = [];
+    for (let i = 0; i < a.length; i += 2) out.push(new THREE.Vector2((a[i] - (minX + maxX) / 2) * k, -(a[i + 1] - (minY + maxY) / 2) * k));
+    return out;
+  };
+  const shape = new THREE.Shape(pts(o));
+  for (const h of WORLD_HEART.holes) shape.holes.push(new THREE.Path(pts(h)));
   const geo = new THREE.ExtrudeGeometry(shape, {
-    depth, bevelEnabled: true, bevelThickness: depth * 0.4, bevelSize: size * 0.035, bevelSegments: 4, curveSegments: 24
+    depth, bevelEnabled: true, bevelThickness: depth * 0.25, bevelSize: size * 0.0025, bevelSegments: 2, curveSegments: 4
   });
   geo.center();
   return geo;
