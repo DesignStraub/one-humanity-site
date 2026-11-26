@@ -2169,9 +2169,9 @@ const NOISE_GLSL = `
 `;
 
 const PLANET_DIR = new THREE.Vector3(0.48, 0.4, -1).normalize();
-// the planet's own sun: turned a little towards us, so most of the face we
-// see is in daylight and the city lights glow along the edge
-const PLANET_SUN = SUN_DIR.clone().multiplyScalar(0.55).addScaledVector(PLANET_DIR, -0.85).normalize();
+// the planet's own sun: from the side, so we see about half in daylight and
+// half at night, with the cities glowing on the dark side
+const PLANET_SUN = SUN_DIR.clone().addScaledVector(PLANET_DIR, -SUN_DIR.dot(PLANET_DIR)).normalize().addScaledVector(PLANET_DIR, 0.12).normalize();
 let planet = null;
 function buildPlanet() {
   const R = 24;
@@ -2222,10 +2222,10 @@ function buildPlanet() {
         float spec = pow(max(dot(n, normalize(uSun + v)), 0.0), 140.0) * (1.0 - land) * (1.0 - cloud) * day;
         c += vec3(1.0, 0.9, 0.75) * spec * 0.45;
         // city lights on the night side: clusters of fine dots
-        float cluster = smoothstep(0.45, 0.7, noise(p * 14.0));
+        float cluster = smoothstep(0.4, 0.66, noise(p * 14.0));
         float dots = smoothstep(0.72, 0.84, noise(p * 230.0)) + 0.5 * smoothstep(0.74, 0.86, noise(p * 95.0));
         float city = dots * cluster * land * (1.0 - ice) * (1.0 - cloud * 0.85) * (1.0 - smoothstep(-0.25, 0.05, d));
-        c += vec3(1.0, 0.72, 0.38) * city;
+        c += vec3(1.0, 0.74, 0.4) * city * 1.5;
         float rim = pow(1.0 - max(dot(n, v), 0.0), 2.6);
         c += vec3(0.3, 0.55, 1.0) * rim * (0.08 + day * 0.9);
         gl_FragColor = vec4(c, 1.0);
