@@ -14,8 +14,8 @@
   <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
   <link rel="stylesheet" href="assets/site.css?v=20261125c">
-  <link rel="stylesheet" href="assets/gallery.css?v=20261125a">
-  <meta name="theme-color" content="#0d1219">
+  <link rel="stylesheet" href="assets/gallery.css?v=20261126c">
+  <meta name="theme-color" content="#03050c">
   <link rel="modulepreload" href="assets/vendor/three.module.min.js">
 </head>
 
@@ -33,20 +33,31 @@
       <h1 id="intro-title" class="g-intro-title">OneHumanity Labs</h1>
       <p class="g-intro-claim">One Planet, One Humanity</p>
       <p class="g-intro-lead" data-i18n="introLead">An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art. Walk through the gallery – every room is one area.</p>
-      <div class="g-intro-actions">
-        <button class="btn primary" type="button" data-start disabled>
-          <span data-i18n="introStart">Start the tour</span>
-        </button>
-        <a class="btn" href="uebersicht.html" data-i18n="introList">View as a list</a>
-      </div>
-      <p class="g-intro-status" data-status aria-live="polite" data-i18n="introLoading">Loading the gallery …</p>
-      <p class="g-intro-hint" data-i18n="introHint">Drag to look around · click to walk there · click a picture to learn more</p>
-      <nav class="g-intro-rooms" aria-label="Rooms">
-        <a href="#robotics">Robotics</a>
-        <a href="#games">Games</a>
-        <a href="#werkstatt" data-i18n="roomWorkshop">Workshop</a>
-        <a href="#kunst" data-i18n="roomArt">Art</a>
+      <p class="g-intro-ask" data-i18n="introAsk">What would you like to see?</p>
+      <nav class="g-choices" aria-label="Rooms">
+        <a class="g-choice" href="#robotics" data-choice="robotics" style="--c:#8fd8ff">
+          <span class="g-choice-name">Robotics</span>
+          <span class="g-choice-sub" data-i18n="choiceRobotics">Yusu, our robot</span>
+        </a>
+        <a class="g-choice" href="#games" data-choice="games" style="--c:#ff6fb0">
+          <span class="g-choice-name">Games</span>
+          <span class="g-choice-sub" data-i18n="choiceGames">Play for free</span>
+        </a>
+        <a class="g-choice" href="#werkstatt" data-choice="werkstatt" style="--c:#ffbb73">
+          <span class="g-choice-name" data-i18n="roomWorkshop">Workshop</span>
+          <span class="g-choice-sub" data-i18n="choiceWorkshop">Tools & 3D design</span>
+        </a>
+        <a class="g-choice" href="#kunst" data-choice="kunst" style="--c:#bca2ff">
+          <span class="g-choice-name" data-i18n="roomArt">Art</span>
+          <span class="g-choice-sub" data-i18n="choiceArt">Pictures & experiments</span>
+        </a>
+        <a class="g-choice g-choice-wide" href="#foyer" data-choice="foyer" style="--c:#f3d7a2">
+          <span class="g-choice-name" data-i18n="choiceFoyer">From the beginning</span>
+          <span class="g-choice-sub" data-i18n="choiceFoyerSub">Foyer – who we are</span>
+        </a>
       </nav>
+      <p class="g-intro-status" data-status aria-live="polite">Loading the gallery …</p>
+      <p class="g-intro-hint"><span class="g-hint-keys"><span data-i18n="introHint">Drag to look around · click to walk there · space to jump</span> · </span><a href="uebersicht.html" data-i18n="introList">View as a list</a></p>
     </div>
   </section>
 
@@ -58,6 +69,13 @@
       </svg>
       <span>OneHumanity <span class="suffix">Labs</span></span>
     </a>
+    <nav class="g-rooms" aria-label="Rooms" data-rooms>
+      <button type="button" data-room="foyer">Foyer</button>
+      <button type="button" data-room="robotics">Robotics</button>
+      <button type="button" data-room="games">Games</button>
+      <button type="button" data-room="werkstatt" data-i18n="roomWorkshop">Workshop</button>
+      <button type="button" data-room="kunst" data-i18n="roomArt">Art</button>
+    </nav>
     <div class="g-hud-actions">
       <a class="g-pill" href="uebersicht.html" data-i18n="hudList">List</a>
       <div class="lang-toggle" role="group" aria-label="Language">
@@ -67,13 +85,6 @@
     </div>
   </header>
 
-  <nav class="g-rooms" aria-label="Rooms" data-rooms>
-    <button type="button" data-room="foyer">Foyer</button>
-    <button type="button" data-room="robotics">Robotics</button>
-    <button type="button" data-room="games">Games</button>
-    <button type="button" data-room="werkstatt" data-i18n="roomWorkshop">Workshop</button>
-    <button type="button" data-room="kunst" data-i18n="roomArt">Art</button>
-  </nav>
 
   <p class="g-toast" data-toast role="status" hidden></p>
 
@@ -98,10 +109,16 @@
     window.OH_I18N = {
       de: {
         introLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst. Geh einfach durch die Galerie – jeder Raum ist ein Bereich.',
-        introStart: 'Rundgang starten',
+        introAsk: 'Was möchtest du dir anschauen?',
+        choiceRobotics: 'Yusu, unser Roboter',
+        choiceGames: 'Kostenlos spielen',
+        choiceWorkshop: 'Tools & 3D-Design',
+        choiceArt: 'Bilder & Experimente',
+        choiceFoyer: 'Von vorne beginnen',
+        choiceFoyerSub: 'Foyer – wer wir sind',
         introList: 'Als Liste ansehen',
         introLoading: 'Galerie wird geladen …',
-        introHint: 'Ziehen zum Umsehen · Klicken zum Hingehen · Bild anklicken für mehr',
+        introHint: 'Ziehen zum Umsehen · Klicken zum Hingehen · Leertaste zum Springen',
         roomWorkshop: 'Werkstatt',
         roomArt: 'Kunst',
         hudList: 'Liste',
@@ -109,10 +126,16 @@
       },
       en: {
         introLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art. Walk through the gallery – every room is one area.',
-        introStart: 'Start the tour',
+        introAsk: 'What would you like to see?',
+        choiceRobotics: 'Yusu, our robot',
+        choiceGames: 'Play for free',
+        choiceWorkshop: 'Tools & 3D design',
+        choiceArt: 'Pictures & experiments',
+        choiceFoyer: 'From the beginning',
+        choiceFoyerSub: 'Foyer – who we are',
         introList: 'View as a list',
         introLoading: 'Loading the gallery …',
-        introHint: 'Drag to look around · click to walk there · click a picture to learn more',
+        introHint: 'Drag to look around · click to walk there · space to jump',
         roomWorkshop: 'Workshop',
         roomArt: 'Art',
         hudList: 'List',
@@ -124,7 +147,7 @@
   <script src="assets/artworks.data.js?v=20261125a"></script>
   <script src="assets/projects.render.js?v=20261125c"></script>
   <script src="assets/site.js?v=20261119b"></script>
-  <script type="module" src="assets/gallery.js?v=20261125a"></script>
+  <script type="module" src="assets/gallery.js?v=20261126c"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
