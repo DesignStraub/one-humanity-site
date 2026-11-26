@@ -14,7 +14,7 @@
   <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
   <link rel="stylesheet" href="assets/site.css?v=20261126a">
-  <link rel="stylesheet" href="assets/gallery.css?v=20261126n">
+  <link rel="stylesheet" href="assets/gallery.css?v=20261126o">
   <meta name="theme-color" content="#03050c">
   <link rel="modulepreload" href="assets/vendor/three.module.min.js">
 </head>
@@ -37,15 +37,15 @@
         <span class="g-enter-label" data-i18n="introEnter">Enter</span>
       </button>
       <p class="g-intro-status" data-status aria-live="polite">Loading the gallery …</p>
+      <p class="g-intro-direct" data-i18n="introDirect">Or go straight to</p>
       <nav class="g-intro-rooms" aria-label="Rooms">
-        <span data-i18n="introDirect">Or go straight to</span>
-        <a href="#games" data-choice="games">Games</a>
-        <a href="#apps" data-choice="apps">Apps</a>
-        <a href="#werkstatt" data-choice="werkstatt" data-i18n="roomWorkshop">Workshop</a>
-        <a href="#kunst" data-choice="kunst" data-i18n="roomArt">Art</a>
-        <a href="#foyer" data-choice="foyer">Foyer</a>
-        <a href="uebersicht.html" data-i18n="introList">View as a list</a>
+        <a href="#games" data-choice="games" style="--c:#ff6fb0">Games</a>
+        <a href="#apps" data-choice="apps" style="--c:#6dffc4">Apps</a>
+        <a href="#werkstatt" data-choice="werkstatt" style="--c:#ffbb73" data-i18n="roomWorkshop">Workshop</a>
+        <a href="#kunst" data-choice="kunst" style="--c:#bca2ff" data-i18n="roomArt">Art</a>
+        <a href="#foyer" data-choice="foyer" style="--c:#f3d7a2">Foyer</a>
       </nav>
+      <a class="g-intro-web" href="uebersicht.html" data-i18n="introList">Web view without 3D</a>
     </div>
   </section>
 
@@ -80,7 +80,7 @@
         <svg class="on" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
         <svg class="off" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
-      <a class="g-pill" href="uebersicht.html" data-i18n="hudList">List</a>
+      <a class="g-pill" href="uebersicht.html"><span class="long" data-i18n="hudList">Web view</span><span class="short" aria-hidden="true">Web</span></a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button type="button" data-lang="de">DE</button>
         <button type="button" data-lang="en">EN</button>
@@ -113,23 +113,23 @@
       de: {
         introLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst.',
         introEnter: 'Eintreten',
-        introDirect: 'Oder direkt zu',
-        introList: 'Als Liste',
+        introDirect: 'Oder direkt in einen Raum',
+        introList: 'Zur Webansicht ohne 3D →',
         hudSound: 'Ton an oder aus',
         roomWorkshop: 'Werkstatt',
         roomArt: 'Kunst',
-        hudList: 'Liste',
+        hudList: 'Webansicht',
         panelClose: 'Schließen'
       },
       en: {
         introLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art.',
         introEnter: 'Enter',
-        introDirect: 'Or go straight to',
-        introList: 'As a list',
+        introDirect: 'Or go straight to a room',
+        introList: 'Web view without 3D →',
         hudSound: 'Sound on or off',
         roomWorkshop: 'Workshop',
         roomArt: 'Art',
-        hudList: 'List',
+        hudList: 'Web view',
         panelClose: 'Close'
       }
     };
@@ -138,7 +138,7 @@
   <script src="assets/artworks.data.js?v=20261125a"></script>
   <script src="assets/projects.render.js?v=20261125c"></script>
   <script src="assets/site.js?v=20261126a"></script>
-  <script type="module" src="assets/gallery.js?v=20261126n"></script>
+  <script type="module" src="assets/gallery.js?v=20261126o"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
