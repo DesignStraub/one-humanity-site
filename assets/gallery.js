@@ -210,8 +210,7 @@ const roomButtons = document.querySelectorAll('[data-room]');
    -------------------------------------------------------------------------- */
 let renderer;
 try {
-  // phones: no multisampling – on their dense screens it costs a lot and shows little
-  renderer = new THREE.WebGLRenderer({ antialias: !coarse, powerPreference: 'high-performance' });
+  renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
 } catch (e) {
   renderer = null;
 }
@@ -220,7 +219,7 @@ if (!renderer) {
   choiceButtons.forEach((b) => { if (b.tagName === 'A') b.href = 'uebersicht.html'; else b.addEventListener('click', () => { location.href = 'uebersicht.html'; }); });
   throw new Error('WebGL not available');
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.75));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
@@ -270,42 +269,14 @@ const sun = new THREE.DirectionalLight(0xfff1de, 0.7);
 sun.position.copy(SUN_DIR).multiplyScalar(30);
 scene.add(sun);
 const lamps = [];
-const lampPower = (id) => (id === 'robotics' ? 30 : 16);
-if (!coarse) {
-  for (const id of ROOM_ORDER) {
-    const r = ROOMS[id];
-    const lamp = new THREE.PointLight(r.accent, lampPower(id), 0, 1.6);
-    lamp.position.set(r.x, r.h - 0.6, r.z);
-    lamp.userData.full = lamp.intensity;
-    scene.add(lamp);
-    lamps.push(lamp);
-  }
-} else {
-  // phones: two lamps that move along – one in the room you are in, one in
-  // the foyer (or the room you came from) – instead of one per room
-  for (let i = 0; i < 2; i++) {
-    const lamp = new THREE.PointLight(0xffffff, 0, 0, 1.6);
-    lamp.userData.full = 0;
-    lamp.userData.fade = 1;
-    scene.add(lamp);
-    lamps.push(lamp);
-  }
-}
-function placeLamp(lamp, id) {
-  if (!id || lamp.userData.room === id) return;
+for (const id of ROOM_ORDER) {
   const r = ROOMS[id];
-  lamp.userData.room = id;
-  lamp.color.setHex(r.accent);
+  const lamp = new THREE.PointLight(r.accent, id === 'robotics' ? 30 : 16, 0, 1.6);
   lamp.position.set(r.x, r.h - 0.6, r.z);
-  lamp.userData.full = lampPower(id);
-  lamp.userData.fade = 0;
+  lamp.userData.full = lamp.intensity;
+  scene.add(lamp);
+  lamps.push(lamp);
 }
-function placeLamps(id, from) {
-  if (!coarse) return;
-  placeLamp(lamps[0], id);
-  placeLamp(lamps[1], id === 'foyer' ? (from && from !== 'foyer' ? from : 'robotics') : 'foyer');
-}
-placeLamps('robotics');
 hemi.userData.full = hemi.intensity;
 
 /* --------------------------------------------------------------------------
@@ -2148,7 +2119,7 @@ function nebulaTexture() {
 }
 
 function buildStars() {
-  const n = coarse ? 1100 : 2800;
+  const n = coarse ? 1600 : 2800;
   const pos = new Float32Array(n * 3);
   const tint = new Float32Array(n * 3);
   const size = new Float32Array(n);
@@ -2234,7 +2205,7 @@ function buildPlanet() {
       }`,
     fog: false
   });
-  const ball = new THREE.Mesh(new THREE.SphereGeometry(R, coarse ? 64 : 96, coarse ? 40 : 64), mat);
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), mat);
   ball.rotation.z = 0.35;
   group.add(ball);
   const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.09, 64, 48), new THREE.ShaderMaterial({
@@ -2265,7 +2236,7 @@ function buildPlanet() {
 
 /* Motes of light drifting up in every room, and a few floating lamps. */
 function buildMotes() {
-  const per = coarse ? 40 : 130;
+  const per = coarse ? 70 : 130;
   const n = per * ROOM_ORDER.length;
   const pos = new Float32Array(n * 3);
   const tint = new Float32Array(n * 3);
@@ -3507,9 +3478,7 @@ let hoverTick = 0;
 function updateRoom() {
   const id = roomAt(state.pos.x, state.pos.z);
   if (id === state.room) return;
-  const from = state.room;
   state.room = id;
-  placeLamps(id, from);
   roomButtons.forEach((b) => b.setAttribute('aria-current', String(b.getAttribute('data-room') === id)));
   for (const v of videos) {
     if (v.room === id) {
@@ -3607,8 +3576,8 @@ function stepHover() {
 let debugTime = 0;
 /* Keep it smooth: on a device that cannot keep up, render a little coarser;
    when there is room again, sharpen back up. */
-const MAX_PR = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.75);
-const MIN_PR = Math.min(MAX_PR, coarse ? 0.75 : 1);
+const MAX_PR = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75);
+const MIN_PR = Math.min(MAX_PR, coarse ? 0.8 : 1);
 const perf = { sum: 0, n: 0, good: 0 };
 function adaptQuality(raw) {
   if (document.hidden || raw > 0.25 || state.arriving) return;
@@ -3628,16 +3597,8 @@ function adaptQuality(raw) {
     perf.good = 0;
   }
 }
-// phones with 90/120 Hz screens: draw at most 60 frames a second
-const FRAME_MIN = coarse ? 1 / 62 : 0;
-let frameAcc = 0;
 function tick() {
-  if (FRAME_MIN) {
-    frameAcc += clock.getDelta();
-    if (frameAcc < FRAME_MIN) return;
-  }
-  const raw = FRAME_MIN ? frameAcc : clock.getDelta();
-  frameAcc = 0;
+  const raw = clock.getDelta();
   adaptQuality(raw);
   frame(Math.min(raw, 0.05), clock.elapsedTime + debugTime);
 }
@@ -3683,16 +3644,10 @@ function frame(dt, time) {
   // the room lights (dimmed while you materialise)
   if (Math.abs(state.light - state.lightTarget) > 0.001) {
     state.light += (state.lightTarget - state.light) * Math.min(1, dt * (state.lightTarget > state.light ? 1.1 : 6));
-    if (!coarse) for (const lamp of lamps) lamp.intensity = lamp.userData.full * state.light;
+    for (const lamp of lamps) lamp.intensity = lamp.userData.full * state.light;
     hemi.intensity = hemi.userData.full * (0.25 + 0.75 * state.light);
     if (faceMat) faceMat.opacity = clamp01((state.light - 0.35) / 0.65);
     if (visorMat) visorMat.emissiveIntensity = 0.7 * clamp01((state.light - 0.35) / 0.65);
-  }
-  if (coarse) {
-    for (const lamp of lamps) {
-      lamp.userData.fade = Math.min(1, lamp.userData.fade + dt * 2.5);
-      lamp.intensity = lamp.userData.full * state.light * lamp.userData.fade;
-    }
   }
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i].update(dt)) effects.splice(i, 1);
   for (const fn of animated) fn(dt, time);
