@@ -81,7 +81,7 @@ const TEXT = {
     hintMouse: 'Ziehen zum Umsehen · Boden anklicken zum Hingehen · WASD zum Laufen · Leertaste zum Springen',
     beamPrep: 'Gleich geht’s los – der Beam wird vorbereitet …',
     greet1: 'Hallo! Schön, dass du da bist.',
-    greet2: 'Ich bin noch im Bau – schau dich ruhig um.',
+    greet2: 'Mein Kopf läuft schon – gerade lerne ich neue Sachen dazu. Schau dich um!',
     hintTouch: 'Stick links zum Laufen · wischen zum Umsehen · Bild antippen für mehr',
     ready: 'Bereit.', loading: 'Galerie wird geladen …',
     noWebgl: 'Dein Browser kann die 3D-Galerie leider nicht anzeigen – die Übersicht funktioniert überall.',
@@ -125,7 +125,7 @@ const TEXT = {
     hintMouse: 'Drag to look around · click the floor to walk there · WASD to move · space to jump',
     beamPrep: 'Almost there – preparing the beam …',
     greet1: 'Hi! Nice to have you here.',
-    greet2: 'I’m still being built – have a look around.',
+    greet2: 'My head already works – and I’m learning new things. Have a look around!',
     hintTouch: 'Stick on the left to walk · swipe to look around · tap a picture for more',
     ready: 'Ready.', loading: 'Loading the gallery …',
     noWebgl: 'Your browser can’t show the 3D gallery – the overview works everywhere.',
@@ -2772,7 +2772,7 @@ function greet() {
     sound.chatter(i === 0 ? 1.6 : 2.2);
     subtitle('<b>Yusu:</b> ' + esc(lines[i]));
     i++;
-    setTimeout(say, i === 1 ? 3000 : 3600);
+    setTimeout(say, i === 1 ? 3000 : 4400);
   };
   setTimeout(say, 450);
 }
