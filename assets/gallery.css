@@ -113,17 +113,49 @@
 .g-intro:not(.is-ready) .g-enter{ cursor: progress; opacity: .6; }
 .g-intro:not(.is-ready) .g-enter::after{ animation: none; opacity: 0; }
 .g-intro-status{ min-height: 1.4em; margin: 14px 0 0; font-size: 13px; color: var(--g-ink-dim); }
+.g-intro-direct{ margin: 26px 0 10px; font-size: 13px; letter-spacing: .04em; color: var(--g-ink-soft); }
 .g-intro-rooms{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px 14px;
-  margin-top: 22px;
-  font-size: 14px;
-  color: var(--g-ink-dim);
+  gap: 8px;
+  font-size: 15px;
 }
-.g-intro-rooms a{ color: var(--g-ink-soft); text-decoration: none; }
-.g-intro-rooms a:hover, .g-intro-rooms a:focus-visible{ color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.g-intro-rooms a{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 999px;
+  background: rgba(8, 14, 30, .6);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.g-intro-rooms a::before{
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c, #8fd8ff);
+  box-shadow: 0 0 10px var(--c, #8fd8ff);
+}
+.g-intro-rooms a:hover, .g-intro-rooms a:focus-visible{ border-color: var(--c, #8fd8ff); background: rgba(20, 30, 56, .8); transform: translateY(-1px); outline: none; }
+.g-intro-web{ display: inline-block; margin-top: 16px; font-size: 14px; color: var(--g-ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+.g-intro-web:hover, .g-intro-web:focus-visible{ color: #fff; }
+.g-pill .short{ display: none; }
+@media (max-width: 700px){
+  .g-pill .long{ display: none; }
+  .g-pill .short{ display: inline; }
+  .g-intro-rooms{ gap: 6px; font-size: 14px; }
+  .g-intro-rooms a{ min-height: 38px; padding: 0 13px; }
+  .g-intro-direct{ margin-top: 20px; }
+}
 
 /* cinematic bars: in at the start, out when you arrive */
 .g-bars i{
@@ -524,8 +556,7 @@
 }
 
 /* the planet sits behind the lower part of the welcome card: keep the text readable */
-.g-intro-lead, .g-intro-status, .g-intro-rooms{ text-shadow: 0 1px 3px rgba(0, 0, 0, .95), 0 0 14px rgba(0, 0, 0, .85); }
-.g-intro-rooms a{ color: #e6eef2; }
+.g-intro-lead, .g-intro-status, .g-intro-direct, .g-intro-web{ text-shadow: 0 1px 3px rgba(0, 0, 0, .95), 0 0 14px rgba(0, 0, 0, .85); }
 .g-enter{ background: rgba(6, 14, 30, .55); }
 
 /* an open info panel has the floor: the legal links step aside meanwhile */

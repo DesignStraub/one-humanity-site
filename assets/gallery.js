@@ -565,6 +565,106 @@ function glowMat(color, opacity = 1) {
 /* A room: polished floor, starry walls with glowing edges, no ceiling –
    the sky is the roof, and through the glass floor you see stars below:
    every room is a module floating in space. */
+/* A glowing ring in the floor with the room's sign, like the heart in the
+   foyer: each room gets one in its own colour. */
+function floorEmblem(roomId, x, z, icon, size = 3.0) {
+  const c = ROOMS[roomId].accent;
+  const inlay = board(size, size, (ctx, w, h) => {
+    ctx.clearRect(0, 0, w, h);
+    const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    g.addColorStop(0, css(c, 0.26));
+    g.addColorStop(0.7, css(c, 0.07));
+    g.addColorStop(1, css(c, 0));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    ctx.strokeStyle = css(c, 0.75);
+    ctx.lineWidth = w * 0.008;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, w * 0.42, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.lineWidth = w * 0.003;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, w * 0.37, 0, Math.PI * 2);
+    ctx.stroke();
+    for (let i = 0; i < 24; i++) {
+      const a = (i / 24) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(w / 2 + Math.cos(a) * w * 0.375, h / 2 + Math.sin(a) * w * 0.375);
+      ctx.lineTo(w / 2 + Math.cos(a) * w * (i % 6 ? 0.4 : 0.415), h / 2 + Math.sin(a) * w * (i % 6 ? 0.4 : 0.415));
+      ctx.stroke();
+    }
+    ctx.save();
+    ctx.translate(w / 2, h / 2);
+    ctx.fillStyle = css(c, 0.85);
+    ctx.strokeStyle = css(c, 0.85);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    icon(ctx, w * 0.3);
+    ctx.restore();
+  }, { px: 768, transparent: true });
+  inlay.material.blending = THREE.AdditiveBlending;
+  inlay.material.depthWrite = false;
+  inlay.rotation.x = -Math.PI / 2;
+  inlay.position.set(x, 0.006, z);
+  scene.add(inlay);
+  return inlay;
+}
+const roundRectPath = (ctx, x, y, w, h, r) => {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+};
+const EMBLEMS = {
+  // Yusu's face: a rounded screen with two eyes
+  robotics: (ctx, s) => {
+    ctx.lineWidth = s * 0.07;
+    roundRectPath(ctx, -s * 0.5, -s * 0.36, s, s * 0.72, s * 0.2);
+    ctx.stroke();
+    for (const k of [-1, 1]) { roundRectPath(ctx, k * s * 0.2 - s * 0.07, -s * 0.16, s * 0.14, s * 0.26, s * 0.07); ctx.fill(); }
+  },
+  // a game pad
+  games: (ctx, s) => {
+    ctx.lineWidth = s * 0.07;
+    roundRectPath(ctx, -s * 0.55, -s * 0.28, s * 1.1, s * 0.56, s * 0.28);
+    ctx.stroke();
+    ctx.fillRect(-s * 0.36, -s * 0.04, s * 0.22, s * 0.08);
+    ctx.fillRect(-s * 0.29, -s * 0.11, s * 0.08, s * 0.22);
+    for (const [x, y] of [[0.22, -0.06], [0.34, 0.06]]) { ctx.beginPath(); ctx.arc(x * s, y * s, s * 0.05, 0, Math.PI * 2); ctx.fill(); }
+  },
+  // a browser window
+  apps: (ctx, s) => {
+    ctx.lineWidth = s * 0.06;
+    roundRectPath(ctx, -s * 0.55, -s * 0.38, s * 1.1, s * 0.76, s * 0.08);
+    ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-s * 0.55, -s * 0.2); ctx.lineTo(s * 0.55, -s * 0.2); ctx.stroke();
+    for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.arc(-s * 0.44 + k * s * 0.1, -s * 0.29, s * 0.03, 0, Math.PI * 2); ctx.fill(); }
+    ctx.beginPath(); ctx.moveTo(-s * 0.12, -s * 0.02); ctx.lineTo(-s * 0.26, s * 0.1); ctx.lineTo(-s * 0.12, s * 0.22);
+    ctx.moveTo(s * 0.12, -s * 0.02); ctx.lineTo(s * 0.26, s * 0.1); ctx.lineTo(s * 0.12, s * 0.22); ctx.stroke();
+  },
+  // a gear
+  werkstatt: (ctx, s) => {
+    const teeth = 8;
+    ctx.beginPath();
+    for (let i = 0; i < teeth * 2; i++) {
+      const a0 = (i / (teeth * 2)) * Math.PI * 2;
+      const a1 = ((i + 1) / (teeth * 2)) * Math.PI * 2;
+      const r = i % 2 ? s * 0.4 : s * 0.5;
+      ctx.lineTo(Math.cos(a0) * r, Math.sin(a0) * r);
+      ctx.lineTo(Math.cos(a1) * r, Math.sin(a1) * r);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(0, 0, s * 0.18, 0, Math.PI * 2); ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+  },
+  // the heart, for art
+  kunst: (ctx, s) => { drawHeart(ctx, 0, 0, s, ctx.fillStyle); }
+};
+
 function buildRoom(id) {
   const r = ROOMS[id];
   const group = new THREE.Group();
@@ -1627,11 +1727,6 @@ function buildApps() {
   holo.scale.setScalar(0.6);
   holo.position.set(r.x, 3.55, r.z);
   scene.add(holo);
-  const ring = new THREE.Mesh(new THREE.RingGeometry(0.75, 0.82, 64), glowMat(r.accent, 0.7));
-  ring.rotation.x = -Math.PI / 2;
-  ring.position.set(r.x, 0.02, r.z);
-  scene.add(ring);
-  obstacles.push({ x: r.x, z: r.z, r: 0.9 });
   animated.push((dt, time) => {
     holo.rotation.y = time * 0.35;
     holo.position.y = 3.55 + Math.sin(time * 0.8) * 0.08;
@@ -2263,7 +2358,7 @@ function stepBeam(dt) {
   }
 }
 
-/* The first arrival: from the welcome view down into the chosen room. */
+/* The first arrival: from the welcome view into the chosen room. */
 function arrive(id, then) {
   const e = entryOf(id);
   if (reduceMotion) {
@@ -2271,15 +2366,11 @@ function arrive(id, then) {
     finishArrival(then);
     return;
   }
-  const from = camera.position.clone();
-  const fromYaw = state.yaw;
-  const fromPitch = state.pitch;
-  const focus = id === 'robotics' ? new THREE.Vector3(HEAD_SPOT.x, 2.5, HEAD_SPOT.z) : e.look;
-  // first you zoom into the planet from the welcome view, then dive in
-  // been here before: a shorter flight, no hands
+  // zoom into the planet, a flash, then you take shape in the room;
+  // been here before: a shorter zoom and straight in, no hands
   let seen = false;
   try { seen = localStorage.getItem('oh-arrived') === '1'; } catch (err) { /* private mode */ }
-  state.arriving = { phase: 'zoom', t: 0, e, from, fromYaw, fromPitch, focus, then, id, fov: camera.fov, quick: seen };
+  state.arriving = { phase: 'zoom', t: 0, e, then, id, fov: camera.fov, quick: seen };
 }
 
 /* Field of view for the welcome view: the planet fills a good part of the
@@ -2321,42 +2412,12 @@ function stepArrival(dt, time) {
     state.pitch = base + THREE.MathUtils.degToRad(start) * lift * (1 - ease(k));
     if (k > 0.78) state.flashTarget = 1;
     if (k >= 1) {
-      // out of the light: high above the building, then the dive
-      a.phase = 'dive';
-      a.t = 0;
       a.zoomFov = null;
-      a.from = new THREE.Vector3(6, 26, 40);
-      state.pos.copy(a.from);
-      a.fromYaw = yawTo(-a.from.x, -6 - a.from.z);
-      a.fromPitch = -0.45;
-      state.yaw = a.fromYaw;
-      state.pitch = a.fromPitch;
-      state.flashTarget = 0;
       state.flash = 1;
-    }
-    return;
-  }
-  if (a.phase === 'dive') {
-    const T = 2.6;
-    const k = ease(clamp01(a.t / T));
-    // a curve: out over the building, then down through the open roof
-    const p0 = a.from, p2 = a.e.pos;
-    const mid = new THREE.Vector3(p2.x, 15, p2.z + 10);
-    const q = (1 - k) * (1 - k);
-    const m = 2 * (1 - k) * k;
-    const kk = k * k;
-    state.pos.set(q * p0.x + m * mid.x + kk * p2.x, q * p0.y + m * mid.y + kk * (p2.y + 2.2), q * p0.z + m * mid.z + kk * p2.z);
-    // turn from the welcome view towards what the room is about
-    const f = a.focus;
-    const wantYaw = yawTo(f.x - state.pos.x, f.z - state.pos.z);
-    const wantPitch = Math.atan2(f.y - state.pos.y, Math.hypot(f.x - state.pos.x, f.z - state.pos.z));
-    const turn = ease(clamp01(a.t / (T * 0.55)));
-    state.yaw = a.fromYaw + (shortestAngle(a.fromYaw, wantYaw) - a.fromYaw) * turn;
-    state.pitch = a.fromPitch + (wantPitch - a.fromPitch) * turn;
-    state.fovKick = Math.sin(k * Math.PI) * 0.9 + k * 0.5;
-    if (a.t > T - 0.2) state.flashTarget = 1;
-    if (a.t >= T && a.quick) { finishArrival(a.then); return; }
-    if (a.t >= T) {
+      // later visits: straight into the room
+      if (a.quick) { finishArrival(a.then); return; }
+      // out of the light you take shape in the room, still dim; the room
+      // powers up when you look up from your hands
       a.phase = 'hands';
       a.t = 0;
       state.pos.copy(a.e.pos);
@@ -2364,9 +2425,8 @@ function stepArrival(dt, time) {
       state.pitch = -0.95;
       state.flashTarget = 0;
       state.fovKick = 0.6;
-      // you materialise in the dark; the room powers up when you look up
-      state.light = 0.12;
-      state.lightTarget = 0.12;
+      state.light = 0.3;
+      state.lightTarget = 0.3;
       hands.visible = true;
       handUniforms.uReveal.value = 0;
       handUniforms.uAlpha.value = 1;
@@ -2391,7 +2451,7 @@ function stepArrival(dt, time) {
 }
 
 /* A click or key skips the arrival, once it has properly begun. */
-const canSkip = () => !!state.arriving && (state.arriving.phase === 'zoom' || state.arriving.t > (state.arriving.phase === 'dive' ? 0.8 : 0.4));
+const canSkip = () => !!state.arriving && (state.arriving.phase === 'zoom' || state.arriving.t > 0.4);
 
 function finishArrival(then) {
   const a = state.arriving;
@@ -3352,6 +3412,9 @@ buildSky();
 ROOM_ORDER.forEach(buildRoom);
 Object.keys(PASSAGES).forEach(buildPassage);
 buildFoyer();
+// the floor sign of each room; in the robotics hall just inside the door, in front of Yusu
+floorEmblem('robotics', ROOMS.robotics.x, ROOMS.robotics.z + 6.2, EMBLEMS.robotics);
+for (const id of ['games', 'apps', 'werkstatt', 'kunst']) floorEmblem(id, ROOMS[id].x, ROOMS[id].z, EMBLEMS[id]);
 buildRobotics();
 buildGames();
 buildApps();
