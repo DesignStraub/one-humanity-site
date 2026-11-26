@@ -153,6 +153,12 @@ window.OH_PROJECTS = [
       href: 'yusu/',
       label: { de: 'Im Browser ansehen', en: 'See it in the browser' }
     },
+    // shown in the gallery's apps room
+    app: {
+      image: { src: 'img/yusu-app.jpg', w: 1400, h: 700 },
+      de: { title: 'Yusu – Begleit-App' },
+      en: { title: 'Yusu – companion app' }
+    },
     build: {
       href: '#TODO-yusu-repo',
       label: { de: 'Dateien & Code', en: 'Files & code' }
@@ -361,6 +367,57 @@ window.OH_PROJECTS = [
         { state: 'done', text: 'Builds for three platforms, trailer' },
         { state: 'done', text: 'Free to play on itch.io, code public' },
         { state: 'now',  text: 'Version 2.35 in the repository: several cities with fast travel, driver level, new drift model, vinyls' }
+      ]
+    }
+  },
+
+  /* ---------------------------------------------------------------- */
+  {
+    id: 'pfandpanik',
+    status: 'playable',
+    featured: true,
+    group: 'games',
+    image: {
+      src: 'img/game-pfandpanik-cover.jpg',
+      w: 1260, h: 1000,
+      alt: {
+        de: 'Cover von Pfandpanik Aachen: Comic-Figur mit Krone und Mütze zwischen Pfandflaschen, umringt von Tauben, Ordnungsamt und Kontrolleuren',
+        en: 'Pfandpanik Aachen cover: a cartoon character with crown and beanie among deposit bottles, surrounded by pigeons, wardens and ticket inspectors'
+      }
+    },
+    gallery: [
+      {
+        src: 'img/game-pfandpanik-elite.jpg', w: 1280, h: 720,
+        caption: { de: 'Welle 11 am Elisenbrunnen: ein Elite-Gegner taucht auf', en: 'Wave 11 at the Elisenbrunnen: an elite enemy appears' },
+        alt: { de: 'Screenshot: Spielfigur auf einem Platz in Aachen, oben Lebensbalken und Wellenanzeige, daneben ein Elite-Gegner', en: 'Screenshot: player character on a square in Aachen, health bar and wave counter at the top, an elite enemy next to it' }
+      }
+    ],
+    buy: {
+      href: '#TODO-itch-pfandpanik',
+      label: { de: 'Auf itch.io spielen', en: 'Play on itch.io' }
+    },
+    de: {
+      title: 'Pfandpanik Aachen',
+      tagline: 'Satirisches Arena-Survival mitten in Aachen – mit Pfand, Pech und Printen.',
+      text: 'Ein Arena-Roguelite im Stil von Brotato, gebaut mit Godot. 20 Wellen vom Bushof über die Pontstraße und den Elisenbrunnen bis zum Markt, Pfandflaschen als Währung und ein Kiosk zwischen den Wellen. Gegner sind Tauben, Ordnungsamt, Hipster mit Lastenrad und Immobilienmakler – am Ende warten zwei Aachener Baustellen als Endbosse.',
+      facts: ['Godot 4', '6 Figuren', '16 Waffen', 'Im Browser spielbar'],
+      timeline: [
+        { state: 'done', text: 'Figuren, Waffen, Items, Kiosk und 20 Wellen mit Endbossen' },
+        { state: 'done', text: 'Schwierigkeitsstufen, Freischaltbares, Endlosmodus' },
+        { state: 'now',  text: 'Spielbar, Browser-Version fertig' },
+        { state: 'next', text: 'Als Nächstes: Veröffentlichung auf itch.io' }
+      ]
+    },
+    en: {
+      title: 'Pfandpanik Aachen',
+      tagline: 'Satirical arena survival in the middle of Aachen – with bottle deposits, bad luck and Printen.',
+      text: 'An arena roguelite in the style of Brotato, built in Godot. 20 waves from the bus station via Pontstraße and the Elisenbrunnen to the market square, deposit bottles as currency and a kiosk between waves. Enemies include pigeons, wardens, hipsters on cargo bikes and estate agents – two Aachen building sites wait as final bosses.',
+      facts: ['Godot 4', '6 characters', '16 weapons', 'Playable in the browser'],
+      timeline: [
+        { state: 'done', text: 'Characters, weapons, items, kiosk and 20 waves with bosses' },
+        { state: 'done', text: 'Difficulty levels, unlockables, endless mode' },
+        { state: 'now',  text: 'Playable, browser version ready' },
+        { state: 'next', text: 'Next: release on itch.io' }
       ]
     }
   },

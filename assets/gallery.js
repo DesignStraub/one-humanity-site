@@ -53,7 +53,8 @@ const LINKS = {
 /* Words that appear inside the 3D rooms and in the panels. */
 const TEXT = {
   de: {
-    foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Werkstatt', kunst: 'Kunst',
+    foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Werkstatt', kunst: 'Kunst', apps: 'Apps',
+    appsTitle: 'Online ausprobieren', appsNote: 'Läuft im Browser – ohne Konto, ohne Installation.', appOpen: 'Jetzt öffnen ↗',
     werkstattSub: 'Tools & 3D-Design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Hauptraum · Yusu',
     gamesSub: 'Spielbar im Browser und zum Download',
     welcomeLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst. Verschiedene Projekte, eine Haltung.',
@@ -95,7 +96,8 @@ const TEXT = {
     stickerLabel: 'Kostenloses Sticker-Set anfragen', etsyLabel: 'Zum Shop'
   },
   en: {
-    foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Workshop', kunst: 'Art',
+    foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Workshop', kunst: 'Art', apps: 'Apps',
+    appsTitle: 'Try it online', appsNote: 'Runs in the browser – no account, nothing to install.', appOpen: 'Open now ↗',
     werkstattSub: 'Tools & 3D design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Main hall · Yusu',
     gamesSub: 'Playable in the browser and as a download',
     welcomeLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art. Different projects, one attitude.',
@@ -150,22 +152,29 @@ const ROOMS = {
   robotics:  { x: 0,     z: -(6 + GAP + 11), w: 20, d: 22, h: 6.5, accent: 0x8fd8ff, wall: 0x091022, floor: 0x0f1a36,
                doors: ['s'] },
   games:     { x: 7 + GAP + 7, z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x120c26, floor: 0x1a1334,
+               doors: ['w', 'e'] },
+  // behind the games: apps you can open right away in the browser
+  apps:      { x: 7 + GAP + 14 + GAP + 7, z: 0, w: 14, d: 12, h: 5.2, accent: 0x6dffc4, wall: 0x07141a, floor: 0x0c2128,
                doors: ['w'] },
   kunst:     { x: -(7 + GAP + 7), z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
                doors: ['e'] },
   werkstatt: { x: 0,     z: 6 + GAP + 7,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x13111a, floor: 0x1e1820,
                doors: ['n'] }
 };
-const ROOM_ORDER = ['foyer', 'robotics', 'games', 'werkstatt', 'kunst'];
+const ROOM_ORDER = ['foyer', 'robotics', 'games', 'apps', 'werkstatt', 'kunst'];
 
-/* Where each side room meets the foyer: a point just inside the room and
-   one just inside the foyer. Paths between rooms run through these. */
+/* Where each side room meets the room before it (the foyer, unless `from`
+   says otherwise): a point just inside the room and one just inside the
+   room before (`inFoyer`). Paths between rooms run through these. */
 const PASSAGES = {
   robotics:  { side: 'n', inRoom: new THREE.Vector3(0, EYE, -(6 + GAP + 1.4)), inFoyer: new THREE.Vector3(0, EYE, -4.8) },
   games:     { side: 'e', inRoom: new THREE.Vector3(7 + GAP + 1.4, EYE, 0),   inFoyer: new THREE.Vector3(5.8, EYE, 0) },
   kunst:     { side: 'w', inRoom: new THREE.Vector3(-(7 + GAP + 1.4), EYE, 0), inFoyer: new THREE.Vector3(-5.8, EYE, 0) },
-  werkstatt: { side: 's', inRoom: new THREE.Vector3(0, EYE, 6 + GAP + 1.4),   inFoyer: new THREE.Vector3(0, EYE, 4.8) }
+  werkstatt: { side: 's', inRoom: new THREE.Vector3(0, EYE, 6 + GAP + 1.4),   inFoyer: new THREE.Vector3(0, EYE, 4.8) },
+  apps:      { side: 'e', from: 'games', inRoom: new THREE.Vector3(7 + GAP + 14 + GAP + 1.4, EYE, 0), inFoyer: new THREE.Vector3(7 + GAP + 14 - 1.4, EYE, 0) }
 };
+const parentOf = (id) => (PASSAGES[id] && PASSAGES[id].from) || 'foyer';
+const chainOf = (id) => { const c = [id]; while (c[c.length - 1] !== 'foyer') c.push(parentOf(c[c.length - 1])); return c; };
 
 /* First view of each room (room bar, links like index.html#games). */
 const ENTRY = {
@@ -173,6 +182,7 @@ const ENTRY = {
   robotics:  { pos: [0, EYE, -(6 + GAP + 4)],   look: [0, 1.7, -(6 + GAP + 12.3)] },
   games:     { pos: [7 + GAP + 1.6, EYE, 0],    look: [7 + GAP + 14, 1.6, 0] },
   werkstatt: { pos: [0, EYE, 6 + GAP + 2.2],    look: [0, 1.6, 6 + GAP + 14] },
+  apps:      { pos: [7 + GAP + 14 + GAP + 1.6, EYE, 0], look: [7 + GAP + 14 + GAP + 14, 2.0, 0] },
   kunst:     { pos: [-(7 + GAP + 1.6), EYE, 0], look: [-(7 + GAP + 14), 2.0, 0] }
 };
 
@@ -645,8 +655,10 @@ function buildRoom(id) {
 /* Short open bridge between the foyer and a room. */
 function buildPassage(id) {
   const p = PASSAGES[id];
-  const f = ROOMS.foyer;
+  const f = ROOMS[parentOf(id)];
   const r = ROOMS[id];
+  const cx = f.x; // the passage runs along the parent's centre line
+  const cz = f.z;
   const along = p.side === 'n' || p.side === 's';
   const a = along ? (p.side === 'n' ? f.z - f.d / 2 : f.z + f.d / 2) : (p.side === 'e' ? f.x + f.w / 2 : f.x - f.w / 2);
   const b = along ? (p.side === 'n' ? r.z + r.d / 2 : r.z - r.d / 2) : (p.side === 'e' ? r.x - r.w / 2 : r.x + r.w / 2);
@@ -658,25 +670,25 @@ function buildPassage(id) {
   const closed = id === 'kunst' && !ART_OPEN;
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(along ? DOOR_W : len, along ? len : DOOR_W), MAT.glass);
   floor.rotation.x = -Math.PI / 2;
-  floor.position.set(along ? 0 : mid, 0.001, along ? mid : 0);
+  floor.position.set(along ? cx : mid, 0.001, along ? mid : cz);
   scene.add(floor);
   if (!closed) floors.push(floor);
   for (const s of [-1, 1]) {
     const side = along ? box(WALL, DOOR_H, len, mat) : box(len, DOOR_H, WALL, mat);
-    side.position.set(along ? s * (DOOR_W / 2 + WALL / 2) : mid, DOOR_H / 2, along ? mid : s * (DOOR_W / 2 + WALL / 2));
+    side.position.set(along ? cx + s * (DOOR_W / 2 + WALL / 2) : mid, DOOR_H / 2, along ? mid : cz + s * (DOOR_W / 2 + WALL / 2));
     scene.add(side);
     blockers.push(side);
     const top = along ? box(WALL + 0.02, 0.04, len, light) : box(len, 0.04, WALL + 0.02, light);
     top.position.set(side.position.x, DOOR_H + 0.02, side.position.z);
     scene.add(top);
     const strip = along ? box(0.03, 0.01, len, light) : box(len, 0.01, 0.03, light);
-    strip.position.set(along ? s * (DOOR_W / 2 - 0.12) : mid, 0.006, along ? mid : s * (DOOR_W / 2 - 0.12));
+    strip.position.set(along ? cx + s * (DOOR_W / 2 - 0.12) : mid, 0.006, along ? mid : cz + s * (DOOR_W / 2 - 0.12));
     scene.add(strip);
   }
   const half = DOOR_W / 2 - 0.45;
   const lo = Math.min(a, b) - 1.2;
   const hi = Math.max(a, b) + 1.2;
-  if (!closed) walkRects.push(along ? [-half, half, lo, hi] : [lo, hi, -half, half]);
+  if (!closed) walkRects.push(along ? [cx - half, cx + half, lo, hi] : [lo, hi, cz - half, cz + half]);
 }
 
 /* A framed picture (or video screen) with an optional plaque under it. */
@@ -996,7 +1008,7 @@ function worldHeartGeometry(size, depth) {
 }
 
 /* The floor plan as a star chart, painted from ROOMS. */
-const MAP_BOUNDS = { minX: -23, maxX: 23, minZ: -30, maxZ: 22 };
+const MAP_BOUNDS = { minX: -23, maxX: 38, minZ: -30, maxZ: 22 };
 function paintMap(ctx, w, h) {
   ctx.fillStyle = '#0a0f1d';
   ctx.fillRect(0, 0, w, h);
@@ -1472,12 +1484,14 @@ function buildGames() {
     ctx.font = `800 ${Math.round(h * 0.5)}px ${FONT}`;
     ctx.fillText(t('itchSign'), w / 2, h * 0.18, w * 0.96);
   }, { px: 1400, transparent: true });
-  place(sign, wallSpot('games', 'e', 0, 3.55));
+  place(sign, wallSpot('games', 'e', 0, 3.85));
   addExhibit({ id: 'itch', root: sign, meshes: [sign], room: 'games', open: () => openLinks(['itch']) });
-  shots.forEach((shot, i) => {
-    const along = shots.length > 1 ? -2.6 + (5.2 / (shots.length - 1)) * i : 0;
-    const f = framed({ src: shot.src, w: shot.w, h: shot.h, maxW: 2.4, maxH: 1.6, style: 'screen' });
-    place(f.group, wallSpot('games', 'e', along, 1.85));
+  // beside the doors: east wall left and right of the way to the apps, then the west wall
+  const slots = [['e', -3.9], ['e', 3.9], ['w', -3.9], ['w', 3.9]];
+  shots.slice(0, slots.length).forEach((shot, i) => {
+    const [side, along] = slots[i];
+    const f = framed({ src: shot.src, w: shot.w, h: shot.h, maxW: 2.2, maxH: 1.5, style: 'screen' });
+    place(f.group, wallSpot('games', side, along, 1.85));
     addExhibit({ id: shot.src, root: f.group, meshes: f.meshes, room: 'games', open: () => openMedia(shot, { kicker: (shot.project[lang()] || {}).title, back: shot.project }) });
   });
 }
@@ -1529,12 +1543,95 @@ function arcadeCabinet(p, accent) {
 }
 
 /* --------------------------------------------------------------------------
+   Apps: everything you can open straight away in the browser, big screens
+   with a button that opens the app in a new tab
+   -------------------------------------------------------------------------- */
+const isApp = (p) => !!(p.demo && p.demo.href && !p.demo.href.startsWith('#'));
+function buildApps() {
+  const r = ROOMS.apps;
+  const apps = PROJECTS.filter(isApp)
+    // tools first, they are the apps proper; then the rest
+    .sort((a, b) => (a.group === 'tools' ? 0 : 1) - (b.group === 'tools' ? 0 : 1));
+  wallTitle('apps', 'e', 0, r.h - 0.75, () => t('appsTitle'));
+  const note = board(5.2, 0.42, (ctx, w, h) => {
+    ctx.clearRect(0, 0, w, h);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(242,247,248,.78)';
+    ctx.font = `500 ${Math.round(h * 0.5)}px ${FONT}`;
+    ctx.fillText(t('appsNote'), w / 2, h * 0.2, w * 0.98);
+  }, { px: 1200, transparent: true });
+  place(note, wallSpot('apps', 'e', 0, r.h - 1.3));
+  // two big screens on the far wall, more along the side walls
+  const slots = [['e', -2.9], ['e', 2.9], ['n', -2.6], ['s', 2.6], ['n', 2.6], ['s', -2.6]];
+  apps.slice(0, slots.length).forEach((p, i) => {
+    const [side, along] = slots[i];
+    const card = p.app || {};
+    const copy = card[lang()] || card.en || p[lang()] || p.en || {};
+    const img = card.image || p.image || {};
+    const f = framed({ src: img.src, w: img.w || 4, h: img.h || 3, maxW: 2.7, maxH: 1.7, style: 'screen' });
+    const y = 2.2;
+    place(f.group, wallSpot('apps', side, along, y));
+    const [, fh] = f.group.userData.size;
+    const cap = plaque({ de: ((card.de || p.de || {}).title), en: ((card.en || p.en || {}).title) }, () => (p.app ? '' : (R && R.STATUS[p.status] ? pick(R.STATUS[p.status]) : '')), { width: 1.6, accent: r.accent });
+    place(cap, wallSpot('apps', side, along, y - fh / 2 - 0.3));
+    addExhibit({ id: 'project-' + p.id + (p.app ? '-app' : ''), root: f.group, meshes: [...f.meshes, cap], room: 'apps', open: () => openProject(p) });
+    // the button: glows, opens the app itself
+    const btn = board(1.5, 0.36, (ctx, w, h) => {
+      ctx.clearRect(0, 0, w, h);
+      const g = ctx.createLinearGradient(0, 0, w, 0);
+      g.addColorStop(0, '#46e3a8');
+      g.addColorStop(1, '#6dd8ff');
+      ctx.fillStyle = g;
+      const rr = h / 2;
+      ctx.beginPath();
+      ctx.moveTo(rr, 0); ctx.lineTo(w - rr, 0); ctx.arc(w - rr, rr, rr, -Math.PI / 2, Math.PI / 2);
+      ctx.lineTo(rr, h); ctx.arc(rr, rr, rr, Math.PI / 2, Math.PI * 1.5); ctx.fill();
+      ctx.fillStyle = '#04231a';
+      ctx.textAlign = 'center';
+      ctx.font = `800 ${Math.round(h * 0.46)}px ${FONT}`;
+      ctx.fillText(t('appOpen'), w / 2, h * 0.24, w * 0.86);
+    }, { px: 600, transparent: true });
+    place(btn, wallSpot('apps', side, along, y - fh / 2 - 0.78, 0.04));
+    addExhibit({ id: 'open-' + p.id, root: btn, meshes: [btn], room: 'apps', open: () => { window.open(p.demo.href, '_blank', 'noopener'); } });
+  });
+  // a hologram in the middle: a slowly turning browser window of light
+  const holo = new THREE.Group();
+  const lineMat = glowMat(r.accent, 0.85);
+  const frameW = 1.6, frameH = 1.0;
+  for (const [w, h, x, y] of [[frameW, 0.03, 0, frameH / 2], [frameW, 0.03, 0, -frameH / 2], [0.03, frameH, -frameW / 2, 0], [0.03, frameH, frameW / 2, 0], [frameW, 0.02, 0, frameH / 2 - 0.16]]) {
+    const bar = box(w, h, 0.02, lineMat);
+    bar.position.set(x, y, 0);
+    holo.add(bar);
+  }
+  for (let k = 0; k < 3; k++) {
+    const dot = new THREE.Mesh(new THREE.CircleGeometry(0.03, 12), lineMat);
+    dot.position.set(-frameW / 2 + 0.1 + k * 0.09, frameH / 2 - 0.08, 0.012);
+    holo.add(dot);
+  }
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: DOT, color: r.accent, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+  glow.scale.setScalar(3.2);
+  holo.add(glow);
+  holo.scale.setScalar(0.6);
+  holo.position.set(r.x, 3.55, r.z);
+  scene.add(holo);
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.75, 0.82, 64), glowMat(r.accent, 0.7));
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.set(r.x, 0.02, r.z);
+  scene.add(ring);
+  obstacles.push({ x: r.x, z: r.z, r: 0.9 });
+  animated.push((dt, time) => {
+    holo.rotation.y = time * 0.35;
+    holo.position.y = 3.55 + Math.sin(time * 0.8) * 0.08;
+  });
+}
+
+/* --------------------------------------------------------------------------
    Workshop: tools at desks, 3D designs on a pegboard, photos of the room
    -------------------------------------------------------------------------- */
 function buildWorkshop() {
   const r = ROOMS.werkstatt;
   // tools, plus robot ideas that are still future topics (e.g. Ringwheel)
-  const tools = [...projectsIn('tools').filter((p) => p.featured !== false), ...projectsIn('robotics').filter((p) => p.id !== 'yusu')];
+  const tools = [...projectsIn('tools').filter((p) => p.featured !== false && !isApp(p)), ...projectsIn('robotics').filter((p) => p.id !== 'yusu')];
   const east = tools.slice(0, Math.ceil(tools.length / 2));
   const west = tools.slice(Math.ceil(tools.length / 2));
   wallTitle('werkstatt', 'e', 0, r.h - 0.75, () => t('toolsTitle'));
@@ -1827,7 +1924,7 @@ function buildPlanet() {
         float d = dot(n, uSun);
         float day = smoothstep(-0.12, 0.3, d);
         vec3 c = col * (0.015 + day * 1.2);
-        float city = step(0.74, noise(p * 70.0)) * land * (1.0 - cloud) * (1.0 - smoothstep(-0.25, 0.05, d));
+        float city = step(0.8, noise(p * 170.0)) * smoothstep(0.42, 0.68, noise(p * 14.0)) * land * (1.0 - cloud) * (1.0 - smoothstep(-0.25, 0.05, d));
         c += vec3(1.0, 0.72, 0.38) * city * 0.9;
         float rim = pow(1.0 - max(dot(n, normalize(vView)), 0.0), 2.6);
         c += vec3(0.3, 0.55, 1.0) * rim * (0.08 + day * 0.9);
@@ -2165,7 +2262,28 @@ function arrive(id, then) {
   const fromYaw = state.yaw;
   const fromPitch = state.pitch;
   const focus = id === 'robotics' ? new THREE.Vector3(HEAD_SPOT.x, 2.5, HEAD_SPOT.z) : e.look;
-  state.arriving = { phase: 'dive', t: 0, e, from, fromYaw, fromPitch, focus, then, id };
+  // first you zoom into the planet from the welcome view, then dive in
+  state.arriving = { phase: 'zoom', t: 0, e, from, fromYaw, fromPitch, focus, then, id, fov: camera.fov };
+}
+
+/* Field of view for the welcome view: the planet fills a good part of the
+   screen, on wide screens and on phones held upright. */
+const PLANET_ANGLE = 2 * Math.atan(24 / 150);
+function introFov() {
+  const aspect = window.innerWidth / window.innerHeight;
+  const share = aspect < 1 ? 0.84 : 0.5; // of the width on phones, of the height elsewhere
+  const v = aspect < 1
+    ? 2 * Math.atan(Math.tan(PLANET_ANGLE / share / 2) / aspect)
+    : PLANET_ANGLE / share;
+  return THREE.MathUtils.radToDeg(v);
+}
+/* Look at the planet, a little above it, so it sits below the title. */
+function lookAtPlanet(fovDeg, time) {
+  const drift = reduceMotion ? 0 : Math.sin(time * 0.07) * 0.015;
+  state.yaw = yawTo(PLANET_DIR.x, PLANET_DIR.z) + drift;
+  const base = Math.atan2(PLANET_DIR.y, Math.hypot(PLANET_DIR.x, PLANET_DIR.z));
+  const lift = window.innerWidth < window.innerHeight ? 0.34 : 0.31;
+  state.pitch = base + THREE.MathUtils.degToRad(fovDeg) * lift;
 }
 
 const ease = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
@@ -2174,6 +2292,34 @@ const clamp01 = (x) => Math.min(1, Math.max(0, x));
 function stepArrival(dt, time) {
   const a = state.arriving;
   a.t += dt;
+  if (a.phase === 'zoom') {
+    const T = 1.6;
+    const k = clamp01(a.t / T);
+    const kk = k * k * k;
+    // the planet moves to the centre and grows until it fills the screen
+    const start = a.fov;
+    a.zoomFov = start + (2.2 - start) * kk;
+    const base = Math.atan2(PLANET_DIR.y, Math.hypot(PLANET_DIR.x, PLANET_DIR.z));
+    const lift = window.innerWidth < window.innerHeight ? 0.34 : 0.31;
+    state.yaw = yawTo(PLANET_DIR.x, PLANET_DIR.z);
+    state.pitch = base + THREE.MathUtils.degToRad(start) * lift * (1 - ease(k));
+    if (k > 0.78) state.flashTarget = 1;
+    if (k >= 1) {
+      // out of the light: high above the building, then the dive
+      a.phase = 'dive';
+      a.t = 0;
+      a.zoomFov = null;
+      a.from = new THREE.Vector3(6, 26, 40);
+      state.pos.copy(a.from);
+      a.fromYaw = yawTo(-a.from.x, -6 - a.from.z);
+      a.fromPitch = -0.45;
+      state.yaw = a.fromYaw;
+      state.pitch = a.fromPitch;
+      state.flashTarget = 0;
+      state.flash = 1;
+    }
+    return;
+  }
   if (a.phase === 'dive') {
     const T = 2.6;
     const k = ease(clamp01(a.t / T));
@@ -2228,11 +2374,11 @@ function stepArrival(dt, time) {
 }
 
 /* A click or key skips the arrival, once it has properly begun. */
-const canSkip = () => !!state.arriving && state.arriving.t > (state.arriving.phase === 'dive' ? 0.8 : 0.4);
+const canSkip = () => !!state.arriving && (state.arriving.phase === 'zoom' || state.arriving.t > (state.arriving.phase === 'dive' ? 0.8 : 0.4));
 
 function finishArrival(then) {
   const a = state.arriving;
-  if (a && a.phase === 'dive') {
+  if (a && a.phase !== 'hands') {
     state.pos.copy(a.e.pos);
     beamFx(a.e.pos, ROOMS[a.id].accent);
     sound.beam();
@@ -2629,8 +2775,12 @@ function planPath(from, to) {
   const b = roomAt(to.x, to.z);
   const pts = [];
   if (a !== b) {
-    if (a !== 'foyer') pts.push(PASSAGES[a].inRoom.clone(), PASSAGES[a].inFoyer.clone());
-    if (b !== 'foyer') pts.push(PASSAGES[b].inFoyer.clone(), PASSAGES[b].inRoom.clone());
+    // up from a to the first room both share, then down to b
+    const ca = chainOf(a);
+    const cb = chainOf(b);
+    const common = ca.find((id) => cb.includes(id));
+    for (const id of ca.slice(0, ca.indexOf(common))) pts.push(PASSAGES[id].inRoom.clone(), PASSAGES[id].inFoyer.clone());
+    for (const id of cb.slice(0, cb.indexOf(common)).reverse()) pts.push(PASSAGES[id].inFoyer.clone(), PASSAGES[id].inRoom.clone());
   }
   pts.push(to.clone());
   const out = [];
@@ -2744,12 +2894,10 @@ renderer.domElement.addEventListener('pointermove', (e) => {
       stage.classList.add('is-dragging');
       if (state.glide && !state.glide.look) state.glide = null;
       if (state.glide) state.glide.look = false;
-      // mouse: the view follows the hand (drag right = look right);
-      // touch: you drag the world, like on a map
+      // the view follows the hand: drag or swipe right = look right
       const k = drag.type === 'touch' ? 0.006 : 0.0042;
-      const dir = drag.type === 'touch' ? 1 : -1;
-      state.yaw += dir * dx * k;
-      state.pitch = THREE.MathUtils.clamp(state.pitch + dir * dy * k * 0.8, -1.0, 0.9);
+      state.yaw -= dx * k;
+      state.pitch = THREE.MathUtils.clamp(state.pitch - dy * k * 0.8, -1.0, 0.9);
       if (state.glide) { state.glide.endYaw = state.yaw; state.glide.endPitch = state.pitch; }
     }
   } else if (e.pointerType === 'mouse') {
@@ -2894,7 +3042,8 @@ document.querySelectorAll('[data-room-link]').forEach((a) => a.addEventListener(
    -------------------------------------------------------------------------- */
 const HASH_ROOMS = {
   robotics: 'robotics', projekte: 'robotics', games: 'games', tools: 'werkstatt', design: 'werkstatt',
-  werkstatt: 'werkstatt', workshop: 'werkstatt', kunst: 'kunst', art: 'kunst', foyer: 'foyer', haltung: 'foyer', ueber: 'foyer'
+  werkstatt: 'werkstatt', workshop: 'werkstatt', kunst: 'kunst', art: 'kunst', foyer: 'foyer', haltung: 'foyer', ueber: 'foyer',
+  apps: 'apps', online: 'apps'
 };
 /* Where a link points: a room, and maybe an exhibit in it. */
 function hashTarget() {
@@ -3091,11 +3240,9 @@ function frame(dt, time) {
     hoverTick += dt;
     if (hoverTick > 0.08) { hoverTick = 0; stepHover(); }
   } else {
-    // behind the welcome card: drifting outside, the building and the planet in view
-    const a = reduceMotion ? 0 : Math.sin(time * 0.05) * 0.45;
-    state.pos.set(ORBIT.pos.x + Math.sin(a) * 14, ORBIT.pos.y + (reduceMotion ? 0 : Math.sin(time * 0.13) * 0.6), ORBIT.pos.z - (1 - Math.cos(a)) * 6);
-    state.yaw = yawTo(ORBIT.look.x - state.pos.x, ORBIT.look.z - state.pos.z);
-    state.pitch = Math.atan2(ORBIT.look.y - state.pos.y, Math.hypot(ORBIT.look.x - state.pos.x, ORBIT.look.z - state.pos.z));
+    // behind the welcome card: the planet, alone among the stars
+    state.pos.copy(ORBIT.pos);
+    lookAtPlanet(introFov(), time);
   }
   if (state.started && !state.arriving) updateRoom();
 
@@ -3114,7 +3261,9 @@ function frame(dt, time) {
   flashEl.style.opacity = state.flash > 0.004 ? state.flash.toFixed(3) : '0';
   if (!state.arriving) state.fovKick += (0 - state.fovKick) * Math.min(1, dt * 3);
   const baseFov = coarse ? 70 : 62;
-  const fov = baseFov + state.fovKick * 14;
+  let fov = baseFov + state.fovKick * 14;
+  if (!state.started && !state.arriving) fov = introFov();
+  else if (state.arriving && state.arriving.zoomFov) fov = state.arriving.zoomFov;
   if (Math.abs(camera.fov - fov) > 0.01) { camera.fov = fov; camera.updateProjectionMatrix(); }
 
   // the room lights (dimmed while you materialise)
@@ -3187,6 +3336,7 @@ Object.keys(PASSAGES).forEach(buildPassage);
 buildFoyer();
 buildRobotics();
 buildGames();
+buildApps();
 buildWorkshop();
 buildArt();
 buildMotes();
