@@ -2,368 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <title>OneHumanity Labs — One Planet, One Humanity</title>
-  <meta name="description" content="OneHumanity Labs aus Aachen: Robotics, Games, Tools und 3D-Design. Verschiedene Projekte, eine Haltung – offen, lokal und für Menschen gemacht.">
+  <title>OneHumanity Labs — 3D-Galerie</title>
+  <meta name="description" content="OneHumanity Labs aus Aachen: Robotics, Games, Tools, 3D-Design und Kunst – als begehbare 3D-Galerie. Verschiedene Projekte, eine Haltung: offen, lokal und für Menschen gemacht.">
   <link rel="canonical" href="https://oneplanetonehumanity.com/">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="OneHumanity Labs — One Planet, One Humanity">
-  <meta property="og:description" content="An independent lab from Aachen: robotics, games, tools and 3D design.">
+  <meta property="og:description" content="An independent lab from Aachen: robotics, games, tools, 3D design and art – as a gallery you can walk through.">
   <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
 
   <link rel="stylesheet" href="assets/site.css?v=20261126a">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#faf6ef" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0d1219" media="(prefers-color-scheme: dark)">
-  <script>try{var t=localStorage.getItem('onehumanity-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="stylesheet" href="assets/gallery.css?v=20261126h">
+  <meta name="theme-color" content="#03050c">
+  <link rel="modulepreload" href="assets/vendor/three.module.min.js">
 </head>
 
-<body class="page">
+<body class="gallery-page">
 
-  <a class="visually-hidden" href="#main">Skip to content</a>
+  <!-- the 3D gallery draws into this -->
+  <div class="g-stage" data-stage aria-hidden="true"></div>
 
-  <nav class="nav" id="nav">
-    <a href="#top" class="brand" aria-label="OneHumanity Labs — home">
-      <svg width="26" height="26" class="logo" viewBox="0 0 64 64" aria-hidden="true">
+  <!-- welcome: readable without 3D, also for search engines and screen readers -->
+  <section class="g-intro" data-intro aria-labelledby="intro-title">
+    <div class="g-intro-card">
+      <svg width="52" height="52" class="g-intro-logo" viewBox="0 0 64 64" aria-hidden="true">
         <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
       </svg>
-      <span class="title">OneHumanity <span class="suffix">Labs</span></span>
-    </a>
+      <h1 id="intro-title" class="g-intro-title">OneHumanity Labs</h1>
+      <p class="g-intro-claim">One Planet, One Humanity</p>
+      <p class="g-intro-lead" data-i18n="introLead">An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art.</p>
+      <button class="g-enter" type="button" data-choice="robotics">
+        <span class="g-enter-label" data-i18n="introEnter">Enter</span>
+      </button>
+      <p class="g-intro-status" data-status aria-live="polite">Loading the gallery …</p>
+      <nav class="g-intro-rooms" aria-label="Rooms">
+        <span data-i18n="introDirect">Or go straight to</span>
+        <a href="#games" data-choice="games">Games</a>
+        <a href="#werkstatt" data-choice="werkstatt" data-i18n="roomWorkshop">Workshop</a>
+        <a href="#kunst" data-choice="kunst" data-i18n="roomArt">Art</a>
+        <a href="#foyer" data-choice="foyer">Foyer</a>
+        <a href="uebersicht.html" data-i18n="introList">View as a list</a>
+      </nav>
+    </div>
+  </section>
 
-    <div class="nav-actions">
+  <!-- cinematic bars and subtitles during the arrival -->
+  <div class="g-bars" aria-hidden="true"><i></i><i></i></div>
+  <div class="g-touch" aria-hidden="true">
+    <div class="g-stick" data-stick><i></i></div>
+    <button class="g-jump" type="button" tabindex="-1" data-jump>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/><path d="M6 19l6-6 6 6" opacity=".45"/></svg>
+    </button>
+  </div>
+  <p class="g-subtitle" data-subtitle aria-live="polite" hidden></p>
+
+  <!-- controls on top of the gallery -->
+  <header class="g-hud-top">
+    <a class="g-brand" href="#foyer" data-room-link="foyer" aria-label="OneHumanity Labs – Foyer">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
+      </svg>
+      <span>OneHumanity <span class="suffix">Labs</span></span>
+    </a>
+    <nav class="g-rooms" aria-label="Rooms" data-rooms>
+      <button type="button" data-room="foyer">Foyer</button>
+      <button type="button" data-room="robotics">Robotics</button>
+      <button type="button" data-room="games">Games</button>
+      <button type="button" data-room="werkstatt" data-i18n="roomWorkshop">Workshop</button>
+      <button type="button" data-room="kunst" data-i18n="roomArt">Art</button>
+    </nav>
+    <div class="g-hud-actions">
+      <button class="g-pill g-sound" type="button" data-sound aria-pressed="false" data-i18n-attr="aria-label:hudSound" aria-label="Sound">
+        <svg class="on" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+        <svg class="off" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <a class="g-pill" href="uebersicht.html" data-i18n="hudList">List</a>
       <div class="lang-toggle" role="group" aria-label="Language">
         <button type="button" data-lang="de">DE</button>
         <button type="button" data-lang="en">EN</button>
       </div>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false"
-              aria-label="Toggle light/dark" data-i18n-attr="aria-label:navTheme">
-        <svg width="20" height="20" class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z" fill="currentColor"/></svg>
-        <svg width="20" height="20" class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
-      </button>
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links"
-              aria-label="Menu" data-i18n-attr="aria-label:navMenu">
-        <span></span>
-      </button>
     </div>
+  </header>
 
-    <div class="nav-links" id="nav-links">
-      <a class="nav-link" href="#projekte" data-i18n="navProjects">Projects</a>
-      <a class="nav-link" href="#werkstatt" data-i18n="navWorkshop">Workshop</a>
-      <a class="nav-link" href="#mitmachen" data-i18n="navJoin">Take part</a>
-      <a class="nav-link" href="tools.html#archiv" data-i18n="navArchive">Archive</a>
-      <a class="nav-link nav-link-gallery" href="galerie.html" data-i18n="navGallery">3D gallery</a>
-    </div>
-  </nav>
 
-  <main id="main">
+  <p class="g-toast" data-toast role="status" hidden></p>
 
-    <!-- ================= HERO ================= -->
-    <header class="hero" id="top">
-      <svg class="grain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/></filter>
-        <rect width="100" height="100" filter="url(#noise)"></rect>
-      </svg>
-      <span class="orb a" aria-hidden="true"></span>
-      <span class="orb b" aria-hidden="true"></span>
-      <span class="orb c" aria-hidden="true"></span>
+  <aside class="g-panel" data-panel hidden aria-labelledby="panel-title" tabindex="-1">
+    <button class="g-panel-close" type="button" data-panel-close data-i18n-attr="aria-label:panelClose" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <div class="g-panel-body" data-panel-body></div>
+  </aside>
 
-      <div class="hero-inner">
-        <svg class="symbol reveal" width="108" height="108" viewBox="0 0 200 200" role="img" aria-label="OneHumanity">
-          <path d="M62 96c0-18 14.3-33 31.9-33 9.2 0 17.5 4.7 23.1 12.1C122.6 67.7 131 63 140.1 63c17.6 0 31.9 15 31.9 33 0 39.3-55.8 64.6-55.8 64.6S62 135.3 62 96z" fill="currentColor"/>
-        </svg>
-
-        <p class="brandline reveal">OneHumanity Labs</p>
-        <h1 class="h-hero reveal">One Planet,<br>One Humanity</h1>
-
-        <p class="lead reveal" data-i18n="heroLead">An independent lab from Aachen. We build robots, make games and tools, and design 3D models for printing. Different projects, one attitude: open, local and made for people.</p>
-
-        <div class="btn-row reveal" style="justify-content:center">
-          <a href="#projekte" class="btn primary" data-i18n="heroCtaProjects">See the projects</a>
-          <a href="yusu/" class="btn" data-i18n="heroCtaYusu">Meet Yusu in the browser</a>
-          <a href="https://www.youtube.com/@marcelloswigswag" class="btn" target="_blank" rel="noopener" data-i18n="heroCtaYoutube">One Humanity Lab on YouTube</a>
-        </div>
-
-      </div>
-    </header>
-
-    <!-- ================= PROJECTS (rail) ================= -->
-    <section id="projekte" class="projects" data-rail aria-labelledby="projekte-title">
-      <span class="anchor" id="robotics"></span><span class="anchor" id="games"></span><span class="anchor" id="tools"></span><span class="anchor" id="design"></span>
-      <div class="wrap">
-        <div class="rail-head reveal">
-          <div>
-            <p class="kicker" data-i18n="projKicker">Projects</p>
-            <h2 class="section-title" id="projekte-title" data-i18n="projTitle">What we are building.</h2>
-          </div>
-        </div>
-        <div class="chips reveal" role="group" aria-label="Filter" data-i18n-attr="aria-label:railFilter">
-          <button type="button" class="chip" data-rail-filter="all" aria-pressed="true" data-i18n="chipAll">All</button>
-          <button type="button" class="chip" data-rail-filter="robotics" aria-pressed="false">Robotics</button>
-          <button type="button" class="chip" data-rail-filter="games" aria-pressed="false">Games</button>
-          <button type="button" class="chip" data-rail-filter="tools" aria-pressed="false">Tools</button>
-          <button type="button" class="chip" data-rail-filter="design" aria-pressed="false" data-i18n="navDesign">3D design</button>
-        </div>
-        <ol class="proj-grid reveal" data-projects="rail"></ol>
-        <div class="proj-more">
-          <button type="button" class="btn" data-rail-more aria-expanded="false" hidden></button>
-        </div>
-        <div class="rail-foot reveal">
-          <a class="btn" href="tools.html" data-i18n="rmAll">Every project in detail →</a>
-          <a class="more-link" href="tools.html#archiv" data-i18n="rmArchive">Archive</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= VALUES ================= -->
-    <section id="haltung" aria-labelledby="haltung-title">
-      <div class="wrap">
-        <div class="values reveal" style="margin-top:0">
-          <h2 class="kicker" id="haltung-title" data-i18n="valuesKicker">What we stand for</h2>
-          <ul class="values-list">
-            <li><strong data-i18n="v1Title">Open</strong> <span data-i18n="v1Text">Code, files and guides are published wherever possible.</span></li>
-            <li><strong data-i18n="v2Title">Local</strong> <span data-i18n="v2Text">No account, no cloud – our devices and tools work on their own.</span></li>
-            <li><strong data-i18n="v3Title">Human</strong> <span data-i18n="v3Text">Made for people, not for metrics.</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= WORKSHOP ================= -->
-    <section id="werkstatt" aria-labelledby="werkstatt-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="wsKicker">The workshop</p>
-        <h2 class="section-title reveal" id="werkstatt-title" data-i18n="wsTitle">Where it all comes together.</h2>
-        <p class="lead reveal" data-i18n="wsIntro">3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.</p>
-
-        <div class="workshop-grid reveal">
-          <figure class="media wide">
-            <img src="img/workshop-bench.jpg" width="1600" height="1200" loading="lazy"
-                 alt="Workbench with pegboard, tools, cable spools, monitor and 3D-printed parts under a light bar" data-i18n-attr="alt:wsAlt1">
-          </figure>
-          <figure class="media">
-            <img src="img/workshop-evening.jpg" width="1600" height="1200" loading="lazy"
-                 alt="The workshop in the evening: wooden desk, pegboard wall and a large enclosed 3D printer" data-i18n-attr="alt:wsAlt2">
-          </figure>
-          <figure class="media">
-            <img src="img/workshop-desk.jpg" width="1600" height="1200" loading="lazy"
-                 alt="Desk with monitor, keyboard, speakers and laptop by the window" data-i18n-attr="alt:wsAlt3">
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= ABOUT ================= -->
-    <section id="ueber" aria-labelledby="ueber-title">
-      <div class="wrap narrow">
-        <div class="about reveal">
-          <img src="img/marcello.jpg" width="1500" height="1000" loading="lazy"
-               alt="Marcello at his desk in the Aachen studio" data-i18n-attr="alt:aboutAlt">
-          <div>
-            <p class="kicker" data-i18n="aboutKicker">Who is behind it</p>
-            <h2 class="section-title" id="ueber-title" data-i18n="aboutTitle">Hi, I’m Marcello.</h2>
-            <p class="lead" data-i18n="aboutText">Founder of OneHumanity Labs – online mostly as MarcelloSwigswag. Software developer by profession and trained craftsman, so I like working with code and with my hands. For now the lab is just me; in the future more people are meant to build here too.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= TAKE PART ================= -->
-    <section id="mitmachen" aria-labelledby="mitmachen-title">
-      <div class="wrap">
-        <p class="kicker reveal" data-i18n="takePartKicker">Take part</p>
-        <h2 class="section-title reveal" id="mitmachen-title" data-i18n="takePartTitle">Follow along, play, rebuild.</h2>
-        <p class="lead reveal" data-i18n="takePartIntro">Videos of the projects, open files and code, free games – and free stickers for good places.</p>
-
-        <div class="split reveal" style="margin-top:var(--sp-6)">
-          <div class="link-tiles">
-            <a class="link-tile" href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor"/></svg>
-              <strong data-i18n="ctaYoutube">One Humanity Lab on YouTube</strong>
-              <span data-i18n="hintYoutube">Walkthroughs and progress on robots, games and everything else on the bench.</span>
-            </a>
-            <a class="link-tile" href="https://github.com/DesignStraub" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6 2.5 12 8 18M16 6l5.5 6L16 18M13.5 4l-3 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              <strong data-i18n="ctaFiles">Code &amp; files on GitHub</strong>
-              <span data-i18n="hintFiles">Games, firmware, CAD and circuit boards.</span>
-            </a>
-            <a class="link-tile" href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 20 7.4v9.2l-8 4.6-8-4.6V7.4z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/><path d="M4 7.4l8 4.6 8-4.6M12 12v9.2" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" fill="none"/></svg>
-              <strong data-i18n="ctaPrint">3D models on MakerWorld</strong>
-              <span data-i18n="hintPrint">Print files for everything from the 3D design section.</span>
-            </a>
-            <a class="link-tile" href="https://onehumanity.itch.io" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="5.5" stroke="currentColor" stroke-width="1.9" fill="none"/><path d="M7.5 10.5v4M5.5 12.5h4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="15.5" cy="11.5" r="1.1" fill="currentColor"/><circle cx="17.8" cy="13.6" r="1.1" fill="currentColor"/></svg>
-              <strong data-i18n="ctaItch">Games on itch.io</strong>
-              <span data-i18n="hintItch">Download and play for free – Windows, macOS and Linux.</span>
-            </a>
-            <a class="link-tile" href="https://docs.google.com/forms/d/e/1FAIpQLScWkpiObt9dsZZTg1nW82hWRVyb8-oSdZoOqfZSrBDZrqmtzw/viewform" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16a1 1 0 0 1 .8 1.6l-8 6a1 1 0 0 1-1.2 0l-8-6A1 1 0 0 1 4 6zm0 3.8 7.4 5.6a3 3 0 0 0 3.2 0L22 9.8V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.8z" fill="currentColor"/></svg>
-              <strong data-i18n="ctaRequest">Request a free sticker set</strong>
-              <span data-i18n="hintRequest">Limited free sets. We cover printing and shipping – it may take a few weeks.</span>
-            </a>
-            <a class="link-tile" href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.1 21.3c-.3.2-.7.2-1 0C7.1 18.6 2 14.7 2 9.6 2 6.6 4.4 4.2 7.4 4.2c1.7 0 3.3.8 4.3 2.1 1-1.3 2.6-2.1 4.3-2.1 3 0 5.4 2.4 5.4 5.4 0 5.1-5.1 9-9 11.7z" fill="currentColor"/></svg>
-              <strong data-i18n="ctaSupport">Visit the shop</strong>
-              <span data-i18n="hintSupport">Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next project.</span>
-            </a>
-          </div>
-
-          <div class="sticker-card" data-sticker>
-            <div class="sticker">
-              <img src="sticker.png" alt="OneHumanity sticker" width="720" height="720">
-              <span class="sticker-sheen" aria-hidden="true"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <svg width="26" height="26" class="logo" viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
-        </svg>
-        <strong class="manifest">One Planet, One Humanity</strong>
-        <span class="small" data-i18n="footerTagline">Robotics, games, tools and 3D design from Aachen.</span>
-        <span class="small">© <span data-year>2026</span> OneHumanity Labs · MorphicMoons, Aachen</span>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h2 data-i18n="footerProjects">Projects</h2>
-          <ul class="footer-nav">
-            <li><a href="#robotics">Robotics</a></li>
-            <li><a href="#games">Games</a></li>
-            <li><a href="#tools">Tools</a></li>
-            <li><a href="#design" data-i18n="navDesign">3D design</a></li>
-            <li><a href="tools.html#archiv" data-i18n="footerArchive">Archive &amp; history</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h2 data-i18n="footerOpen">Open</h2>
-          <ul class="footer-nav">
-            <li><a href="https://www.youtube.com/@marcelloswigswag" target="_blank" rel="noopener">YouTube · One Humanity Lab</a></li>
-            <li><a href="https://www.instagram.com/marcelloswigswag/" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://github.com/DesignStraub" target="_blank" rel="noopener">GitHub</a></li>
-            <li><a href="https://makerworld.com/@MarcelloStr" target="_blank" rel="noopener">MakerWorld</a></li>
-            <li><a href="https://onehumanity.itch.io" target="_blank" rel="noopener">itch.io</a></li>
-            <li><a href="https://oneplanetonehumanity.etsy.com" target="_blank" rel="noopener" data-i18n="footerEtsy">Etsy shop</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h2 data-i18n="footerLegal">Legal</h2>
-          <ul class="footer-nav">
-            <li><a href="impressum.html" data-i18n="navLegal">Legal notice</a></li>
-            <li><a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <footer class="g-legal">
+    <a href="impressum.html" data-i18n="navLegal">Legal notice</a>
+    <a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a>
+    <span>© <span data-year></span> MorphicMoons</span>
   </footer>
+
+  <noscript>
+    <p class="g-noscript">Die 3D-Galerie braucht JavaScript. <a href="uebersicht.html">Zur Übersicht ohne 3D</a> · <a href="tools.html">Alle Projekte</a></p>
+  </noscript>
 
   <script>
     window.OH_I18N = {
       de: {
-        heroLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge und gestalten 3D-Modelle zum Drucken. Verschiedene Projekte, eine Haltung: offen, lokal und für Menschen gemacht.',
-        heroCtaProjects: 'Projekte ansehen',
-        heroCtaYusu: 'Yusu im Browser ansehen',
-        heroCtaYoutube: 'One Humanity Lab auf YouTube',
-        valuesKicker: 'Wofür wir stehen',
-        v1Title: 'Offen',
-        v1Text: 'Code, Dateien und Anleitungen werden veröffentlicht, wo immer es geht.',
-        v2Title: 'Lokal',
-        v2Text: 'Kein Account, keine Cloud – unsere Geräte und Werkzeuge funktionieren für sich.',
-        v3Title: 'Menschlich',
-        v3Text: 'Für Menschen gemacht, nicht für Kennzahlen.',
-        projKicker: 'Projekte',
-        projTitle: 'Woran wir bauen.',
-        chipAll: 'Alle',
-        railFilter: 'Nach Bereich filtern',
-        railMore: 'Alle {n} Projekte zeigen',
-        railLess: 'Weniger zeigen',
-        rmAll: 'Alle Projekte im Detail →',
-        rmArchive: 'Archiv',
-        wsKicker: 'Die Werkstatt',
-        wsTitle: 'Wo alles zusammenkommt.',
-        wsIntro: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
-        wsAlt1: 'Werkbank mit Lochwand, Werkzeug, Kabelrollen, Monitor und 3D-gedruckten Teilen unter einer Lichtleiste',
-        wsAlt2: 'Die Werkstatt am Abend: Holztisch, Lochwand und ein großer geschlossener 3D-Drucker',
-        wsAlt3: 'Schreibtisch mit Monitor, Tastatur, Lautsprechern und Laptop am Fenster',
-        aboutKicker: 'Wer dahinter steckt',
-        aboutTitle: 'Hi, ich bin Marcello.',
-        aboutText: 'Gründer von OneHumanity Labs – im Netz meist als MarcelloSwigswag unterwegs. Von Beruf Software-Entwickler, gelernter Handwerker, deshalb arbeite ich gern mit Code und mit den Händen. Bisher ist das Lab nur ich; künftig sollen hier auch weitere Menschen mitbauen.',
-        aboutAlt: 'Marcello an seinem Schreibtisch im Aachener Studio',
-        takePartKicker: 'Mitmachen',
-        takePartTitle: 'Zuschauen, spielen, nachbauen.',
-        takePartIntro: 'Videos zu den Projekten, offene Dateien und offener Code, kostenlose Spiele – und freie Sticker für gute Orte.',
-        ctaYoutube: 'One Humanity Lab auf YouTube',
-        hintYoutube: 'Walkthroughs und Fortschritte zu Robotern, Spielen und allem anderen auf der Werkbank.',
-        ctaFiles: 'Code &amp; Dateien auf GitHub',
-        hintFiles: 'Spiele, Firmware, CAD und Platinen.',
-        ctaPrint: '3D-Modelle auf MakerWorld',
-        hintPrint: 'Druckdateien zu allem aus dem Bereich 3D-Design.',
-        ctaItch: 'Spiele auf itch.io',
-        hintItch: 'Kostenlos herunterladen und spielen – Windows, macOS und Linux.',
-        ctaRequest: 'Kostenloses Sticker-Set anfragen',
-        hintRequest: 'Limitierte kostenlose Sets. Druck und Versand übernehmen wir – es kann ein paar Wochen dauern.',
-        ctaSupport: 'Zum Shop',
-        hintSupport: 'Sticker, Lesezeichen und fertige Stücke auf Etsy. Jeder Kauf fließt ins nächste Projekt.'
+        introLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst.',
+        introEnter: 'Eintreten',
+        introDirect: 'Oder direkt zu',
+        introList: 'Als Liste',
+        hudSound: 'Ton an oder aus',
+        roomWorkshop: 'Werkstatt',
+        roomArt: 'Kunst',
+        hudList: 'Liste',
+        panelClose: 'Schließen'
       },
       en: {
-        heroLead: 'An independent lab from Aachen. We build robots, make games and tools, and design 3D models for printing. Different projects, one attitude: open, local and made for people.',
-        heroCtaProjects: 'See the projects',
-        heroCtaYusu: 'Meet Yusu in the browser',
-        heroCtaYoutube: 'One Humanity Lab on YouTube',
-        valuesKicker: 'What we stand for',
-        v1Title: 'Open',
-        v1Text: 'Code, files and guides are published wherever possible.',
-        v2Title: 'Local',
-        v2Text: 'No account, no cloud – our devices and tools work on their own.',
-        v3Title: 'Human',
-        v3Text: 'Made for people, not for metrics.',
-        projKicker: 'Projects',
-        projTitle: 'What we are building.',
-        chipAll: 'All',
-        railFilter: 'Filter by area',
-        railMore: 'Show all {n} projects',
-        railLess: 'Show fewer',
-        rmAll: 'Every project in detail →',
-        rmArchive: 'Archive',
-        wsKicker: 'The workshop',
-        wsTitle: 'Where it all comes together.',
-        wsIntro: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
-        wsAlt1: 'Workbench with pegboard, tools, cable spools, monitor and 3D-printed parts under a light bar',
-        wsAlt2: 'The workshop in the evening: wooden desk, pegboard wall and a large enclosed 3D printer',
-        wsAlt3: 'Desk with monitor, keyboard, speakers and laptop by the window',
-        aboutKicker: 'Who is behind it',
-        aboutTitle: 'Hi, I\u2019m Marcello.',
-        aboutText: 'Founder of OneHumanity Labs – online mostly as MarcelloSwigswag. Software developer by profession and trained craftsman, so I like working with code and with my hands. For now the lab is just me; in the future more people are meant to build here too.',
-        aboutAlt: 'Marcello at his desk in the Aachen studio',
-        takePartKicker: 'Take part',
-        takePartTitle: 'Follow along, play, rebuild.',
-        takePartIntro: 'Videos of the projects, open files and code, free games – and free stickers for good places.',
-        ctaYoutube: 'One Humanity Lab on YouTube',
-        hintYoutube: 'Walkthroughs and progress on robots, games and everything else on the bench.',
-        ctaFiles: 'Code &amp; files on GitHub',
-        hintFiles: 'Games, firmware, CAD and circuit boards.',
-        ctaPrint: '3D models on MakerWorld',
-        hintPrint: 'Print files for everything from the 3D design section.',
-        ctaItch: 'Games on itch.io',
-        hintItch: 'Download and play for free – Windows, macOS and Linux.',
-        ctaRequest: 'Request a free sticker set',
-        hintRequest: 'Limited free sets. We cover printing and shipping – it may take a few weeks.',
-        ctaSupport: 'Visit the shop',
-        hintSupport: 'Stickers, bookmarks and finished pieces on Etsy. Every purchase goes into the next project.'
+        introLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art.',
+        introEnter: 'Enter',
+        introDirect: 'Or go straight to',
+        introList: 'As a list',
+        hudSound: 'Sound on or off',
+        roomWorkshop: 'Workshop',
+        roomArt: 'Art',
+        hudList: 'List',
+        panelClose: 'Close'
       }
     };
   </script>
   <script src="assets/projects.data.js?v=20261125b"></script>
+  <script src="assets/artworks.data.js?v=20261125a"></script>
   <script src="assets/projects.render.js?v=20261125c"></script>
   <script src="assets/site.js?v=20261126a"></script>
+  <script type="module" src="assets/gallery.js?v=20261126j"></script>
   <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

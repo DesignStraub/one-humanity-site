@@ -1,142 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3D-Galerie — OneHumanity Labs</title>
-  <meta name="description" content="OneHumanity Labs aus Aachen: Robotics, Games, Tools, 3D-Design und Kunst – als begehbare 3D-Galerie. Verschiedene Projekte, eine Haltung: offen, lokal und für Menschen gemacht.">
-  <link rel="canonical" href="https://oneplanetonehumanity.com/galerie.html">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="OneHumanity Labs — One Planet, One Humanity">
-  <meta property="og:description" content="An independent lab from Aachen: robotics, games, tools, 3D design and art – as a gallery you can walk through.">
-  <meta property="og:image" content="https://oneplanetonehumanity.com/img/yusu-head-render.jpg">
-
-  <link rel="stylesheet" href="assets/site.css?v=20261126a">
-  <link rel="stylesheet" href="assets/gallery.css?v=20261126h">
-  <meta name="theme-color" content="#03050c">
-  <link rel="modulepreload" href="assets/vendor/three.module.min.js">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://oneplanetonehumanity.com/">
+  <script>location.replace('./' + location.hash);</script>
+  <meta http-equiv="refresh" content="0; url=./">
 </head>
-
-<body class="gallery-page">
-
-  <!-- the 3D gallery draws into this -->
-  <div class="g-stage" data-stage aria-hidden="true"></div>
-
-  <!-- welcome: readable without 3D, also for search engines and screen readers -->
-  <section class="g-intro" data-intro aria-labelledby="intro-title">
-    <div class="g-intro-card">
-      <svg width="52" height="52" class="g-intro-logo" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
-      </svg>
-      <h1 id="intro-title" class="g-intro-title">OneHumanity Labs</h1>
-      <p class="g-intro-claim">One Planet, One Humanity</p>
-      <p class="g-intro-lead" data-i18n="introLead">An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art.</p>
-      <button class="g-enter" type="button" data-choice="robotics">
-        <span class="g-enter-label" data-i18n="introEnter">Enter</span>
-      </button>
-      <p class="g-intro-status" data-status aria-live="polite">Loading the gallery …</p>
-      <nav class="g-intro-rooms" aria-label="Rooms">
-        <span data-i18n="introDirect">Or go straight to</span>
-        <a href="#games" data-choice="games">Games</a>
-        <a href="#werkstatt" data-choice="werkstatt" data-i18n="roomWorkshop">Workshop</a>
-        <a href="#kunst" data-choice="kunst" data-i18n="roomArt">Art</a>
-        <a href="#foyer" data-choice="foyer">Foyer</a>
-        <a href="index.html" data-i18n="introList">View as a list</a>
-      </nav>
-    </div>
-  </section>
-
-  <!-- cinematic bars and subtitles during the arrival -->
-  <div class="g-bars" aria-hidden="true"><i></i><i></i></div>
-  <div class="g-touch" aria-hidden="true">
-    <div class="g-stick" data-stick><i></i></div>
-    <button class="g-jump" type="button" tabindex="-1" data-jump>
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/><path d="M6 19l6-6 6 6" opacity=".45"/></svg>
-    </button>
-  </div>
-  <p class="g-subtitle" data-subtitle aria-live="polite" hidden></p>
-
-  <!-- controls on top of the gallery -->
-  <header class="g-hud-top">
-    <a class="g-brand" href="#foyer" data-room-link="foyer" aria-label="OneHumanity Labs – Foyer">
-      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M20 28c0-5.5 4.5-10 10-10 3.1 0 6 1.5 7.9 4 1.9-2.5 4.8-4 7.9-4 5.5 0 10 4.5 10 10 0 11.8-18.1 19.4-18.1 19.4S20 39.8 20 28z" fill="currentColor"/>
-      </svg>
-      <span>OneHumanity <span class="suffix">Labs</span></span>
-    </a>
-    <nav class="g-rooms" aria-label="Rooms" data-rooms>
-      <button type="button" data-room="foyer">Foyer</button>
-      <button type="button" data-room="robotics">Robotics</button>
-      <button type="button" data-room="games">Games</button>
-      <button type="button" data-room="werkstatt" data-i18n="roomWorkshop">Workshop</button>
-      <button type="button" data-room="kunst" data-i18n="roomArt">Art</button>
-    </nav>
-    <div class="g-hud-actions">
-      <button class="g-pill g-sound" type="button" data-sound aria-pressed="false" data-i18n-attr="aria-label:hudSound" aria-label="Sound">
-        <svg class="on" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
-        <svg class="off" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 9.5l5 5M21.5 9.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </button>
-      <a class="g-pill" href="index.html" data-i18n="hudList">List</a>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button type="button" data-lang="de">DE</button>
-        <button type="button" data-lang="en">EN</button>
-      </div>
-    </div>
-  </header>
-
-
-  <p class="g-toast" data-toast role="status" hidden></p>
-
-  <aside class="g-panel" data-panel hidden aria-labelledby="panel-title" tabindex="-1">
-    <button class="g-panel-close" type="button" data-panel-close data-i18n-attr="aria-label:panelClose" aria-label="Close">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-    <div class="g-panel-body" data-panel-body></div>
-  </aside>
-
-  <footer class="g-legal">
-    <a href="impressum.html" data-i18n="navLegal">Legal notice</a>
-    <a href="datenschutz.html" data-i18n="navPrivacy">Privacy</a>
-    <span>© <span data-year></span> MorphicMoons</span>
-  </footer>
-
-  <noscript>
-    <p class="g-noscript">Die 3D-Galerie braucht JavaScript. <a href="index.html">Zur Übersicht ohne 3D</a> · <a href="tools.html">Alle Projekte</a></p>
-  </noscript>
-
-  <script>
-    window.OH_I18N = {
-      de: {
-        introLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst.',
-        introEnter: 'Eintreten',
-        introDirect: 'Oder direkt zu',
-        introList: 'Als Liste',
-        hudSound: 'Ton an oder aus',
-        roomWorkshop: 'Werkstatt',
-        roomArt: 'Kunst',
-        hudList: 'Liste',
-        panelClose: 'Schließen'
-      },
-      en: {
-        introLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art.',
-        introEnter: 'Enter',
-        introDirect: 'Or go straight to',
-        introList: 'As a list',
-        hudSound: 'Sound on or off',
-        roomWorkshop: 'Workshop',
-        roomArt: 'Art',
-        hudList: 'List',
-        panelClose: 'Close'
-      }
-    };
-  </script>
-  <script src="assets/projects.data.js?v=20261125b"></script>
-  <script src="assets/artworks.data.js?v=20261125a"></script>
-  <script src="assets/projects.render.js?v=20261125c"></script>
-  <script src="assets/site.js?v=20261126a"></script>
-  <script type="module" src="assets/gallery.js?v=20261126i"></script>
-  <script data-goatcounter="https://onehumanity.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<body>
+  <p><a href="./">Zur 3D-Galerie</a></p>
 </body>
 </html>
