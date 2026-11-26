@@ -1837,7 +1837,7 @@ function buildApps() {
   }, { px: 1200, transparent: true });
   place(note, wallSpot('apps', 'e', 0, r.h - 1.3));
   // two big screens on the far wall, more along the side walls
-  const slots = [['e', -2.9], ['e', 2.9], ['n', -2.6], ['s', 2.6], ['n', 2.6], ['s', -2.6]];
+  const slots = apps.length === 1 ? [['e', 0]] : [['e', -2.9], ['e', 2.9], ['n', -2.6], ['s', 2.6], ['n', 2.6], ['s', -2.6]];
   apps.slice(0, slots.length).forEach((p, i) => {
     const [side, along] = slots[i];
     const card = p.app || {};
@@ -2367,7 +2367,9 @@ const warp = (() => {
 function impact() {
   state.shake = 1;
   sound.impact();
-  try { if (navigator.vibrate) navigator.vibrate([35, 40, 90]); } catch (e) { /* not supported */ }
+  // phones only buzz after a tap; arriving through a link there was none yet
+  const tapped = !navigator.userActivation || navigator.userActivation.hasBeenActive;
+  try { if (navigator.vibrate && tapped) navigator.vibrate([35, 40, 90]); } catch (e) { /* not supported */ }
 }
 
 /* Robot hands like Yusu's body concept: white low-poly shells, black

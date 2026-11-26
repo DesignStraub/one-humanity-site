@@ -133,14 +133,6 @@ window.OH_PROJECTS = [
         }
       },
       {
-        src: 'img/yusu-app.jpg', w: 1400, h: 700,
-        caption: { de: 'Die Begleit-App im Browser (Prototyp)', en: 'The companion app in the browser (prototype)' },
-        alt: {
-          de: 'Bildschirmfoto der Begleit-App: zwei leuchtende Augen und sechs Mund-Punkte auf Schwarz, unten ein Eingabefeld',
-          en: 'Screenshot of the companion app: two glowing eyes and six mouth dots on black, a text field below'
-        }
-      },
-      {
         src: 'img/yusu-body-concept.jpg', w: 1000, h: 1500,
         caption: { de: 'Konzept des ganzen Roboters – bisher nur ein Render', en: 'Concept of the whole robot – so far only a render' },
         alt: {
@@ -149,16 +141,6 @@ window.OH_PROJECTS = [
         }
       }
     ],
-    demo: {
-      href: 'yusu/',
-      label: { de: 'Im Browser ansehen', en: 'See it in the browser' }
-    },
-    // shown in the gallery's apps room
-    app: {
-      image: { src: 'img/yusu-app.jpg', w: 1400, h: 700 },
-      de: { title: 'Yusu – Begleit-App' },
-      en: { title: 'Yusu – companion app' }
-    },
     build: {
       href: '#TODO-yusu-repo',
       label: { de: 'Dateien & Code', en: 'Files & code' }
