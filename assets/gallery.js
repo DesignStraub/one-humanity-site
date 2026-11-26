@@ -1168,6 +1168,7 @@ function mapRoomAt(uv) {
    state on the east wall, the plan on the north wall, other robots south
    -------------------------------------------------------------------------- */
 const HEAD_SPOT = new THREE.Vector3(0, 0, ROOMS.robotics.z - 1.3);
+const HEAD_Y = 2.1; // the head floats just above the projector beam
 let head = null;
 
 function buildRobotics() {
@@ -1205,7 +1206,7 @@ function buildRobotics() {
   scene.add(spot, spot.target);
 
   head = new THREE.Group();
-  head.position.set(HEAD_SPOT.x, 2.55, HEAD_SPOT.z);
+  head.position.set(HEAD_SPOT.x, HEAD_Y, HEAD_SPOT.z);
   scene.add(head);
   buildYusuHalo(head, cyan);
   // the real head from the CAD; if it cannot load, the drawn face
@@ -1218,7 +1219,7 @@ function buildRobotics() {
     id: 'project-yusu', root: plinth, meshes: [plinth, stageMesh], room: 'robotics',
     open: () => openProject(yusu), viewDist: 5.2
   });
-  headExhibit.center.set(HEAD_SPOT.x, 2.3, HEAD_SPOT.z);
+  headExhibit.center.set(HEAD_SPOT.x, HEAD_Y - 0.2, HEAD_SPOT.z);
   headExhibit.normal.set(0, 0, 1);
   const pickBox = box(2.0, 1.7, 1.0, new THREE.MeshBasicMaterial());
   pickBox.visible = false;
@@ -1239,16 +1240,19 @@ function buildRobotics() {
   if (!yusu) return;
 
   // history: render + gallery on the west wall
+  // in the order it happened, from the door towards Yusu: idea, design,
+  // printed parts, the first head, the eyes, and where it stands now
+  const pool = [...(yusu.gallery || [])];
+  if (yusu.image) pool.push({ ...yusu.image, caption: { de: TEXT.de.renderCaption, en: TEXT.en.renderCaption } });
+  const nowItems = yusu.now ? yusu.now.items : [];
+  const latest = nowItems.find((it) => !it.video);
+  const when = (l) => ((yusu.now.title || {})[l] || '').split('·').pop().trim();
+  if (latest) pool.push({ ...latest, caption: { de: when('de') + ': ' + latest.caption.de, en: when('en') + ': ' + latest.caption.en }, now: true });
+  const ORDER = [/body-concept/, /head-render\./, /head-parts/, /head-print/, /eyes-(firmware|display)/];
   const past = [];
-  if (yusu.image) past.push({ ...yusu.image, caption: { de: TEXT.de.renderCaption, en: TEXT.en.renderCaption } });
-  // one picture per step: the app hangs in the apps room, and of the several
-  // face close-ups the first one is enough here
-  let faces = 0;
-  (yusu.gallery || []).forEach((g) => {
-    if (/yusu-app\./.test(g.src)) return;
-    if (/eyes/.test(g.src) && faces++ > 0) return;
-    past.push(g);
-  });
+  for (const re of ORDER) { const it = pool.find((g) => re.test(g.src) && !past.includes(g)); if (it) past.push(it); }
+  const novItem = pool.find((g) => g.now);
+  if (novItem) past.push(novItem);
   wallTitle('robotics', 'w', 0, r.h - 1.1, () => t('pastTitle'), true);
   rowOnWall('robotics', 'w', past, { y: 2.4, from: -7.6, to: 7.6, maxW: 2.6, maxH: 1.8, style: 'dark', dark: true, timeline: true },
     (item, i) => () => openMedia(item, { kicker: t('pastTitle') + ' · ' + (i + 1), back: yusu }));
@@ -1553,7 +1557,7 @@ function buildYusuHalo(group, color) {
   group.add(glow);
 
   animated.push((dt, time) => {
-    group.position.y = 2.55 + Math.sin(time * 1.1) * 0.06;
+    group.position.y = HEAD_Y + Math.sin(time * 1.1) * 0.06;
     rings.forEach((ring) => { ring.rotation.z += ring.userData.speed * dt; });
   });
 }
