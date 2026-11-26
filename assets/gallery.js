@@ -1168,7 +1168,7 @@ function mapRoomAt(uv) {
    state on the east wall, the plan on the north wall, other robots south
    -------------------------------------------------------------------------- */
 const HEAD_SPOT = new THREE.Vector3(0, 0, ROOMS.robotics.z - 1.3);
-const HEAD_Y = 2.1; // the head floats just above the projector beam
+const HEAD_Y = 2.5;
 let head = null;
 
 function buildRobotics() {
@@ -1443,7 +1443,7 @@ async function loadYusuHead(group) {
   const white = new THREE.MeshStandardMaterial({ color: 0xe4e2dd, roughness: 0.6, metalness: 0.02, flatShading: true, envMapIntensity: 0.55 });
   const black = new THREE.MeshStandardMaterial({ color: 0x1a1d22, roughness: 0.5, flatShading: true });
   const visor = new THREE.MeshStandardMaterial({
-    color: 0x5e6973, roughness: 0.34, metalness: 0.3, flatShading: true, envMapIntensity: 0.9,
+    color: 0x78828a, roughness: 0.5, metalness: 0.08, flatShading: true, envMapIntensity: 0.8,
     emissive: 0xffffff, emissiveMap: eyes.texture, emissiveIntensity: 0.7
   });
   eyes.texture.wrapS = eyes.texture.wrapT = THREE.ClampToEdgeWrapping;
@@ -1452,8 +1452,10 @@ async function loadYusuHead(group) {
   // CAD is z-up with the face towards −y: stand it up, face to +z, centred
   const model = new THREE.Group();
   model.rotation.x = -Math.PI / 2;
-  model.scale.setScalar(HEAD_SCALE);
-  model.position.y = -((header.min[2] + header.max[2]) / 2) * HEAD_SCALE;
+  // CAD z is up: a touch shorter, so it matches the photos of the real head
+  const SQUASH = 0.92;
+  model.scale.set(HEAD_SCALE, HEAD_SCALE, HEAD_SCALE * SQUASH);
+  model.position.y = -((header.min[2] + header.max[2]) / 2) * HEAD_SCALE * SQUASH;
   group.add(model);
 
   for (const part of header.parts) {
