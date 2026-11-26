@@ -69,7 +69,7 @@ const TEXT = {
     designTitle: '3D-Design', designSub: 'Druckdateien auf MakerWorld',
     toolsTitle: 'Tools', benchTitle: 'Auf der Werkbank', workshopTitle: 'Die Werkstatt',
     workshopText: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
-    artSoon: 'Artworks folgen', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
+    artSoon: 'Artworks folgen', comingSoon: 'Bald hier', artDoorText: 'Bis dahin findest du alle Bilder auf Instagram.', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
     artWall: 'Bilder, Zeichnungen, Experimente.',
     itchSign: 'Alle Spiele auf itch.io',
     allStages: 'Alle Etappen auf der Projektseite →', toProject: '← Zurück zu Yusu',
@@ -111,7 +111,7 @@ const TEXT = {
     designTitle: '3D design', designSub: 'Print files on MakerWorld',
     toolsTitle: 'Tools', benchTitle: 'On the workbench', workshopTitle: 'The workshop',
     workshopText: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
-    artSoon: 'Artworks coming soon', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
+    artSoon: 'Artworks coming soon', comingSoon: 'Coming soon', artDoorText: 'Until then, all the pictures are on Instagram.', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
     artWall: 'Pictures, drawings, experiments.',
     itchSign: 'All games on itch.io',
     allStages: 'Every stage on the project page →', toProject: '← Back to Yusu',
@@ -142,16 +142,17 @@ const t = (key) => TEXT[lang()][key] ?? TEXT.en[key] ?? key;
    Floor plan. Rooms sit 1.2 m apart and are joined by short passages, so no
    two walls ever share a plane. x → east, z → south, y → up.
    -------------------------------------------------------------------------- */
+const GAP = 0.4; // between the foyer and each room: a short bridge
 const ROOMS = {
   foyer:     { x: 0,     z: 0,     w: 14, d: 12, h: 4.6, accent: 0xf3d7a2, wall: 0x0b1020, floor: 0x121b36,
                doors: ['n', 'e', 's', 'w'] },
-  robotics:  { x: 0,     z: -18.2, w: 20, d: 22, h: 6.5, accent: 0x8fd8ff, wall: 0x091022, floor: 0x0f1a36,
+  robotics:  { x: 0,     z: -(6 + GAP + 11), w: 20, d: 22, h: 6.5, accent: 0x8fd8ff, wall: 0x091022, floor: 0x0f1a36,
                doors: ['s'] },
-  games:     { x: 15.2,  z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x120c26, floor: 0x1a1334,
+  games:     { x: 7 + GAP + 7, z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x120c26, floor: 0x1a1334,
                doors: ['w'] },
-  kunst:     { x: -15.2, z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
+  kunst:     { x: -(7 + GAP + 7), z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
                doors: ['e'] },
-  werkstatt: { x: 0,     z: 14.2,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x13111a, floor: 0x1e1820,
+  werkstatt: { x: 0,     z: 6 + GAP + 7,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x13111a, floor: 0x1e1820,
                doors: ['n'] }
 };
 const ROOM_ORDER = ['foyer', 'robotics', 'games', 'werkstatt', 'kunst'];
@@ -159,20 +160,25 @@ const ROOM_ORDER = ['foyer', 'robotics', 'games', 'werkstatt', 'kunst'];
 /* Where each side room meets the foyer: a point just inside the room and
    one just inside the foyer. Paths between rooms run through these. */
 const PASSAGES = {
-  robotics:  { side: 'n', inRoom: new THREE.Vector3(0, EYE, -8.6),  inFoyer: new THREE.Vector3(0, EYE, -4.8) },
-  games:     { side: 'e', inRoom: new THREE.Vector3(9.6, EYE, 0),   inFoyer: new THREE.Vector3(5.8, EYE, 0) },
-  kunst:     { side: 'w', inRoom: new THREE.Vector3(-9.6, EYE, 0),  inFoyer: new THREE.Vector3(-5.8, EYE, 0) },
-  werkstatt: { side: 's', inRoom: new THREE.Vector3(0, EYE, 8.6),   inFoyer: new THREE.Vector3(0, EYE, 4.8) }
+  robotics:  { side: 'n', inRoom: new THREE.Vector3(0, EYE, -(6 + GAP + 1.4)), inFoyer: new THREE.Vector3(0, EYE, -4.8) },
+  games:     { side: 'e', inRoom: new THREE.Vector3(7 + GAP + 1.4, EYE, 0),   inFoyer: new THREE.Vector3(5.8, EYE, 0) },
+  kunst:     { side: 'w', inRoom: new THREE.Vector3(-(7 + GAP + 1.4), EYE, 0), inFoyer: new THREE.Vector3(-5.8, EYE, 0) },
+  werkstatt: { side: 's', inRoom: new THREE.Vector3(0, EYE, 6 + GAP + 1.4),   inFoyer: new THREE.Vector3(0, EYE, 4.8) }
 };
 
 /* First view of each room (room bar, links like index.html#games). */
 const ENTRY = {
   foyer:     { pos: [0, EYE, 4.2],    look: [0, 1.7, -14] },
-  robotics:  { pos: [0, EYE, -11.2],  look: [0, 1.7, -19.5] },
-  games:     { pos: [9.8, EYE, 0],    look: [22, 1.6, 0] },
-  werkstatt: { pos: [0, EYE, 9.4],    look: [0, 1.6, 21] },
-  kunst:     { pos: [-9.8, EYE, 0],   look: [-22, 2.0, 0] }
+  robotics:  { pos: [0, EYE, -(6 + GAP + 4)],   look: [0, 1.7, -(6 + GAP + 12.3)] },
+  games:     { pos: [7 + GAP + 1.6, EYE, 0],    look: [7 + GAP + 14, 1.6, 0] },
+  werkstatt: { pos: [0, EYE, 6 + GAP + 2.2],    look: [0, 1.6, 6 + GAP + 14] },
+  kunst:     { pos: [-(7 + GAP + 1.6), EYE, 0], look: [-(7 + GAP + 14), 2.0, 0] }
 };
+
+/* Until there are artworks, the art room stays closed: its door in the
+   foyer points to Instagram instead. */
+const ART_OPEN = ARTWORKS.length > 0;
+if (!ART_OPEN) ENTRY.kunst = { pos: [-1.6, EYE, 0], look: [-7, 2.2, 0] };
 
 /* --------------------------------------------------------------------------
    DOM
@@ -197,7 +203,7 @@ try {
 }
 if (!renderer) {
   statusEl.textContent = t('noWebgl');
-  choiceButtons.forEach((b) => { b.removeAttribute('data-choice'); b.href = 'uebersicht.html'; });
+  choiceButtons.forEach((b) => { if (b.tagName === 'A') b.href = 'index.html'; else b.addEventListener('click', () => { location.href = 'index.html'; }); });
   throw new Error('WebGL not available');
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
@@ -647,11 +653,12 @@ function buildPassage(id) {
   const mat = new THREE.MeshStandardMaterial({ color: 0x141a2a, roughness: 0.7 });
   const light = glowMat(r.accent, 0.8);
 
+  const closed = id === 'kunst' && !ART_OPEN;
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(along ? DOOR_W : len, along ? len : DOOR_W), MAT.glass);
   floor.rotation.x = -Math.PI / 2;
   floor.position.set(along ? 0 : mid, 0.001, along ? mid : 0);
   scene.add(floor);
-  floors.push(floor);
+  if (!closed) floors.push(floor);
   for (const s of [-1, 1]) {
     const side = along ? box(WALL, DOOR_H, len, mat) : box(len, DOOR_H, WALL, mat);
     side.position.set(along ? s * (DOOR_W / 2 + WALL / 2) : mid, DOOR_H / 2, along ? mid : s * (DOOR_W / 2 + WALL / 2));
@@ -667,7 +674,7 @@ function buildPassage(id) {
   const half = DOOR_W / 2 - 0.45;
   const lo = Math.min(a, b) - 1.2;
   const hi = Math.max(a, b) + 1.2;
-  walkRects.push(along ? [-half, half, lo, hi] : [lo, hi, -half, half]);
+  if (!closed) walkRects.push(along ? [-half, half, lo, hi] : [lo, hi, -half, half]);
 }
 
 /* A framed picture (or video screen) with an optional plaque under it. */
@@ -838,6 +845,8 @@ function buildFoyer() {
     }
   });
 
+  if (!ART_OPEN) artDoor();
+
   // take part: south wall, left of the workshop door (seen from inside)
   const join = board(3.6, 2.3, (ctx, w, h) => {
     const g = ctx.createLinearGradient(0, 0, w, h);
@@ -921,6 +930,44 @@ function buildFoyer() {
   });
 }
 
+/* The closed door to the art room: coming soon, Instagram until then. */
+function artDoor() {
+  const violet = ROOMS.kunst.accent;
+  const door = board(DOOR_W, DOOR_H, (ctx, w, h) => {
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#1d1640');
+    g.addColorStop(1, '#0b0919');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+    const rnd = rng(21);
+    for (let i = 0; i < 90; i++) {
+      ctx.fillStyle = `rgba(255,255,255,${0.1 + rnd() * 0.5})`;
+      ctx.fillRect(rnd() * w, rnd() * h, 2, 2);
+    }
+    ctx.strokeStyle = css(violet, 0.8);
+    ctx.lineWidth = w * 0.012;
+    ctx.strokeRect(w * 0.04, h * 0.03, w * 0.92, h * 0.94);
+    drawHeart(ctx, w / 2, h * 0.2, w * 0.16, css(violet, 0.9));
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `800 ${Math.round(w * 0.13)}px ${FONT}`;
+    ctx.fillText(t('kunst'), w / 2, h * 0.32, w * 0.86);
+    ctx.fillStyle = css(violet, 1);
+    ctx.font = `700 ${Math.round(w * 0.075)}px ${FONT}`;
+    ctx.fillText(t('comingSoon'), w / 2, h * 0.47, w * 0.86);
+    ctx.fillStyle = 'rgba(242,247,248,.8)';
+    ctx.font = `500 ${Math.round(w * 0.05)}px ${FONT}`;
+    wrapText(ctx, t('artDoorText'), w / 2, h * 0.58, w * 0.8, w * 0.068, 3);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `700 ${Math.round(w * 0.058)}px ${FONT}`;
+    ctx.fillText('@marcelloswigswag →', w / 2, h * 0.82, w * 0.86);
+  }, { px: 900 });
+  // sits right in the doorway of the foyer's west wall
+  place(door, wallSpot('foyer', 'w', 0, DOOR_H / 2, -WALL / 2 + 0.02));
+  blockers.push(door);
+  addExhibit({ id: 'art-door', root: door, meshes: [door], room: 'foyer', open: () => openArt(null), viewDist: 3.4 });
+}
+
 /* The heart from the logo as a solid, centred, `size` metres tall. */
 function heartGeometry(size, depth) {
   const k = size / 30;
@@ -998,7 +1045,7 @@ function mapRoomAt(uv) {
    Robotics hall: Yusu on a plinth, its history on the west wall, the current
    state on the east wall, the plan on the north wall, other robots south
    -------------------------------------------------------------------------- */
-const HEAD_SPOT = new THREE.Vector3(0, 0, -19.5);
+const HEAD_SPOT = new THREE.Vector3(0, 0, ROOMS.robotics.z - 1.3);
 let head = null;
 
 function buildRobotics() {
@@ -2063,6 +2110,7 @@ function entryOf(id) {
 /* Quick beam between rooms (room bar, floor plan). */
 function beamTo(id, then) {
   if (!ENTRY[id]) return;
+  if (id === 'kunst' && !ART_OPEN && !then) then = () => openArt(null);
   hidePanel();
   if (reduceMotion) {
     const e = entryOf(id);
@@ -2191,6 +2239,7 @@ function finishArrival(then) {
   updateRoom();
   const next = then || (a && a.then);
   if (state.room === 'robotics' && !next) greet();
+  else if (next) setTimeout(showHint, 1500);
   else { placeCard(state.room); setTimeout(showHint, 3300); }
   if (next) next();
 }
@@ -2483,7 +2532,7 @@ function openText(kind) {
         `<div class="actions">${linkButton(LINKS.instagram, 'Instagram')}${linkButton(LINKS.youtube, 'YouTube')}${linkButton(LINKS.github, 'GitHub')}</div>`;
     }
     return `<p class="g-panel-kicker">One Planet, One Humanity</p><h2 id="panel-title">OneHumanity Labs</h2><p>${esc(t('welcomeLead'))}</p>` +
-      `<div class="actions"><button class="btn primary" type="button" data-go-room="robotics">Robotics →</button>${linkButton('uebersicht.html', document.querySelector('[data-i18n="introList"]')?.textContent || 'List', false)}</div>`;
+      `<div class="actions"><button class="btn primary" type="button" data-go-room="robotics">Robotics →</button>${linkButton('index.html', document.querySelector('[data-i18n="introList"]')?.textContent || 'List', false)}</div>`;
   });
 }
 
@@ -2833,7 +2882,7 @@ function choose(id, ex) {
   intro.setAttribute('aria-hidden', 'true');
   document.body.classList.add('is-touring', 'is-cinematic');
   sound.whoosh(2.6);
-  arrive(id, ex ? () => visit(ex) : null);
+  arrive(id, ex ? () => visit(ex) : (id === 'kunst' && !ART_OPEN ? () => openArt(null) : null));
 }
 
 choiceButtons.forEach((el) => el.addEventListener('click', (e) => {

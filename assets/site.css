@@ -2117,3 +2117,16 @@ figure.media figcaption{
 @media (max-width: 600px){
   .now-grid{ grid-template-columns: 1fr 1fr; }
 }
+
+/* link to the walkable 3D gallery: a small glowing star in front */
+.nav-link-gallery::before{
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: #8fd8ff;
+  box-shadow: 0 0 8px #8fd8ff;
+}
