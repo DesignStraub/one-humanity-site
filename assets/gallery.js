@@ -17,6 +17,7 @@
    jump, room bar at the top to beam between rooms.
    ========================================================================== */
 import * as THREE from './vendor/three.module.min.js';
+import WORLD_HEART from './models/world-heart.js?v=20261126i';
 
 const PROJECTS = window.OH_PROJECTS || [];
 const ARTWORKS = window.OH_ARTWORKS || [];
@@ -79,7 +80,7 @@ const TEXT = {
     beamPrep: 'Gleich geht’s los – der Beam wird vorbereitet …',
     greet1: 'Hallo! Schön, dass du da bist.',
     greet2: 'Ich bin noch im Bau – schau dich ruhig um.',
-    hintTouch: 'Wischen zum Umsehen · Boden antippen zum Hingehen · Bild antippen für mehr',
+    hintTouch: 'Stick links zum Laufen · wischen zum Umsehen · Bild antippen für mehr',
     ready: 'Bereit.', loading: 'Galerie wird geladen …',
     noWebgl: 'Dein Browser kann die 3D-Galerie leider nicht anzeigen – die Übersicht funktioniert überall.',
     ytHint: 'Walkthroughs und Fortschritte zu Robotern, Spielen und allem anderen auf der Werkbank.',
@@ -121,7 +122,7 @@ const TEXT = {
     beamPrep: 'Almost there – preparing the beam …',
     greet1: 'Hi! Nice to have you here.',
     greet2: 'I’m still being built – have a look around.',
-    hintTouch: 'Swipe to look around · tap the floor to walk there · tap a picture for more',
+    hintTouch: 'Stick on the left to walk · swipe to look around · tap a picture for more',
     ready: 'Ready.', loading: 'Loading the gallery …',
     noWebgl: 'Your browser can’t show the 3D gallery – the overview works everywhere.',
     ytHint: 'Walkthroughs and progress on robots, games and everything else on the bench.',
@@ -231,6 +232,7 @@ const state = {
   room: null,
   glide: null,
   keys: new Set(),
+  stick: { x: 0, y: 0 }, // touch joystick, -1..1
   hovered: null,
   viewShift: 0,
   viewShiftY: 0,
@@ -906,7 +908,7 @@ function buildFoyer() {
   scene.add(inlay);
 
   // the world heart, floating above the ring
-  const heart = new THREE.Mesh(heartGeometry(1.15, 0.16), new THREE.MeshStandardMaterial({
+  const heart = new THREE.Mesh(worldHeartGeometry(1.5, 0.09), new THREE.MeshStandardMaterial({
     color: 0xfff3dc, roughness: 0.25, metalness: 0.35, emissive: gold, emissiveIntensity: 0.55, envMapIntensity: 1.5
   }));
   heart.position.set(0, 3.25, 0);
@@ -968,20 +970,26 @@ function artDoor() {
   addExhibit({ id: 'art-door', root: door, meshes: [door], room: 'foyer', open: () => openArt(null), viewDist: 3.4 });
 }
 
-/* The heart from the logo as a solid, centred, `size` metres tall. */
-function heartGeometry(size, depth) {
-  const k = size / 30;
-  const P = (x, y) => [(x - 37.9) * k, -(y - 32.7) * k];
-  const shape = new THREE.Shape();
-  shape.moveTo(...P(20, 28));
-  shape.bezierCurveTo(...P(20, 22.5), ...P(24.5, 18), ...P(30, 18));
-  shape.bezierCurveTo(...P(33.1, 18), ...P(36, 19.5), ...P(37.9, 22));
-  shape.bezierCurveTo(...P(39.8, 19.5), ...P(42.7, 18), ...P(45.8, 18));
-  shape.bezierCurveTo(...P(51.3, 18), ...P(55.8, 22.5), ...P(55.8, 28));
-  shape.bezierCurveTo(...P(55.8, 39.8), ...P(37.7, 47.4), ...P(37.7, 47.4));
-  shape.bezierCurveTo(...P(37.7, 47.4), ...P(20, 39.8), ...P(20, 28));
+/* The logo – the world heart – as a solid, `size` metres wide and centred.
+   The continents are cut out, so you look through them into the stars.
+   Shape data comes from the logo SVG (tools-dev/svg_to_shape.py). */
+function worldHeartGeometry(size, depth) {
+  const o = WORLD_HEART.outer;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let i = 0; i < o.length; i += 2) {
+    minX = Math.min(minX, o[i]); maxX = Math.max(maxX, o[i]);
+    minY = Math.min(minY, o[i + 1]); maxY = Math.max(maxY, o[i + 1]);
+  }
+  const k = size / (maxX - minX);
+  const pts = (a) => {
+    const out = [];
+    for (let i = 0; i < a.length; i += 2) out.push(new THREE.Vector2((a[i] - (minX + maxX) / 2) * k, -(a[i + 1] - (minY + maxY) / 2) * k));
+    return out;
+  };
+  const shape = new THREE.Shape(pts(o));
+  for (const h of WORLD_HEART.holes) shape.holes.push(new THREE.Path(pts(h)));
   const geo = new THREE.ExtrudeGeometry(shape, {
-    depth, bevelEnabled: true, bevelThickness: depth * 0.4, bevelSize: size * 0.035, bevelSegments: 4, curveSegments: 24
+    depth, bevelEnabled: true, bevelThickness: depth * 0.25, bevelSize: size * 0.0025, bevelSegments: 2, curveSegments: 4
   });
   geo.center();
   return geo;
@@ -2466,11 +2474,13 @@ function showPanel(build) {
   toastEl.hidden = true;
   panelBody.innerHTML = build();
   panel.hidden = false;
+  document.body.classList.add('has-panel');
   panel.scrollTop = 0;
   panel.focus({ preventScroll: true });
 }
 function hidePanel() {
   panel.hidden = true;
+  document.body.classList.remove('has-panel');
   panelBuilder = null;
   panelBody.innerHTML = '';
   if (location.hash.startsWith('#project-')) history.replaceState(null, '', location.pathname + location.search);
@@ -2778,6 +2788,63 @@ function jump() {
   if (state.jumpY > 0.001 || state.jumpV !== 0) return;
   state.jumpV = 4.4;
 }
+/* Touch joystick: a round knob you drag, as known from games. Left thumb
+   walks, the right thumb swipes the view and taps the jump button. */
+const stickEl = document.querySelector('[data-stick]');
+const jumpBtn = document.querySelector('[data-jump]');
+if (stickEl) {
+  const knob = stickEl.querySelector('i');
+  const pad = { id: null, cx: 0, cy: 0 };
+  const radius = () => stickEl.offsetWidth * 0.36;
+  const setStick = (dx, dy) => {
+    const r = radius();
+    const len = Math.hypot(dx, dy);
+    if (len > r) { dx *= r / len; dy *= r / len; }
+    knob.style.transform = `translate(${dx}px, ${dy}px)`;
+    // a small dead zone so a resting thumb does not drift
+    const nx = dx / r;
+    const ny = dy / r;
+    const m = Math.hypot(nx, ny);
+    state.stick.x = m < 0.12 ? 0 : nx;
+    state.stick.y = m < 0.12 ? 0 : ny;
+  };
+  const release = () => {
+    pad.id = null;
+    stickEl.classList.remove('is-active');
+    knob.style.transform = '';
+    state.stick.x = 0;
+    state.stick.y = 0;
+  };
+  stickEl.addEventListener('pointerdown', (e) => {
+    if (canSkip()) { finishArrival(); return; }
+    if (!state.started || pad.id !== null) return;
+    e.preventDefault();
+    sound.unlock();
+    const rect = stickEl.getBoundingClientRect();
+    pad.id = e.pointerId;
+    pad.cx = rect.left + rect.width / 2;
+    pad.cy = rect.top + rect.height / 2;
+    stickEl.classList.add('is-active');
+    try { stickEl.setPointerCapture(e.pointerId); } catch (err) { /* pointer already gone */ }
+    if (!panel.hidden) hidePanel();
+    setStick(e.clientX - pad.cx, e.clientY - pad.cy);
+  });
+  stickEl.addEventListener('pointermove', (e) => {
+    if (e.pointerId !== pad.id) return;
+    e.preventDefault();
+    setStick(e.clientX - pad.cx, e.clientY - pad.cy);
+  });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach((type) => stickEl.addEventListener(type, (e) => { if (e.pointerId === pad.id) release(); }));
+  window.addEventListener('blur', release);
+}
+if (jumpBtn) {
+  jumpBtn.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    if (canSkip()) { finishArrival(); return; }
+    if (state.started) jump();
+  });
+}
+
 const inField = (el) => el && el.closest && el.closest('input, textarea, select, [contenteditable]');
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !panel.hidden) { hidePanel(); return; }
@@ -2960,7 +3027,20 @@ function stepKeys(dt) {
   const k = state.keys;
   let wx = 0;
   let wz = 0;
-  if (k.size) {
+  const st = state.stick;
+  const stickOn = st.x !== 0 || st.y !== 0;
+  if (stickOn && !k.size) {
+    // the stick walks and strafes; how far you push it sets the pace
+    const mag = Math.min(1, Math.hypot(st.x, st.y));
+    const speed = mag > 0.92 ? 8.5 : 6.5 * mag;
+    const forward = -st.y / (mag || 1);
+    const strafe = st.x / (mag || 1);
+    const sin = Math.sin(state.yaw);
+    const cos = Math.cos(state.yaw);
+    wx = (-sin * forward + cos * strafe) * speed;
+    wz = (-cos * forward - sin * strafe) * speed;
+    if (state.glide) state.glide = null;
+  } else if (k.size) {
     // always at a brisk pace; Shift is for really running
     const speed = k.has('ShiftLeft') || k.has('ShiftRight') ? 10 : 6.5;
     const forward = (k.has('KeyW') || k.has('ArrowUp') ? 1 : 0) - (k.has('KeyS') || k.has('ArrowDown') ? 1 : 0);
@@ -2974,7 +3054,8 @@ function stepKeys(dt) {
     wz = (-cos * forward - sin * strafe) / len * speed;
   }
   const v = state.vel;
-  const rate = k.size ? 5 : 2.6; // speeds up quickly, drifts out slowly
+  const moving = k.size || stickOn;
+  const rate = moving ? 5 : 2.6; // speeds up quickly, drifts out slowly
   v.x += (wx - v.x) * Math.min(1, dt * rate);
   v.z += (wz - v.z) * Math.min(1, dt * rate);
   if (Math.abs(v.x) < 0.01 && Math.abs(v.z) < 0.01) { v.x = 0; v.z = 0; return; }
