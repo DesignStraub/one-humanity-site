@@ -204,7 +204,7 @@ try {
 }
 if (!renderer) {
   statusEl.textContent = t('noWebgl');
-  choiceButtons.forEach((b) => { if (b.tagName === 'A') b.href = 'index.html'; else b.addEventListener('click', () => { location.href = 'index.html'; }); });
+  choiceButtons.forEach((b) => { if (b.tagName === 'A') b.href = 'uebersicht.html'; else b.addEventListener('click', () => { location.href = 'uebersicht.html'; }); });
   throw new Error('WebGL not available');
 }
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
@@ -2542,7 +2542,7 @@ function openText(kind) {
         `<div class="actions">${linkButton(LINKS.instagram, 'Instagram')}${linkButton(LINKS.youtube, 'YouTube')}${linkButton(LINKS.github, 'GitHub')}</div>`;
     }
     return `<p class="g-panel-kicker">One Planet, One Humanity</p><h2 id="panel-title">OneHumanity Labs</h2><p>${esc(t('welcomeLead'))}</p>` +
-      `<div class="actions"><button class="btn primary" type="button" data-go-room="robotics">Robotics →</button>${linkButton('index.html', document.querySelector('[data-i18n="introList"]')?.textContent || 'List', false)}</div>`;
+      `<div class="actions"><button class="btn primary" type="button" data-go-room="robotics">Robotics →</button>${linkButton('uebersicht.html', document.querySelector('[data-i18n="introList"]')?.textContent || 'List', false)}</div>`;
   });
 }
 
