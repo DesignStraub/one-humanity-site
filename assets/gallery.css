@@ -500,6 +500,9 @@
 }
 @media (min-width: 701px) and (max-width: 980px){
   .g-brand .suffix{ display: none; }
+  /* tablets: the room bar gets its own row, so every room fits */
+  .g-hud-top{ flex-wrap: wrap; row-gap: 8px; }
+  .g-rooms{ order: 3; flex: 1 1 100%; justify-content: center; }
 }
 
 /* the white-blue flash when you are beamed somewhere */
