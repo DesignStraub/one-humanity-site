@@ -30,6 +30,43 @@
 .g-stage.is-dragging{ cursor: grabbing; }
 .g-stage.is-pointing{ cursor: pointer; }
 .g-stage canvas{ display: block; width: 100%; height: 100%; outline: none; }
+/* no blue selection or focus frame when you click or drag around the scene */
+.gallery-page{ -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+.gallery-page .g-panel{ -webkit-user-select: text; user-select: text; }
+.gallery-page :focus:not(:focus-visible){ outline: none; }
+.gallery-page .g-panel:focus{ outline: none; }
+
+/* crosshair while the mouse looks around (pointer lock) */
+.g-cross{
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 15;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 1.5px solid rgba(242, 247, 248, .55);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .2s ease, transform .2s ease, border-color .2s ease;
+}
+.g-cross::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: #f2f7f8;
+  box-shadow: 0 0 6px rgba(143, 216, 255, .9);
+}
+.is-mouselook .g-cross{ opacity: 1; transform: scale(1); }
+.is-mouselook.has-panel .g-cross{ opacity: 0; }
+.g-cross.is-on{ border-color: #8fd8ff; transform: scale(1.3); box-shadow: 0 0 12px rgba(143, 216, 255, .5); }
 
 /* --- welcome: a title over open space, like the start of a film -------- */
 .g-intro{
