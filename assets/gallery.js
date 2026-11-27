@@ -78,7 +78,10 @@ const TEXT = {
     allStages: 'Alle Etappen auf der Projektseite →', toProject: '← Zurück zu Yusu',
     onInstagram: 'Auf Instagram ansehen', clickHint: 'Anklicken für mehr',
     renderCaption: 'Der erste Entwurf als Render',
-    hintMouse: 'Ziehen zum Umsehen · Boden anklicken zum Hingehen · WASD zum Laufen · Leertaste zum Springen',
+    hintMouse: 'Klicken, dann mit der Maus umsehen · WASD zum Laufen · Leertaste zum Springen',
+    hintDrag: 'Ziehen zum Umsehen · Boden anklicken zum Hingehen · WASD zum Laufen · Leertaste zum Springen',
+    hintLook: 'Maus bewegen zum Umsehen · Klick öffnet, was im Fadenkreuz ist · WASD zum Laufen · Esc gibt die Maus frei',
+    hintRelock: 'Ins Bild klicken, um wieder mit der Maus zu schauen',
     beamPrep: 'Gleich geht’s los – der Beam wird vorbereitet …',
     greet1: 'Hallo! Schön, dass du da bist.',
     greet2: 'Mein Kopf läuft schon – gerade lerne ich neue Sachen dazu. Schau dich um!',
@@ -122,7 +125,10 @@ const TEXT = {
     allStages: 'Every stage on the project page →', toProject: '← Back to Yusu',
     onInstagram: 'View on Instagram', clickHint: 'Click for more',
     renderCaption: 'The first design as a render',
-    hintMouse: 'Drag to look around · click the floor to walk there · WASD to move · space to jump',
+    hintMouse: 'Click, then look around with the mouse · WASD to move · space to jump',
+    hintDrag: 'Drag to look around · click the floor to walk there · WASD to move · space to jump',
+    hintLook: 'Move the mouse to look around · click opens what is in the crosshair · WASD to move · Esc frees the mouse',
+    hintRelock: 'Click the view to look around with the mouse again',
     beamPrep: 'Almost there – preparing the beam …',
     greet1: 'Hi! Nice to have you here.',
     greet2: 'My head already works – and I’m learning new things. Have a look around!',
@@ -2803,7 +2809,7 @@ let hinted = false;
 function showHint() {
   if (hinted) return;
   hinted = true;
-  toast(coarse ? t('hintTouch') : t('hintMouse'), 6500);
+  toast(coarse ? t('hintTouch') : isLocked() ? t('hintLook') : (!canLock || lockBlocked) ? t('hintDrag') : t('hintMouse'), 6500);
 }
 
 /* --------------------------------------------------------------------------
@@ -3000,6 +3006,7 @@ function showPanel(build) {
   panel.hidden = false;
   document.body.classList.add('has-panel');
   panel.scrollTop = 0;
+  unlockMouse();
   panel.focus({ preventScroll: true });
 }
 function hidePanel() {
@@ -3249,9 +3256,72 @@ function hitAt(clientX, clientY) {
   return hits[0] || null;
 }
 
+function pickHit(hit) {
+  if (!hit) return;
+  const ex = hit.object.userData.exhibit;
+  if (ex) {
+    if (ex.onPick) ex.onPick(hit);
+    else visit(ex);
+    return;
+  }
+  if (floors.includes(hit.object)) {
+    hidePanel();
+    travel(hit.point, null);
+  }
+}
+
+/* Mouse look on computers, as in games: a click (or "Enter") hands the mouse
+   to the view – moving it looks around, a crosshair aims, a click opens what
+   it points at. Esc gives the mouse back; dragging still works without. */
+const canLock = !coarse && 'requestPointerLock' in renderer.domElement;
+const crossEl = document.createElement('div');
+crossEl.className = 'g-cross';
+crossEl.setAttribute('aria-hidden', 'true');
+document.body.appendChild(crossEl);
+function isLocked() { return document.pointerLockElement === renderer.domElement; }
+function centerXY() {
+  const r = renderer.domElement.getBoundingClientRect();
+  return [r.left + r.width / 2, r.top + r.height / 2];
+}
+function lockMouse() {
+  if (!canLock || lockBlocked || isLocked() || !panel.hidden) return;
+  try {
+    const p = renderer.domElement.requestPointerLock();
+    if (p && p.catch) p.catch(() => {});
+  } catch (err) { /* not allowed right now – dragging still works */ }
+}
+function unlockMouse() { if (isLocked()) document.exitPointerLock(); }
+let wasLocked = false;
+let lockBlocked = false; // the browser said no: stay with dragging
+let everLocked = false;
+// a refusal right after Esc is normal in Chrome; only a browser that never allows it counts
+document.addEventListener('pointerlockerror', () => { if (!everLocked) lockBlocked = true; });
+document.addEventListener('pointerlockchange', () => {
+  const on = isLocked();
+  document.body.classList.toggle('is-mouselook', on);
+  if (on) {
+    everLocked = true;
+    state.hoverAt = null;
+    if (state.started && hinted) toast(t('hintLook'), 4200);
+  } else {
+    crossEl.classList.remove('is-on');
+    if (wasLocked && state.started && panel.hidden) toast(t('hintRelock'), 3200);
+  }
+  wasLocked = on;
+});
+
 renderer.domElement.addEventListener('pointerdown', (e) => {
   if (canSkip()) { finishArrival(); return; }
   if (!state.started) return;
+  if (isLocked()) {
+    if (e.button === 0 && !state.beam) pickHit(hitAt(...centerXY()));
+    return;
+  }
+  if (canLock && !lockBlocked && e.pointerType === 'mouse' && e.button === 0) {
+    // an exhibit under the arrow still opens on release, anywhere else takes the mouse
+    const hit = hitAt(e.clientX, e.clientY);
+    if (!(hit && hit.object.userData.exhibit)) lockMouse();
+  }
   drag.active = true;
   drag.id = e.pointerId;
   drag.x = e.clientX;
@@ -3262,6 +3332,14 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
 });
 renderer.domElement.addEventListener('pointermove', (e) => {
   if (!state.started) return;
+  if (isLocked()) {
+    const k = 0.0024;
+    if (state.glide) { state.glide.look = false; }
+    state.yaw -= (e.movementX || 0) * k;
+    state.pitch = THREE.MathUtils.clamp(state.pitch - (e.movementY || 0) * k * 0.85, -1.0, 0.9);
+    if (state.glide) { state.glide.endYaw = state.yaw; state.glide.endPitch = state.pitch; }
+    return;
+  }
   if (drag.active && e.pointerId === drag.id) {
     const dx = e.clientX - drag.x;
     const dy = e.clientY - drag.y;
@@ -3286,19 +3364,9 @@ renderer.domElement.addEventListener('pointerup', (e) => {
   if (!drag.active || e.pointerId !== drag.id) return;
   drag.active = false;
   stage.classList.remove('is-dragging');
+  if (isLocked()) return; // this click only handed the mouse to the view
   if (drag.moved > 6 || state.beam) return;
-  const hit = hitAt(e.clientX, e.clientY);
-  if (!hit) return;
-  const ex = hit.object.userData.exhibit;
-  if (ex) {
-    if (ex.onPick) ex.onPick(hit);
-    else visit(ex);
-    return;
-  }
-  if (floors.includes(hit.object)) {
-    hidePanel();
-    travel(hit.point, null);
-  }
+  pickHit(hitAt(e.clientX, e.clientY));
 });
 renderer.domElement.addEventListener('pointercancel', () => { drag.active = false; stage.classList.remove('is-dragging'); });
 renderer.domElement.addEventListener('wheel', (e) => {
@@ -3486,6 +3554,7 @@ choiceButtons.forEach((el) => el.addEventListener('click', (e) => {
   const plain = el.classList.contains('g-enter') || id === 'foyer';
   history.replaceState(null, '', plain ? location.pathname + location.search : '#' + id);
   sound.unlock();
+  lockMouse();
   choose(id);
 }));
 // arriving through a link starts without a click: sound waits for the first one
@@ -3590,10 +3659,12 @@ function stepKeys(dt) {
 }
 
 function stepHover() {
-  if (!state.hoverAt || drag.active) return;
-  const hit = hitAt(state.hoverAt[0], state.hoverAt[1]);
+  const at = isLocked() ? centerXY() : state.hoverAt;
+  if (!at || drag.active) return;
+  const hit = hitAt(at[0], at[1]);
   const ex = hit && hit.object.userData.exhibit;
   stage.classList.toggle('is-pointing', !!ex);
+  crossEl.classList.toggle('is-on', !!ex);
   if (ex !== state.hovered) {
     if (state.hovered) state.hovered.hoverTarget = 1;
     state.hovered = ex || null;
