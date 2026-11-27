@@ -302,6 +302,7 @@
   bottom: max(40px, calc(env(safe-area-inset-bottom) + 32px));
   z-index: 20;
   transform: translateX(-50%);
+  width: max-content;
   max-width: calc(100vw - 32px);
   margin: 0;
   padding: 9px 16px;

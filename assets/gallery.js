@@ -69,7 +69,7 @@ const TEXT = {
     map: 'Lageplan', mapHint: 'Raum anklicken zum Hingehen',
     pastTitle: 'So ist Yusu entstanden', nowTitle: 'Aktueller Stand',
     designTitle: '3D-Design', designSub: 'Druckdateien auf MakerWorld',
-    planTitle: 'Etappen', planDone: '{n} von {m} geschafft', openMore: 'Antippen für mehr →',
+    planTitle: 'Etappen', planDone: '{n} von {m} geschafft', openMore: coarse ? 'Antippen für mehr →' : 'Klicken für mehr →',
     toolsTitle: 'Tools', benchTitle: 'Auf der Werkbank', workshopTitle: 'Die Werkstatt',
     workshopText: '3D-Druck, Elektronik, Lötstation, CAD und ein Schreibtisch für Code – alles für die erste Version eines Projekts steht in einem Raum in Aachen.',
     artSoon: 'Artworks folgen', comingSoon: 'Bald hier', artDoorText: 'Bis dahin findest du alle Bilder auf Instagram.', artSoonText: 'Bis dahin alles auf Instagram unter @marcelloswigswag.',
@@ -113,7 +113,7 @@ const TEXT = {
     map: 'Floor plan', mapHint: 'Click a room to walk there',
     pastTitle: 'How Yusu came to be', nowTitle: 'Current state',
     designTitle: '3D design', designSub: 'Print files on MakerWorld',
-    planTitle: 'Milestones', planDone: '{n} of {m} done', openMore: 'Tap for more →',
+    planTitle: 'Milestones', planDone: '{n} of {m} done', openMore: coarse ? 'Tap for more →' : 'Click for more →',
     toolsTitle: 'Tools', benchTitle: 'On the workbench', workshopTitle: 'The workshop',
     workshopText: '3D printing, electronics, soldering station, CAD and a desk for code – everything for the first version of a project is in one room in Aachen.',
     artSoon: 'Artworks coming soon', comingSoon: 'Coming soon', artDoorText: 'Until then, all the pictures are on Instagram.', artSoonText: 'Until then, everything is on Instagram as @marcelloswigswag.',
@@ -3663,7 +3663,11 @@ function frame(dt, time) {
   state.flash += (state.flashTarget - state.flash) * Math.min(1, dt * (state.flashTarget > state.flash ? 14 : 3.2));
   flashEl.style.opacity = state.flash > 0.004 ? state.flash.toFixed(3) : '0';
   if (!state.arriving) state.fovKick += (0 - state.fovKick) * Math.min(1, dt * 3);
-  const baseFov = coarse ? 70 : 62;
+  // upright phones: a wider view so the boards beside an exhibit stay in sight
+  const aspect = camera.aspect;
+  const baseFov = aspect < 1
+    ? THREE.MathUtils.clamp(2 * THREE.MathUtils.radToDeg(Math.atan(Math.tan(THREE.MathUtils.degToRad(26)) / aspect)), 70, 82)
+    : (coarse ? 70 : 62);
   let fov = baseFov + state.fovKick * 14;
   if (!state.started && !state.arriving) fov = introFov();
   else if (state.arriving && state.arriving.zoomFov) fov = state.arriving.zoomFov;
