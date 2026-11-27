@@ -2411,13 +2411,13 @@ function impact() {
 /* Robot hands like Yusu's body concept: white low-poly shells, black
    joints. They take shape from the wrist up with a glowing edge, and fade
    out when you look up. */
-function robotHandMat(color, glow) {
+function robotHandMat(color, glow, uniforms) {
   const m = new THREE.MeshStandardMaterial({
     color, roughness: 0.45, metalness: 0.08, flatShading: true, transparent: true,
     emissive: color, emissiveIntensity: glow
   });
   m.onBeforeCompile = (sh) => {
-    Object.assign(sh.uniforms, handUniforms);
+    Object.assign(sh.uniforms, uniforms || handUniforms);
     sh.vertexShader = sh.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vHP;')
       .replace('#include <project_vertex>', '#include <project_vertex>\nvHP = mvPosition.xyz;');
@@ -2516,18 +2516,66 @@ const handL = buildHand(-1);
 const handR = buildHand(1);
 hands.add(handL.group, handR.group);
 hands.visible = false;
-camera.add(hands);
+/* The hands are drawn in a second pass on top of the room, like in games,
+   so they never sink into a wall; they get their own soft light. */
+const vmScene = new THREE.Scene();
+const vmCam = new THREE.PerspectiveCamera();
+const vmHemi = new THREE.HemisphereLight(0xdfe8ff, 0x1a2233, 1.2);
+const vmKey = new THREE.DirectionalLight(0xffffff, 1.5);
+vmKey.position.set(0.5, 1, 0.9);
+vmScene.add(vmHemi, vmKey, hands);
 
-function poseHands(lift, curl, time) {
+/* The rest of the robot body (Yusu's concept: white shells, black joints):
+   you see it when you look down, and the legs swing as you walk. */
+// the body is always fully there (the arrival only builds up the hands)
+const bodyUniforms = { uReveal: { value: 10 }, uAlpha: { value: 1 }, uTime: skyUniforms.uTime, uColor: handUniforms.uColor };
+const BODY_WHITE = robotHandMat(0xeef0f2, 0.1, bodyUniforms);
+const BODY_BLACK = robotHandMat(0x1b1e24, 0.03, bodyUniforms);
+function buildBody() {
+  const g = new THREE.Group();
+  const part = (geo, mat = BODY_WHITE) => new THREE.Mesh(geo, mat);
+  const add = (m, x, y, z, parent = g) => { m.position.set(x, y, z); parent.add(m); return m; };
+  const TZ = 0.1; // chest a little behind the eyes, so you look past it at your feet
+  const torso = add(part(new THREE.CylinderGeometry(0.15, 0.12, 0.34, 6)), 0, 1.08, TZ);
+  torso.scale.z = 0.7;
+  add(part(new THREE.BoxGeometry(0.18, 0.012, 0.012), BODY_BLACK), 0, 1.15, TZ - 0.15 * 0.7 * 0.92);
+  add(part(new THREE.CylinderGeometry(0.125, 0.125, 0.045, 6), BODY_BLACK), 0, 0.89, TZ).scale.z = 0.72;
+  add(part(new THREE.CylinderGeometry(0.13, 0.105, 0.12, 6)), 0, 0.81, TZ * 0.5).scale.z = 0.75;
+  for (const sx of [-1, 1]) add(part(new THREE.SphereGeometry(0.055, 8, 6), BODY_BLACK), sx * 0.19, 1.22, TZ);
+  const legs = [-1, 1].map((sx) => {
+    const hip = add(new THREE.Group(), sx * 0.085, 0.77, 0);
+    add(part(new THREE.SphereGeometry(0.05, 8, 6), BODY_BLACK), 0, 0, 0, hip);
+    add(part(new THREE.CylinderGeometry(0.056, 0.046, 0.33, 6)), 0, -0.19, 0, hip);
+    const knee = add(new THREE.Group(), 0, -0.38, 0, hip);
+    add(part(new THREE.SphereGeometry(0.047, 8, 6), BODY_BLACK), 0, 0, 0, knee);
+    add(part(new THREE.CylinderGeometry(0.046, 0.038, 0.31, 6)), 0, -0.18, 0, knee);
+    add(part(new THREE.BoxGeometry(0.09, 0.05, 0.19)), 0, -0.36, -0.045, knee);
+    return { hip, knee, sx };
+  });
+  g.visible = false;
+  scene.add(g);
+  return { group: g, legs };
+}
+const body = buildBody();
+
+/* where the hands rest while you walk around: low in the corners, relaxed */
+const VM = { x: 0.21, y: -0.215, z: -0.46, rx: -0.55, ry: 0.4, rz: 0.25, turn: Math.PI, rest: 0.85, scale: 0.9 };
+function vmLayout() {
+  const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect * 0.42;
+  return { x: Math.min(VM.x, halfW * 0.66), scale: VM.scale * Math.min(1, halfW / 0.24), halfW };
+}
+function poseHands(lift, curl, time, blend = 0) {
   // keep both hands inside narrow (portrait) screens
   const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect * 0.42;
   const x = Math.min(0.12, halfW * 0.52);
   const scale = Math.min(1, halfW / 0.2);
+  const L = vmLayout();
+  const mix = (a, b) => a + (b - a) * blend;
   for (const h of [handL, handR]) {
     const sway = Math.sin(time * 1.3 + h.side) * 0.006;
-    h.group.scale.setScalar(scale);
-    h.group.position.set(h.side * x, -0.14 - lift + sway, -0.42);
-    h.group.rotation.set(-0.25, -h.side * 0.22, h.side * 0.28);
+    h.group.scale.setScalar(mix(scale, L.scale));
+    h.group.position.set(h.side * mix(x, L.x), mix(-0.14 - lift + sway, VM.y), mix(-0.42, VM.z));
+    h.group.rotation.set(mix(-0.25, VM.rx), mix(0, VM.turn) - h.side * mix(0.22, VM.ry), h.side * mix(0.28, VM.rz));
     h.fingers.forEach((f) => {
       const c = curl * (0.8 + f.i * 0.12);
       f.root.rotation.x = c * 0.65;
@@ -2536,6 +2584,109 @@ function poseHands(lift, curl, time) {
     h.tj.rotation.x = curl * 0.5;
     h.thumb.rotation.x = curl * 0.3;
   }
+}
+
+/* After the arrival the hands stay with you, as in first-person games:
+   they bob with your steps, lag a little behind when you turn, and the
+   right hand points at whatever you click – a light ping marks the spot. */
+const vm = { away: 1, walk: 0, swayX: 0, swayY: 0, lastYaw: 0, lastPitch: 0, point: -1, last: new THREE.Vector3(), speed: 0 };
+function stepViewmodel(dt, time) {
+  const moved = Math.hypot(state.pos.x - vm.last.x, state.pos.z - vm.last.z);
+  vm.last.copy(state.pos);
+  vm.speed += (Math.min(10, moved / Math.max(dt, 0.001)) - vm.speed) * Math.min(1, dt * 8);
+  const amt = clamp01(vm.speed / 6) * (reduceMotion ? 0.3 : 1);
+  vm.walk += dt * (2 + vm.speed * 1.3);
+
+  // the body below you: follows position and heading, legs swing
+  body.group.visible = state.started || (state.arriving && state.arriving.phase === 'hands');
+  if (body.group.visible) {
+    body.group.position.set(state.pos.x, state.pos.y - 1.6 + state.jumpY + state.bob * 0.6, state.pos.z);
+    body.group.rotation.y = state.yaw;
+    const air = clamp01(state.jumpY * 2);
+    for (const l of body.legs) {
+      const ph = vm.walk + (l.sx > 0 ? Math.PI : 0);
+      l.hip.rotation.x = Math.sin(ph) * 0.55 * amt * (1 - air) - air * 0.35;
+      l.knee.rotation.x = (Math.max(0, -Math.cos(ph)) * 0.7 * amt) * (1 - air) + air * 0.6;
+    }
+  }
+  if (state.arriving) return; // the arrival poses the hands itself
+
+  const show = state.started && panel.hidden;
+  vm.away += ((show ? 0 : 1) - vm.away) * Math.min(1, dt * (show ? 3.5 : 9));
+  hands.visible = vm.away < 0.985;
+  if (!hands.visible) return;
+
+  // turning: the hands trail behind a little
+  let dyaw = state.yaw - vm.lastYaw;
+  dyaw = Math.atan2(Math.sin(dyaw), Math.cos(dyaw));
+  const dpitch = state.pitch - vm.lastPitch;
+  vm.lastYaw = state.yaw;
+  vm.lastPitch = state.pitch;
+  const k = Math.min(1, dt * 7);
+  vm.swayX += (THREE.MathUtils.clamp(dyaw / Math.max(dt, 0.001) * 0.012, -0.045, 0.045) - vm.swayX) * k;
+  vm.swayY += (THREE.MathUtils.clamp(-dpitch / Math.max(dt, 0.001) * 0.01, -0.035, 0.035) - vm.swayY) * k;
+
+  // the pointing gesture: up quickly, hold, back down
+  let e = 0;
+  if (vm.point >= 0) {
+    vm.point += dt / 0.95;
+    if (vm.point >= 1) vm.point = -1;
+    else e = vm.point < 0.2 ? ease(vm.point / 0.2) : vm.point < 0.6 ? 1 : 1 - ease((vm.point - 0.6) / 0.4);
+  }
+
+  const { x: x0, scale } = vmLayout();
+  for (const h of [handL, handR]) {
+    const right = h.side > 0;
+    const p = right ? e : 0;
+    const ph = vm.walk + (right ? Math.PI : 0);
+    const bob = Math.sin(ph * 2) * 0.011 * amt + Math.sin(time * 1.4 + h.side) * 0.004;
+    const swing = Math.cos(ph) * 0.007 * amt;
+    h.group.scale.setScalar(scale);
+    h.group.position.set(
+      h.side * x0 * (1 - p * 0.5) + swing - vm.swayX,
+      VM.y + bob - vm.swayY + p * 0.12 - vm.away * 0.34,
+      VM.z - p * 0.06
+    );
+    h.group.rotation.set(VM.rx - p * 0.65 + vm.swayY * 2, VM.turn - h.side * VM.ry * (1 - p), h.side * VM.rz * (1 - p));
+    const rest = VM.rest;
+    h.fingers.forEach((f) => {
+      // pointing: the index finger stretches, the others close
+      const c = f.i === 0 ? rest * (1 - p) : rest + (1.25 - rest) * p;
+      f.root.rotation.x = c * (0.8 + f.i * 0.12) * 0.65;
+      f.joint.rotation.x = c * (0.8 + f.i * 0.12) * 0.95;
+    });
+    h.tj.rotation.x = rest * 0.5 + p * 0.5;
+    h.thumb.rotation.x = rest * 0.3 + p * 0.5;
+  }
+}
+
+function pointFx(hit) {
+  if (!hit) return;
+  const n = hit.face ? hit.face.normal.clone().transformDirection(hit.object.matrixWorld) : new THREE.Vector3(0, 1, 0);
+  const color = new THREE.Color(ROOMS[state.room] ? ROOMS[state.room].accent : 0x8fd8ff);
+  const mat = new THREE.MeshBasicMaterial({ color, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false });
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.035, 0.055, 32), mat);
+  const dot = new THREE.Mesh(new THREE.CircleGeometry(0.02, 16), mat);
+  const g = new THREE.Group();
+  g.add(ring, dot);
+  g.position.copy(hit.point).addScaledVector(n, 0.01);
+  g.lookAt(hit.point.clone().add(n));
+  scene.add(g);
+  const fx = { t: 0, update(dt) {
+    fx.t += dt;
+    const k = fx.t / 0.6;
+    ring.scale.setScalar(1 + k * 5);
+    mat.opacity = Math.max(0, 1 - k);
+    if (k >= 1) { scene.remove(g); ring.geometry.dispose(); dot.geometry.dispose(); mat.dispose(); return false; }
+    return true;
+  } };
+  effects.push(fx);
+  sound.ping();
+}
+function pointAt(hit) {
+  if (vm.away > 0.5) return;
+  vm.point = 0;
+  pointFx(hit);
 }
 
 /* Ring, light column and sparks where someone lands. */
@@ -2730,8 +2881,8 @@ function stepArrival(dt, time) {
   const curl = Math.sin(flex * Math.PI) * 0.75 + 0.08;
   const up = ease(clamp01((t - 2.1) / 1.6));
   if (t > 2.1 && state.lightTarget < 1) { state.lightTarget = 1; sound.powerUp(); }
-  poseHands(up * 0.45, curl, time);
-  handUniforms.uAlpha.value = 1 - up;
+  poseHands(0, curl * (1 - up) + VM.rest * up, time, up);
+  handUniforms.uAlpha.value = 1;
   state.yaw = a.e.yaw + Math.sin(t * 0.8) * 0.04 * (1 - up);
   state.pitch = -0.95 + (a.e.pitch + 0.95) * up;
   if (t >= 3.7) finishArrival(a.then);
@@ -2754,7 +2905,13 @@ function finishArrival(then) {
   try { localStorage.setItem('oh-arrived', '1'); } catch (err) { /* private mode */ }
   state.flashTarget = 0;
   state.lightTarget = 1;
-  hands.visible = false;
+  // after the full arrival the hands simply stay; otherwise they come up
+  vm.away = a && a.phase === 'hands' ? 0 : 1;
+  vm.lastYaw = state.yaw;
+  vm.lastPitch = state.pitch;
+  vm.last.copy(state.pos);
+  handUniforms.uReveal.value = 1;
+  handUniforms.uAlpha.value = 1;
   state.started = true;
   document.body.classList.remove('is-cinematic');
   updateRoom();
@@ -2973,6 +3130,12 @@ const sound = (() => {
       n.connect(lp).connect(g).connect(master);
       n.start(at);
       n.stop(at + 1.2);
+    },
+    ping() {
+      if (!live()) return;
+      const at = ctx.currentTime;
+      tone('sine', 1180, 1560, at, 0.16, 0.045);
+      tone('sine', 1760, 1760, at + 0.06, 0.28, 0.025);
     },
     powerUp() {
       if (!live()) return;
@@ -3314,7 +3477,7 @@ renderer.domElement.addEventListener('pointerdown', (e) => {
   if (canSkip()) { finishArrival(); return; }
   if (!state.started) return;
   if (isLocked()) {
-    if (e.button === 0 && !state.beam) pickHit(hitAt(...centerXY()));
+    if (e.button === 0 && !state.beam) { const hit = hitAt(...centerXY()); pointAt(hit); pickHit(hit); }
     return;
   }
   if (canLock && !lockBlocked && e.pointerType === 'mouse' && e.button === 0) {
@@ -3336,7 +3499,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
     const k = 0.0024;
     if (state.glide) { state.glide.look = false; }
     state.yaw -= (e.movementX || 0) * k;
-    state.pitch = THREE.MathUtils.clamp(state.pitch - (e.movementY || 0) * k * 0.85, -1.0, 0.9);
+    state.pitch = THREE.MathUtils.clamp(state.pitch - (e.movementY || 0) * k * 0.85, -1.3, 0.9);
     if (state.glide) { state.glide.endYaw = state.yaw; state.glide.endPitch = state.pitch; }
     return;
   }
@@ -3353,7 +3516,7 @@ renderer.domElement.addEventListener('pointermove', (e) => {
       // the view follows the hand: drag or swipe right = look right
       const k = drag.type === 'touch' ? 0.006 : 0.0042;
       state.yaw -= dx * k;
-      state.pitch = THREE.MathUtils.clamp(state.pitch - dy * k * 0.8, -1.0, 0.9);
+      state.pitch = THREE.MathUtils.clamp(state.pitch - dy * k * 0.8, -1.3, 0.9);
       if (state.glide) { state.glide.endYaw = state.yaw; state.glide.endPitch = state.pitch; }
     }
   } else if (e.pointerType === 'mouse') {
@@ -3366,7 +3529,9 @@ renderer.domElement.addEventListener('pointerup', (e) => {
   stage.classList.remove('is-dragging');
   if (isLocked()) return; // this click only handed the mouse to the view
   if (drag.moved > 6 || state.beam) return;
-  pickHit(hitAt(e.clientX, e.clientY));
+  const hit = hitAt(e.clientX, e.clientY);
+  pointAt(hit);
+  pickHit(hit);
 });
 renderer.domElement.addEventListener('pointercancel', () => { drag.active = false; stage.classList.remove('is-dragging'); });
 renderer.domElement.addEventListener('wheel', (e) => {
@@ -3719,6 +3884,7 @@ function frame(dt, time) {
     lookAtPlanet(introFov(), time);
   }
   if (state.started && !state.arriving) updateRoom();
+  stepViewmodel(dt, time);
 
   // low gravity: jumps float up and sink back down slowly
   if (state.jumpV !== 0 || state.jumpY > 0) {
@@ -3795,6 +3961,17 @@ function frame(dt, time) {
   camera.rotation.set(state.pitch + (Math.random() - 0.5) * sh * 0.03, state.yaw + (Math.random() - 0.5) * sh * 0.03, roll + (Math.random() - 0.5) * sh * 0.02, 'YXZ');
   sky.position.copy(camera.position);
   renderer.render(scene, camera);
+  if (hands.visible) {
+    vmCam.projectionMatrix.copy(camera.projectionMatrix);
+    vmCam.projectionMatrixInverse.copy(camera.projectionMatrixInverse);
+    const lit = 0.35 + 0.65 * state.light;
+    vmHemi.intensity = 1.2 * lit;
+    vmKey.intensity = 1.5 * lit;
+    renderer.autoClear = false;
+    renderer.clearDepth();
+    renderer.render(vmScene, vmCam);
+    renderer.autoClear = true;
+  }
 }
 
 window.addEventListener('resize', () => {
@@ -3830,7 +4007,7 @@ camera.position.copy(state.pos);
 renderer.setAnimationLoop(tick);
 
 // ?debug in the address: handles for testing in the browser console
-if (/[?&]debug\b/.test(location.search)) window.OH_GALLERY = { THREE, renderer, scene, camera, state, exhibits, goToRoom, visit, beamTo, arrive, finishArrival, hands, handUniforms, poseHands,
+if (/[?&]debug\b/.test(location.search)) window.OH_GALLERY = { THREE, renderer, scene, camera, state, exhibits, goToRoom, visit, beamTo, arrive, finishArrival, hands, handUniforms, poseHands, vm, VM, body, pointAt,
   // run the scene forward by `sec` seconds at once (hidden tabs barely animate)
   advance(sec, step = 1 / 30) { for (let x = 0; x < sec; x += step) { debugTime += step; frame(step, clock.elapsedTime + debugTime); } }
 };
