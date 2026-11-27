@@ -56,7 +56,8 @@ const TEXT = {
     foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Werkstatt', kunst: 'Kunst', apps: 'Apps',
     appsTitle: 'Online ausprobieren', appsNote: 'Läuft im Browser – ohne Konto, ohne Installation.', appOpen: 'Jetzt öffnen ↗',
     werkstattSub: 'Tools & 3D-Design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Hauptraum · Yusu',
-    gamesSub: 'Dahinter: Apps zum Ausprobieren',
+    gamesSub: 'Dahinter: Kunst',
+    appsSub: 'Im Browser ausprobieren',
     welcomeLead: 'Ein unabhängiges Lab aus Aachen. Wir bauen Roboter, entwickeln Spiele und Werkzeuge, gestalten 3D-Modelle und machen Kunst. Verschiedene Projekte, eine Haltung.',
     values: 'Wofür wir stehen',
     v1: 'Offen', v1t: 'Code, Dateien und Anleitungen werden veröffentlicht, wo immer es geht.',
@@ -103,7 +104,8 @@ const TEXT = {
     foyer: 'Foyer', robotics: 'Robotics', games: 'Games', werkstatt: 'Workshop', kunst: 'Art', apps: 'Apps',
     appsTitle: 'Try it online', appsNote: 'Runs in the browser – no account, nothing to install.', appOpen: 'Open now ↗',
     werkstattSub: 'Tools & 3D design', kunstSub: 'Art · @marcelloswigswag', roboticsSub: 'Main hall · Yusu',
-    gamesSub: 'Behind it: apps to try out',
+    gamesSub: 'Behind it: art',
+    appsSub: 'Try in the browser',
     welcomeLead: 'An independent lab from Aachen. We build robots, make games and tools, design 3D models and make art. Different projects, one attitude.',
     values: 'What we stand for',
     v1: 'Open', v1t: 'Code, files and guides are published wherever possible.',
@@ -161,11 +163,12 @@ const ROOMS = {
                doors: ['s'] },
   games:     { x: 7 + GAP + 7, z: 0,     w: 14, d: 12, h: 4.6, accent: 0xff6fb0, wall: 0x120c26, floor: 0x1a1334,
                doors: ['w', 'e'] },
-  // behind the games: apps you can open right away in the browser
-  apps:      { x: 7 + GAP + 14 + GAP + 7, z: 0, w: 14, d: 12, h: 5.2, accent: 0x6dffc4, wall: 0x07141a, floor: 0x0c2128,
-               doors: ['w'] },
-  kunst:     { x: -(7 + GAP + 7), z: 0,     w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
+  // west of the foyer: apps you can open right away in the browser
+  apps:      { x: -(7 + GAP + 7), z: 0,     w: 14, d: 12, h: 5.2, accent: 0x6dffc4, wall: 0x07141a, floor: 0x0c2128,
                doors: ['e'] },
+  // behind the games: art
+  kunst:     { x: 7 + GAP + 14 + GAP + 7, z: 0, w: 14, d: 12, h: 5.2, accent: 0xbca2ff, wall: 0x0f0c22, floor: 0x171330,
+               doors: ['w'] },
   werkstatt: { x: 0,     z: 6 + GAP + 7,  w: 16, d: 14, h: 4.6, accent: 0xffbb73, wall: 0x13111a, floor: 0x1e1820,
                doors: ['n'] }
 };
@@ -177,9 +180,9 @@ const ROOM_ORDER = ['foyer', 'robotics', 'games', 'apps', 'werkstatt', 'kunst'];
 const PASSAGES = {
   robotics:  { side: 'n', inRoom: new THREE.Vector3(0, EYE, -(6 + GAP + 1.4)), inFoyer: new THREE.Vector3(0, EYE, -4.8) },
   games:     { side: 'e', inRoom: new THREE.Vector3(7 + GAP + 1.4, EYE, 0),   inFoyer: new THREE.Vector3(5.8, EYE, 0) },
-  kunst:     { side: 'w', inRoom: new THREE.Vector3(-(7 + GAP + 1.4), EYE, 0), inFoyer: new THREE.Vector3(-5.8, EYE, 0) },
+  apps:      { side: 'w', inRoom: new THREE.Vector3(-(7 + GAP + 1.4), EYE, 0), inFoyer: new THREE.Vector3(-5.8, EYE, 0) },
   werkstatt: { side: 's', inRoom: new THREE.Vector3(0, EYE, 6 + GAP + 1.4),   inFoyer: new THREE.Vector3(0, EYE, 4.8) },
-  apps:      { side: 'e', from: 'games', inRoom: new THREE.Vector3(7 + GAP + 14 + GAP + 1.4, EYE, 0), inFoyer: new THREE.Vector3(7 + GAP + 14 - 1.4, EYE, 0) }
+  kunst:     { side: 'e', from: 'games', inRoom: new THREE.Vector3(7 + GAP + 14 + GAP + 1.4, EYE, 0), inFoyer: new THREE.Vector3(7 + GAP + 14 - 1.4, EYE, 0) }
 };
 const parentOf = (id) => (PASSAGES[id] && PASSAGES[id].from) || 'foyer';
 const chainOf = (id) => { const c = [id]; while (c[c.length - 1] !== 'foyer') c.push(parentOf(c[c.length - 1])); return c; };
@@ -190,14 +193,14 @@ const ENTRY = {
   robotics:  { pos: [0, EYE, -(6 + GAP + 4)],   look: [0, 1.7, -(6 + GAP + 12.3)] },
   games:     { pos: [7 + GAP + 1.6, EYE, 0],    look: [7 + GAP + 14, 1.6, 0] },
   werkstatt: { pos: [0, EYE, 6 + GAP + 2.2],    look: [0, 1.6, 6 + GAP + 14] },
-  apps:      { pos: [7 + GAP + 14 + GAP + 1.6, EYE, 0], look: [7 + GAP + 14 + GAP + 14, 2.0, 0] },
-  kunst:     { pos: [-(7 + GAP + 1.6), EYE, 0], look: [-(7 + GAP + 14), 2.0, 0] }
+  apps:      { pos: [-(7 + GAP + 1.6), EYE, 0], look: [-(7 + GAP + 14), 2.0, 0] },
+  kunst:     { pos: [7 + GAP + 14 + GAP + 1.6, EYE, 0], look: [7 + GAP + 14 + GAP + 14, 2.0, 0] }
 };
 
-/* Until there are artworks, the art room stays closed: its door in the
-   foyer points to Instagram instead. */
+/* Until there are artworks, the art room stays closed: its door at the
+   back of the games room points to Instagram instead. */
 const ART_OPEN = ARTWORKS.length > 0;
-if (!ART_OPEN) ENTRY.kunst = { pos: [-1.6, EYE, 0], look: [-7, 2.2, 0] };
+if (!ART_OPEN) ENTRY.kunst = { pos: [ROOMS.games.x + 1.6, EYE, 0], look: [ROOMS.games.x + 7, 2.2, 0] };
 
 /* --------------------------------------------------------------------------
    DOM
@@ -930,7 +933,7 @@ function buildFoyer() {
 
   // glowing signs above the doors, in the colour of the room behind
   const signs = [
-    ['n', 'robotics', 'roboticsSub'], ['e', 'games', 'gamesSub'], ['s', 'werkstatt', 'werkstattSub'], ['w', 'kunst', 'kunstSub']
+    ['n', 'robotics', 'roboticsSub'], ['e', 'games', 'gamesSub'], ['s', 'werkstatt', 'werkstattSub'], ['w', 'apps', 'appsSub']
   ];
   for (const [side, key, sub] of signs) {
     const color = ROOMS[key].accent;
@@ -968,7 +971,6 @@ function buildFoyer() {
     }
   });
 
-  if (!ART_OPEN) artDoor();
 
   // take part: south wall, left of the workshop door (seen from inside)
   const join = board(3.6, 2.3, (ctx, w, h) => {
@@ -1084,10 +1086,10 @@ function artDoor() {
     ctx.font = `700 ${Math.round(w * 0.058)}px ${FONT}`;
     ctx.fillText('@marcelloswigswag →', w / 2, h * 0.82, w * 0.86);
   }, { px: 900 });
-  // sits right in the doorway of the foyer's west wall
-  place(door, wallSpot('foyer', 'w', 0, DOOR_H / 2, -WALL / 2 + 0.02));
+  // sits right in the doorway at the back of the games room
+  place(door, wallSpot('games', 'e', 0, DOOR_H / 2, -WALL / 2 + 0.02));
   blockers.push(door);
-  addExhibit({ id: 'art-door', root: door, meshes: [door], room: 'foyer', open: () => openArt(null), viewDist: 3.4 });
+  addExhibit({ id: 'art-door', root: door, meshes: [door], room: 'games', open: () => openArt(null), viewDist: 3.4 });
 }
 
 /* The logo – the world heart – as a solid, `size` metres wide and centred.
@@ -1742,19 +1744,25 @@ function buildGames() {
   const r = ROOMS.games;
   const games = projectsIn('games');
   const neon = [0xff5fa2, 0x5fd4ff];
-
-  games.forEach((p, i) => {
-    const onNorth = i % 2 === 0;
-    const slot = Math.floor(i / 2);
-    const along = -3.2 + slot * 3.6;
-    const side = onNorth ? 'n' : 's';
-    const cab = arcadeCabinet(p, neon[i % 2]);
-    const spot = wallSpot('games', side, along, 0, 0.45);
+  // a game with `arcade.spotlight` gets the big machine in the middle of the
+  // north wall, the others stand along the south wall
+  const stars = games.filter((p) => p.arcade && p.arcade.spotlight).slice(0, 1);
+  const rest = games.filter((p) => !stars.includes(p));
+  const spots = [
+    ...stars.map((p) => ({ p, side: 'n', along: 0, big: true })),
+    ...rest.map((p, k) => ({ p, side: stars.length ? 's' : (k % 2 ? 's' : 'n'),
+      along: stars.length ? (k - (rest.length - 1) / 2) * 3.4 : -3.2 + Math.floor(k / 2) * 3.6 }))
+  ];
+  spots.forEach(({ p, side, along, big }, i) => {
+    const cab = arcadeCabinet(p, big ? 0xffc93c : neon[i % 2], big);
+    const spot = wallSpot('games', side, along, 0, big ? 0.6 : 0.45);
     place(cab.group, spot);
-    obstacles.push({ x: spot.pos.x, z: spot.pos.z, r: 0.85 });
-    const ex = addExhibit({ id: 'project-' + p.id, root: cab.group, meshes: cab.meshes, room: 'games', open: () => openProject(p), viewDist: 2.3 });
-    ex.center.set(spot.pos.x, 1.5, spot.pos.z);
+    obstacles.push({ x: spot.pos.x, z: spot.pos.z, r: big ? 1.05 : 0.85 });
+    const ex = addExhibit({ id: 'project-' + p.id, root: cab.group, meshes: cab.meshes, room: 'games', open: () => openProject(p), viewDist: big ? 3.3 : 2.3 });
+    ex.center.set(spot.pos.x, big ? 1.9 : 1.5, spot.pos.z);
+    if (cab.videoEntry) cab.videoEntry.room = 'games';
   });
+  if (!ART_OPEN) artDoor();
 
   // screenshots on the east wall, one per game
   const shots = games.flatMap((p) => (p.gallery || []).slice(0, 1).map((g) => ({ ...g, project: p })));
@@ -1779,8 +1787,9 @@ function buildGames() {
   });
 }
 
-function arcadeCabinet(p, accent) {
+function arcadeCabinet(p, accent, big = false) {
   const group = new THREE.Group();
+  const arcade = big ? p.arcade : null;
   const body = new THREE.MeshStandardMaterial({ color: 0x1b1a33, roughness: 0.6 });
   const side = new THREE.MeshStandardMaterial({ color: new THREE.Color(accent).multiplyScalar(0.25), roughness: 0.5, emissive: accent, emissiveIntensity: 0.22 });
   const base = box(1.4, 1.0, 0.85, body);
@@ -1795,13 +1804,21 @@ function arcadeCabinet(p, accent) {
     edge.position.set(s * 0.72, 1.15, -0.02);
     group.add(edge);
   }
-  const img = p.image || {};
+  // the big machine shows its trailer upright, like an old vertical arcade
+  const img = arcade && arcade.video ? { src: arcade.poster, w: arcade.w, h: arcade.h } : (p.image || {});
   const aspect = (img.w || 4) / (img.h || 3);
-  const sh = 0.82;
+  const sh = arcade ? 1.04 : 0.82;
   const sw = Math.min(1.22, sh * aspect);
-  const screen = new THREE.Mesh(new THREE.PlaneGeometry(sw, sw / aspect),
-    new THREE.MeshBasicMaterial({ map: img.src ? imageTexture(img.src, img.w, img.h) : null, toneMapped: false }));
-  screen.position.set(0, 1.6, 0.13);
+  const screenMat = new THREE.MeshBasicMaterial({ map: img.src ? imageTexture(img.src, img.w, img.h) : null, toneMapped: false });
+  let videoEntry = null;
+  if (arcade && arcade.video) {
+    videoEntry = videoTexture({ video: arcade.video, poster: arcade.poster, w: arcade.w, h: arcade.h });
+    videoEntry.material = screenMat;
+    screenMat.map = videoEntry.poster;
+  }
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(sw, sw / aspect), screenMat);
+  // in front of the cabinet face (tilted back, its top edge must stay clear)
+  screen.position.set(0, arcade ? 1.7 : 1.6, 0.18);
   screen.rotation.x = -0.08;
   const marquee = board(1.36, 0.3, (ctx, w, h) => {
     ctx.fillStyle = '#0d0c1c';
@@ -1821,8 +1838,30 @@ function arcadeCabinet(p, accent) {
     group.add(button);
   }
   group.add(base, top, deck, screen, marquee);
-  group.userData.size = [1.4, 2.5];
-  return { group, meshes: [screen, top, base, marquee] };
+  const meshes = [screen, top, base, marquee];
+  if (arcade) {
+    // a glowing badge on top and a light pool on the floor
+    const badge = board(1.5, 0.34, (ctx, w, h) => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.textAlign = 'center';
+      ctx.shadowColor = '#ffc93c';
+      ctx.shadowBlur = h * 0.3;
+      ctx.fillStyle = '#ffe28a';
+      ctx.font = `800 ${Math.round(h * 0.52)}px ${FONT}`;
+      ctx.fillText(pick(arcade.badge) || '', w / 2, h * 0.2, w * 0.96);
+    }, { px: 800, transparent: true });
+    badge.position.set(0, 2.78, 0.1);
+    group.add(badge);
+    meshes.push(badge);
+    animated.push((dt, time) => { badge.position.y = 2.78 + Math.sin(time * 1.6) * 0.03; });
+    const pool = new THREE.Sprite(new THREE.SpriteMaterial({ map: DOT, color: accent, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false, fog: false }));
+    pool.scale.set(3.2, 1.2, 1);
+    pool.position.set(0, 0.05, 0.9);
+    group.add(pool);
+    group.scale.setScalar(1.22);
+  }
+  group.userData.size = [1.4 * (arcade ? 1.22 : 1), arcade ? 3.5 : 2.5];
+  return { group, meshes, videoEntry };
 }
 
 /* --------------------------------------------------------------------------
@@ -1835,7 +1874,7 @@ function buildApps() {
   const apps = PROJECTS.filter(isApp)
     // tools first, they are the apps proper; then the rest
     .sort((a, b) => (a.group === 'tools' ? 0 : 1) - (b.group === 'tools' ? 0 : 1));
-  wallTitle('apps', 'e', 0, r.h - 0.75, () => t('appsTitle'));
+  wallTitle('apps', 'w', 0, r.h - 0.75, () => t('appsTitle'));
   const note = board(5.2, 0.42, (ctx, w, h) => {
     ctx.clearRect(0, 0, w, h);
     ctx.textAlign = 'center';
@@ -1843,9 +1882,9 @@ function buildApps() {
     ctx.font = `500 ${Math.round(h * 0.5)}px ${FONT}`;
     ctx.fillText(t('appsNote'), w / 2, h * 0.2, w * 0.98);
   }, { px: 1200, transparent: true });
-  place(note, wallSpot('apps', 'e', 0, r.h - 1.3));
+  place(note, wallSpot('apps', 'w', 0, r.h - 1.3));
   // two big screens on the far wall, more along the side walls
-  const slots = apps.length === 1 ? [['e', 0]] : [['e', -2.9], ['e', 2.9], ['n', -2.6], ['s', 2.6], ['n', 2.6], ['s', -2.6]];
+  const slots = apps.length === 1 ? [['w', 0]] : [['w', -2.9], ['w', 2.9], ['n', -2.6], ['s', 2.6], ['n', 2.6], ['s', -2.6]];
   apps.slice(0, slots.length).forEach((p, i) => {
     const [side, along] = slots[i];
     const card = p.app || {};
@@ -2013,13 +2052,13 @@ function buildArt() {
     ctx.font = `500 ${Math.round(h * 0.16)}px ${FONT}`;
     ctx.fillText(t('artWall') + '  ·  @marcelloswigswag', 0, h * 0.58, w);
   }, { px: 1400, transparent: true });
-  place(title, wallSpot('kunst', 'n', -3.0, 3.9));
+  place(title, wallSpot('kunst', 'n', 3.0, 3.9));
   addExhibit({ id: 'art-title', root: title, meshes: [title], room: 'kunst', open: () => openArt(null) });
 
-  // slots: west wall first, then north and south
+  // slots: the far (east) wall first, then north and south
   const slots = [
-    ['w', -3.6], ['w', 0], ['w', 3.6],
-    ['n', 0.8], ['n', 4.4], ['s', 0.8], ['s', 4.4], ['s', -3.6]
+    ['e', -3.6], ['e', 0], ['e', 3.6],
+    ['n', -0.8], ['n', -4.4], ['s', -0.8], ['s', -4.4], ['s', 3.6]
   ];
   const works = ARTWORKS.length ? ARTWORKS : [null, null, null];
   works.slice(0, slots.length).forEach((art, i) => {
@@ -2061,13 +2100,13 @@ function buildArt() {
 
   // a bench to sit and look
   const bench = box(2.4, 0.45, 0.6, MAT.plinth);
-  bench.position.set(r.x - 1, 0.225, r.z);
+  bench.position.set(r.x + 1, 0.225, r.z);
   bench.rotation.y = Math.PI / 2;
   scene.add(bench);
   const benchLine = box(2.42, 0.02, 0.62, glowMat(r.accent, 0.8));
   benchLine.position.y = 0.235;
   bench.add(benchLine);
-  obstacles.push({ x: r.x - 1, z: r.z - 0.7, r: 0.7 }, { x: r.x - 1, z: r.z + 0.7, r: 0.7 });
+  obstacles.push({ x: r.x + 1, z: r.z - 0.7, r: 0.7 }, { x: r.x + 1, z: r.z + 0.7, r: 0.7 });
 }
 
 /* --------------------------------------------------------------------------
@@ -2943,7 +2982,7 @@ function greet() {
 /* Name of the room, like a location card in a film. */
 function placeCard(id) {
   if (!id || !TEXT.en[id]) return;
-  const sub = { foyer: '', robotics: 'roboticsSub', games: 'gamesSub', werkstatt: 'werkstattSub', kunst: 'kunstSub' }[id];
+  const sub = { foyer: '', robotics: 'roboticsSub', games: 'gamesSub', werkstatt: 'werkstattSub', kunst: 'kunstSub', apps: 'appsSub' }[id];
   subtitle('<b>' + esc(t(id)) + '</b>' + (sub ? ' · ' + esc(t(sub)) : ''), 2600);
 }
 

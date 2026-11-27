@@ -367,15 +367,36 @@ window.OH_PROJECTS = [
         en: 'Pfandpanik Aachen cover: a cartoon character with crown and beanie among deposit bottles, surrounded by pigeons, wardens and ticket inspectors'
       }
     },
+    // the game's own arcade in the 3D gallery: a bigger cabinet with the trailer running
+    arcade: {
+      spotlight: true,
+      video: 'img/game-pfandpanik-trailer.mp4', poster: 'img/game-pfandpanik-trailer.jpg', w: 540, h: 960,
+      badge: { de: 'Gratis im Browser', en: 'Free in the browser' }
+    },
     gallery: [
+      {
+        src: 'img/game-pfandpanik-titel.jpg', w: 1600, h: 900,
+        caption: { de: 'Am Bushof: Pfand, Tauben und das Ordnungsamt', en: 'At the bus station: deposit bottles, pigeons and the wardens' },
+        alt: { de: 'Screenshot: Titel Pfandpanik Aachen über einem gepflasterten Platz, in der Mitte die Spielfigur mit Krone und Hund, ringsum Pfandflaschen und lila Gegner', en: 'Screenshot: the title Pfandpanik Aachen over a paved square, the player with crown and dog in the middle, deposit bottles and purple enemies around' }
+      },
       {
         src: 'img/game-pfandpanik-elite.jpg', w: 1280, h: 720,
         caption: { de: 'Welle 11 am Elisenbrunnen: ein Elite-Gegner taucht auf', en: 'Wave 11 at the Elisenbrunnen: an elite enemy appears' },
         alt: { de: 'Screenshot: Spielfigur auf einem Platz in Aachen, oben Lebensbalken und Wellenanzeige, daneben ein Elite-Gegner', en: 'Screenshot: player character on a square in Aachen, health bar and wave counter at the top, an elite enemy next to it' }
+      },
+      {
+        src: 'img/game-pfandpanik-kiosk.jpg', w: 1280, h: 720,
+        caption: { de: 'Der Kiosk zwischen den Wellen', en: 'The kiosk between waves' },
+        alt: { de: 'Screenshot: Kiosk-Menü mit vier Angeboten wie Schlafsack und Konfetti-Kanone, rechts die Werte der Figur', en: 'Screenshot: kiosk menu with four offers such as a sleeping bag and a confetti cannon, the character stats on the right' }
+      },
+      {
+        src: 'img/game-pfandpanik-figuren.jpg', w: 1280, h: 720,
+        caption: { de: '„Wer bist du heute?“ – sechs Figuren zur Wahl', en: '“Who are you today?” – six characters to choose from' },
+        alt: { de: 'Screenshot: Auswahl aus sechs Figuren wie Pfand-Paule, Bushof-Bernd und Karnevals-Kalle mit ihren Werten', en: 'Screenshot: choice of six characters such as Pfand-Paule, Bushof-Bernd and Karnevals-Kalle with their stats' }
       }
     ],
     buy: {
-      href: '#TODO-itch-pfandpanik',
+      href: 'https://onehumanity.itch.io/pfandpanik-aachen',
       label: { de: 'Auf itch.io spielen', en: 'Play on itch.io' }
     },
     de: {
@@ -386,8 +407,8 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Figuren, Waffen, Items, Kiosk und 20 Wellen mit Endbossen' },
         { state: 'done', text: 'Schwierigkeitsstufen, Freischaltbares, Endlosmodus' },
-        { state: 'now',  text: 'Spielbar, Browser-Version fertig' },
-        { state: 'next', text: 'Als Nächstes: Veröffentlichung auf itch.io' }
+        { state: 'done', text: 'Browser-Version fertig' },
+        { state: 'now',  text: 'Auf itch.io gratis im Browser spielbar' }
       ]
     },
     en: {
@@ -398,8 +419,8 @@ window.OH_PROJECTS = [
       timeline: [
         { state: 'done', text: 'Characters, weapons, items, kiosk and 20 waves with bosses' },
         { state: 'done', text: 'Difficulty levels, unlockables, endless mode' },
-        { state: 'now',  text: 'Playable, browser version ready' },
-        { state: 'next', text: 'Next: release on itch.io' }
+        { state: 'done', text: 'Browser version ready' },
+        { state: 'now',  text: 'Free to play in the browser on itch.io' }
       ]
     }
   },
