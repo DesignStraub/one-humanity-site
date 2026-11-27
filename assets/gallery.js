@@ -3009,8 +3009,8 @@ function showHint() {
 }
 
 /* --------------------------------------------------------------------------
-   Sound, made on the spot with the Web Audio API (no files): a quiet space
-   drone, a whoosh for the flight, the beam, Yusu's little voice.
+   Sound, made on the spot with the Web Audio API (no files): short effects
+   only (beam, impact, ping, Yusu's little voice), no background sound.
    Off with the speaker button; the choice is remembered.
    -------------------------------------------------------------------------- */
 const sound = (() => {
@@ -3031,47 +3031,6 @@ const sound = (() => {
     src.buffer = buf;
     return src;
   }
-  function drone() {
-    const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass';
-    lp.frequency.value = 650;
-    const out = ctx.createGain();
-    out.gain.value = 0.05;
-    lp.connect(out).connect(master);
-    [55, 82.41, 110, 164.81, 246.94].forEach((f, i) => {
-      const o = ctx.createOscillator();
-      o.type = i % 2 ? 'triangle' : 'sine';
-      o.frequency.value = f;
-      o.detune.value = (i - 2) * 5;
-      const g = ctx.createGain();
-      g.gain.value = i > 2 ? 0.08 : 0.22;
-      const lfo = ctx.createOscillator();
-      lfo.frequency.value = 0.04 + i * 0.025;
-      const depth = ctx.createGain();
-      depth.gain.value = g.gain.value * 0.6;
-      lfo.connect(depth).connect(g.gain);
-      o.connect(g).connect(lp);
-      o.start();
-      lfo.start();
-    });
-    // a breath of air moving through
-    const n = noise(4);
-    n.loop = true;
-    const bp = ctx.createBiquadFilter();
-    bp.type = 'bandpass';
-    bp.frequency.value = 700;
-    bp.Q.value = 0.5;
-    const ng = ctx.createGain();
-    ng.gain.value = 0.01;
-    const sweep = ctx.createOscillator();
-    sweep.frequency.value = 0.06;
-    const sweepDepth = ctx.createGain();
-    sweepDepth.gain.value = 350;
-    sweep.connect(sweepDepth).connect(bp.frequency);
-    n.connect(bp).connect(ng).connect(master);
-    n.start();
-    sweep.start();
-  }
   function init() {
     if (ctx || !enabled) return;
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -3081,7 +3040,6 @@ const sound = (() => {
     master.gain.value = 0;
     master.connect(ctx.destination);
     master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
-    drone();
   }
   function tone(type, f0, f1, at, len, vol) {
     const o = ctx.createOscillator();
@@ -3127,23 +3085,6 @@ const sound = (() => {
       if (!enabled) return;
       init();
       if (ctx && ctx.state === 'suspended') ctx.resume();
-    },
-    whoosh(len = 2.6) {
-      if (!live()) return;
-      const at = ctx.currentTime;
-      const n = noise(len + 0.2);
-      const bp = ctx.createBiquadFilter();
-      bp.type = 'bandpass';
-      bp.Q.value = 1.1;
-      bp.frequency.setValueAtTime(160, at);
-      bp.frequency.exponentialRampToValueAtTime(2600, at + len * 0.9);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.0001, at);
-      g.gain.exponentialRampToValueAtTime(0.28, at + len * 0.75);
-      g.gain.exponentialRampToValueAtTime(0.0001, at + len);
-      n.connect(bp).connect(g).connect(master);
-      n.start(at);
-      n.stop(at + len + 0.1);
     },
     beam() {
       if (!live()) return;
@@ -3747,7 +3688,6 @@ function choose(id, ex) {
   intro.classList.add('is-hidden');
   intro.setAttribute('aria-hidden', 'true');
   document.body.classList.add('is-touring', 'is-cinematic');
-  sound.whoosh(3.0);
   arrive(id, ex ? () => visit(ex) : (id === 'kunst' && !ART_OPEN ? () => openArt(null) : null));
 }
 
