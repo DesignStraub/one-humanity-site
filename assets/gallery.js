@@ -3023,14 +3023,6 @@ const sound = (() => {
   show();
   const live = () => ctx && enabled && ctx.state === 'running';
 
-  function noise(seconds = 2) {
-    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seconds), ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    return src;
-  }
   function init() {
     if (ctx || !enabled) return;
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -3038,8 +3030,11 @@ const sound = (() => {
     try { ctx = new AC(); } catch (e) { ctx = null; return; }
     master = ctx.createGain();
     master.gain.value = 0;
-    master.connect(ctx.destination);
-    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
+    const soft = ctx.createBiquadFilter();
+    soft.type = 'lowpass';
+    soft.frequency.value = 1400;
+    master.connect(soft).connect(ctx.destination);
+    master.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.5);
   }
   function tone(type, f0, f1, at, len, vol) {
     const o = ctx.createOscillator();
@@ -3048,7 +3043,7 @@ const sound = (() => {
     if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, at + len);
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.03, len / 4));
+    g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.08, len / 3));
     g.gain.exponentialRampToValueAtTime(0.0001, at + len);
     o.connect(g).connect(master);
     o.start(at);
@@ -3068,7 +3063,7 @@ const sound = (() => {
         ctx.resume();
         master.gain.cancelScheduledValues(ctx.currentTime);
         master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-        master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 0.6);
+        master.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.6);
       }
     } else if (ctx) {
       master.gain.cancelScheduledValues(ctx.currentTime);
@@ -3089,48 +3084,31 @@ const sound = (() => {
     beam() {
       if (!live()) return;
       const at = ctx.currentTime;
-      tone('sine', 1600, 160, at, 0.7, 0.14);
-      tone('triangle', 660, 660, at + 0.05, 1.8, 0.05);
-      tone('triangle', 990, 990, at + 0.1, 2.0, 0.035);
-      tone('sine', 1320, 1320, at + 0.16, 2.2, 0.025);
+      tone('sine', 392, 330, at, 0.9, 0.05);
+      tone('sine', 659, 659, at + 0.08, 1.2, 0.015);
     },
     impact() {
       if (!live()) return;
-      const at = ctx.currentTime;
-      tone('sine', 95, 32, at, 1.3, 0.3);
-      tone('triangle', 190, 60, at, 0.5, 0.08);
-      const n = noise(1.2);
-      const lp = ctx.createBiquadFilter();
-      lp.type = 'lowpass';
-      lp.frequency.setValueAtTime(900, at);
-      lp.frequency.exponentialRampToValueAtTime(80, at + 1.0);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.25, at);
-      g.gain.exponentialRampToValueAtTime(0.0001, at + 1.1);
-      n.connect(lp).connect(g).connect(master);
-      n.start(at);
-      n.stop(at + 1.2);
+      tone('sine', 72, 40, ctx.currentTime, 1.0, 0.2);
     },
     ping() {
       if (!live()) return;
-      const at = ctx.currentTime;
-      tone('sine', 1180, 1560, at, 0.16, 0.045);
-      tone('sine', 1760, 1760, at + 0.06, 0.28, 0.025);
+      tone('sine', 660, 660, ctx.currentTime, 0.35, 0.025);
     },
     powerUp() {
       if (!live()) return;
       const at = ctx.currentTime;
-      tone('sine', 110, 220, at, 1.6, 0.08);
-      tone('sine', 220, 440, at + 0.2, 1.4, 0.04);
+      tone('sine', 110, 165, at, 1.6, 0.05);
+      tone('sine', 220, 330, at + 0.2, 1.4, 0.02);
     },
     chatter(len) {
       if (!live()) return;
       let at = ctx.currentTime + 0.05;
       const end = at + len;
       while (at < end) {
-        const f = 520 + Math.random() * 620;
-        const d = 0.05 + Math.random() * 0.07;
-        tone('sine', f, f * (0.85 + Math.random() * 0.4), at, d, 0.05);
+        const f = 330 + Math.random() * 220;
+        const d = 0.08 + Math.random() * 0.08;
+        tone('sine', f, f * (0.9 + Math.random() * 0.2), at, d, 0.03);
         at += d + 0.03 + Math.random() * 0.08;
       }
     }
