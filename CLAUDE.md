@@ -60,7 +60,7 @@ Entscheidung (Marcello, 25.11.2026): eine 3D-Galerie, durch die man läuft – �
 - Leistung: Auflösung passt sich an (unter ca. 40 FPS gröber, mit Luft wieder schärfer, `adaptQuality`); möglichst keine zusätzlichen Punktlichter – Leuchtschimmer (Sprites) statt Lampen.
 - `?debug` an der Adresse stellt `window.OH_GALLERY` zum Testen bereit (`advance(sek)` spult die Szene vor, nützlich im verdeckten Browser-Fenster).
 - „Webansicht“ (mobil „Web“) in der Galerie führt zur Übersicht `uebersicht.html`.
-- Wer auf dem Startbildschirm (vor „Eintreten“) nach unten scrollt/wischt oder Bild-runter drückt, landet in der Webansicht `uebersicht.html` (Marcello, 28.11.2026); kleiner Pfeil unter dem Webansicht-Link als Hinweis. In der Galerie selbst läuft man mit dem Mausrad weiter.
+- Wer auf dem Startbildschirm (vor „Eintreten“) nach unten scrollt/wischt oder Bild-runter drückt, tritt ein wie mit dem Knopf: Zoom in die Erde, Ankunft (Marcello, 28.11.2026; nicht mehr zur Webansicht). Kleiner wippender Pfeil unter dem Webansicht-Link als Hinweis. In der Galerie selbst läuft man mit dem Mausrad weiter.
 
 Konzept, wie daraus ein Baukasten für alle werden kann (Datenformat `museum.data.js`, Claude-Skill, Web-App): `docs/museum-baukasten.md` (öffentlich im Repo).
 

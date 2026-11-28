@@ -3687,8 +3687,9 @@ function choose(id, ex) {
   arrive(id, ex ? () => visit(ex) : (id === 'kunst' && !ART_OPEN ? () => openArt(null) : null));
 }
 
-/* Scrolling on the start screen means "show me a normal page": the web view. */
-(function scrollToWebView() {
+/* Scrolling down on the start screen enters, like the big button:
+   zoom into the Earth and arrive. */
+(function scrollToEnter() {
   let sum = 0;
   let last = 0;
   let touchY = null;
@@ -3697,8 +3698,8 @@ function choose(id, ex) {
   const blocked = () => gone || state.started || state.arriving || intro.classList.contains('is-hidden');
   const go = () => {
     gone = true;
-    intro.classList.add('is-leaving');
-    setTimeout(() => { location.href = 'uebersicht.html'; }, 280);
+    history.replaceState(null, '', location.pathname + location.search);
+    choose('robotics');
   };
   window.addEventListener('wheel', (e) => {
     if (blocked() || e.deltaY <= 0 || !atEnd()) return;
