@@ -185,6 +185,11 @@
 .g-intro-rooms a:hover, .g-intro-rooms a:focus-visible{ border-color: var(--c, #8fd8ff); background: rgba(20, 30, 56, .8); transform: translateY(-1px); outline: none; }
 .g-intro-web{ display: inline-block; margin-top: 16px; font-size: 14px; color: var(--g-ink-soft); text-decoration: underline; text-underline-offset: 4px; }
 .g-intro-web:hover, .g-intro-web:focus-visible{ color: #fff; }
+.g-intro.is-leaving{ opacity: 0; transition: opacity .28s ease; }
+/* scrolling down here opens the web view: a small hint */
+.g-intro-scroll{ display: block; width: 14px; height: 14px; margin: 18px auto 0; border-right: 2px solid var(--g-ink-soft); border-bottom: 2px solid var(--g-ink-soft); transform: rotate(45deg); opacity: .55; animation: g-scrollhint 2.4s ease-in-out infinite; }
+@keyframes g-scrollhint{ 0%, 100%{ transform: translateY(0) rotate(45deg); } 50%{ transform: translateY(6px) rotate(45deg); } }
+@media (prefers-reduced-motion: reduce){ .g-intro-scroll{ animation: none; } }
 .g-pill .short{ display: none; }
 @media (max-width: 700px){
   .g-pill .long{ display: none; }

@@ -228,8 +228,9 @@ if (!renderer) {
   choiceButtons.forEach((b) => { if (b.tagName === 'A') b.href = 'uebersicht.html'; else b.addEventListener('click', () => { location.href = 'uebersicht.html'; }); });
   throw new Error('WebGL not available');
 }
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
+const ANISO = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
 stage.appendChild(renderer.domElement);
@@ -345,7 +346,7 @@ function makeCanvas(w, h) {
 function canvasTexture(canvas, repeat) {
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 4;
+  tex.anisotropy = ANISO;
   if (repeat) {
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
     tex.repeat.set(repeat[0], repeat[1]);
@@ -485,7 +486,7 @@ function imageTexture(src, w, h) {
   if (textures.has(src)) return textures.get(src);
   const tex = new THREE.Texture();
   tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 4;
+  tex.anisotropy = ANISO;
   textures.set(src, tex);
   pendingImages++;
   const img = new Image();
@@ -3023,14 +3024,6 @@ const sound = (() => {
   show();
   const live = () => ctx && enabled && ctx.state === 'running';
 
-  function noise(seconds = 2) {
-    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * seconds), ctx.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    return src;
-  }
   function init() {
     if (ctx || !enabled) return;
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -3038,17 +3031,35 @@ const sound = (() => {
     try { ctx = new AC(); } catch (e) { ctx = null; return; }
     master = ctx.createGain();
     master.gain.value = 0;
-    master.connect(ctx.destination);
-    master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 3);
+    const soft = ctx.createBiquadFilter();
+    soft.type = 'lowpass';
+    soft.frequency.value = 1000;
+    soft.Q.value = 0.5;
+    master.connect(soft).connect(ctx.destination);
+    // a little room around every sound makes it round instead of sharp
+    try {
+      const len = Math.floor(ctx.sampleRate * 1.6);
+      const ir = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let c = 0; c < 2; c++) {
+        const d = ir.getChannelData(c);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+      }
+      const verb = ctx.createConvolver();
+      verb.buffer = ir;
+      const wet = ctx.createGain();
+      wet.gain.value = 0.22;
+      soft.connect(verb).connect(wet).connect(ctx.destination);
+    } catch (e) { /* no reverb, fine */ }
+    master.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.5);
   }
-  function tone(type, f0, f1, at, len, vol) {
+  function tone(type, f0, f1, at, len, vol, attack = 0) {
     const o = ctx.createOscillator();
     o.type = type;
     o.frequency.setValueAtTime(f0, at);
     if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, at + len);
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, at);
-    g.gain.exponentialRampToValueAtTime(vol, at + Math.min(0.03, len / 4));
+    g.gain.exponentialRampToValueAtTime(vol, at + (attack || Math.min(0.08, len / 3)));
     g.gain.exponentialRampToValueAtTime(0.0001, at + len);
     o.connect(g).connect(master);
     o.start(at);
@@ -3068,7 +3079,7 @@ const sound = (() => {
         ctx.resume();
         master.gain.cancelScheduledValues(ctx.currentTime);
         master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-        master.gain.linearRampToValueAtTime(0.85, ctx.currentTime + 0.6);
+        master.gain.linearRampToValueAtTime(0.6, ctx.currentTime + 0.6);
       }
     } else if (ctx) {
       master.gain.cancelScheduledValues(ctx.currentTime);
@@ -3089,48 +3100,33 @@ const sound = (() => {
     beam() {
       if (!live()) return;
       const at = ctx.currentTime;
-      tone('sine', 1600, 160, at, 0.7, 0.14);
-      tone('triangle', 660, 660, at + 0.05, 1.8, 0.05);
-      tone('triangle', 990, 990, at + 0.1, 2.0, 0.035);
-      tone('sine', 1320, 1320, at + 0.16, 2.2, 0.025);
+      // a soft, low "whum" that swells and fades
+      tone('sine', 196, 165, at, 1.1, 0.045, 0.25);
+      tone('sine', 294, 247, at + 0.05, 1.0, 0.012, 0.3);
     },
     impact() {
       if (!live()) return;
-      const at = ctx.currentTime;
-      tone('sine', 95, 32, at, 1.3, 0.3);
-      tone('triangle', 190, 60, at, 0.5, 0.08);
-      const n = noise(1.2);
-      const lp = ctx.createBiquadFilter();
-      lp.type = 'lowpass';
-      lp.frequency.setValueAtTime(900, at);
-      lp.frequency.exponentialRampToValueAtTime(80, at + 1.0);
-      const g = ctx.createGain();
-      g.gain.setValueAtTime(0.25, at);
-      g.gain.exponentialRampToValueAtTime(0.0001, at + 1.1);
-      n.connect(lp).connect(g).connect(master);
-      n.start(at);
-      n.stop(at + 1.2);
+      tone('sine', 72, 40, ctx.currentTime, 1.0, 0.2);
     },
     ping() {
       if (!live()) return;
-      const at = ctx.currentTime;
-      tone('sine', 1180, 1560, at, 0.16, 0.045);
-      tone('sine', 1760, 1760, at + 0.06, 0.28, 0.025);
+      // a quiet, round "tok"
+      tone('sine', 330, 294, ctx.currentTime, 0.3, 0.02, 0.04);
     },
     powerUp() {
       if (!live()) return;
       const at = ctx.currentTime;
-      tone('sine', 110, 220, at, 1.6, 0.08);
-      tone('sine', 220, 440, at + 0.2, 1.4, 0.04);
+      tone('sine', 110, 165, at, 1.6, 0.05);
+      tone('sine', 220, 330, at + 0.2, 1.4, 0.02);
     },
     chatter(len) {
       if (!live()) return;
       let at = ctx.currentTime + 0.05;
       const end = at + len;
       while (at < end) {
-        const f = 520 + Math.random() * 620;
-        const d = 0.05 + Math.random() * 0.07;
-        tone('sine', f, f * (0.85 + Math.random() * 0.4), at, d, 0.05);
+        const f = 330 + Math.random() * 220;
+        const d = 0.08 + Math.random() * 0.08;
+        tone('sine', f, f * (0.9 + Math.random() * 0.2), at, d, 0.03);
         at += d + 0.03 + Math.random() * 0.08;
       }
     }
@@ -3691,6 +3687,35 @@ function choose(id, ex) {
   arrive(id, ex ? () => visit(ex) : (id === 'kunst' && !ART_OPEN ? () => openArt(null) : null));
 }
 
+/* Scrolling on the start screen means "show me a normal page": the web view. */
+(function scrollToWebView() {
+  let sum = 0;
+  let last = 0;
+  let touchY = null;
+  let gone = false;
+  const atEnd = () => intro.scrollTop + intro.clientHeight >= intro.scrollHeight - 4;
+  const blocked = () => gone || state.started || state.arriving || intro.classList.contains('is-hidden');
+  const go = () => {
+    gone = true;
+    intro.classList.add('is-leaving');
+    setTimeout(() => { location.href = 'uebersicht.html'; }, 280);
+  };
+  window.addEventListener('wheel', (e) => {
+    if (blocked() || e.deltaY <= 0 || !atEnd()) return;
+    const now = performance.now();
+    if (now - last > 400) sum = 0;
+    last = now;
+    sum += e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
+    if (sum > 160) go();
+  }, { passive: true });
+  intro.addEventListener('touchstart', (e) => { touchY = atEnd() ? e.touches[0].clientY : null; }, { passive: true });
+  intro.addEventListener('touchmove', (e) => {
+    if (blocked() || touchY === null) return;
+    if (touchY - e.touches[0].clientY > 90) { touchY = null; go(); }
+  }, { passive: true });
+  window.addEventListener('keydown', (e) => { if (e.key === 'PageDown' && !blocked()) go(); });
+})();
+
 choiceButtons.forEach((el) => el.addEventListener('click', (e) => {
   e.preventDefault();
   const id = el.getAttribute('data-choice');
@@ -3819,7 +3844,7 @@ function stepHover() {
 let debugTime = 0;
 /* Keep it smooth: on a device that cannot keep up, render a little coarser;
    when there is room again, sharpen back up. */
-const MAX_PR = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75);
+const MAX_PR = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2);
 const MIN_PR = Math.min(MAX_PR, coarse ? 0.8 : 1);
 const perf = { sum: 0, n: 0, good: 0 };
 function adaptQuality(raw) {
